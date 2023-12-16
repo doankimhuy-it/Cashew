@@ -1,25 +1,25 @@
 import 'dart:developer';
 
 import 'package:budget/functions.dart';
-import 'package:budget/pages/addBudgetPage.dart';
-import 'package:budget/pages/homePage/homePageLineGraph.dart';
-import 'package:budget/pages/transactionFilters.dart';
-import 'package:budget/pages/transactionsSearchPage.dart';
-import 'package:budget/struct/databaseGlobal.dart';
-import 'package:budget/struct/firebaseAuthGlobal.dart';
+import 'package:budget/pages/add_budget_page.dart';
+import 'package:budget/pages/home_page/home_page_line_graph.dart';
+import 'package:budget/pages/transaction_filters.dart';
+import 'package:budget/pages/transactions_search_page.dart';
+import 'package:budget/struct/database_global.dart';
+import 'package:budget/struct/firebase_auth_global.dart';
 import 'package:budget/struct/settings.dart';
-import 'package:budget/struct/shareBudget.dart';
-import 'package:budget/struct/syncClient.dart';
-import 'package:budget/widgets/navigationFramework.dart';
-import 'package:budget/widgets/periodCyclePicker.dart';
-import 'package:budget/widgets/walletEntry.dart';
+import 'package:budget/struct/share_budget.dart';
+import 'package:budget/struct/sync_client.dart';
+import 'package:budget/widgets/navigation_framework.dart';
+import 'package:budget/widgets/period_cycle_picker.dart';
+import 'package:budget/widgets/wallet_entry.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'package:async/async.dart';
 import 'package:drift/drift.dart';
 export 'platform/shared.dart';
 import 'dart:convert';
-import 'package:budget/struct/currencyFunctions.dart';
+import 'package:budget/struct/currency_functions.dart';
 import 'schema_versions.dart';
 import 'package:flutter/material.dart' show DateTimeRange;
 

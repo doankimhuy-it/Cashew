@@ -1,14 +1,11 @@
 import 'package:budget/functions.dart';
 import 'package:budget/struct/settings.dart';
-import 'package:budget/widgets/bottomNavBar.dart';
+import 'package:budget/widgets/bottom_nav_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:system_theme/system_theme.dart';
-
-//import 'package:budget/colors.dart';
-//getColor(context, "lightDarkAccent")
 
 late AppColors appColorsLight;
 

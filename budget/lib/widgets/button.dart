@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:budget/functions.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/tappable.dart';
-import 'package:budget/widgets/textWidgets.dart';
+import 'package:budget/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
 

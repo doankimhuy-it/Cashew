@@ -1,7 +1,7 @@
 // web.dart
 import 'dart:typed_data';
 import 'package:budget/database/binary_string_conversion.dart';
-import 'package:budget/struct/databaseGlobal.dart';
+import 'package:budget/struct/database_global.dart';
 import 'package:drift/web.dart';
 import 'package:budget/database/tables.dart';
 import 'package:universal_html/html.dart' as html;
