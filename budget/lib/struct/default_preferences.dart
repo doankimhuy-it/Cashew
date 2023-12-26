@@ -1,14 +1,10 @@
 import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
-import 'package:budget/functions.dart';
-import 'package:budget/main.dart';
 import 'package:budget/pages/home_page/home_page_line_graph.dart';
-import 'package:budget/pages/wallet_details_page.dart';
 import 'package:budget/widgets/notifications_settings.dart';
 import 'package:budget/widgets/period_cycle_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
 
 // default settings, defaultSettings, initial settings

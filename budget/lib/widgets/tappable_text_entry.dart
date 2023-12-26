@@ -3,7 +3,6 @@ import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TappableTextEntry extends StatelessWidget {

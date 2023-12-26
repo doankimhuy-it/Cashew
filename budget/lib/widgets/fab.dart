@@ -1,11 +1,9 @@
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/widgets/navigation_framework.dart';
-import 'package:budget/widgets/navigation_sidebar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_container_navigation.dart';
 import 'package:budget/widgets/tappable.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class FAB extends StatelessWidget {

@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:budget/functions.dart';
 import 'package:budget/pages/auto_transactions_page_email.dart';
 import 'package:budget/struct/icon_objects.dart';
 import 'package:budget/struct/keyboard_intents.dart';
-import 'package:budget/widgets/bottom_nav_bar.dart';
 import 'package:budget/widgets/fade_in.dart';
 import 'package:budget/struct/language_map.dart';
 import 'package:budget/struct/initialize_biometrics.dart';
@@ -28,7 +26,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:budget/colors.dart';
-import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';

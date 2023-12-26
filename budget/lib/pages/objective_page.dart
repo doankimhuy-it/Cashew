@@ -1,13 +1,9 @@
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
-import 'package:budget/pages/add_budget_page.dart';
 import 'package:budget/pages/add_objective_page.dart';
 import 'package:budget/pages/add_transaction_page.dart';
-import 'package:budget/pages/edit_budget_limits_page.dart';
 import 'package:budget/pages/edit_objectives_page.dart';
 import 'package:budget/pages/objectives_list_page.dart';
-import 'package:budget/pages/past_budgets_page.dart';
-import 'package:budget/pages/premium_page.dart';
 import 'package:budget/pages/transaction_filters.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
@@ -16,21 +12,13 @@ import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/category_icon.dart';
 import 'package:budget/widgets/dropdown_select.dart';
 import 'package:budget/widgets/extra_info_boxes.dart';
-import 'package:budget/widgets/framework/popup_framework.dart';
-import 'package:budget/widgets/list_item.dart';
 import 'package:budget/widgets/open_popup.dart';
-import 'package:budget/widgets/outlined_button_stacked.dart';
 import 'package:budget/widgets/selected_transactions_app_bar.dart';
-import 'package:budget/widgets/budget_container.dart';
-import 'package:budget/widgets/category_entry.dart';
-import 'package:budget/widgets/category_limits.dart';
 import 'package:budget/widgets/fab.dart';
 import 'package:budget/widgets/fade_in.dart';
-import 'package:budget/widgets/line_graph.dart';
 import 'package:budget/widgets/navigation_sidebar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
-import 'package:budget/widgets/pie_chart.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:budget/widgets/transaction_entries.dart';
@@ -39,14 +27,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
-import 'package:async/async.dart' show StreamZip;
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:budget/widgets/count_number.dart';
-import 'package:budget/struct/currency_functions.dart';
 import 'package:confetti/confetti.dart';
 
-import '../widgets/util/widget_size.dart';
 
 class ObjectivePage extends StatelessWidget {
   const ObjectivePage({

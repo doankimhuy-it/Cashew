@@ -1,15 +1,12 @@
 import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
-import 'package:budget/pages/edit_home_page.dart';
 import 'package:budget/pages/upcoming_overdue_transactions_page.dart';
 import 'package:budget/struct/database_global.dart';
-import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/widgets/navigation_framework.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/period_cycle_picker.dart';
 import 'package:budget/widgets/util/keep_alive_client_mixin.dart';
-import 'package:budget/widgets/navigation_sidebar.dart';
 import 'package:budget/widgets/transactions_amount_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

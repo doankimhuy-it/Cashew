@@ -2,15 +2,11 @@ import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/pages/add_category_page.dart';
-import 'package:budget/pages/add_wallet_page.dart';
-import 'package:budget/pages/edit_home_page.dart';
 import 'package:budget/pages/home_page/home_page_wallet_switcher.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/util/keep_alive_client_mixin.dart';
-import 'package:budget/widgets/navigation_sidebar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
-import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/wallet_entry.dart';
 import 'package:flutter/material.dart';
 

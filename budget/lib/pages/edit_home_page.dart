@@ -1,14 +1,11 @@
 import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
-import 'package:budget/pages/add_objective_page.dart';
 import 'package:budget/pages/add_transaction_page.dart';
-import 'package:budget/pages/edit_budget_page.dart';
 import 'package:budget/pages/home_page/home_page_budgets.dart';
 import 'package:budget/pages/home_page/home_page_line_graph.dart';
 import 'package:budget/pages/home_page/home_page_net_worth.dart';
 import 'package:budget/pages/home_page/home_page_objectives.dart';
 import 'package:budget/pages/home_page/home_page_wallet_switcher.dart';
-import 'package:budget/pages/wallet_details_page.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/modified/reorderable_list.dart';
 import 'package:budget/struct/nav_bar_icons_data.dart';
@@ -18,13 +15,8 @@ import 'package:budget/widgets/more_icons.dart';
 import 'package:budget/widgets/navigation_framework.dart';
 import 'package:budget/widgets/navigation_sidebar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
-import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/period_cycle_picker.dart';
 import 'package:budget/widgets/radio_tems.dart';
-import 'package:budget/widgets/select_amount.dart';
-import 'package:budget/widgets/select_items.dart';
-import 'package:budget/pages/add_budget_page.dart';
-import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:budget/widgets/util/show_date_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -34,9 +26,7 @@ import 'package:flutter/services.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/functions.dart';
-import 'package:provider/provider.dart';
 
-import '../widgets/tappable_text_entry.dart';
 
 // We need to refresh the home page when this route is popped
 

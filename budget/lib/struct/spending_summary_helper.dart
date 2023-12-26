@@ -1,9 +1,6 @@
-import 'dart:developer';
 
 import 'package:budget/database/tables.dart';
-import 'package:budget/functions.dart';
 import 'package:budget/struct/settings.dart';
-import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/fade_in.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:easy_localization/easy_localization.dart';

@@ -1,10 +1,8 @@
 import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
-import 'package:budget/pages/add_budget_page.dart';
 import 'package:budget/pages/add_transaction_page.dart';
 import 'package:budget/pages/edit_budget_page.dart';
-import 'package:budget/pages/edit_categories_page.dart';
 import 'package:budget/pages/edit_objectives_page.dart';
 import 'package:budget/pages/edit_wallets_page.dart';
 import 'package:budget/struct/database_global.dart';
@@ -34,7 +32,6 @@ import 'package:budget/widgets/framework/popup_framework.dart';
 
 import 'tappable_text_entry.dart';
 
-import 'tappable_text_entry.dart';
 
 class SelectedTransactionsAppBar extends StatelessWidget {
   const SelectedTransactionsAppBar(

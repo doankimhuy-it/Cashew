@@ -10,7 +10,6 @@ import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/open_snackbar.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/widgets/select_amount.dart';
-import 'package:budget/widgets/transaction_entry/transaction_entry_type_button.dart';
 import 'package:budget/widgets/transaction_entry/transaction_label.dart';
 import 'package:drift/drift.dart' hide Column;
 import 'package:easy_localization/easy_localization.dart';

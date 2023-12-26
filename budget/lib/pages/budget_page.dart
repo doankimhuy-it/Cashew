@@ -1,9 +1,7 @@
-import 'dart:developer';
 import 'dart:math';
 
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
-import 'package:budget/pages/accounts_page.dart';
 import 'package:budget/pages/add_budget_page.dart';
 import 'package:budget/pages/add_transaction_page.dart';
 import 'package:budget/pages/edit_budget_limits_page.dart';
@@ -15,7 +13,6 @@ import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/struct/spending_summary_helper.dart';
 import 'package:budget/widgets/animated_expanded.dart';
-import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/dropdown_select.dart';
 import 'package:budget/widgets/extra_info_boxes.dart';
 import 'package:budget/widgets/open_popup.dart';
@@ -30,7 +27,6 @@ import 'package:budget/widgets/navigation_sidebar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
 import 'package:budget/widgets/pie_chart.dart';
-import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:budget/widgets/transaction_entries.dart';
 import 'package:budget/widgets/transaction_entry/transaction_entry.dart';

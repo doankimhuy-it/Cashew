@@ -2,7 +2,6 @@ import 'package:budget/functions.dart';
 import 'package:budget/main.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/button.dart';
-import 'package:budget/widgets/framework/page_framework.dart';
 import 'package:budget/widgets/global_snackbar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_snackbar.dart';

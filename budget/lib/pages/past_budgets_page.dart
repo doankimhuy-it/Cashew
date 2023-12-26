@@ -14,7 +14,6 @@ import 'package:budget/widgets/budget_container.dart';
 import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/category_icon.dart';
 import 'package:budget/widgets/fade_in.dart';
-import 'package:budget/widgets/navigation_sidebar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_container_navigation.dart';
 import 'package:budget/widgets/framework/page_framework.dart';

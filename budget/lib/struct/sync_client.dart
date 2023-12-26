@@ -22,7 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:googleapis/drive/v3.dart' as drive;
-import 'package:universal_html/html.dart' as html;
 import 'dart:io';
 
 bool isSyncBackupFile(String? backupFileName) {
@@ -129,11 +128,6 @@ Future<bool> createSyncBackup(
   final authHeaders = await googleUser!.authHeaders;
   final authenticateClient = GoogleAuthClient(authHeaders);
   drive.DriveApi driveApi = drive.DriveApi(authenticateClient);
-  if (driveApi == null) {
-    if (changeMadeSync)
-      loadingIndeterminateKey.currentState!.setVisibility(false);
-    throw "Failed to login to Google Drive";
-  }
 
   drive.FileList fileList = await driveApi.files.list(
       spaces: 'appDataFolder', $fields: 'files(id, name, modifiedTime, size)');
@@ -212,9 +206,6 @@ Future<bool> syncData(BuildContext context) async {
   final authHeaders = await googleUser!.authHeaders;
   final authenticateClient = GoogleAuthClient(authHeaders);
   drive.DriveApi driveApi = drive.DriveApi(authenticateClient);
-  if (driveApi == null) {
-    throw "Failed to login to Google Drive";
-  }
 
   await createSyncBackup();
 

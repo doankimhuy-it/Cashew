@@ -2,7 +2,6 @@ import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
-import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/category_icon.dart';
 import 'package:budget/widgets/fade_in.dart';
 import 'package:budget/widgets/navigation_sidebar.dart';
@@ -402,7 +401,7 @@ class _Badge extends StatelessWidget {
                               textAlign: TextAlign.center,
                             ),
                             data: MediaQuery.of(context)
-                                .copyWith(textScaleFactor: 1.0),
+                                .copyWith(textScaler: TextScaler.linear(1.0)),
                           ),
                         ),
                       ),

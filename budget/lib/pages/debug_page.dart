@@ -1,21 +1,15 @@
-import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/main.dart';
 import 'package:budget/pages/auto_transactions_page_email.dart';
-import 'package:budget/pages/home_page/home_page.dart';
-import 'package:budget/pages/settings_page.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/button.dart';
-import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/widgets/global_snackbar.dart';
 import 'package:budget/widgets/notifications_settings.dart';
-import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_snackbar.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
 import 'package:budget/database/generate_preview_data.dart';
-import 'package:budget/widgets/radio_tems.dart';
 import 'package:budget/widgets/rating_popup.dart';
 import 'package:budget/widgets/settings_containers.dart';
 import 'package:budget/widgets/text_input.dart';
@@ -24,10 +18,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:in_app_review/in_app_review.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:budget/struct/random_constants.dart';
-import 'package:budget/widgets/tappable.dart';
 import '../widgets/slider_selector.dart';
 
 class DebugPage extends StatelessWidget {

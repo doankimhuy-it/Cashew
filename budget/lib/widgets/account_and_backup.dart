@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:budget/colors.dart';
-import 'package:budget/database/binary_string_conversion.dart';
 import 'package:budget/database/generate_preview_data.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/firebase_options.dart';
@@ -483,9 +481,6 @@ Future<void> deleteRecentBackups(context, amountToKeep,
     final authHeaders = await googleUser!.authHeaders;
     final authenticateClient = GoogleAuthClient(authHeaders);
     final driveApi = drive.DriveApi(authenticateClient);
-    if (driveApi == null) {
-      throw "Failed to login to Google Drive";
-    }
 
     drive.FileList fileList = await driveApi.files.list(
       spaces: 'appDataFolder',

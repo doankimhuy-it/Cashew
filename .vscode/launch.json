@@ -8,27 +8,7 @@
       "name": "Flutter",
       "request": "launch",
       "type": "dart",
-      "args": ["--web-port", "5000"],
-      // "flutterMode": "profile",
-    },
-    // {
-    //   "name": "Flutter",
-    //   "request": "launch",
-    //   "type": "dart",
-    //   "flutterMode": "profile"
-    // },
-    // {
-    //   "name": "budget",
-    //   "cwd": "budget",
-    //   "request": "launch",
-    //   "type": "dart"
-    // },
-    // {
-    //   "name": "budget (profile mode)",
-    //   "cwd": "budget",
-    //   "request": "launch",
-    //   "type": "dart",
-    //   "flutterMode": "profile"
-    // },
+      "program": "budget/lib/main.dart"
+    }
   ]
 }

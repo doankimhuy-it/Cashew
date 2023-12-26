@@ -1,4 +1,3 @@
-import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/transaction_entries.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,5 @@
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
-import 'package:budget/pages/transactions_search_page.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

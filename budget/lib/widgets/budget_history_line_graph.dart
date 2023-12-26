@@ -614,7 +614,7 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                       padding: const EdgeInsets.only(top: 8.0),
                       child: MediaQuery(
                         data: MediaQuery.of(context)
-                            .copyWith(textScaleFactor: 1.0),
+                            .copyWith(textScaler: TextScaler.linear(1.0)),
                         child: TextFont(
                           textAlign: TextAlign.center,
                           fontSize: 13,
@@ -672,7 +672,7 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                     padding: const EdgeInsets.only(right: 8.0),
                     child: MediaQuery(
                       data:
-                          MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                          MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
                       child: TextFont(
                         textAlign: TextAlign.right,
                         text: getWordedNumber(

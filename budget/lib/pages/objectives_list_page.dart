@@ -1,12 +1,9 @@
-import 'dart:collection';
 
 import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
-import 'package:budget/pages/add_budget_page.dart';
 import 'package:budget/pages/add_category_page.dart';
 import 'package:budget/pages/add_objective_page.dart';
-import 'package:budget/pages/edit_budget_page.dart';
 import 'package:budget/pages/edit_objectives_page.dart';
 import 'package:budget/pages/objective_page.dart';
 import 'package:budget/struct/currency_functions.dart';
@@ -15,16 +12,13 @@ import 'package:budget/struct/random_constants.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/budget_container.dart';
 import 'package:budget/widgets/category_icon.dart';
-import 'package:budget/widgets/edit_row_entry.dart';
 import 'package:budget/widgets/navigation_sidebar.dart';
-import 'package:budget/widgets/no_results.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
 import 'package:budget/widgets/open_container_navigation.dart';
 import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
-import 'package:budget/widgets/util/widget_size.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart'
     hide SliverReorderableList, ReorderableDelayedDragStartListener;

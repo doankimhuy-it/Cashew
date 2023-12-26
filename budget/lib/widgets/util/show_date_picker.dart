@@ -1,5 +1,3 @@
-import 'package:budget/functions.dart';
-import 'package:budget/struct/settings.dart';
 import 'package:flutter/material.dart';
 
 // Currently there is a bug (Flutter 3.13) where the shadow behind date pickers
@@ -21,7 +19,6 @@ Future<DateTime?> showCustomDatePicker(
     builder: (BuildContext context2, Widget? child) {
       return Theme(
         data: Theme.of(context).copyWith(
-          useMaterial3: getPlatform() != PlatformOS.isIOS,
           datePickerTheme: DatePickerTheme.of(context).copyWith(
             headerHeadlineStyle: const TextStyle(
               fontSize: 26,
@@ -48,7 +45,6 @@ Future<DateTimeRange?> showCustomDateRangePicker(
     builder: (BuildContext context, Widget? child) {
       return Theme(
         data: Theme.of(context).copyWith(
-          useMaterial3: getPlatform() != PlatformOS.isIOS,
           datePickerTheme: DatePickerTheme.of(context).copyWith(
             headerHeadlineStyle: const TextStyle(
               fontSize: 18,

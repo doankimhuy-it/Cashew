@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:budget/colors.dart';
 import 'package:budget/database/initialize_default_database.dart';
 import 'package:budget/database/tables.dart';
-import 'package:budget/main.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/navigation_framework.dart';

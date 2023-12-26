@@ -2,9 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:budget/functions.dart';
-import 'package:budget/main.dart';
 import 'package:budget/struct/settings.dart';
-import 'package:budget/struct/share_budget.dart';
 import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/navigation_sidebar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
@@ -13,7 +11,6 @@ import 'package:budget/widgets/text_widgets.dart';
 import 'package:budget/widgets/transaction_entry/swipe_to_select_transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
-import 'package:flutter/services.dart';
 
 import '../pull_down_to_refresh_sync.dart';
 
@@ -690,7 +687,7 @@ class PageFrameworkSliverAppBar extends StatelessWidget {
           centerTitle: centeredTitleWithDefault,
           titlePadding: EdgeInsets.symmetric(vertical: 15, horizontal: 18),
           title: MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
             child: Transform.translate(
               offset: centeredTitleWithDefault
                   ? Offset(

@@ -9,10 +9,8 @@ import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/dropdown_select.dart';
 import 'package:budget/widgets/export_csv.dart';
-import 'package:budget/widgets/global_snackbar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_popup.dart';
-import 'package:budget/widgets/open_snackbar.dart';
 import 'package:budget/widgets/progress_bar.dart';
 import 'package:budget/widgets/settings_containers.dart';
 import 'package:budget/widgets/text_input.dart';
@@ -27,12 +25,7 @@ import 'dart:io';
 import 'package:csv/csv.dart';
 import 'package:flutter_charset_detector/flutter_charset_detector.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:universal_html/html.dart' as html;
-import 'dart:io';
-import 'package:budget/struct/random_constants.dart';
-import 'package:universal_html/html.dart' show AnchorElement;
 import 'package:http/http.dart' as http;
 
 class ImportCSV extends StatefulWidget {

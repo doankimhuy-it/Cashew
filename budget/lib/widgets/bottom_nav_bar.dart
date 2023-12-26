@@ -1,4 +1,3 @@
-import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/pages/edit_budget_page.dart';
 import 'package:budget/pages/edit_objectives_page.dart';
@@ -9,11 +8,8 @@ import 'package:budget/struct/nav_bar_icons_data.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/fade_in.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
-import 'package:budget/widgets/icon_button_scaled.dart';
-import 'package:budget/widgets/more_icons.dart';
 import 'package:budget/widgets/navigation_framework.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
-import 'package:budget/widgets/framework/page_framework.dart';
 import 'package:budget/widgets/outlined_button_stacked.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

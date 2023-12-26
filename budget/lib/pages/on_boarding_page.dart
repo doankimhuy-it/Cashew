@@ -14,7 +14,6 @@ import 'package:budget/widgets/more_icons.dart';
 import 'package:budget/widgets/navigation_framework.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_popup.dart';
-import 'package:budget/widgets/select_amount.dart';
 import 'package:budget/widgets/settings_containers.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:budget/widgets/view_all_transactions_button.dart';
@@ -22,7 +21,6 @@ import 'package:drift/drift.dart' hide Column;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import '../functions.dart';
 import 'package:budget/database/initialize_default_database.dart';
 

@@ -1,6 +1,5 @@
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
-import 'package:budget/pages/objective_page.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/breathing_animation.dart';
 import 'package:budget/widgets/category_icon.dart';

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
@@ -22,7 +21,6 @@ import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/open_snackbar.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
 import 'package:budget/widgets/radio_tems.dart';
-import 'package:budget/widgets/select_category.dart';
 import 'package:budget/widgets/text_input.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';

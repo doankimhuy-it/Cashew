@@ -8,7 +8,6 @@ import 'package:budget/widgets/scrollbar_wrap.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/pages/transactions_search_page.dart';
-import 'package:budget/struct/share_budget.dart';
 import 'package:budget/widgets/selected_transactions_app_bar.dart';
 import 'package:budget/widgets/month_selector.dart';
 import 'package:budget/widgets/framework/page_framework.dart';

@@ -1,4 +1,3 @@
-import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/main.dart';
 import 'package:budget/pages/edit_categories_page.dart';
@@ -7,8 +6,6 @@ import 'package:budget/struct/nav_bar_icons_data.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/account_and_backup.dart';
 import 'package:budget/widgets/animated_expanded.dart';
-import 'package:budget/widgets/bottom_nav_bar.dart';
-import 'package:budget/widgets/more_icons.dart';
 import 'package:budget/widgets/navigation_framework.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/tappable.dart';
@@ -22,7 +19,6 @@ import 'package:timer_builder/timer_builder.dart';
 
 // returns 0 if no navigation sidebar should be shown
 double getWidthNavigationSidebar(BuildContext context) {
-  if (context == null) return 0;
   double screenPercent = 0.3;
   double maxWidthNavigation = 270;
   double minScreenWidth = 700;
@@ -328,7 +324,7 @@ class SidebarClock extends StatelessWidget {
         ? Center(
             key: ValueKey(appStateSettings["expandedNavigationSidebar"]),
             child: MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
               child: TimerBuilder.periodic(
                 Duration(seconds: 5),
                 builder: (context) {

@@ -11,11 +11,6 @@ import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/material/colors.dart';
-import 'package:flutter/src/material/theme.dart';
-import 'package:flutter/src/widgets/basic.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class TransactionEntryActionButton extends StatelessWidget {
   const TransactionEntryActionButton({

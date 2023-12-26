@@ -1,6 +1,5 @@
 import 'package:budget/colors.dart';
 import 'package:budget/functions.dart';
-import 'package:budget/pages/add_transaction_page.dart';
 import 'package:flutter/material.dart';
 
 String addInvisibleSpace(String original, String newString) {

@@ -1,9 +1,7 @@
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/pages/add_wallet_page.dart';
-import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
-import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/fade_in.dart';
 import 'package:budget/widgets/open_container_navigation.dart';
 import 'package:budget/widgets/open_popup.dart';

@@ -1,11 +1,9 @@
-import 'dart:io';
 
 import 'package:budget/colors.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/main.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/account_and_backup.dart';
-import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/dropdown_select.dart';
 import 'package:budget/widgets/more_icons.dart';

@@ -2,7 +2,6 @@ import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/pages/add_category_page.dart';
-import 'package:budget/pages/add_objective_page.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/open_popup.dart';
@@ -288,7 +287,7 @@ class EmojiIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQueryData(textScaleFactor: 1),
+      data: MediaQueryData(textScaler: TextScaler.linear(1)),
       child: IgnorePointer(
         child: Padding(
           padding: EdgeInsets.only(

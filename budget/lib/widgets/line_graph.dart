@@ -2,10 +2,8 @@ import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/struct/currency_functions.dart';
 import 'package:budget/struct/settings.dart';
-import 'package:budget/widgets/no_results.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/text_widgets.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
@@ -238,7 +236,7 @@ class _LineChartState extends State<_LineChart> with WidgetsBindingObserver {
               return Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: MediaQuery(
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
                   child: TextFont(
                     textAlign: TextAlign.right,
                     text: getWordedNumber(

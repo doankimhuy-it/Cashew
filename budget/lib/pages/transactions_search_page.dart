@@ -1,22 +1,14 @@
-import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
-import 'package:budget/pages/add_budget_page.dart';
-import 'package:budget/pages/add_objective_page.dart';
 import 'package:budget/pages/add_transaction_page.dart';
-import 'package:budget/pages/add_wallet_page.dart';
 import 'package:budget/pages/transaction_filters.dart';
 import 'package:budget/struct/settings.dart';
-import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/fab.dart';
 import 'package:budget/widgets/fade_in.dart';
-import 'package:budget/struct/database_global.dart';
-import 'package:budget/widgets/icon_button_scaled.dart';
 import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/selected_transactions_app_bar.dart';
 import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
-import 'package:budget/widgets/select_category.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_input.dart';
 import 'package:budget/widgets/text_widgets.dart';
@@ -27,11 +19,8 @@ import 'package:budget/widgets/util/show_date_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
-import 'package:provider/provider.dart';
-import 'package:budget/widgets/select_chips.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
 
-import '../widgets/amount_range_slider.dart';
 
 int roundToNearestNextFifthYear(int year) {
   return (((year + 5) / 5).ceil()) * 5;

@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:budget/functions.dart';
 import 'package:budget/main.dart';
 import 'package:budget/pages/edit_home_page.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
-import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:drift/isolate.dart';
@@ -15,7 +13,6 @@ import 'package:budget/struct/default_preferences.dart';
 import 'package:budget/widgets/navigation_framework.dart';
 import 'package:budget/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:budget/struct/language_map.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';

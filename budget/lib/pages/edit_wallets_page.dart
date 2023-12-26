@@ -1,7 +1,6 @@
 import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
-import 'package:budget/main.dart';
 import 'package:budget/pages/add_wallet_page.dart';
 import 'package:budget/pages/edit_budget_page.dart';
 import 'package:budget/struct/database_global.dart';

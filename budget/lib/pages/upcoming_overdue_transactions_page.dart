@@ -24,7 +24,6 @@ import 'package:budget/widgets/sliding_selector_income_expense.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:budget/widgets/transaction_entry/transaction_entry.dart';
-import 'package:budget/widgets/transaction_entry/transaction_entry_amount.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';

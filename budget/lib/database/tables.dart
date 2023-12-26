@@ -1,10 +1,7 @@
-import 'dart:developer';
 
-import 'package:budget/functions.dart';
 import 'package:budget/pages/add_budget_page.dart';
 import 'package:budget/pages/home_page/home_page_line_graph.dart';
 import 'package:budget/pages/transaction_filters.dart';
-import 'package:budget/pages/transactions_search_page.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/firebase_auth_global.dart';
 import 'package:budget/struct/settings.dart';

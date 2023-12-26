@@ -4,27 +4,19 @@ import 'package:budget/functions.dart';
 import 'package:budget/pages/add_category_page.dart';
 import 'package:budget/pages/add_objective_page.dart';
 import 'package:budget/pages/edit_budget_page.dart';
-import 'package:budget/pages/edit_home_page.dart';
 import 'package:budget/pages/edit_objectives_page.dart';
 import 'package:budget/pages/objectives_list_page.dart';
-import 'package:budget/pages/transactions_search_page.dart';
-import 'package:budget/pages/wallet_details_page.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/widgets/util/keep_alive_client_mixin.dart';
-import 'package:budget/widgets/linear_gradient_faded_edges.dart';
-import 'package:budget/widgets/navigation_sidebar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/select_items.dart';
-import 'package:budget/widgets/transactions_amount_box.dart';
-import 'package:budget/widgets/util/right_side_clipper.dart';
 import 'package:budget/widgets/util/widget_size.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomePageObjectives extends StatefulWidget {
   const HomePageObjectives({super.key, required this.objectiveType});

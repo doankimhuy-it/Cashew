@@ -1,4 +1,3 @@
-import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/main.dart';
 import 'package:budget/pages/accounts_page.dart';
@@ -15,7 +14,6 @@ import 'package:budget/widgets/more_icons.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
-import 'package:budget/widgets/outlined_button_stacked.dart';
 import 'package:budget/widgets/show_changelog.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';

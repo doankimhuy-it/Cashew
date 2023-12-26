@@ -1,7 +1,6 @@
 import 'package:budget/functions.dart';
 import 'package:budget/pages/add_category_page.dart';
 import 'package:budget/struct/settings.dart';
-import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';

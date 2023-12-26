@@ -1,5 +1,4 @@
 import 'package:budget/colors.dart';
-import 'package:budget/pages/past_budgets_page.dart';
 import 'package:budget/widgets/navigation_sidebar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/util/debouncer.dart';

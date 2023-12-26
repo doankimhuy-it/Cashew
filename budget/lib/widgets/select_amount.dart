@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
-import 'package:budget/pages/add_category_page.dart';
 import 'package:budget/pages/add_wallet_page.dart';
 import 'package:budget/pages/settings_page.dart';
 import 'package:budget/struct/settings.dart';
@@ -707,7 +706,7 @@ class _SelectAmountState extends State<SelectAmount> {
                                         ),
                                       ),
                                       data: MediaQuery.of(context)
-                                          .copyWith(textScaleFactor: 1.0),
+                                          .copyWith(textScaler: TextScaler.linear(1.0)),
                                     ),
                             ],
                           ),

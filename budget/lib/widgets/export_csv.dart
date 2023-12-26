@@ -1,37 +1,13 @@
-import 'dart:convert';
 
-import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
-import 'package:budget/functions.dart';
-import 'package:budget/pages/add_transaction_page.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
-import 'package:budget/widgets/button.dart';
-import 'package:budget/widgets/dropdown_select.dart';
-import 'package:budget/widgets/global_snackbar.dart';
-import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_popup.dart';
-import 'package:budget/widgets/open_snackbar.dart';
-import 'package:budget/widgets/progress_bar.dart';
 import 'package:budget/widgets/settings_containers.dart';
-import 'package:budget/widgets/text_input.dart';
-import 'package:budget/widgets/text_widgets.dart';
 import 'package:budget/widgets/util/save_file.dart';
-import 'package:drift/drift.dart' hide Column, Table;
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'dart:io';
 import 'package:csv/csv.dart';
-import 'package:flutter_charset_detector/flutter_charset_detector.dart';
-import 'package:budget/widgets/framework/popup_framework.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:universal_html/html.dart' as html;
-import 'dart:io';
-import 'package:budget/struct/random_constants.dart';
-import 'package:universal_html/html.dart' show AnchorElement;
-import 'package:file_picker/file_picker.dart';
 
 Future saveCSV(
     {required BuildContext boxContext,

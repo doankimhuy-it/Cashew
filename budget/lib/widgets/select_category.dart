@@ -6,7 +6,6 @@ import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/category_icon.dart';
-import 'package:budget/widgets/income_expense_tab_selector.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/tappable.dart';
