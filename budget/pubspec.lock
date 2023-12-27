@@ -856,7 +856,7 @@ packages:
   implicitly_animated_reorderable_list:
     dependency: "direct main"
     description:
-      path: "packages/implicitly_animated_reorderable_list-0.4.2-modified"
+      path: "packages/implicitly_animated_reorderable_list"
       relative: true
     source: path
     version: "0.4.2"
@@ -1429,7 +1429,7 @@ packages:
   sliding_sheet:
     dependency: "direct main"
     description:
-      path: "packages/sliding_sheet-0.5.2-modified"
+      path: "packages/sliding_sheet"
       relative: true
     source: path
     version: "0.5.2"

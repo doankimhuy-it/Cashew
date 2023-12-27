@@ -46,9 +46,9 @@ dependencies:
   shared_preferences: ^2.0.13
   csv: ^5.0.1
   sliding_sheet:
-    path: ./packages/sliding_sheet-0.5.2-modified/
+    path: ./packages/sliding_sheet/
   implicitly_animated_reorderable_list:
-    path: ./packages/implicitly_animated_reorderable_list-0.4.2-modified/
+    path: ./packages/implicitly_animated_reorderable_list/
   shimmer: ^2.0.0
   carousel_slider: ^4.2.1
   # flutter_notification_listener: ^1.3.2
