@@ -47,8 +47,7 @@ TotalSpentCategoriesSummary watchTotalSpentInTimeRangeHelper({
 }) {
   TotalSpentCategoriesSummary s = TotalSpentCategoriesSummary();
 
-  dataInput.forEach(
-    (CategoryWithTotal categoryWithTotal) {
+  for (var categoryWithTotal in dataInput) {
       // Don't re-add the subcategory total, since the main category total includes this already
       if (categoryWithTotal.category.mainCategoryPk == null) {
         s.totalSpent = s.totalSpent + categoryWithTotal.total;
@@ -98,17 +97,16 @@ TotalSpentCategoriesSummary watchTotalSpentInTimeRangeHelper({
                   categoryWithTotal.total;
         }
       }
-    },
-  );
+    }
 
-  dataInput.forEach((CategoryWithTotal categoryWithTotal) {
+  for (var categoryWithTotal in dataInput) {
     double? newTotal = s.totalSpentOfCategoriesRemoveUnassignedTransactions[
         categoryWithTotal.category.categoryPk];
     if (newTotal != null)
       s.dataFilterUnassignedTransactions.add(
         categoryWithTotal.copyWith(total: newTotal),
       );
-  });
+  }
 
   s.hasSubCategories = s.subCategorySpendingIndexedByMainCategoryPk.isNotEmpty;
 

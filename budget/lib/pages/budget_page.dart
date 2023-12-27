@@ -257,9 +257,9 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
               builder: (context, snapshot) {
                 double totalSpent = 0;
                 if (snapshot.hasData) {
-                  snapshot.data!.forEach((category) {
+                  for (var category in snapshot.data!) {
                     totalSpent = totalSpent + category.total;
-                  });
+                  }
                   totalSpent = totalSpent * -1;
                 }
 

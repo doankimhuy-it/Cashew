@@ -1012,9 +1012,9 @@ class PastBudgetContainer extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           double totalSpent = 0;
-          snapshot.data!.forEach((category) {
+          for (var category in snapshot.data!) {
             totalSpent = totalSpent + category.total;
-          });
+          }
           totalSpent = totalSpent * -1;
 
           return Padding(

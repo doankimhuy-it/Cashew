@@ -469,14 +469,14 @@ Future<void> deleteRecentBackups(context, amountToKeep,
     }
 
     int index = 0;
-    files.forEach((file) {
+    for (var file in files) {
       // subtract 1 because we just made a backup
       if (index >= amountToKeep - 1) {
         // only delete excess backups that don't belong to a client sync
         if (!isSyncBackupFile(file.name)) deleteBackup(driveApi, file.id ?? "");
       }
       if (!isSyncBackupFile(file.name)) index++;
-    });
+    }
     if (silentDelete == false || silentDelete == null) {
       loadingIndeterminateKey.currentState!.setVisibility(false);
     }
