@@ -15,12 +15,10 @@ import 'package:budget/widgets/settings_containers.dart';
 import 'package:budget/widgets/text_input.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:universal_html/html.dart' as html;
 import 'package:budget/struct/random_constants.dart';
-import '../widgets/slider_selector.dart';
+import 'package:budget/widgets/slider_selector.dart';
 
 class DebugPage extends StatelessWidget {
   const DebugPage({Key? key}) : super(key: key);

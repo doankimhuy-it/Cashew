@@ -38,8 +38,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:budget/widgets/count_number.dart';
 import 'package:budget/struct/currency_functions.dart';
-
-import '../widgets/util/widget_size.dart';
+import 'package:budget/widgets/util/widget_size.dart';
 
 class BudgetPage extends StatelessWidget {
   const BudgetPage({

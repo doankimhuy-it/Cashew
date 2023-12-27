@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:universal_html/html.dart' show AnchorElement;
 
 // On Android -> Save file to device downloads -> Save file to folder -> Share file
 // On Web -> Download file via web

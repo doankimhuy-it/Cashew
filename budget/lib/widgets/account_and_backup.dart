@@ -39,7 +39,6 @@ import 'package:googleapis/gmail/v1.dart' as gMail;
 import 'package:google_sign_in/google_sign_in.dart' as signIn;
 import 'package:http/http.dart' as http;
 import 'package:shimmer/shimmer.dart';
-import 'package:universal_html/html.dart' as html;
 import 'dart:io';
 import 'package:budget/struct/random_constants.dart';
 

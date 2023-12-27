@@ -6,7 +6,6 @@ import 'package:budget/widgets/framework/page_framework.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:drift/isolate.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/default_preferences.dart';

@@ -21,8 +21,7 @@ import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:budget/widgets/util/sliver_pinned_overlap_injector.dart';
 import 'package:budget/widgets/util/multi_directional_infinite_scroll.dart';
-
-import '../widgets/pull_down_to_refresh_sync.dart';
+import 'package:budget/widgets/pull_down_to_refresh_sync.dart';
 
 class TransactionsListPage extends StatefulWidget {
   const TransactionsListPage({Key? key}) : super(key: key);

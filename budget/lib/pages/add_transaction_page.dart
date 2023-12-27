@@ -44,7 +44,6 @@ import 'package:budget/widgets/util/widget_size.dart';
 import 'package:budget/widgets/view_all_transactions_button.dart';
 import 'package:drift/drift.dart' hide Column;
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:budget/colors.dart';
@@ -57,11 +56,10 @@ import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/struct/currency_functions.dart';
 import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/icon_button_scaled.dart';
-
-import '../struct/link_highlighter.dart';
-import '../widgets/list_item.dart';
-import '../widgets/outlined_button_stacked.dart';
-import '../widgets/tappable_text_entry.dart';
+import 'package:budget/struct/link_highlighter.dart';
+import 'package:budget/widgets/list_item.dart';
+import 'package:budget/widgets/outlined_button_stacked.dart';
+import 'package:budget/widgets/tappable_text_entry.dart';
 
 //TODO
 //only show the tags that correspond to selected category

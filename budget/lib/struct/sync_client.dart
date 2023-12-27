@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:budget/database/binary_string_conversion.dart';
 import 'package:budget/database/tables.dart';
-import 'package:budget/main.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/account_and_backup.dart';
@@ -16,7 +14,6 @@ import 'package:budget/widgets/util/debouncer.dart';
 import 'package:budget/widgets/wallet_entry.dart';
 // import 'package:drift/web.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';

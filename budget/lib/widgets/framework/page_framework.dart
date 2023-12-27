@@ -12,8 +12,7 @@ import 'package:budget/widgets/text_widgets.dart';
 import 'package:budget/widgets/transaction_entry/swipe_to_select_transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
-
-import '../pull_down_to_refresh_sync.dart';
+import 'package:budget/widgets/pull_down_to_refresh_sync.dart';
 
 ValueNotifier<bool> isSwipingToDismissPageDown = ValueNotifier<bool>(false);
 ValueNotifier<bool> callRefreshToPages = ValueNotifier<bool>(false);

@@ -19,7 +19,6 @@ import 'package:budget/widgets/transaction_entry/transaction_label.dart';
 import 'package:budget/widgets/util/show_time_picker.dart';
 import 'package:drift/drift.dart' hide Column;
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/widgets/time_digits.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';

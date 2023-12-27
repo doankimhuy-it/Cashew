@@ -1,4 +1,3 @@
-import 'package:budget/functions.dart';
 import 'package:budget/pages/add_category_page.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/linear_gradient_faded_edges.dart';

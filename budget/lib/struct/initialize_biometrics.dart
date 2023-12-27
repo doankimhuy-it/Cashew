@@ -4,7 +4,6 @@ import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/breathing_animation.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 

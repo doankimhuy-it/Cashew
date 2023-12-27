@@ -4,22 +4,17 @@ import 'package:budget/main.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/account_and_backup.dart';
 import 'package:budget/widgets/button.dart';
-import 'package:budget/widgets/dropdown_select.dart';
 import 'package:budget/widgets/more_icons.dart';
 import 'package:budget/widgets/navigation_framework.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
-import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/settings_containers.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
-
-import '../widgets/extra_info_boxes.dart';
-import '../widgets/outlined_button_stacked.dart';
+import 'package:budget/widgets/outlined_button_stacked.dart';
 
 class AccountsPage extends StatefulWidget {
   const AccountsPage({Key? key}) : super(key: key);

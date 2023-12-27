@@ -12,7 +12,6 @@ import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/util/show_date_picker.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
 import 'package:timer_builder/timer_builder.dart';

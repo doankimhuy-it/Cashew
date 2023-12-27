@@ -28,13 +28,11 @@ import 'package:budget/widgets/text_input.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:drift/drift.dart' show Value;
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide SliverReorderableList;
 import 'dart:async';
 import 'package:budget/colors.dart';
 import 'package:flutter/services.dart' hide TextInput;
-
-import '../widgets/extra_info_boxes.dart';
+import 'package:budget/widgets/extra_info_boxes.dart';
 
 class AddCategoryPage extends StatefulWidget {
   AddCategoryPage({

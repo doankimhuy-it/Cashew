@@ -26,14 +26,12 @@ import 'package:budget/widgets/sliver_sticky_label_divider.dart';
 import 'package:budget/widgets/text_input.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:budget/widgets/count_number.dart';
 import 'package:budget/struct/database_global.dart';
-
-import '../widgets/tappable_text_entry.dart';
+import 'package:budget/widgets/tappable_text_entry.dart';
 
 class BillSplitterItem {
   BillSplitterItem(

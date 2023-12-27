@@ -6,7 +6,6 @@ import 'package:budget/struct/notifications_global.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/notifications_settings.dart';
 import 'package:budget/widgets/open_popup.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:universal_io/io.dart';

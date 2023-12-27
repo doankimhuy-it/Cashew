@@ -34,10 +34,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/widgets/scrollbar_wrap.dart';
 import 'package:budget/widgets/sliding_selector_income_expense.dart';
-
-import '../../widgets/linear_gradient_faded_edges.dart';
-import '../../widgets/pull_down_to_refresh_sync.dart';
-import '../../widgets/util/right_side_clipper.dart';
+import 'package:budget/widgets/linear_gradient_faded_edges.dart';
+import 'package:budget/widgets/pull_down_to_refresh_sync.dart';
+import 'package:budget/widgets/util/right_side_clipper.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({

@@ -3,7 +3,6 @@ import 'package:budget/functions.dart';
 import 'package:budget/pages/auto_transactions_page_email.dart';
 import 'package:budget/struct/icon_objects.dart';
 import 'package:budget/struct/keyboard_intents.dart';
-import 'package:budget/widgets/fade_in.dart';
 import 'package:budget/struct/language_map.dart';
 import 'package:budget/struct/initialize_biometrics.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';

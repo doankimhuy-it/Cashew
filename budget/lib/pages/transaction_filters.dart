@@ -18,8 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:budget/widgets/select_chips.dart';
-
-import '../widgets/amount_range_slider.dart';
+import 'package:budget/widgets/amount_range_slider.dart';
 
 class SearchFilters {
   SearchFilters({

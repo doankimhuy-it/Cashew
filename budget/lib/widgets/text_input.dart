@@ -1,10 +1,9 @@
 import 'package:budget/functions.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/text_widgets.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../colors.dart';
+import 'package:budget/colors.dart';
 
 class TextInput extends StatelessWidget {
   final String labelText;

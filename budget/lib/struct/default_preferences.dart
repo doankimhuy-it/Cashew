@@ -3,7 +3,6 @@ import 'package:budget/database/tables.dart';
 import 'package:budget/pages/home_page/home_page_line_graph.dart';
 import 'package:budget/widgets/notifications_settings.dart';
 import 'package:budget/widgets/period_cycle_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

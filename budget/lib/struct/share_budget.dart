@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
-import 'package:budget/main.dart';
 import 'package:budget/pages/add_budget_page.dart';
 import 'package:budget/pages/add_transaction_page.dart';
 import 'package:budget/struct/database_global.dart';
@@ -12,7 +11,6 @@ import 'package:budget/widgets/navigation_framework.dart';
 import 'package:budget/widgets/open_snackbar.dart';
 import 'package:drift/drift.dart' hide Query, Column;
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import 'package:firebase_auth/firebase_auth.dart';

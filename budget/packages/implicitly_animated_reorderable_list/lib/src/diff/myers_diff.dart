@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
-
-import '../src.dart';
+import 'package:implicitly_animated_reorderable_list/src/src.dart';
 
 // This implementation of the MyersDiff algorithm was originally written by David Bota
 // over here https://gitlab.com/otsoaUnLoco/animated-stream-list.

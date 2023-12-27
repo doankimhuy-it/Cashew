@@ -9,7 +9,6 @@ import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/widgets/navigation_framework.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
-import 'package:budget/widgets/period_cycle_picker.dart';
 import 'package:budget/widgets/util/keep_alive_client_mixin.dart';
 import 'package:budget/widgets/transactions_amount_box.dart';
 import 'package:easy_localization/easy_localization.dart';

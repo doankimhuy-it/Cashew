@@ -37,11 +37,10 @@ import 'dart:async';
 import 'package:budget/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:budget/widgets/animated_expanded.dart';
-
-import '../widgets/list_item.dart';
-import '../widgets/outlined_button_stacked.dart';
-import '../widgets/sliver_sticky_label_divider.dart';
-import '../widgets/tappable_text_entry.dart';
+import 'package:budget/widgets/list_item.dart';
+import 'package:budget/widgets/outlined_button_stacked.dart';
+import 'package:budget/widgets/sliver_sticky_label_divider.dart';
+import 'package:budget/widgets/tappable_text_entry.dart';
 
 class AddBudgetPage extends StatefulWidget {
   AddBudgetPage({

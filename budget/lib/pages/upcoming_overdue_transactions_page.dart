@@ -31,8 +31,7 @@ import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:provider/provider.dart';
 import 'package:budget/widgets/count_number.dart';
 import 'package:budget/widgets/text_input.dart';
-
-import '../widgets/transaction_entry/income_amount_arrow.dart';
+import 'package:budget/widgets/transaction_entry/income_amount_arrow.dart';
 
 class UpcomingOverdueTransactions extends StatefulWidget {
   const UpcomingOverdueTransactions(

@@ -21,7 +21,7 @@ import 'package:drift/drift.dart' hide Column;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../functions.dart';
+import 'package:budget/functions.dart';
 import 'package:budget/database/initialize_default_database.dart';
 
 class OnBoardingPage extends StatelessWidget {

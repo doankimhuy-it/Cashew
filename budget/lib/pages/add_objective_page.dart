@@ -29,16 +29,14 @@ import 'package:budget/widgets/text_input.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:budget/widgets/util/show_date_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:budget/colors.dart';
 import 'package:provider/provider.dart';
-
-import '../widgets/list_item.dart';
-import '../widgets/outlined_button_stacked.dart';
-import '../widgets/select_date_range.dart';
-import '../widgets/tappable_text_entry.dart';
+import 'package:budget/widgets/list_item.dart';
+import 'package:budget/widgets/outlined_button_stacked.dart';
+import 'package:budget/widgets/select_date_range.dart';
+import 'package:budget/widgets/tappable_text_entry.dart';
 
 class AddObjectivePage extends StatefulWidget {
   AddObjectivePage({

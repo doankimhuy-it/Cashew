@@ -58,7 +58,6 @@ import 'package:budget/struct/upcoming_transactions_functions.dart';
 import 'package:budget/widgets/transaction_entry/transaction_entry.dart';
 import 'package:budget/widgets/transaction_entry/transaction_label.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';

@@ -16,9 +16,8 @@ import 'package:budget/widgets/transaction_entries.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../widgets/linear_gradient_faded_edges.dart';
-import '../../widgets/transaction_entry/income_amount_arrow.dart';
+import 'package:budget/widgets/linear_gradient_faded_edges.dart';
+import 'package:budget/widgets/transaction_entry/income_amount_arrow.dart';
 
 class HomePageHeatMap extends StatefulWidget {
   const HomePageHeatMap({super.key});

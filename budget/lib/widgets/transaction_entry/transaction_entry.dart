@@ -9,7 +9,6 @@ import 'package:budget/widgets/open_container_navigation.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/transaction_entry/transaction_entry_type_button.dart';
 import 'package:budget/widgets/transaction_entry/transaction_label.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
