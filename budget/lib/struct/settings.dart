@@ -87,7 +87,7 @@ Future<bool> initializeSettings() async {
   appStateSettings["appOpenedHour"] = DateTime.now().hour;
   appStateSettings["appOpenedMinute"] = DateTime.now().minute;
 
-  String? retrievedClientID = await sharedPreferences.getString("clientID");
+  String? retrievedClientID = sharedPreferences.getString("clientID");
   if (retrievedClientID == null) {
     String systemID = await getDeviceInfo();
     String newClientID = systemID

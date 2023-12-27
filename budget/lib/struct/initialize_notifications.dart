@@ -33,7 +33,7 @@ Future<String?> initializeNotifications() async {
       await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   NotificationResponse? payload =
       notificationAppLaunchDetails?.notificationResponse;
-  String? response = await payload?.payload;
+  String? response = payload?.payload;
   return response;
 }
 

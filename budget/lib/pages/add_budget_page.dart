@@ -278,7 +278,7 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
       currentInstance =
           await database.getBudgetInstance(widget.budget!.budgetPk);
     }
-    return await Budget(
+    return Budget(
       budgetPk: widget.budget != null ? widget.budget!.budgetPk : "-1",
       name: selectedTitle ?? "",
       amount: selectedAmount ?? 0,

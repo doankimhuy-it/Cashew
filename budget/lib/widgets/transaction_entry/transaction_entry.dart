@@ -70,7 +70,7 @@ class TransactionEntryBox extends SingleChildRenderObjectWidget {
   @override
   void updateRenderObject(
       BuildContext context, TransactionEntryHitBox renderObject) {
-    renderObject..transactionKey = transactionKey;
+    renderObject.transactionKey = transactionKey;
   }
 }
 

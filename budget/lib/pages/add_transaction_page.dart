@@ -397,7 +397,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
         await addAssociatedTitles(selectedTitle!, selectedCategory!);
       }
 
-      Transaction createdTransaction = await createTransaction();
+      Transaction createdTransaction = createTransaction();
 
       if (widget.transaction != null) {
         // Only ask if changes were made that will affect other balance correction
@@ -1827,7 +1827,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
           discardChangesPopup(
             context,
             previousObject: addDefaultMissingValues(widget.transaction!),
-            currentObject: await createTransaction(),
+            currentObject: createTransaction(),
           );
         } else {
           showDiscardChangesPopupIfNotEditing();
@@ -1858,7 +1858,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
               discardChangesPopup(
                 context,
                 previousObject: addDefaultMissingValues(widget.transaction!),
-                currentObject: await createTransaction(),
+                currentObject: createTransaction(),
               );
             } else {
               showDiscardChangesPopupIfNotEditing();
@@ -1869,7 +1869,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
               discardChangesPopup(
                 context,
                 previousObject: addDefaultMissingValues(widget.transaction!),
-                currentObject: await createTransaction(),
+                currentObject: createTransaction(),
               );
             } else {
               showDiscardChangesPopupIfNotEditing();
