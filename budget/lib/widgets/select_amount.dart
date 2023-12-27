@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/pages/add_wallet_page.dart';
+import 'package:budget/pages/edit_wallets_page.dart';
 import 'package:budget/pages/settings_page.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/animated_expanded.dart';
@@ -57,6 +58,7 @@ class SelectAmount extends StatefulWidget {
     this.allDecimals = false,
     this.hideWalletPickerIfOneCurrency = false,
     this.hideNextButton = false,
+    this.decimals,
   }) : super(key: key);
   final Function(double, String) setSelectedAmount;
   final String amountPassed;
@@ -77,6 +79,7 @@ class SelectAmount extends StatefulWidget {
   final bool allDecimals;
   final bool hideWalletPickerIfOneCurrency;
   final bool hideNextButton;
+  final int? decimals;
 
   @override
   _SelectAmountState createState() => _SelectAmountState();
@@ -96,7 +99,8 @@ class _SelectAmountState extends State<SelectAmount> {
   }
 
   int getDecimals({required bool listen}) {
-    return getSelectedWallet(listen: listen)?.decimals ??
+    return widget.decimals ??
+        getSelectedWallet(listen: listen)?.decimals ??
         Provider.of<AllWallets>(context, listen: false)
             .indexedByPk[appStateSettings["selectedWalletPk"]]
             ?.decimals ??
@@ -446,6 +450,21 @@ class _SelectAmountState extends State<SelectAmount> {
     return RegExp(r'^00').hasMatch(input);
   }
 
+  setSelectedWallet(TransactionWallet wallet) {
+    if (widget.setSelectedWalletPk != null)
+      widget.setSelectedWalletPk!(wallet.walletPk);
+    setState(() {
+      selectedWalletPk = wallet.walletPk;
+      walletPkForCurrency = wallet.walletPk;
+      try {
+        amount =
+            double.parse(amount).toStringAsFixed(getDecimals(listen: false));
+      } catch (e) {}
+      amount = removeTrailingZeroes(amount);
+      addToAmount("");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     _focusAttachment.reparent();
@@ -464,16 +483,17 @@ class _SelectAmountState extends State<SelectAmount> {
             forceAllDecimals: doesNotContainOtherNumbers(amount) &&
                 startsWithTwoZeroes(amount) == false &&
                 (getSelectedWallet(listen: false)?.decimals ?? 0) > 2,
-            decimals: getSelectedWallet(listen: false)?.decimals == 2 &&
-                    includesOperations(amount, true)
-                ? 2
-                : min(
-                    getSelectedWallet(listen: false)?.decimals ?? 1000,
-                    includesOperations(amount, false)
-                        ? countDecimalDigits(
-                            calculateResult(amountConverted).toString())
-                        : countDecimalDigits(amount),
-                  ),
+            decimals: widget.decimals ??
+                (getSelectedWallet(listen: false)?.decimals == 2 &&
+                        includesOperations(amount, true)
+                    ? 2
+                    : min(
+                        getSelectedWallet(listen: false)?.decimals ?? 1000,
+                        includesOperations(amount, false)
+                            ? countDecimalDigits(
+                                calculateResult(amountConverted).toString())
+                            : countDecimalDigits(amount),
+                      )),
           );
     return Column(
       children: [
@@ -705,8 +725,8 @@ class _SelectAmountState extends State<SelectAmount> {
                                           ),
                                         ),
                                       ),
-                                      data: MediaQuery.of(context)
-                                          .copyWith(textScaler: TextScaler.linear(1.0)),
+                                      data: MediaQuery.of(context).copyWith(
+                                          textScaler: TextScaler.linear(1.0)),
                                     ),
                             ],
                           ),
@@ -741,18 +761,7 @@ class _SelectAmountState extends State<SelectAmount> {
                               wallet.walletPk;
                         },
                         onSelected: (TransactionWallet wallet) {
-                          if (widget.setSelectedWalletPk != null)
-                            widget.setSelectedWalletPk!(wallet.walletPk);
-                          setState(() {
-                            selectedWalletPk = wallet.walletPk;
-                            walletPkForCurrency = wallet.walletPk;
-                            try {
-                              amount = double.parse(amount)
-                                  .toStringAsFixed(getDecimals(listen: false));
-                            } catch (e) {}
-                            amount = removeTrailingZeroes(amount);
-                            addToAmount("");
-                          });
+                          setSelectedWallet(wallet);
                         },
                         getLabel: (TransactionWallet wallet) {
                           return wallet.name ==
@@ -777,7 +786,39 @@ class _SelectAmountState extends State<SelectAmount> {
                             amount: 0.4,
                           );
                         },
-                        extraWidget: SelectChipsAddButtonExtraWidget(
+                        extraWidgetBefore: Provider.of<AllWallets>(context,
+                                                listen: false)
+                                            .indexedByPk
+                                            .length >
+                                        3 &&
+                                    getIsFullScreen(context) == false ||
+                                Provider.of<AllWallets>(context, listen: false)
+                                            .indexedByPk
+                                            .length >
+                                        5 &&
+                                    getIsFullScreen(context) == true
+                            ? SelectChipsAddButtonExtraWidget(
+                                openPage: null,
+                                onTap: () async {
+                                  dynamic result = await selectWalletPopup(
+                                    context,
+                                    selectedWallet: Provider.of<AllWallets>(
+                                            context,
+                                            listen: false)
+                                        .indexedByPk[selectedWalletPk],
+                                    allowEditWallet: true,
+                                    allowDeleteWallet: false,
+                                  );
+                                  if (result is TransactionWallet) {
+                                    setSelectedWallet(result);
+                                  }
+                                },
+                                iconData: appStateSettings["outlinedIcons"]
+                                    ? Icons.expand_more_outlined
+                                    : Icons.expand_more_rounded,
+                              )
+                            : null,
+                        extraWidgetAfter: SelectChipsAddButtonExtraWidget(
                           openPage: AddWalletPage(
                             routesToPopAfterDelete: RoutesToPopAfterDelete.None,
                           ),

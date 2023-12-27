@@ -270,6 +270,7 @@ class _AddWalletPageState extends State<AddWalletPage> {
           currencyKey: selectedCurrency,
           nextLabel: "set-amount".tr(),
           allowZero: true,
+          decimals: selectedDecimals == 2 ? null : selectedDecimals,
         ),
       ),
     );
@@ -302,8 +303,10 @@ class _AddWalletPageState extends State<AddWalletPage> {
                 Row(
                   children: [
                     TextFont(
-                        text: currencies[key]?["CountryName"] ??
-                            currencies[key]?["Currency"]),
+                      text: currencies[key]?["CountryName"] ??
+                          currencies[key]?["Currency"] ??
+                          "",
+                    ),
                   ],
                 ),
                 Row(
@@ -664,6 +667,7 @@ class _AddWalletPageState extends State<AddWalletPage> {
                             Provider.of<AllWallets>(context),
                             currencyKey: selectedCurrency,
                             initialBalance,
+                            decimals: selectedDecimals,
                           ),
                           placeholder: convertToMoney(
                             Provider.of<AllWallets>(context),
@@ -1041,11 +1045,14 @@ Future<TransactionCategory> initializeBalanceCorrectionCategory() async {
 }
 
 Future<String?> createCorrectionTransaction(
-    double amount, TransactionWallet wallet,
-    {String? note,
-    DateTime? dateTime,
-    String? title,
-    String? pairedTransactionFk}) async {
+  double amount,
+  TransactionWallet wallet, {
+  String? note,
+  DateTime? dateTime,
+  String? title,
+  String? pairedTransactionFk,
+  String? objectiveLoanPk,
+}) async {
   await initializeBalanceCorrectionCategory();
 
   int? rowId = await database.createOrUpdateTransaction(
@@ -1063,6 +1070,7 @@ Future<String?> createCorrectionTransaction(
       income: amount > 0,
       paid: true,
       skipPaid: false,
+      objectiveLoanFk: objectiveLoanPk,
     ),
   );
   if (rowId != null) {
@@ -1081,14 +1089,18 @@ class TransferBalancePopup extends StatefulWidget {
     this.initialAmount,
     this.initialDate,
     this.initialTitle,
+    this.initialObjectiveLoanPk,
+    this.initialIsNegative,
     super.key,
   });
-  final TransactionWallet wallet;
+  final TransactionWallet? wallet;
   final bool allowEditWallet;
   final bool showAllEditDetails;
   final double? initialAmount;
   final DateTime? initialDate;
   final String? initialTitle;
+  final String? initialObjectiveLoanPk;
+  final bool? initialIsNegative;
 
   @override
   State<TransferBalancePopup> createState() => _TransferBalancePopupState();
@@ -1096,8 +1108,8 @@ class TransferBalancePopup extends StatefulWidget {
 
 class _TransferBalancePopupState extends State<TransferBalancePopup> {
   late double enteredAmount = widget.initialAmount ?? 0;
-  bool isNegative = false;
-  late TransactionWallet walletFrom = widget.wallet;
+  late bool isNegative = widget.initialIsNegative ?? false;
+  late TransactionWallet? walletFrom = widget.wallet;
   TransactionWallet? walletTo;
   late TimeOfDay? selectedTime = widget.initialDate != null
       ? TimeOfDay(
@@ -1106,6 +1118,18 @@ class _TransferBalancePopupState extends State<TransferBalancePopup> {
   late DateTime? selectedDateTime = widget.initialDate ?? null;
   late String selectedTitle = widget.initialTitle ?? "";
   // double transferFee = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      if (widget.wallet == null) {
+        walletFrom = await database
+            .getWalletInstance(appStateSettings["selectedWalletPk"]);
+        setState(() {});
+      }
+    });
+  }
 
   Widget walletSelector(TransactionWallet? wallet,
       Function(TransactionWallet wallet) onSelected) {
@@ -1392,6 +1416,9 @@ class _TransferBalancePopupState extends State<TransferBalancePopup> {
                       ? "select-account".tr()
                       : "transfer-amount".tr(),
                   onTap: () async {
+                    TransactionWallet walletFrom = this.walletFrom ??
+                        Provider.of<AllWallets>(context, listen: false)
+                            .indexedByPk[appStateSettings["selectedWalletPk"]]!;
                     if (walletTo == null) {
                       dynamic result = await selectWalletPopup(
                         context,
@@ -1437,6 +1464,7 @@ class _TransferBalancePopupState extends State<TransferBalancePopup> {
                     );
 
                     await createCorrectionTransaction(
+                      objectiveLoanPk: widget.initialObjectiveLoanPk,
                       pairedTransactionFk: transactionPk,
                       enteredAmount *
                           getAmountRatioWalletTransferFrom(

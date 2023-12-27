@@ -5,6 +5,8 @@ import 'package:budget/pages/add_budget_page.dart';
 import 'package:budget/pages/add_category_page.dart';
 import 'package:budget/pages/add_objective_page.dart';
 import 'package:budget/pages/add_wallet_page.dart';
+import 'package:budget/pages/edit_associated_titles_page.dart';
+import 'package:budget/pages/edit_wallets_page.dart';
 import 'package:budget/pages/premium_page.dart';
 import 'package:budget/pages/shared_budget_settings.dart';
 import 'package:budget/pages/transactions_list_page.dart';
@@ -92,6 +94,7 @@ class AddTransactionPage extends StatefulWidget {
     this.selectedTitle,
     this.selectedCategory,
     this.startInitialAddTransactionSequence = true,
+    this.transferBalancePopup = false,
     required this.routesToPopAfterDelete,
   }) : super(key: key);
 
@@ -106,6 +109,7 @@ class AddTransactionPage extends StatefulWidget {
   final String? selectedTitle;
   final TransactionCategory? selectedCategory;
   final bool startInitialAddTransactionSequence;
+  final bool transferBalancePopup;
 
   @override
   _AddTransactionPageState createState() => _AddTransactionPageState();
@@ -119,7 +123,6 @@ class _AddTransactionPageState extends State<AddTransactionPage>
   String? selectedAmountCalculation;
   String? selectedTitle;
   TransactionSpecialType? selectedType = null;
-  List<String> selectedTags = [];
   DateTime selectedDate = DateTime.now();
   DateTime? selectedEndDate = null;
   int selectedPeriodLength = 1;
@@ -170,7 +173,9 @@ class _AddTransactionPageState extends State<AddTransactionPage>
       {bool setIncome = true}) {
     if (isAddedToLoanObjective == false &&
         setIncome &&
-        category.categoryPk != "0") {
+        category.categoryPk != "0" &&
+        selectedType != TransactionSpecialType.credit &&
+        selectedType != TransactionSpecialType.debt) {
       setSelectedIncome(category.income);
     }
     setState(() {
@@ -223,12 +228,6 @@ class _AddTransactionPageState extends State<AddTransactionPage>
     return;
   }
 
-  void setSelectedTags(List<String> tags) {
-    setState(() {
-      selectedTags = tags;
-    });
-  }
-
   void setSelectedNoteController(String note, {bool setInput = true}) {
     if (setInput) setTextInput(_noteInputController, note);
     return;
@@ -237,6 +236,11 @@ class _AddTransactionPageState extends State<AddTransactionPage>
   void setSelectedType(String type) {
     setState(() {
       selectedType = transactionTypeDisplayToEnum[type];
+      if (selectedType == TransactionSpecialType.credit) {
+        selectedIncome = false;
+      } else if (selectedType == TransactionSpecialType.debt) {
+        selectedIncome = true;
+      }
     });
     return;
   }
@@ -274,6 +278,23 @@ class _AddTransactionPageState extends State<AddTransactionPage>
   void setSelectedObjectivePk(String? selectedObjectivePkPassed) {
     setState(() {
       selectedObjectivePk = selectedObjectivePkPassed;
+      setSelectedLoanObjectivePk(null);
+    });
+    return;
+  }
+
+  void setSelectedLoanObjectivePk(String? selectedLoanObjectivePkPassed) {
+    setState(() {
+      selectedObjectiveLoanPk = selectedLoanObjectivePkPassed;
+      if (selectedLoanObjectivePkPassed == null) {
+        isAddedToLoanObjective = false;
+      } else {
+        isAddedToLoanObjective = true;
+        selectedObjectivePk = null;
+        if (selectedType == TransactionSpecialType.credit ||
+            selectedType == TransactionSpecialType.debt)
+          setSelectedType("Default");
+      }
     });
     return;
   }
@@ -287,6 +308,15 @@ class _AddTransactionPageState extends State<AddTransactionPage>
     setState(() {
       selectedIncome = value;
       initiallySettingSelectedIncome = initiallySetting;
+
+      // Flip credit/debt selection if income/expense changed
+      if (selectedType == TransactionSpecialType.credit &&
+          selectedIncome == true) {
+        setSelectedType("Borrowed");
+      } else if (selectedType == TransactionSpecialType.debt &&
+          selectedIncome == false) {
+        setSelectedType("Lent");
+      }
     });
   }
 
@@ -384,6 +414,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
               income: false,
               amount: widget.transaction!.amount.abs(),
               objectiveFk: Value(null),
+              objectiveLoanFk: Value(null),
             ) !=
             createdTransaction.copyWith(
               dateTimeModified: Value(null),
@@ -393,6 +424,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
               income: false,
               amount: createdTransaction.amount.abs(),
               objectiveFk: Value(null),
+              objectiveLoanFk: Value(null),
             )) {
           Transaction? closelyRelatedTransferCorrectionTransaction =
               await database.getCloselyRelatedBalanceCorrectionTransaction(
@@ -686,6 +718,10 @@ class _AddTransactionPageState extends State<AddTransactionPage>
       _noteInputController = new LinkHighlighter();
 
       Future.delayed(Duration(milliseconds: 0), () async {
+        if (widget.transferBalancePopup) {
+          openTransferBalancePopup();
+          return;
+        }
         await premiumPopupAddTransaction(context);
         if (widget.startInitialAddTransactionSequence == false) return;
         if (appStateSettings["askForTransactionTitle"]) {
@@ -697,7 +733,6 @@ class _AddTransactionPageState extends State<AddTransactionPage>
               selectedTitle: selectedTitle,
               setSelectedNote: setSelectedNoteController,
               setSelectedTitle: setSelectedTitleController,
-              setSelectedTags: setSelectedTags,
               selectedCategory: selectedCategory,
               setSelectedCategory: setSelectedCategory,
               next: () {
@@ -807,6 +842,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
             selectedObjectivePk: selectedObjectivePk,
             extraHorizontalPadding: 13,
             wrapped: false,
+            objectiveType: ObjectiveType.goal,
           ),
         ],
       ),
@@ -877,6 +913,31 @@ class _AddTransactionPageState extends State<AddTransactionPage>
   //   }
   // }
 
+  Future openTransferBalancePopup() async {
+    bool? initialIsNegative;
+    if (selectedObjectiveLoanPk != null) {
+      initialIsNegative = selectedIncome;
+    }
+    dynamic result = await openBottomSheet(
+      context,
+      fullSnap: true,
+      TransferBalancePopup(
+        allowEditWallet: true,
+        wallet: Provider.of<AllWallets>(context, listen: false)
+            .indexedByPk[appStateSettings["selectedWalletPk"]]!,
+        showAllEditDetails: true,
+        initialAmount: selectedAmount,
+        initialDate: selectedDate,
+        initialTitle: selectedTitle,
+        initialObjectiveLoanPk: selectedObjectiveLoanPk,
+        initialIsNegative: initialIsNegative,
+      ),
+    );
+    if (result == true) {
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Color categoryColor = dynamicPastel(
@@ -899,20 +960,12 @@ class _AddTransactionPageState extends State<AddTransactionPage>
         enableDoubleColumn(context)
             ? Container(height: 20)
             : Container(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22),
-          child: TextInput(
-            padding: EdgeInsets.zero,
-            labelText: "title-placeholder".tr(),
-            icon: appStateSettings["outlinedIcons"]
-                ? Icons.title_outlined
-                : Icons.title_rounded,
-            controller: _titleInputController,
-            onChanged: (text) async {
-              setSelectedTitle(text, setInput: false);
-            },
-            autoFocus: kIsWeb && getIsFullScreen(context),
-          ),
+        TitleInput(
+          setSelectedTitle: (title) {
+            setSelectedTitle(title, setInput: false);
+          },
+          titleInputController: _titleInputController,
+          setSelectedCategory: setSelectedCategory,
         ),
         Container(height: 14),
         Padding(
@@ -967,8 +1020,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                   child: SelectChips(
                     allowMultipleSelected: false,
                     wrapped: enableDoubleColumn(context),
-                    extraWidgetAtBeginning: true,
-                    extraWidget: Transform.scale(
+                    extraWidgetBefore: Transform.scale(
                       scale: 1.3,
                       child: IconButton(
                         padding: EdgeInsets.zero,
@@ -1215,6 +1267,8 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                       child: Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: SelectChips(
+                          wrapped: enableDoubleColumn(context),
+                          extraWidgetBeforeSticky: true,
                           allowMultipleSelected: false,
                           onLongPress: (TransactionWallet wallet) {
                             pushRoute(
@@ -1234,6 +1288,33 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                           onSelected: (TransactionWallet wallet) {
                             setSelectedWalletPk(wallet.walletPk);
                           },
+                          extraWidgetBefore: Provider.of<AllWallets>(context,
+                                              listen: false)
+                                          .indexedByPk
+                                          .length >
+                                      3 &&
+                                  enableDoubleColumn(context) == false
+                              ? SelectChipsAddButtonExtraWidget(
+                                  openPage: null,
+                                  onTap: () async {
+                                    dynamic result = await selectWalletPopup(
+                                      context,
+                                      selectedWallet: Provider.of<AllWallets>(
+                                              context,
+                                              listen: false)
+                                          .indexedByPk[selectedWalletPk],
+                                      allowEditWallet: true,
+                                      allowDeleteWallet: false,
+                                    );
+                                    if (result is TransactionWallet) {
+                                      setSelectedWalletPk(result.walletPk);
+                                    }
+                                  },
+                                  iconData: appStateSettings["outlinedIcons"]
+                                      ? Icons.expand_more_outlined
+                                      : Icons.expand_more_rounded,
+                                )
+                              : null,
                           getCustomBorderColor: (TransactionWallet item) {
                             return dynamicPastel(
                               context,
@@ -1257,7 +1338,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                                     wallet.currency.toString().toUpperCase() +
                                     ")";
                           },
-                          extraWidget: SelectChipsAddButtonExtraWidget(
+                          extraWidgetAfter: SelectChipsAddButtonExtraWidget(
                             openPage: AddWalletPage(
                               routesToPopAfterDelete:
                                   RoutesToPopAfterDelete.None,
@@ -1271,12 +1352,23 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                 setSelectedBudget: setSelectedBudgetPk,
                 horizontalBreak: true,
               ),
-              if (isAddedToLoanObjective == false)
-                SelectObjective(
+              AnimatedExpanded(
+                axis: Axis.vertical,
+                expand: isAddedToLoanObjective == false,
+                child: SelectObjective(
                   setSelectedObjective: setSelectedObjectivePk,
                   selectedObjectivePk: selectedObjectivePk,
                   horizontalBreak: true,
+                  objectiveType: ObjectiveType.goal,
                 ),
+              ),
+              SelectObjective(
+                setSelectedObjective: setSelectedLoanObjectivePk,
+                selectedObjectivePk: selectedObjectiveLoanPk,
+                setSelectedIncome: setSelectedIncome,
+                horizontalBreak: true,
+                objectiveType: ObjectiveType.loan,
+              ),
               AnimatedExpanded(
                 expand:
                     selectedBudgetPk != null && selectedBudgetIsShared == true,
@@ -1387,6 +1479,18 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                       ),
               ),
 
+              if (appStateSettings["showTransactionPk"] == true)
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                  child: TextFont(
+                    text: widget.transaction?.transactionPk ?? "",
+                    fontSize: 13,
+                    textColor: getColor(context, "textLight"),
+                    textAlign: TextAlign.center,
+                    maxLines: 4,
+                  ),
+                ),
+
               widget.transaction == null ||
                       widget.transaction!.sharedDateUpdated == null
                   ? SizedBox.shrink()
@@ -1416,8 +1520,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
       ),
     );
 
-    bool enableBalanceTransferTab = isAddedToLoanObjective == false &&
-        widget.transaction == null &&
+    bool enableBalanceTransferTab = widget.transaction == null &&
         Provider.of<AllWallets>(context).indexedByPk.keys.length > 1;
 
     Widget transactionAmountAndCategoryHeader = AnimatedContainer(
@@ -1439,55 +1542,12 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                 setState(() {});
               }
             },
-            child: AnimatedExpanded(
-              expand: !(selectedType == TransactionSpecialType.credit ||
-                  selectedType == TransactionSpecialType.debt),
-              child: appStateSettings["showTransactionsBalanceTransferTab"] ==
-                          true &&
-                      enableBalanceTransferTab
-                  ? IncomeExpenseTransferTabSelector(
-                      onTabChanged: (int index) async {
-                        if (index == 0) {
-                          //resetInitializeBalanceTransfer();
-                          setSelectedIncome(false);
-                        } else if (index == 1) {
-                          //resetInitializeBalanceTransfer();
-                          setSelectedIncome(true);
-                        } else if (index == 2) {
-                          //initializeBalanceTransfer();
-                          dynamic result = await openBottomSheet(
-                            context,
-                            fullSnap: true,
-                            TransferBalancePopup(
-                              allowEditWallet: true,
-                              wallet: Provider.of<AllWallets>(context,
-                                          listen: false)
-                                      .indexedByPk[
-                                  appStateSettings["selectedWalletPk"]]!,
-                              showAllEditDetails: true,
-                              initialAmount: selectedAmount,
-                              initialDate: selectedDate,
-                              initialTitle: selectedTitle,
-                            ),
-                          );
-                          if (result == true) {
-                            Navigator.pop(context);
-                          } else {
-                            setSelectedIncome(false);
-                          }
-                        }
-                      },
-                      initialTab: selectedIncome ? 1 : 0,
-                      // initialTab: isSettingUpBalanceTransfer
-                      //     ? 2
-                      //     : selectedIncome
-                      //         ? 1
-                      //         : 0,
-                      color: categoryColor,
-                      unselectedColor: Colors.black.withOpacity(0.2),
-                      unselectedLabelColor: Colors.white.withOpacity(0.3),
-                    )
-                  : IncomeExpenseTabSelector(
+            child: IntrinsicHeight(
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: 2,
+                    child: IncomeExpenseTabSelector(
                       hasBorderRadius: false,
                       onTabChanged: setSelectedIncome,
                       initialTabIsIncome: selectedIncome,
@@ -1497,15 +1557,63 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                       unselectedLabelColor: Colors.white.withOpacity(0.3),
                       incomeLabel: isAddedToLoanObjective
                           ? "collected".tr()
-                          : selectedCategory?.categoryPk == "0"
-                              ? "transfer-in".tr()
-                              : null,
+                          : selectedType == TransactionSpecialType.debt ||
+                                  selectedType == TransactionSpecialType.credit
+                              ? "borrowed".tr()
+                              : selectedCategory?.categoryPk == "0"
+                                  ? "transfer-in".tr()
+                                  : null,
+                      incomeIconColor: isAddedToLoanObjective ||
+                              selectedType == TransactionSpecialType.debt ||
+                              selectedType == TransactionSpecialType.credit
+                          ? getColor(context, "unPaidOverdue")
+                          : null,
                       expenseLabel: isAddedToLoanObjective
                           ? "paid".tr()
-                          : selectedCategory?.categoryPk == "0"
-                              ? "transfer-out".tr()
-                              : null,
+                          : selectedType == TransactionSpecialType.debt ||
+                                  selectedType == TransactionSpecialType.credit
+                              ? "lent".tr()
+                              : selectedCategory?.categoryPk == "0"
+                                  ? "transfer-out".tr()
+                                  : null,
+                      expenseIconColor: isAddedToLoanObjective ||
+                              selectedType == TransactionSpecialType.debt ||
+                              selectedType == TransactionSpecialType.credit
+                          ? getColor(context, "unPaidUpcoming")
+                          : null,
                     ),
+                  ),
+                  if (appStateSettings["showTransactionsBalanceTransferTab"] ==
+                          true &&
+                      enableBalanceTransferTab)
+                    Flexible(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Tappable(
+                              color: Colors.black.withOpacity(0.2),
+                              onTap: () async {
+                                openTransferBalancePopup();
+                              },
+                              child: ExpenseIncomeSelectorLabel(
+                                selectedIncome: false,
+                                showIcons: false,
+                                label: "transfer".tr(),
+                                isIncome: true,
+                                customIcon: Icon(
+                                  appStateSettings["outlinedIcons"]
+                                      ? Icons.compare_arrows_outlined
+                                      : Icons.compare_arrows_rounded,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
           Row(
@@ -2027,6 +2135,33 @@ class _DateButtonState extends State<DateButton> {
 
     return Tappable(
       color: Colors.transparent,
+      onLongPress: () {
+        if (DateTime(selectedDate.year, selectedDate.month, selectedDate.day,
+                selectedTime.hour, selectedTime.minute) !=
+            DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+              DateTime.now().hour,
+              DateTime.now().minute,
+            )) {
+          openSnackbar(
+            SnackbarMessage(
+              title: "date-reset".tr(),
+              icon: appStateSettings["outlinedIcons"]
+                  ? Icons.today_outlined
+                  : Icons.today_rounded,
+              description: "set-to-current-date-and-time".tr(),
+            ),
+          );
+        }
+        widget.setSelectedDate(DateTime.now());
+        widget.setSelectedTime(TimeOfDay.now());
+        setState(() {
+          selectedDate = DateTime.now();
+          selectedTime = TimeOfDay.now();
+        });
+      },
       onTap: () async {
         final DateTime picked =
             (await showCustomDatePicker(context, selectedDate) ?? selectedDate);
@@ -2115,7 +2250,6 @@ class SelectTitle extends StatefulWidget {
     this.selectedCategory,
     required this.setSelectedCategory,
     this.selectedTitle,
-    required this.setSelectedTags,
     required this.noteInputController,
     this.next,
   }) : super(key: key);
@@ -2123,7 +2257,6 @@ class SelectTitle extends StatefulWidget {
   final Function(String) setSelectedNote;
   final TransactionCategory? selectedCategory;
   final Function(TransactionCategory) setSelectedCategory;
-  final Function(List<String>) setSelectedTags;
   final String? selectedTitle;
   final TextEditingController noteInputController;
   final VoidCallback? next;
@@ -2246,7 +2379,7 @@ class _SelectTitleState extends State<SelectTitle> {
                     width: getWidthBottomSheet(context) - 36,
                   )
                 : Container(
-                    key: ValueKey(selectedCategory!.categoryPk),
+                    key: ValueKey(selectedCategory?.categoryPk),
                     width: getWidthBottomSheet(context) - 36,
                     padding: EdgeInsets.only(top: 13),
                     child: Tappable(
@@ -2775,7 +2908,7 @@ class _SelectAddedBudgetState extends State<SelectAddedBudget> {
                       ),
                     );
                   },
-                  extraWidget: SelectChipsAddButtonExtraWidget(
+                  extraWidgetAfter: SelectChipsAddButtonExtraWidget(
                     openPage: AddBudgetPage(
                       isAddedOnlyBudget: true,
                       routesToPopAfterDelete: RoutesToPopAfterDelete.One,
@@ -2827,6 +2960,8 @@ class SelectObjective extends StatefulWidget {
     this.extraHorizontalPadding,
     this.wrapped,
     this.horizontalBreak = false,
+    required this.objectiveType,
+    this.setSelectedIncome,
     super.key,
   });
   final Function(String?) setSelectedObjective;
@@ -2834,6 +2969,8 @@ class SelectObjective extends StatefulWidget {
   final double? extraHorizontalPadding;
   final bool? wrapped;
   final bool horizontalBreak;
+  final ObjectiveType objectiveType;
+  final Function(bool isIncome)? setSelectedIncome;
 
   @override
   State<SelectObjective> createState() => _SelectObjectiveState();
@@ -2856,7 +2993,7 @@ class _SelectObjectiveState extends State<SelectObjective> {
   Widget build(BuildContext context) {
     return StreamBuilder<List<Objective>>(
       stream: database.watchAllObjectives(
-          objectiveType: ObjectiveType.goal, archivedLast: true),
+          objectiveType: widget.objectiveType, archivedLast: true),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.length <= 0) return Container();
@@ -2879,19 +3016,26 @@ class _SelectObjectiveState extends State<SelectObjective> {
                       ),
                     );
                   },
-                  extraWidget: SelectChipsAddButtonExtraWidget(
+                  extraWidgetAfter: SelectChipsAddButtonExtraWidget(
                     openPage: AddObjectivePage(
                       routesToPopAfterDelete: RoutesToPopAfterDelete.One,
                     ),
                   ),
                   items: [null, ...snapshot.data!],
                   getLabel: (Objective? item) {
-                    return item?.name ?? "no-goal".tr();
+                    return item?.name ??
+                        (widget.objectiveType == ObjectiveType.loan
+                            ? "no-loan".tr()
+                            : "no-goal".tr());
                   },
                   onSelected: (Objective? item) {
                     widget.setSelectedObjective(
                       item?.objectivePk,
                     );
+                    if (item?.type == ObjectiveType.loan &&
+                        widget.setSelectedIncome != null) {
+                      widget.setSelectedIncome!(item?.income ?? false);
+                    }
                     setState(() {
                       selectedObjectivePk = item?.objectivePk;
                     });
@@ -2983,7 +3127,7 @@ class _SelectExcludeBudgetState extends State<SelectExcludeBudget> {
                     ),
                   );
                 },
-                extraWidget: SelectChipsAddButtonExtraWidget(
+                extraWidgetAfter: SelectChipsAddButtonExtraWidget(
                   openPage: AddBudgetPage(
                     routesToPopAfterDelete: RoutesToPopAfterDelete.One,
                   ),
@@ -4246,7 +4390,7 @@ class SelectSubcategoryChips extends StatelessWidget {
                         getLabel: (TransactionCategory category) {
                           return category.name;
                         },
-                        extraWidget: SelectChipsAddButtonExtraWidget(
+                        extraWidgetAfter: SelectChipsAddButtonExtraWidget(
                           openPage: AddCategoryPage(
                             routesToPopAfterDelete: RoutesToPopAfterDelete.One,
                             mainCategoryPkWhenSubCategory: selectedCategoryPk,
@@ -4312,4 +4456,157 @@ List<dynamic>
       TransactionSpecialType.subscription
     ];
   return defaultList;
+}
+
+class TitleInput extends StatefulWidget {
+  const TitleInput({
+    required this.setSelectedTitle,
+    required this.titleInputController,
+    required this.setSelectedCategory,
+    super.key,
+  });
+  final Function(String title) setSelectedTitle;
+  final TextEditingController titleInputController;
+  final Function(TransactionCategory category) setSelectedCategory;
+
+  @override
+  State<TitleInput> createState() => _TitleInputState();
+}
+
+class _TitleInputState extends State<TitleInput> {
+  List<TransactionAssociatedTitle> foundAssociatedTitles = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 22),
+      child: ClipRRect(
+        borderRadius:
+            BorderRadius.circular(getPlatform() == PlatformOS.isIOS ? 8 : 15),
+        child: Column(
+          children: [
+            Focus(
+              onFocusChange: (value) {
+                if (value == false)
+                  setState(() {
+                    foundAssociatedTitles = [];
+                  });
+              },
+              child: TextInput(
+                borderRadius: BorderRadius.zero,
+                padding: EdgeInsets.zero,
+                labelText: "title-placeholder".tr(),
+                icon: appStateSettings["outlinedIcons"]
+                    ? Icons.title_outlined
+                    : Icons.title_rounded,
+                controller: widget.titleInputController,
+                onChanged: (text) async {
+                  widget.setSelectedTitle(text);
+                  foundAssociatedTitles = await database
+                      .getSimilarAssociatedTitles(title: text, limit: 3);
+                  setState(() {});
+                },
+                autoFocus: kIsWeb && getIsFullScreen(context),
+              ),
+            ),
+            AnimatedSizeSwitcher(
+              child: foundAssociatedTitles.length <= 0
+                  ? Container(
+                      key: ValueKey(0),
+                    )
+                  : AnimatedSize(
+                      key: ValueKey(1),
+                      duration: Duration(milliseconds: 200),
+                      curve: Curves.easeInOut,
+                      alignment: Alignment.topCenter,
+                      child: Column(
+                        children: [
+                          HorizontalBreak(
+                            padding: EdgeInsets.zero,
+                            color: dynamicPastel(
+                              context,
+                              Theme.of(context).colorScheme.secondaryContainer,
+                              amount: 0.1,
+                              inverse: true,
+                            ),
+                          ),
+                          for (TransactionAssociatedTitle foundAssociatedTitle
+                              in foundAssociatedTitles)
+                            Container(
+                              color: appStateSettings["materialYou"]
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer
+                                  : getColor(context, "canvasContainer"),
+                              key: ValueKey(
+                                  foundAssociatedTitle.associatedTitlePk),
+                              child: Tappable(
+                                borderRadius: 0,
+                                color: Colors.transparent,
+                                onTap: () async {
+                                  String categoryFk =
+                                      foundAssociatedTitle.categoryFk;
+                                  widget.setSelectedCategory(await database
+                                      .getCategoryInstance(categoryFk));
+                                  widget.setSelectedTitle(
+                                      foundAssociatedTitle.title);
+                                  setTextInput(widget.titleInputController,
+                                      foundAssociatedTitle.title);
+                                  setState(() {
+                                    foundAssociatedTitles = [];
+                                  });
+                                  FocusScope.of(context).unfocus();
+                                },
+                                child: Row(
+                                  children: [
+                                    IgnorePointer(
+                                      child: CategoryIcon(
+                                        categoryPk:
+                                            foundAssociatedTitle.categoryFk,
+                                        size: 23,
+                                        margin: EdgeInsets.zero,
+                                        sizePadding: 16,
+                                        borderRadius: 0,
+                                      ),
+                                    ),
+                                    SizedBox(width: 13),
+                                     Expanded(
+                                      child: TextFont(
+                                        text: foundAssociatedTitle.title,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Opacity(
+                                      opacity: 0.65,
+                                      child: IconButtonScaled(
+                                        iconData:
+                                            appStateSettings["outlinedIcons"]
+                                                ? Icons.clear_outlined
+                                                : Icons.clear_rounded,
+                                        iconSize: 18,
+                                        scale: 1.1,
+                                        onTap: () async {
+                                          await deleteAssociatedTitlePopup(
+                                            context,
+                                            title: foundAssociatedTitle,
+                                            routesToPopAfterDelete:
+                                                RoutesToPopAfterDelete.None,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(width: 5),
+                                  ],
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

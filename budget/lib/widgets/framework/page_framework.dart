@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:budget/functions.dart';
 import 'package:budget/struct/settings.dart';
+import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/navigation_sidebar.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
@@ -703,21 +704,24 @@ class PageFrameworkSliverAppBar extends StatelessWidget {
               child: Transform.scale(
                 scale: percent * 0.15 + 1,
                 child: titleWidget ??
-                    TextFont(
-                      text: getIsFullScreen(context) == false &&
-                              titleString.length > 20
-                          ? titleString.split(" ")[0]
-                          : titleString,
-                      fontSize: centeredTitleSmallWithDefault
-                          ? (enableDoubleColumn(context) ? 19 : 16)
-                          : 22,
-                      fontWeight: FontWeight.bold,
-                      textColor: textColor == null
-                          ? Theme.of(context).colorScheme.onSecondaryContainer
-                          : textColor,
-                      textAlign: centeredTitleWithDefault
-                          ? TextAlign.center
-                          : TextAlign.left,
+                    AnimatedSizeSwitcher(
+                      child: TextFont(
+                        key: ValueKey(titleString),
+                        text: getIsFullScreen(context) == false &&
+                                titleString.length > 20
+                            ? titleString.split(" ")[0]
+                            : titleString,
+                        fontSize: centeredTitleSmallWithDefault
+                            ? (enableDoubleColumn(context) ? 19 : 16)
+                            : 22,
+                        fontWeight: FontWeight.bold,
+                        textColor: textColor == null
+                            ? Theme.of(context).colorScheme.onSecondaryContainer
+                            : textColor,
+                        textAlign: centeredTitleWithDefault
+                            ? TextAlign.center
+                            : TextAlign.left,
+                      ),
                     ),
               ),
             ),

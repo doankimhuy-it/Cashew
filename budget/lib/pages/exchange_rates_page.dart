@@ -1,13 +1,16 @@
 import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/pages/about_page.dart';
+import 'package:budget/pages/add_transaction_page.dart';
 import 'package:budget/struct/currency_functions.dart';
+import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/fade_in.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/widgets/no_results.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_popup.dart';
+import 'package:budget/widgets/outlined_button_stacked.dart';
 import 'package:budget/widgets/select_amount.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_input.dart';
@@ -29,19 +32,52 @@ class ExchangeRates extends StatefulWidget {
 class _ExchangeRatesState extends State<ExchangeRates> {
   String searchCurrenciesText = "";
 
+  Future addCustomCurrency(String customKey) async {
+    List<dynamic> customCurrencies = appStateSettings["customCurrencies"];
+    customCurrencies.add(customKey);
+    await updateSettings(
+      "customCurrencies",
+      customCurrencies,
+      updateGlobalState: false,
+    );
+    setState(() {});
+  }
+
+  Future<DeletePopupAction?> deleteCustomCurrency(String customKey) async {
+    DeletePopupAction? action = await openDeletePopup(
+      context,
+      title: "delete-currency-question".tr(),
+      subtitle: customKey,
+    );
+    if (action == DeletePopupAction.Delete) {
+      List<dynamic> customCurrencies = appStateSettings["customCurrencies"];
+      customCurrencies.remove(customKey);
+      await updateSettings(
+        "customCurrencies",
+        customCurrencies,
+        updateGlobalState: false,
+      );
+      Map<dynamic, dynamic> customCurrencyAmountsMap =
+          appStateSettings["customCurrencyAmounts"];
+      customCurrencyAmountsMap.remove(customKey);
+      updateSettings("customCurrencyAmounts", customCurrencyAmountsMap,
+          updateGlobalState: false);
+      setState(() {});
+    }
+    return action;
+  }
+
   @override
   Widget build(BuildContext context) {
-    Map<dynamic, dynamic> currencyExchange =
-        appStateSettings["cachedCurrencyExchange"];
+    Map<dynamic, dynamic> currencyExchange = {};
+    List<dynamic> customCurrencies = appStateSettings["customCurrencies"];
+    for (String key in customCurrencies) {
+      currencyExchange[key] = null;
+    }
+    currencyExchange.addAll(appStateSettings["cachedCurrencyExchange"]);
     if (currencyExchange.keys.length <= 0) {
       for (String key in currenciesJSON.keys) {
         currencyExchange[key] = 1;
-      }
-    } else {
-      for (String key in [...currencyExchange.keys]) {
-        if (currenciesJSON.keys.contains(key) == false) {
-          currencyExchange.remove(key);
-        }
       }
     }
     Map<dynamic, dynamic> currencyExchangeFiltered = {};
@@ -80,7 +116,7 @@ class _ExchangeRatesState extends State<ExchangeRates> {
               title: "exchange-rate-notice".tr(),
               description: "exchange-rate-notice-description".tr() +
                   "\n\n" +
-                  "tap-for-custom-exchange-rate".tr(),
+                  "select-an-entry-to-set-custom-exchange-rate".tr(),
               icon: appStateSettings["outlinedIcons"]
                   ? Icons.info_outlined
                   : Icons.info_outline_rounded,
@@ -107,18 +143,53 @@ class _ExchangeRatesState extends State<ExchangeRates> {
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.only(top: 5),
-            child: TextInput(
-              labelText: "search-currencies-placeholder".tr(),
-              icon: appStateSettings["outlinedIcons"]
-                  ? Icons.search_outlined
-                  : Icons.search_rounded,
-              onChanged: (value) {
-                setState(() {
-                  searchCurrenciesText = value;
-                });
-              },
-              autoFocus: false,
-              padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              children: [
+                SizedBox(width: 15),
+                Expanded(
+                  child: TextInput(
+                    labelText: "search-currencies-placeholder".tr(),
+                    icon: appStateSettings["outlinedIcons"]
+                        ? Icons.search_outlined
+                        : Icons.search_rounded,
+                    onChanged: (value) {
+                      setState(() {
+                        searchCurrenciesText = value;
+                      });
+                    },
+                    autoFocus: false,
+                    padding: EdgeInsets.zero,
+                  ),
+                ),
+                SizedBox(width: 10),
+                ButtonIcon(
+                  onTap: () {
+                    openBottomSheet(
+                      context,
+                      PopupFramework(
+                        title: "add-currency".tr(),
+                        child: SelectText(
+                          icon: appStateSettings["outlinedIcons"]
+                              ? Icons.account_balance_wallet_outlined
+                              : Icons.account_balance_wallet_rounded,
+                          setSelectedText: (_) {},
+                          nextWithInput: (text) async {
+                            addCustomCurrency(text);
+                          },
+                          selectedText: "",
+                          placeholder: "currency".tr(),
+                          autoFocus: false,
+                          requestLateAutoFocus: true,
+                        ),
+                      ),
+                    );
+                  },
+                  icon: appStateSettings["outlinedIcons"]
+                      ? Icons.add_outlined
+                      : Icons.add_rounded,
+                ),
+                SizedBox(width: 15),
+              ],
             ),
           ),
         ),
@@ -128,7 +199,7 @@ class _ExchangeRatesState extends State<ExchangeRates> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17),
               child: TextFont(
-                text: "tap-for-custom-exchange-rate".tr(),
+                text: "select-an-entry-to-set-custom-exchange-rate".tr(),
                 maxLines: 2,
                 fontSize: 13,
                 textColor: getColor(context, "textLight"),
@@ -166,60 +237,101 @@ class _ExchangeRatesState extends State<ExchangeRates> {
                     String key = currencyExchangeFiltered.keys
                         .toList()[index]
                         .toString();
+                    bool isCustomCurrency = customCurrencies.contains(key);
+                    bool isUnsetCustomCurrency = isCustomCurrency &&
+                        appStateSettings["customCurrencyAmounts"]?[key] == null;
+                    String calculatedExchangeRateString = isUnsetCustomCurrency
+                        ? "1"
+                        : (1 /
+                                ((amountRatioToPrimaryCurrency(
+                                    Provider.of<AllWallets>(context), key))))
+                            .toStringAsFixed(14);
                     return ScaledAnimatedSwitcher(
                       keyToWatch: (appStateSettings["customCurrencyAmounts"]
                               ?[key])
                           .toString(),
                       key: ValueKey(key),
-                      child: Tappable(
-                        onTap: () async {
-                          await openBottomSheet(
-                            context,
-                            SetCustomCurrency(currencyKey: key),
-                          );
-                          setState(() {});
-                        },
-                        color: appStateSettings["customCurrencyAmounts"]
-                                    ?[key] ==
-                                null
-                            ? Colors.transparent
-                            : Theme.of(context).colorScheme.secondaryContainer,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              TextFont(
-                                text: "",
-                                maxLines: 3,
-                                richTextSpan: [
-                                  TextSpan(
-                                    text: " = " +
-                                        (1 /
-                                                ((amountRatioToPrimaryCurrency(
-                                                    Provider.of<AllWallets>(
-                                                        context),
-                                                    key))))
-                                            .toStringAsFixed(14),
-                                    style: TextStyle(
-                                      color: getColor(context, "black"),
-                                      fontFamily: appStateSettings["font"],
-                                      fontFamilyFallback: ['Inter'],
-                                      fontSize: 16,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.only(bottom: isCustomCurrency ? 5 : 0),
+                        child: Tappable(
+                          onTap: () async {
+                            await openBottomSheet(
+                              context,
+                              SetCustomCurrency(currencyKey: key),
+                            );
+                            setState(() {});
+                          },
+                          color: isCustomCurrency ||
+                                  appStateSettings["customCurrencyAmounts"]
+                                          ?[key] ==
+                                      null
+                              ? Colors.transparent
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .secondaryContainer,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            child: OutlinedContainer(
+                              enabled: isCustomCurrency,
+                              filled: appStateSettings["customCurrencyAmounts"]
+                                      ?[key] !=
+                                  null,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 7),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: TextFont(
+                                        text: "",
+                                        maxLines: 3,
+                                        richTextSpan: [
+                                          TextSpan(
+                                            text: (isUnsetCustomCurrency
+                                                    ? " " + "1 USD"
+                                                    : "") +
+                                                " = " +
+                                                calculatedExchangeRateString,
+                                            style: TextStyle(
+                                              color: getColor(context, "black"),
+                                              fontFamily:
+                                                  appStateSettings["font"],
+                                              fontFamilyFallback: ['Inter'],
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: " " + key.allCaps,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily:
+                                                  appStateSettings["font"],
+                                              fontFamilyFallback: ['Inter'],
+                                              color: getColor(context, "black"),
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  TextSpan(
-                                    text: " " + key.allCaps,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: appStateSettings["font"],
-                                      fontFamilyFallback: ['Inter'],
-                                      color: getColor(context, "black"),
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ],
+                                  if (isCustomCurrency)
+                                      IconButton(
+                                        padding: EdgeInsets.all(15),
+                                        tooltip: "delete-currency".tr(),
+                                        onPressed: () {
+                                          deleteCustomCurrency(key);
+                                        },
+                                        icon: Icon(
+                                          appStateSettings["outlinedIcons"]
+                                              ? Icons.delete_outlined
+                                              : Icons.delete_rounded,
+                                        ),
+                                      ),
+                                  ],
+                                ),
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
@@ -246,13 +358,7 @@ class _SetCustomCurrencyState extends State<SetCustomCurrency> {
   Widget build(BuildContext context) {
     return PopupFramework(
       title: "set-currency".tr(),
-      subtitle: "1 " +
-          Provider.of<AllWallets>(context)
-              .indexedByPk[appStateSettings["selectedWalletPk"]]!
-              .currency
-              .toString()
-              .allCaps +
-          " = ",
+      subtitle: "1 USD = ",
       child: SelectAmountValue(
         allowZero: true,
         setSelectedAmount: (amount, amountString) {

@@ -821,8 +821,7 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
                         SizedBox(height: 5),
                         SelectChips(
                           allowMultipleSelected: false,
-                          extraWidgetAtBeginning: true,
-                          extraWidget: Transform.scale(
+                          extraWidgetBefore: Transform.scale(
                             scale: 1.3,
                             child: IconButton(
                               padding: EdgeInsets.zero,
@@ -909,7 +908,7 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
                           children: [
                             SizedBox(height: 5),
                             SelectChips(
-                              extraWidget: Transform.scale(
+                              extraWidgetBefore: Transform.scale(
                                 scale: 1.3,
                                 child: IconButton(
                                   padding: EdgeInsets.zero,
@@ -933,7 +932,6 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
                                   },
                                 ),
                               ),
-                              extraWidgetAtBeginning: true,
                               items: [
                                 BudgetTransactionFilters
                                     .defaultBudgetTransactionFilters,

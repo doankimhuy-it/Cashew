@@ -614,6 +614,11 @@ class AddMoreThingsPopup extends StatelessWidget {
                       );
                     },
                     getLabel: (TransactionWithCount transactionWithCount) {
+                      double amountInPrimary =
+                          transactionWithCount.transaction.amount *
+                              (amountRatioToPrimaryCurrencyGivenPk(
+                                  Provider.of<AllWallets>(context),
+                                  transactionWithCount.transaction.walletFk));
                       return getTransactionLabelSync(
                             transactionWithCount.transaction,
                             categoriesIndexed[
@@ -621,8 +626,14 @@ class AddMoreThingsPopup extends StatelessWidget {
                           ) +
                           " " +
                           "(" +
-                          convertToMoney(Provider.of<AllWallets>(context),
-                              transactionWithCount.transaction.amount) +
+                          convertToMoney(
+                            Provider.of<AllWallets>(context),
+                            amountInPrimary,
+                            currencyKey: Provider.of<AllWallets>(context)
+                                .indexedByPk[
+                                    transactionWithCount.transaction.walletFk]
+                                ?.currency,
+                          ) +
                           ")";
                     },
                     getCustomBorderColor:

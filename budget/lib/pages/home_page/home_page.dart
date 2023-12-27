@@ -1,3 +1,4 @@
+import 'package:budget/colors.dart';
 import 'package:budget/database/generate_preview_data.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
@@ -17,8 +18,14 @@ import 'package:budget/pages/edit_home_page.dart';
 import 'package:budget/pages/settings_page.dart';
 import 'package:budget/pages/home_page/home_page_credit_debts.dart';
 import 'package:budget/struct/settings.dart';
+import 'package:budget/widgets/animated_expanded.dart';
+import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
+import 'package:budget/widgets/pie_chart.dart';
+import 'package:budget/widgets/rating_popup.dart';
 import 'package:budget/widgets/selected_transactions_app_bar.dart';
+import 'package:budget/widgets/text_widgets.dart';
+import 'package:budget/widgets/util/check_widget_launch.dart';
 import 'package:budget/widgets/util/keep_alive_client_mixin.dart';
 import 'package:budget/widgets/transaction_entry/swipe_to_select_transactions.dart';
 import 'package:budget/widgets/view_all_transactions_button.dart';
@@ -107,6 +114,8 @@ class HomePageState extends State<HomePage>
     return countAfter == 0;
   }
 
+  GlobalKey<PieChartDisplayState> _pieChartDisplayStateKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -184,7 +193,10 @@ class HomePageState extends State<HomePage>
           ? HomePageLineGraph(selectedSlidingSelector: selectedSlidingSelector)
           : null,
       "pieChart": isHomeScreenSectionEnabled(context, "showPieChart")
-          ? HomePagePieChart(selectedSlidingSelector: selectedSlidingSelector)
+          ? HomePagePieChart(
+              pieChartDisplayStateKey: _pieChartDisplayStateKey,
+              selectedSlidingSelector: selectedSlidingSelector,
+            )
           : null,
       "heatMap": isHomeScreenSectionEnabled(context, "showHeatMap")
           ? HomePageHeatMap()
@@ -222,6 +234,8 @@ class HomePageState extends State<HomePage>
         scrollController: _scrollController,
         child: Stack(
           children: [
+            AndroidOnly(child: CheckWidgetLaunch()),
+            AndroidOnly(child: RenderHomePageWidgets()),
             Scaffold(
               resizeToAvoidBottomInset: false,
               body: ScrollbarWrap(
@@ -292,9 +306,10 @@ class HomePageState extends State<HomePage>
                         : SizedBox(height: 5),
                     // Not full screen
                     if (enableDoubleColumn(context) != true) ...[
+                      KeepAliveClientMixin(child: HomePageRatingBox()),
                       for (String sectionKey
                           in appStateSettings["homePageOrder"])
-                        homePageSections[sectionKey] ?? SizedBox.shrink()
+                        homePageSections[sectionKey] ?? SizedBox.shrink(),
                     ],
                     // Full screen top section
                     if (enableDoubleColumn(context) == true) ...[
@@ -374,6 +389,141 @@ class HomePageState extends State<HomePage>
           ],
         ),
       ),
+    );
+  }
+}
+
+class HomePageRatingBox extends StatefulWidget {
+  const HomePageRatingBox({super.key});
+
+  @override
+  State<HomePageRatingBox> createState() => _HomePageRatingBoxState();
+}
+
+class _HomePageRatingBoxState extends State<HomePageRatingBox> {
+  bool hidden = true;
+
+  @override
+  void initState() {
+    if ((appStateSettings["numLogins"] + 1) % 13 == 0 &&
+        appStateSettings["dismissedStoreRating"] != true &&
+        appStateSettings["openedStoreRating"] != true) {
+      setState(() {
+        hidden = false;
+      });
+    }
+    super.initState();
+  }
+
+  hide() {
+    setState(() {
+      hidden = true;
+    });
+    updateSettings("dismissedStoreRating", true, updateGlobalState: true);
+  }
+
+  open() {
+    setState(() {
+      hidden = true;
+    });
+    updateSettings("openedStoreRating", true, updateGlobalState: true);
+    inAppReview.openStoreListing(
+      appStoreId: "6463662930",
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSizeSwitcher(
+      child: hidden
+          ? Container(
+              key: ValueKey(1),
+            )
+          : Padding(
+              key: ValueKey(2),
+              padding: const EdgeInsets.only(bottom: 13),
+              child: Container(
+                padding:
+                    EdgeInsets.only(left: 15, right: 15, bottom: 18, top: 18),
+                margin: EdgeInsets.symmetric(horizontal: 13),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  color: getColor(context, "lightDarkAccentHeavyLight"),
+                  boxShadow: boxShadowCheck(boxShadowGeneral(context)),
+                ),
+                child: Column(
+                  children: [
+                    TextFont(
+                      text: "enjoying-cashew-question".tr(),
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                    ),
+                    SizedBox(height: 7),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextFont(
+                        text: "consider-rating".tr(),
+                        fontSize: 16,
+                        textAlign: TextAlign.center,
+                        maxLines: 5,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ScalingStars(
+                      selectedStars: 5,
+                      onTap: (i) {
+                        if (i >= 4) {
+                          open();
+                        } else {
+                          shareFeedback(
+                            "from-homepage-stars",
+                            "rating",
+                            selectedStars: i,
+                          );
+                          hide();
+                        }
+                      },
+                      size: 50,
+                      color: getColor(context, "starYellow"),
+                      loop: true,
+                      loopDelay: Duration(milliseconds: 1900),
+                    ),
+                    SizedBox(height: 15),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Opacity(
+                            opacity: 0.7,
+                            child: Button(
+                              label: "no-thanks".tr(),
+                              onTap: () {
+                                hide();
+                              },
+                              expandedLayout: true,
+                              color: Theme.of(context).colorScheme.tertiary,
+                              textColor:
+                                  Theme.of(context).colorScheme.onTertiary,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Button(
+                            label: "rate".tr(),
+                            onTap: () {
+                              open();
+                            },
+                            expandedLayout: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

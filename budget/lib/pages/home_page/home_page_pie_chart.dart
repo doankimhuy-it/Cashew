@@ -13,11 +13,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePagePieChart extends StatelessWidget {
-  const HomePagePieChart({required this.selectedSlidingSelector, super.key});
+  const HomePagePieChart(
+      {required this.pieChartDisplayStateKey,
+      required this.selectedSlidingSelector,
+      super.key});
   final int selectedSlidingSelector;
+    final GlobalKey<PieChartDisplayState> pieChartDisplayStateKey;
+
   @override
   Widget build(BuildContext context) {
-    bool isIncome = appStateSettings["pieChartIsIncome"];
+    bool? isIncome = appStateSettings["pieChartTotal"] == "all"
+        ? null
+        : appStateSettings["pieChartTotal"] == "outgoing"
+            ? false
+            : true;
     return KeepAliveClientMixin(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 13, left: 13, right: 13),
@@ -31,89 +40,83 @@ class HomePagePieChart extends StatelessWidget {
               await openPieChartHomePageBottomSheetSettings(context);
               homePageStateKey.currentState?.refreshState();
             },
+             onTap: () {
+              pieChartDisplayStateKey.currentState?.setTouchedIndex(-1);
+            },
             color: getColor(context, "lightDarkAccentHeavyLight"),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-              child: StreamBuilder<double?>(
-                stream: database.watchTotalOfWallet(
-                  null,
-                  isIncome: isIncome,
+              child: StreamBuilder<List<CategoryWithTotal>>(
+                stream: database
+                    .watchTotalSpentInEachCategoryInTimeRangeFromCategories(
                   allWallets: Provider.of<AllWallets>(context),
+                  start: DateTime.now(),
+                  end: DateTime.now(),
+                  categoryFks: null,
+                  categoryFksExclude: null,
+                  budgetTransactionFilters: null,
+                  memberTransactionFilters: null,
+                  allTime: true,
+                  walletPks: null,
+                  isIncome: isIncome,
                   followCustomPeriodCycle: true,
                   cycleSettingsExtension: "PieChart",
                 ),
-                builder: (context, totalSnapshot) {
-                  double total = (totalSnapshot.data ?? 0).abs();
-                  return StreamBuilder<List<CategoryWithTotal>>(
-                    stream: database
-                        .watchTotalSpentInEachCategoryInTimeRangeFromCategories(
-                      allWallets: Provider.of<AllWallets>(context),
-                      start: DateTime.now(),
-                      end: DateTime.now(),
-                      categoryFks: null,
-                      categoryFksExclude: null,
-                      budgetTransactionFilters: null,
-                      memberTransactionFilters: null,
-                      allTime: true,
-                      walletPks: null,
-                      isIncome: isIncome,
-                      followCustomPeriodCycle: true,
-                      cycleSettingsExtension: "PieChart",
-                    ),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return LayoutBuilder(
-                          builder: (_, boxConstraints) {
-                            // print(boxConstraints);
-                            bool showTopCategoriesLegend =
-                                boxConstraints.maxWidth > 320;
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (showTopCategoriesLegend)
-                                  Flexible(
-                                    flex: 1,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 12),
-                                      child: TopCategoriesSpentLegend(
-                                        categoriesWithTotal: snapshot.data!
-                                            .take(
-                                              boxConstraints.maxWidth < 420
-                                                  ? 3
-                                                  : 5,
-                                            )
-                                            .toList(),
-                                      ),
-                                    ),
-                                  ),
-                                Flexible(
-                                  flex: 2,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        right:
-                                            showTopCategoriesLegend ? 20 : 0),
-                                    child: PieChartWrapper(
-                                      isPastBudget: true,
-                                      pieChartDisplayStateKey: null,
-                                      data: snapshot.data!,
-                                      totalSpent: total,
-                                      setSelectedCategory:
-                                          (categoryPk, category) {},
-                                      percentLabelOnTop: true,
-                                      middleColor: getColor(
-                                          context, "lightDarkAccentHeavyLight"),
-                                    ),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    double total = 0;
+                    for (CategoryWithTotal categoryWithTotal
+                        in snapshot.data ?? []) {
+                      total = total + categoryWithTotal.total.abs();
+                    }
+                    return LayoutBuilder(
+                      builder: (_, boxConstraints) {
+                        // print(boxConstraints);
+                        bool showTopCategoriesLegend =
+                            boxConstraints.maxWidth > 320;
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (showTopCategoriesLegend)
+                              Flexible(
+                                flex: 1,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 12),
+                                  child: TopCategoriesSpentLegend(
+                                    categoriesWithTotal: snapshot.data!
+                                        .take(
+                                          boxConstraints.maxWidth < 420 ? 3 : 5,
+                                        )
+                                        .toList(),
                                   ),
                                 ),
-                              ],
-                            );
-                          },
+                              ),
+                            Flexible(
+                              flex: 2,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    right: showTopCategoriesLegend ? 20 : 0),
+                                child: PieChartWrapper(
+                                  pieChartDisplayStateKey:
+                                      pieChartDisplayStateKey,
+                                  isPastBudget: true,
+                                  data: snapshot.data!,
+                                  totalSpent: total,
+                                  setSelectedCategory:
+                                      (categoryPk, category) {},
+                                  percentLabelOnTop: true,
+                                  middleColor: getColor(
+                                      context, "lightDarkAccentHeavyLight"),
+                                ),
+                              ),
+                            ),
+                          ],
                         );
-                      }
-                      return SizedBox.shrink();
-                    },
-                  );
+                     },
+                    );
+                  }
+                  return SizedBox.shrink();
                 },
               ),
             ),

@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-createNewSubscriptionTransaction(
+Future createNewSubscriptionTransaction(
     BuildContext context, Transaction transaction) async {
   if (transaction.createdAnotherFutureTransaction == false) {
     if (transaction.type == TransactionSpecialType.subscription ||
@@ -95,11 +95,11 @@ createNewSubscriptionTransaction(
 
       Transaction newTransaction = transaction.copyWith(
         paid: false,
-        transactionPk: "-1",
+        transactionPk: updatePredictableKey(transaction.transactionPk),
         dateCreated: newDate,
         createdAnotherFutureTransaction: Value(false),
       );
-      await database.createOrUpdateTransaction(insert: true, newTransaction);
+      await database.createOrUpdateTransaction(insert: false, newTransaction);
       String transactionName = await getTransactionLabel(transaction);
       openSnackbar(
         SnackbarMessage(
@@ -123,6 +123,28 @@ createNewSubscriptionTransaction(
         ),
       );
     }
+  }
+}
+
+// We create a predictable key when a new repeat transaction is made
+// So that when we sync, if the sync client syncs later but it was already automatically marked as paid
+// It won't create a new entry (with a random key), it will just replace the entry that we predictably created
+// with this key algorithm
+// t.l.d.r: it prevents transactions from being duplicated with syncing and auto payments
+String updatePredictableKey(String originalKey) {
+  if (originalKey.contains("::predict::")) {
+    try {
+      List<String> parts = originalKey.split("::predict::");
+      int currentNumber = int.parse(parts[1]);
+      int newNumber = currentNumber + 1;
+
+      return "${parts[0]}::predict::$newNumber";
+    } catch (e) {
+      print("Error creating predictable key! " + e.toString());
+      return uuid.v4();
+    }
+  } else {
+    return "$originalKey::predict::1";
   }
 }
 
@@ -491,7 +513,9 @@ Future<bool> markSubscriptionsAsPaid(BuildContext context,
     ];
     bool hasUpdatedASubscription = false;
     for (Transaction transaction in subscriptions) {
-      if (transaction.dateCreated.isBefore(DateTime.now())) {
+       // Only mark it as paid if it was not marked as unpaid at any point (createdAnotherFutureTransaction == false)
+      if (transaction.createdAnotherFutureTransaction != true &&
+          transaction.dateCreated.isBefore(DateTime.now())) {
         hasUpdatedASubscription = true;
         Transaction transactionNew = transaction.copyWith(
           paid: true,
@@ -516,7 +540,9 @@ Future<bool> markUpcomingAsPaid() async {
     List<Transaction> upcoming =
         await database.getAllOverdueUpcomingTransactions().$2;
     for (Transaction transaction in upcoming) {
-      if (transaction.dateCreated.isBefore(DateTime.now())) {
+      // Only mark it as paid if it was not marked as unpaid at any point (createdAnotherFutureTransaction == false)
+      if (transaction.createdAnotherFutureTransaction != true &&
+          transaction.dateCreated.isBefore(DateTime.now())) {
         Transaction transactionNew = transaction.copyWith(
           paid: true,
           dateCreated: transaction.dateCreated,

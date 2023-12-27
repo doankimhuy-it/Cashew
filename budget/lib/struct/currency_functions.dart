@@ -19,6 +19,7 @@ Future<bool> getExchangeRates() async {
     }
   } catch (e) {
     print(e.toString());
+    return false;
   }
   // print(cachedCurrencyExchange);
   updateSettings(
@@ -92,7 +93,7 @@ double? amountRatioFromToCurrency(
 String getCurrencyString(AllWallets allWallets, {String? currencyKey}) {
   String? selectedWalletCurrency =
       allWallets.indexedByPk[appStateSettings["selectedWalletPk"]]?.currency;
-  return currencyKey != null && currenciesJSON[currencyKey] != null
+  return currencyKey != null
       ? (currenciesJSON[currencyKey]?["Symbol"] ?? "")
       : selectedWalletCurrency == null
           ? ""

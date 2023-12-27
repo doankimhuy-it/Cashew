@@ -8,6 +8,7 @@ import 'package:budget/pages/credit_debt_transactions_page.dart';
 import 'package:budget/pages/edit_home_page.dart';
 import 'package:budget/pages/edit_objectives_page.dart';
 import 'package:budget/pages/exchange_rates_page.dart';
+import 'package:budget/pages/home_page/home_page_net_worth.dart';
 import 'package:budget/pages/objectives_list_page.dart';
 import 'package:budget/pages/premium_page.dart';
 import 'package:budget/pages/transactions_list_page.dart';
@@ -43,6 +44,7 @@ import 'package:budget/pages/wallet_details_page.dart';
 import 'package:budget/struct/initialize_biometrics.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
+import 'package:budget/widgets/util/check_widget_launch.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/main.dart';
@@ -91,23 +93,6 @@ class MoreActionsPageState extends State<MoreActionsPage>
         title: "more-actions".tr(),
         backButton: false,
         horizontalPadding: getHorizontalPaddingConstrained(context),
-        actions: [
-          CustomPopupMenuButton(
-            showButtons: true,
-            items: [
-              DropdownItemMenu(
-                id: "about-app",
-                label: "about-app".tr(namedArgs: {"app": globalAppName}),
-                icon: appStateSettings["outlinedIcons"]
-                    ? Icons.info_outlined
-                    : Icons.info_outline_rounded,
-                action: () {
-                  pushRoute(context, AboutPage());
-                },
-              ),
-            ],
-          ),
-        ],
         listWidgets: [
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
@@ -169,16 +154,11 @@ class MorePages extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-                  child: SettingsContainer(
-                    onTap: () {
-                      openUrl("https://github.com/jameskokoska/Cashew");
-                    },
-                    title: "open-source".tr(),
-                    icon: MoreIcons.github,
-                    isOutlined: true,
-                  ),
+                child: SettingsContainerOpenPage(
+                  openPage: AboutPage(),
+                  title: "about-app".tr(namedArgs: {"app": globalAppName}),
+                  icon: navBarIconsData["about"]!.iconData,
+                  isOutlined: true,
                 ),
               ),
               Expanded(
@@ -445,6 +425,7 @@ class SettingsPageContent extends StatelessWidget {
                             updateSettings("accentSystemColor", false,
                                 updateGlobalState: true);
                             generateColors();
+                            updateWidgetColorsAndText(context);
                           },
                           useSystemColorPrompt: true,
                         ),
@@ -485,14 +466,15 @@ class SettingsPageContent extends StatelessWidget {
                   : Icons.dark_mode_rounded,
           initial: appStateSettings["theme"].toString().capitalizeFirst,
           items: ["Light", "Dark", "System"],
-          onChanged: (value) {
+          onChanged: (value) async {
             if (value == "Light") {
-              updateSettings("theme", "light", updateGlobalState: true);
+              await updateSettings("theme", "light", updateGlobalState: true);
             } else if (value == "Dark") {
-              updateSettings("theme", "dark", updateGlobalState: true);
+              await updateSettings("theme", "dark", updateGlobalState: true);
             } else if (value == "System") {
-              updateSettings("theme", "system", updateGlobalState: true);
+              await updateSettings("theme", "system", updateGlobalState: true);
             }
+            updateWidgetColorsAndText(context);
           },
           getLabel: (item) {
             return item.toLowerCase().tr();
@@ -655,6 +637,10 @@ class MoreOptionsPagePreferences extends StatelessWidget {
         SettingsHeader(title: "titles".tr()),
         AskForTitlesToggle(),
         AutoTitlesToggle(),
+        if (getPlatform(ignoreEmulation: true) == PlatformOS.isAndroid)
+          SettingsHeader(title: "widgets".tr()),
+        if (getPlatform(ignoreEmulation: true) == PlatformOS.isAndroid)
+          NetWorthWidgetSetting(),
         SettingsHeader(title: "formatting".tr()),
         NumberFormattingSetting(),
         ExtraZerosButtonSetting(),
@@ -966,7 +952,6 @@ class _SetNumberFormatPopupState extends State<SetNumberFormatPopup> {
       "en",
       "tr",
       "af",
-      "ar",
       "de",
       "fr",
     ];
@@ -1037,6 +1022,24 @@ class ExtraZerosButtonSetting extends StatelessWidget {
         if (item == "") return "none".tr().capitalizeFirst;
         return item;
       },
+    );
+  }
+}
+
+class NetWorthWidgetSetting extends StatelessWidget {
+  const NetWorthWidgetSetting({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SettingsContainer(
+      title: "net-worth-total-widget".tr(),
+      description: "select-accounts-and-time-period".tr(),
+      onTap: () {
+        openNetWorthSettings(context);
+      },
+      icon: appStateSettings["outlinedIcons"]
+          ? Icons.area_chart_outlined
+          : Icons.area_chart_rounded,
     );
   }
 }

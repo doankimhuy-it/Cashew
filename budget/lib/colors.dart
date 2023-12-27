@@ -421,3 +421,9 @@ Color getBottomNavbarBackgroundColor({
     return lightDarkAccent;
   }
 }
+
+String colorToHex(Color color) {
+  Color opaqueColor = color.withAlpha(255);
+  String hexString = opaqueColor.value.toRadixString(16).padLeft(6, '0');
+  return "#" + hexString.substring(2);
+}

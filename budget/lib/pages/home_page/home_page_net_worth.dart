@@ -1,7 +1,9 @@
 import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
+import 'package:budget/functions.dart';
 import 'package:budget/pages/add_transaction_page.dart';
 import 'package:budget/pages/home_page/home_page_wallet_switcher.dart';
+import 'package:budget/pages/transaction_filters.dart';
 import 'package:budget/pages/wallet_details_page.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
@@ -41,18 +43,7 @@ class HomePageNetWorth extends StatelessWidget {
                     Expanded(
                       child: TransactionsAmountBox(
                         onLongPress: () async {
-                          await openBottomSheet(
-                            context,
-                            PopupFramework(
-                              title: "net-worth-settings".tr(),
-                              child: WalletPickerPeriodCycle(
-                                allWalletsSettingKey: "netWorthAllWallets",
-                                cycleSettingsExtension: "NetWorth",
-                                homePageWidgetDisplay:
-                                    HomePageWidgetDisplay.NetWorth,
-                              ),
-                            ),
-                          );
+                          await openNetWorthSettings(context);
                           homePageStateKey.currentState?.refreshState();
                         },
                         label: "net-worth".tr(),
@@ -60,26 +51,16 @@ class HomePageNetWorth extends StatelessWidget {
                         currencyKey: Provider.of<AllWallets>(context)
                             .indexedByPk[appStateSettings["selectedWalletPk"]]
                             ?.currency,
-                        amountStream: database.watchTotalOfWallet(
-                          walletPks,
+                        totalWithCountStream:
+                            database.watchTotalWithCountOfWallet(
                           isIncome: null,
                           allWallets: Provider.of<AllWallets>(context),
                           followCustomPeriodCycle: true,
                           cycleSettingsExtension: "NetWorth",
+                          searchFilters:
+                              SearchFilters(walletPks: walletPks ?? []),
                         ),
-                        // getTextColor: (amount) => amount == 0
-                        //     ? getColor(context, "black")
-                        //     : amount > 0
-                        //         ? getColor(context, "incomeAmount")
-                        //         : getColor(context, "expenseAmount"),
                         textColor: getColor(context, "black"),
-                        transactionsAmountStream:
-                            database.watchTotalCountOfTransactionsInWallet(
-                          walletPks,
-                          isIncome: null,
-                          followCustomPeriodCycle: true,
-                          cycleSettingsExtension: "NetWorth",
-                        ),
                         openPage: WalletDetailsPage(wallet: null),
                       ),
                     ),
@@ -224,4 +205,22 @@ class _WalletPickerPeriodCycleState extends State<WalletPickerPeriodCycle> {
       ],
     );
   }
+}
+
+Future openNetWorthSettings(BuildContext context) {
+  return openBottomSheet(
+    context,
+    PopupFramework(
+      title: "net-worth".tr(),
+      subtitle: "applies-to-homepage".tr() +
+          (getPlatform(ignoreEmulation: true) == PlatformOS.isAndroid
+              ? " " + "and-applies-to-widget".tr()
+              : ""),
+      child: WalletPickerPeriodCycle(
+        allWalletsSettingKey: "netWorthAllWallets",
+        cycleSettingsExtension: "NetWorth",
+        homePageWidgetDisplay: HomePageWidgetDisplay.NetWorth,
+      ),
+    ),
+  );
 }

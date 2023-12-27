@@ -12,6 +12,7 @@ import 'package:budget/widgets/icon_button_scaled.dart';
 import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/select_category.dart';
+import 'package:budget/widgets/text_input.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
@@ -30,6 +31,7 @@ class SearchFilters {
     this.objectivePks = const [],
     this.objectiveLoanPks = const [],
     this.expenseIncome = const [],
+    this.positiveCashFlow, //Similar to isIncome, but includes anything that is positive amount (loans)
     this.paidStatus = const [],
     this.transactionTypes = const [],
     this.budgetTransactionFilters = const [],
@@ -38,6 +40,8 @@ class SearchFilters {
     this.amountRange,
     this.dateTimeRange,
     this.searchQuery,
+    this.titleContains,
+    this.noteContains,
   }) {
     walletPks = this.walletPks.isEmpty ? [] : this.walletPks;
     categoryPks = this.categoryPks.isEmpty ? [] : this.categoryPks;
@@ -50,6 +54,7 @@ class SearchFilters {
     objectiveLoanPks =
         this.objectiveLoanPks.isEmpty ? [] : this.objectiveLoanPks;
     expenseIncome = this.expenseIncome.isEmpty ? [] : this.expenseIncome;
+    positiveCashFlow = this.positiveCashFlow;
     paidStatus = this.paidStatus.isEmpty ? [] : this.paidStatus;
     transactionTypes =
         this.transactionTypes.isEmpty ? [] : this.transactionTypes;
@@ -70,6 +75,7 @@ class SearchFilters {
   List<String?> objectivePks;
   List<String?> objectiveLoanPks;
   List<ExpenseIncome> expenseIncome;
+  bool? positiveCashFlow;
   List<PaidStatus> paidStatus;
   List<TransactionSpecialType?> transactionTypes;
   List<BudgetTransactionFilters> budgetTransactionFilters;
@@ -78,6 +84,8 @@ class SearchFilters {
   RangeValues? amountRange;
   DateTimeRange? dateTimeRange;
   String? searchQuery;
+  String? titleContains;
+  String? noteContains;
 
   SearchFilters copyWith({
     List<String>? walletPks,
@@ -88,6 +96,7 @@ class SearchFilters {
     List<String?>? objectivePks,
     List<String?>? objectiveLoanPks,
     List<ExpenseIncome>? expenseIncome,
+    bool? positiveCashFlow,
     List<PaidStatus>? paidStatus,
     List<TransactionSpecialType?>? transactionTypes,
     List<BudgetTransactionFilters>? budgetTransactionFilters,
@@ -96,6 +105,8 @@ class SearchFilters {
     DateTimeRange? dateTimeRange,
     bool forceSetDateTimeRange = false,
     String? searchQuery,
+    String? titleContains,
+    String? noteContains,
   }) {
     return SearchFilters(
       walletPks: walletPks ?? this.walletPks,
@@ -106,6 +117,7 @@ class SearchFilters {
       objectivePks: objectivePks ?? this.objectivePks,
       objectiveLoanPks: objectiveLoanPks ?? this.objectiveLoanPks,
       expenseIncome: expenseIncome ?? this.expenseIncome,
+      positiveCashFlow: positiveCashFlow,
       paidStatus: paidStatus ?? this.paidStatus,
       transactionTypes: transactionTypes ?? this.transactionTypes,
       budgetTransactionFilters:
@@ -116,6 +128,8 @@ class SearchFilters {
           ? dateTimeRange
           : (dateTimeRange ?? this.dateTimeRange),
       searchQuery: searchQuery ?? this.searchQuery,
+      titleContains: titleContains ?? this.titleContains,
+      noteContains: noteContains ?? this.noteContains,
     );
   }
 
@@ -128,6 +142,7 @@ class SearchFilters {
     objectivePks = [];
     objectiveLoanPks = [];
     expenseIncome = [];
+    positiveCashFlow = null;
     paidStatus = [];
     transactionTypes = [];
     budgetTransactionFilters = [];
@@ -136,6 +151,8 @@ class SearchFilters {
     amountRange = null;
     dateTimeRange = null;
     searchQuery = null;
+    titleContains = null;
+    noteContains = null;
   }
 
   bool isClear({bool? ignoreDateTimeRange, bool? ignoreSearchQuery}) {
@@ -147,6 +164,7 @@ class SearchFilters {
         objectivePks.isEmpty &&
         objectiveLoanPks.isEmpty &&
         expenseIncome.isEmpty &&
+        positiveCashFlow == null &&
         paidStatus.isEmpty &&
         transactionTypes.isEmpty &&
         budgetTransactionFilters.isEmpty &&
@@ -154,7 +172,10 @@ class SearchFilters {
         methodAdded.isEmpty &&
         amountRange == null &&
         (ignoreDateTimeRange == true || dateTimeRange == null) &&
-        (ignoreSearchQuery == true || searchQuery == null))
+        (ignoreSearchQuery == true || searchQuery == null) &&
+        (ignoreSearchQuery == true || searchQuery == null) &&
+        titleContains == null &&
+        noteContains == null)
       return true;
     else
       return false;
@@ -213,6 +234,13 @@ class SearchFilters {
           case 'expenseIncome':
             expenseIncome.add(ExpenseIncome.values[int.parse(value)]);
             break;
+          case 'positiveCashFlow':
+            if (value == "null") {
+              positiveCashFlow = null;
+            } else {
+              positiveCashFlow = bool.parse(value);
+            }
+            break;
           case 'paidStatus':
             paidStatus.add(PaidStatus.values[int.parse(value)]);
             break;
@@ -262,6 +290,20 @@ class SearchFilters {
               searchQuery = value;
             }
             break;
+          case 'titleContains':
+            if (value == "null" || value.trim() == "") {
+              titleContains = null;
+            } else {
+              titleContains = value;
+            }
+            break;
+          case 'noteContains':
+            if (value == "null" || value.trim() == "") {
+              noteContains = null;
+            } else {
+              noteContains = value;
+            }
+            break;
           default:
             break;
         }
@@ -306,6 +348,8 @@ class SearchFilters {
     for (ExpenseIncome element in expenseIncome) {
       outString += "expenseIncome:-:" + (element.index).toString() + ":-:";
     }
+    outString += "positiveCashFlow:-:" + positiveCashFlow.toString() + ":-:";
+
     for (PaidStatus element in paidStatus) {
       outString += "paidStatus:-:" + (element.index).toString() + ":-:";
     }
@@ -324,6 +368,8 @@ class SearchFilters {
     outString += "amountRange:-:" + amountRange.toString() + ":-:";
     outString += "dateTimeRange:-:" + dateTimeRange.toString() + ":-:";
     outString += "searchQuery:-:" + searchQuery.toString() + ":-:";
+    outString += "titleContains:-:" + titleContains.toString() + ":-:";
+    outString += "noteContains:-:" + noteContains.toString() + ":-:";
     print(outString);
     return outString;
   }
@@ -841,6 +887,37 @@ class _TransactionFiltersSelectionState
         //     return selectedFilters.methodAdded.contains(item);
         //   },
         // ),
+         SizedBox(height: 5),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              TextInput(
+                padding: EdgeInsets.zero,
+                labelText: "title-contains".tr() + "...",
+                onChanged: (value) {
+                  selectedFilters.titleContains = value.trim();
+                },
+                initialValue: selectedFilters.titleContains,
+                icon: appStateSettings["outlinedIcons"]
+                    ? Icons.title_outlined
+                    : Icons.title_rounded,
+              ),
+              SizedBox(height: 7),
+              TextInput(
+                padding: EdgeInsets.zero,
+                labelText: "notes-contain".tr() + "...",
+                onChanged: (value) {
+                  selectedFilters.noteContains = value.trim();
+                },
+                initialValue: selectedFilters.noteContains,
+                icon: appStateSettings["outlinedIcons"]
+                    ? Icons.sticky_note_2_outlined
+                    : Icons.sticky_note_2_rounded,
+              )
+            ],
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
@@ -891,6 +968,21 @@ class AppliedFilterChips extends StatelessWidget {
   Future<List<Widget>> getSearchFilterWidgets(BuildContext context) async {
     AllWallets allWallets = Provider.of<AllWallets>(context);
     List<Widget> out = [];
+    // Title contains
+    if (searchFilters.titleContains != null) {
+      out.add(AppliedFilterChip(
+        label:
+            "title-contains".tr() + ": " + (searchFilters.titleContains ?? ""),
+        openFiltersSelection: openFiltersSelection,
+      ));
+    }
+    // Notes contains
+    if (searchFilters.noteContains != null) {
+      out.add(AppliedFilterChip(
+        label: "notes-contain".tr() + ": " + (searchFilters.noteContains ?? ""),
+        openFiltersSelection: openFiltersSelection,
+      ));
+    }
     // Categories
     for (TransactionCategory category in await database.getAllCategories(
         categoryFks: searchFilters.categoryPks, allCategories: false)) {
@@ -1022,7 +1114,7 @@ class AppliedFilterChips extends StatelessWidget {
     for (Budget budget in await database.getAllBudgets()) {
       if (searchFilters.excludedBudgetPks.contains(budget.budgetPk))
         out.add(AppliedFilterChip(
-          label: "excluded-from".tr() + " " + budget.name,
+          label: "excluded-from".tr() + ": " + budget.name,
           customBorderColor: HexColor(
             budget.colour,
             defaultColor: Theme.of(context).colorScheme.primary,

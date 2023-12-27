@@ -9,6 +9,7 @@ import 'package:budget/widgets/linear_gradient_faded_edges.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/settings_containers.dart';
 import 'package:budget/widgets/tappable.dart';
+import 'package:budget/widgets/util/check_widget_launch.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
@@ -185,6 +186,7 @@ class _SelectColorState extends State<SelectColor> {
                           "accentColor", await getAccentColorSystemString(),
                           updateGlobalState: true);
                       generateColors();
+                      updateWidgetColorsAndText(context);
                     } else {
                       widget.setSelectedColor!(selectedColor);
                     }

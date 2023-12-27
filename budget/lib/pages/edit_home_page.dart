@@ -1,10 +1,13 @@
 import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
 import 'package:budget/pages/add_transaction_page.dart';
+import 'package:budget/pages/home_page/home_page_all_spending_summary.dart';
 import 'package:budget/pages/home_page/home_page_budgets.dart';
+import 'package:budget/pages/home_page/home_page_credit_debts.dart';
 import 'package:budget/pages/home_page/home_page_line_graph.dart';
 import 'package:budget/pages/home_page/home_page_net_worth.dart';
 import 'package:budget/pages/home_page/home_page_objectives.dart';
+import 'package:budget/pages/home_page/home_page_upcoming_transactions.dart';
 import 'package:budget/pages/home_page/home_page_wallet_switcher.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/modified/reorderable_list.dart';
@@ -174,14 +177,7 @@ class _EditHomePageState extends State<EditHomePage> {
               switchHomeScreenSection(context, "showCreditDebt", value);
             },
             onTap: () async {
-              openBottomSheet(
-                context,
-                PopupFramework(
-                  title: "select-period".tr(),
-                  child:
-                      PeriodCyclePicker(cycleSettingsExtension: "CreditDebts"),
-                ),
-              );
+              openOverdueUpcomingSettings(context);
             },
           ),
           "objectiveLoans": EditHomePageItem(
@@ -195,14 +191,7 @@ class _EditHomePageState extends State<EditHomePage> {
               switchHomeScreenSection(context, "showObjectiveLoans", value);
             },
             onTap: () async {
-              openBottomSheet(
-                context,
-                EditHomePagePinnedGoalsPopup(
-                  showGoalsTotalLabelSetting: true,
-                  objectiveType: ObjectiveType.loan,
-                ),
-                useCustomController: true,
-              );
+              openCreditDebtsSettings(context);
             },
           ),
           "allSpendingSummary": EditHomePageItem(
@@ -216,14 +205,7 @@ class _EditHomePageState extends State<EditHomePage> {
               switchHomeScreenSection(context, "showAllSpendingSummary", value);
             },
             onTap: () async {
-              openBottomSheet(
-                context,
-                PopupFramework(
-                  title: "select-period".tr(),
-                  child: PeriodCyclePicker(
-                      cycleSettingsExtension: "AllSpendingSummary"),
-                ),
-              );
+              await openAllSpendingSettings(context);
             },
           ),
           "netWorth": EditHomePageItem(
@@ -237,17 +219,7 @@ class _EditHomePageState extends State<EditHomePage> {
             },
             extraWidgetsBelow: [],
             onTap: () async {
-              await openBottomSheet(
-                context,
-                PopupFramework(
-                  title: "net-worth-settings".tr(),
-                  child: WalletPickerPeriodCycle(
-                    allWalletsSettingKey: "netWorthAllWallets",
-                    cycleSettingsExtension: "NetWorth",
-                    homePageWidgetDisplay: HomePageWidgetDisplay.NetWorth,
-                  ),
-                ),
-              );
+              await openNetWorthSettings(context);
             },
           ),
           "spendingGraph": EditHomePageItem(
@@ -448,7 +420,7 @@ class _EditHomePageState extends State<EditHomePage> {
         horizontalPadding: getHorizontalPaddingConstrained(context),
         dragDownToDismiss: true,
         dragDownToDismissEnabled: dragDownToDismissEnabled,
-        title: "top-center".tr(),
+        title: "edit-home".tr(),
         slivers: [
           if (enableDoubleColumn(context))
             SliverToBoxAdapter(
@@ -628,28 +600,22 @@ Future openPieChartHomePageBottomSheetSettings(BuildContext context) async {
   await openBottomSheet(
     context,
     PopupFramework(
-      title: "select-type".tr(),
+      title: "pie-chart".tr(),
+      subtitle: "applies-to-homepage".tr(),
       child: Column(
         children: [
           RadioItems(
             items: <String>[
-              "expense",
-              "income",
+              "all",
+              "outgoing",
+              "incoming",
             ],
             displayFilter: (type) {
               return type.toString().tr();
             },
-            initial: appStateSettings["pieChartIsIncome"] == true
-                ? "income"
-                : "expense",
+            initial: appStateSettings["pieChartTotal"],
             onChanged: (type) async {
-              if (type == "expense") {
-                updateSettings("pieChartIsIncome", false,
-                    updateGlobalState: false);
-              } else {
-                updateSettings("pieChartIsIncome", true,
-                    updateGlobalState: false);
-              }
+              updateSettings("pieChartTotal", type, updateGlobalState: false);
               Navigator.of(context).pop();
             },
           ),

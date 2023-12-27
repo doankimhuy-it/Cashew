@@ -1,6 +1,7 @@
 import 'package:budget/functions.dart';
 import 'package:budget/pages/add_category_page.dart';
 import 'package:budget/struct/settings.dart';
+import 'package:budget/widgets/linear_gradient_faded_edges.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class SelectChips<T> extends StatefulWidget {
     required this.getLabel,
     this.getCustomBorderColor,
     this.getCustomSelectedColor,
-    this.extraWidget,
-    this.extraWidgetAtBeginning = false,
+    this.extraWidgetBefore,
+    this.extraWidgetAfter,
     this.onLongPress,
     this.wrapped = false,
     this.extraHorizontalPadding,
@@ -30,6 +31,7 @@ class SelectChips<T> extends StatefulWidget {
     this.padding,
     // If allowMultipleSelected, we use check marks
     this.allowMultipleSelected = true,
+    this.extraWidgetBeforeSticky = false,
   });
   final List<T> items;
   final bool Function(T) getSelected;
@@ -37,8 +39,8 @@ class SelectChips<T> extends StatefulWidget {
   final String Function(T) getLabel;
   final Color? Function(T)? getCustomBorderColor;
   final Color? Function(T)? getCustomSelectedColor;
-  final Widget? extraWidget;
-  final bool extraWidgetAtBeginning;
+  final Widget? extraWidgetBefore;
+  final Widget? extraWidgetAfter;
   final Function(T)? onLongPress;
   final bool wrapped;
   final double? extraHorizontalPadding;
@@ -47,6 +49,7 @@ class SelectChips<T> extends StatefulWidget {
   final scrollablePositionedList;
   final EdgeInsets? padding;
   final bool allowMultipleSelected;
+  final bool extraWidgetBeforeSticky;
 
   @override
   State<SelectChips<T>> createState() => _SelectChipsState<T>();
@@ -73,8 +76,7 @@ class _SelectChipsState<T> extends State<SelectChips<T>> {
           currentIndex++;
         }
         // Extra widget at beginning
-        if (widget.extraWidget != null &&
-            widget.extraWidgetAtBeginning == true &&
+        if (widget.extraWidgetBefore != null &&
             scrollToIndex != null &&
             scrollToIndex > 0) {
           scrollToIndex = scrollToIndex + 1;
@@ -84,7 +86,10 @@ class _SelectChipsState<T> extends State<SelectChips<T>> {
             index: scrollToIndex,
             duration: Duration(milliseconds: 500),
             curve: Curves.easeInOutCubicEmphasized,
-            alignment: 0.06,
+            alignment: widget.extraWidgetBeforeSticky &&
+                    widget.extraWidgetBefore != null
+                ? 0.4
+                : 0.06,
           );
         }
       });
@@ -101,8 +106,9 @@ class _SelectChipsState<T> extends State<SelectChips<T>> {
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
-      if (widget.extraWidget != null && widget.extraWidgetAtBeginning == true)
-        widget.extraWidget ?? SizedBox.shrink(),
+      if (widget.extraWidgetBefore != null &&
+          widget.extraWidgetBeforeSticky == false)
+        widget.extraWidgetBefore ?? SizedBox.shrink(),
       ...List<Widget>.generate(
         widget.items.length,
         (int index) {
@@ -171,9 +177,18 @@ class _SelectChipsState<T> extends State<SelectChips<T>> {
           );
         },
       ).toList(),
-      if (widget.extraWidget != null && widget.extraWidgetAtBeginning == false)
-        widget.extraWidget ?? SizedBox.shrink()
+      if (widget.extraWidgetAfter != null)
+        widget.extraWidgetAfter ?? SizedBox.shrink(),
     ];
+
+    EdgeInsets scrollPadding = widget.padding ??
+        EdgeInsets.only(
+          left: widget.extraWidgetBeforeSticky == true &&
+                  widget.extraWidgetBefore != null
+              ? (widget.extraHorizontalPadding ?? 0) + 3
+              : (widget.extraHorizontalPadding ?? 0) + 18,
+          right: (widget.extraHorizontalPadding ?? 0) + 18,
+        );
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -193,7 +208,8 @@ class _SelectChipsState<T> extends State<SelectChips<T>> {
                             heightOfScroll = size.height;
                           });
                         },
-                        child: widget.extraWidgetAtBeginning == false
+                        child: widget.extraWidgetBefore == null &&
+                                widget.extraWidgetBeforeSticky == false
                             ? children[0]
                             : children[1],
                       ),
@@ -201,54 +217,74 @@ class _SelectChipsState<T> extends State<SelectChips<T>> {
                   ),
                 )
               : SizedBox.shrink(),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: widget.wrapped
-                ? Padding(
-                    padding: widget.padding ??
-                        EdgeInsets.symmetric(
-                            horizontal:
-                                (widget.extraHorizontalPadding ?? 0) + 18),
-                    child: Wrap(
-                      runSpacing: 10,
-                      children: [
-                        for (Widget child in children)
-                          SizedBox(height: heightOfScroll, child: child)
-                      ],
-                    ),
-                  )
-                : SizedBox(
-                    height: heightOfScroll,
-                    child: widget.scrollablePositionedList == false
-                        ? SingleChildScrollView(
-                            child: Row(
-                              children: children,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                            ),
-                            padding: widget.padding ??
-                                EdgeInsets.symmetric(
-                                    horizontal:
-                                        (widget.extraHorizontalPadding ?? 0) +
-                                            18),
-                            scrollDirection: Axis.horizontal,
-                          )
-                        : ScrollablePositionedList.builder(
-                            itemCount: children.length,
-                            itemBuilder: (context, index) => children[index],
-                            itemScrollController: itemScrollController,
-                            scrollOffsetController: scrollOffsetController,
-                            padding: widget.padding ??
-                                EdgeInsets.symmetric(
-                                    horizontal:
-                                        (widget.extraHorizontalPadding ?? 0) +
-                                            18),
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            // physics:
-                            //     isDoneAnimation ? ScrollPhysics() : BouncingScrollPhysics(),
-                          ),
+          Row(
+            children: [
+              if (widget.extraWidgetBefore != null &&
+                  widget.extraWidgetBeforeSticky)
+                SizedBox(
+                  height: heightOfScroll,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: (widget.extraHorizontalPadding ?? 0) + 18),
+                    child: widget.extraWidgetBefore ?? SizedBox.shrink(),
                   ),
+                ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: widget.wrapped
+                      ? Padding(
+                          padding: widget.padding ??
+                              EdgeInsets.symmetric(
+                                  horizontal:
+                                      (widget.extraHorizontalPadding ?? 0) +
+                                          18),
+                          child: Wrap(
+                            runSpacing: 10,
+                            children: [
+                              for (Widget child in children)
+                                SizedBox(height: heightOfScroll, child: child)
+                            ],
+                          ),
+                        )
+                      : LinearGradientFadedEdges(
+                          enableBottom: false,
+                          enableRight: false,
+                          enableTop: false,
+                          enableLeft: widget.extraWidgetBeforeSticky &&
+                              widget.extraWidgetBefore != null,
+                          child: SizedBox(
+                            height: heightOfScroll,
+                            child: widget.scrollablePositionedList == false
+                                ? SingleChildScrollView(
+                                    child: Row(
+                                      children: children,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                    ),
+                                    padding: scrollPadding,
+                                    scrollDirection: Axis.horizontal,
+                                  )
+                                : ScrollablePositionedList.builder(
+                                    itemCount: children.length,
+                                    itemBuilder: (context, index) =>
+                                        children[index],
+                                    itemScrollController: itemScrollController,
+                                    scrollOffsetController:
+                                        scrollOffsetController,
+                                    padding: scrollPadding,
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    // physics:
+                                    //     isDoneAnimation ? ScrollPhysics() : BouncingScrollPhysics(),
+                                  ),
+                          ),
+                        ),
+                ),
+              ),
+            ],
           )
         ],
       ),
@@ -258,29 +294,23 @@ class _SelectChipsState<T> extends State<SelectChips<T>> {
 
 class SelectChipsAddButtonExtraWidget extends StatelessWidget {
   const SelectChipsAddButtonExtraWidget({
-    this.shouldPushRoute = false,
     required this.openPage,
-    this.popCurrentRoute = false,
+    this.onTap,
+    this.iconData,
     super.key,
   });
-  final bool shouldPushRoute;
-  final Widget openPage;
-  final bool popCurrentRoute;
+  final Widget? openPage;
+  final IconData? iconData;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return AddButton(
-      onTap: () {
-        if (popCurrentRoute) {
-          Navigator.maybePop(context);
-        }
-        if (shouldPushRoute) {
-          pushRoute(context, openPage);
-        }
-      },
+      icon: iconData,
+      onTap: onTap ?? () {},
       width: 40,
-      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-      openPage: shouldPushRoute ? null : openPage,
+       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+      openPage: openPage,
       borderRadius: 8,
     );
   }

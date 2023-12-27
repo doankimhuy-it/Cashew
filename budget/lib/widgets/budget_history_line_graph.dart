@@ -28,6 +28,7 @@ class BudgetHistoryLineGraph extends StatelessWidget {
     required this.setNoPastRegionsAreZero,
     this.showDateOnHover = false,
     this.forceMinYIfPositive,
+    this.forceMaxY,
   });
 
   final Color color;
@@ -43,6 +44,7 @@ class BudgetHistoryLineGraph extends StatelessWidget {
   final Function(bool) setNoPastRegionsAreZero;
   final bool showDateOnHover;
   final double? forceMinYIfPositive;
+  final double? forceMaxY;
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +187,7 @@ class BudgetHistoryLineGraph extends StatelessWidget {
       spots: filteredSpotsFixedX,
       initialSpots: initialSpotsAll,
       horizontalLineAt: horizontalLineAt,
-      maxY: maxY,
+      maxY: forceMaxY ?? maxY,
       minY: minY,
       extraCategorySpots: extraCategorySpotsFilteredFixedX,
       categoriesMapped: categoriesMapped,
@@ -671,8 +673,8 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                   return Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: MediaQuery(
-                      data:
-                          MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
+                      data: MediaQuery.of(context)
+                          .copyWith(textScaler: TextScaler.linear(1.0)),
                       child: TextFont(
                         textAlign: TextAlign.right,
                         text: getWordedNumber(

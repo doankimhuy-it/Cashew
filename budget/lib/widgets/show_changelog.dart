@@ -26,6 +26,69 @@ import 'list_item.dart';
 
 String getChangelogString() {
   return """
+    < 5.1.2
+    Fixed toggle between spending limit type for spending goals in a budget
+    Added font family fallback for base components
+    Delete option for recommended titles
+    Focus is cleared when title is selected
+    When in full screen wide, account picker wraps
+    < 5.1.1
+    New all spending period drop down selector: quickly change selected period on all spending page when viewing details of selected period
+    Increased transaction max amount to 999,999,999,999 from 100,000,000
+    When showing all time, line graph includes transactions past the current date
+    When setting a title of a transaction, when editing details, it suggests titles
+    Fixed re-rendering of pie chart home page graph
+    Initial amount when adding wallet properly supports decimal precision
+    Dropdown account picker if more than 3 when adding transaction
+    Removed number format that would put subtraction at the end of the currency string
+    Added explicit home page widget settings section in More Options
+    Translation updates
+    < 5.1.0
+    Fixed polarity of net spending in all spending page history tab
+    Only allow one widget launch per app lifecycle/resume
+    Updated translations
+    Tapping background of homepage pie chart deselects selected category
+    Dropdown account picker when selecting amount for full screen when more than 5 accounts
+    < 5.0.9
+    Expense and income homepage selected time range and wallets for apply when search page opened
+    Dropdown account selector when more than 3 accounts in Enter Amount popup
+    Biometric workflow stops completely before re-authenticating
+    Changed open source shortcut to about
+    Fix home screen widget double launch
+    < 5.0.8
+    Transfer balance app quick shortcut
+    Ability to select certain accounts for income/expense total on homepage
+    Fixed budget history limit when watching selected categories
+    New all spending summary no longer shows on wallet details page
+    Most common transactions amount properly converted to main currency 
+    Renamed and refactored homepage section settings
+    Home screen widgets and shortcuts (A)
+    < 5.0.7
+    Hot fix for net worth and selected accounts
+    Hot fix for search one time loans after deleting long term loan
+    French language updated
+    < 5.0.6
+    Translation fixes for category totals
+    When long term loan selected, polarity slider in add transaction follows default
+    Icon for title/notes filter
+    If row entry could not be reordered, opacity still follows that of archived status
+    If a transactions payment has been removed, auto payments no longer marks it as paid
+    < 5.0.5
+    Long pressing date selector sets to current date and time
+    When creating any transaction, it can be added to a long term loan 
+    Loan transactions can be edited and removed from a loan
+    Can select multiple transactions and add to goal
+    Improved income/expense selector when adding transaction
+    Multiple transaction selection actions only appear if relevant to users data
+    Fixed automatic payment for transactions would be duplicated when synced
+    Account transfers supported for long term loan transactions
+    Pie chart homepage, revamped selection - all, positive cashflow, negative cashflow
+    Fixed custom currency exchange rate, always references USD for proper conversion when entered
+    All spending page spending amount breakdown improvements - see expense, income, upcoming, overdue,lent, and borrowed totals
+    Ability to add custom currencies
+    Refactored total and count queries
+    Title and note contains filters
+    If a row fails when importing CSV, it will skip
     < 5.0.4
     Better custom home page sections ordering on full screen
     Removed income/expense references when using a balance correction category

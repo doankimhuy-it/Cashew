@@ -1,3 +1,5 @@
+import 'package:budget/database/tables.dart';
+import 'package:budget/pages/transaction_filters.dart';
 import 'package:budget/widgets/transaction_entries.dart';
 import 'package:flutter/material.dart';
 
@@ -23,15 +25,17 @@ class HomeTransactions extends StatelessWidget {
         DateTime.now().month,
         DateTime.now().day + 4,
       ),
-      income: selectedSlidingSelector == 1
-          ? null
-          : selectedSlidingSelector == 2
-              ? false
-              : true,
       dateDividerColor: Colors.transparent,
       useHorizontalPaddingConstrained: false,
       pastDaysLimitToShow: 7,
       limitPerDay: 50,
+      searchFilters: SearchFilters().copyWith(
+          expenseIncome: (selectedSlidingSelector == 1)
+              ? null
+              : [
+                  if (selectedSlidingSelector == 2) ExpenseIncome.expense,
+                  if (selectedSlidingSelector == 3) ExpenseIncome.income,
+                ]),
     );
   }
 }

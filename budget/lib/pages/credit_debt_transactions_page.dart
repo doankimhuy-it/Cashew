@@ -174,14 +174,9 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
         child: Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: CenteredAmountAndNumTransactions(
-            numTransactionsStream: database.watchCountOfCreditDebt(
-              isCredit,
-              searchValue,
-              selectedTab: _tabController.index,
-            ),
-            totalAmountStream: database.watchTotalOfCreditDebt(
-              Provider.of<AllWallets>(context),
-              isCredit,
+            totalWithCountStream: database.watchTotalWithCountOfCreditDebt(
+              allWallets: Provider.of<AllWallets>(context),
+              isCredit: isCredit,
               searchString: searchValue,
               selectedTab: _tabController.index,
             ),
@@ -346,6 +341,7 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
                   if (snapshot.hasData == false) return SizedBox.shrink();
                   if ((snapshot.data?.length ?? 0) <= 0) {
                     numberLongTerm = 0;
+                    _tabController.index = 0;
                     return CustomScrollView(
                       controller: _scrollController,
                       slivers: [

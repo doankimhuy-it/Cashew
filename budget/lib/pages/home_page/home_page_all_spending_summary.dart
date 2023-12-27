@@ -1,8 +1,11 @@
 import 'package:budget/colors.dart';
 import 'package:budget/database/tables.dart';
+import 'package:budget/pages/home_page/home_page_net_worth.dart';
 import 'package:budget/pages/transaction_filters.dart';
 import 'package:budget/pages/transactions_search_page.dart';
+import 'package:budget/pages/wallet_details_page.dart';
 import 'package:budget/struct/database_global.dart';
+import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/widgets/navigation_framework.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
@@ -19,90 +22,102 @@ class HomePageAllSpendingSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KeepAliveClientMixin(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 13, left: 13, right: 13),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: TransactionsAmountBox(
-                onLongPress: () async {
-                  await openBottomSheet(
-                    context,
-                    PopupFramework(
-                      title: "select-period".tr(),
-                      child: PeriodCyclePicker(
+      child: StreamBuilder<List<TransactionWallet>>(
+        stream: database
+            .getAllPinnedWallets(HomePageWidgetDisplay.AllSpendingSummary)
+            .$1,
+        builder: (context, snapshot) {
+          if (snapshot.hasData ||
+              appStateSettings["allSpendingSummaryAllWallets"] == true) {
+            List<String>? walletPks =
+                (snapshot.data ?? []).map((item) => item.walletPk).toList();
+            if (appStateSettings["allSpendingSummaryAllWallets"] == true)
+              walletPks = null;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 13, left: 13, right: 13),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: TransactionsAmountBox(
+                      onLongPress: () async {
+                        await openAllSpendingSettings(context);
+                        homePageStateKey.currentState?.refreshState();
+                      },
+                      label: "expense".tr(),
+                      totalWithCountStream:
+                          database.watchTotalWithCountOfWallet(
+                        isIncome: false,
+                        allWallets: Provider.of<AllWallets>(context),
+                        followCustomPeriodCycle: true,
                         cycleSettingsExtension: "AllSpendingSummary",
+                        onlyIncomeAndExpense: true,
+                        searchFilters:
+                            SearchFilters(walletPks: walletPks ?? []),
+                      ),
+                      textColor: getColor(context, "expenseAmount"),
+                      openPage: TransactionsSearchPage(
+                        initialFilters: SearchFilters().copyWith(
+                          dateTimeRange: getDateTimeRangeForPassedSearchFilters(
+                              cycleSettingsExtension: "AllSpendingSummary"),
+                          walletPks: walletPks ?? [],
+                          expenseIncome: [ExpenseIncome.expense],
+                        ),
                       ),
                     ),
-                  );
-                  homePageStateKey.currentState?.refreshState();
-                },
-                label: "expense".tr(),
-                amountStream: database.watchTotalOfWallet(
-                  null,
-                  isIncome: false,
-                  allWallets: Provider.of<AllWallets>(context),
-                  followCustomPeriodCycle: true,
-                  cycleSettingsExtension: "AllSpendingSummary",
-                ),
-                textColor: getColor(context, "expenseAmount"),
-                transactionsAmountStream:
-                    database.watchTotalCountOfTransactionsInWallet(
-                  null,
-                  isIncome: false,
-                  followCustomPeriodCycle: true,
-                  cycleSettingsExtension: "AllSpendingSummary",
-                ),
-                openPage: TransactionsSearchPage(
-                  initialFilters: SearchFilters(
-                    expenseIncome: [ExpenseIncome.expense],
                   ),
-                ),
-              ),
-            ),
-            SizedBox(width: 13),
-            Expanded(
-              child: TransactionsAmountBox(
-                onLongPress: () async {
-                  await openBottomSheet(
-                    context,
-                    PopupFramework(
-                      title: "select-period".tr(),
-                      child: PeriodCyclePicker(
+                  SizedBox(width: 13),
+                  Expanded(
+                    child: TransactionsAmountBox(
+                      onLongPress: () async {
+                        await openAllSpendingSettings(context);
+                        homePageStateKey.currentState?.refreshState();
+                      },
+                      label: "income".tr(),
+                      totalWithCountStream:
+                          database.watchTotalWithCountOfWallet(
+                        isIncome: true,
+                        allWallets: Provider.of<AllWallets>(context),
+                        followCustomPeriodCycle: true,
                         cycleSettingsExtension: "AllSpendingSummary",
+                        onlyIncomeAndExpense: true,
+                        searchFilters:
+                            SearchFilters(walletPks: walletPks ?? []),
+                      ),
+                      textColor: getColor(context, "incomeAmount"),
+                      openPage: TransactionsSearchPage(
+                        initialFilters: SearchFilters().copyWith(
+                          dateTimeRange: getDateTimeRangeForPassedSearchFilters(
+                              cycleSettingsExtension: "AllSpendingSummary"),
+                          walletPks: walletPks ?? [],
+                          expenseIncome: [ExpenseIncome.income],
+                        ),
                       ),
                     ),
-                  );
-                  homePageStateKey.currentState?.refreshState();
-                },
-                label: "income".tr(),
-                amountStream: database.watchTotalOfWallet(
-                  null,
-                  isIncome: true,
-                  allWallets: Provider.of<AllWallets>(context),
-                  followCustomPeriodCycle: true,
-                  cycleSettingsExtension: "AllSpendingSummary",
-                ),
-                textColor: getColor(context, "incomeAmount"),
-                transactionsAmountStream:
-                    database.watchTotalCountOfTransactionsInWallet(
-                  null,
-                  isIncome: true,
-                  followCustomPeriodCycle: true,
-                  cycleSettingsExtension: "AllSpendingSummary",
-                ),
-                openPage: TransactionsSearchPage(
-                  initialFilters: SearchFilters(
-                    expenseIncome: [ExpenseIncome.income],
                   ),
-                ),
+                ],
               ),
-            ),
-          ],
-        ),
+            );
+          }
+          return SizedBox.shrink();
+        },
       ),
     );
   }
+}
+
+Future openAllSpendingSettings(BuildContext context) {
+  return openBottomSheet(
+    context,
+    PopupFramework(
+      title: "income-and-expenses".tr(),
+      subtitle: "applies-to-homepage".tr(),
+      child: WalletPickerPeriodCycle(
+        allWalletsSettingKey: "allSpendingSummaryAllWallets",
+        cycleSettingsExtension: "AllSpendingSummary",
+        homePageWidgetDisplay: HomePageWidgetDisplay.AllSpendingSummary,
+      ),
+    ),
+  );
 }
