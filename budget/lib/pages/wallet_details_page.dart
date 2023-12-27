@@ -1717,7 +1717,7 @@ class WalletCategoryPieChart extends StatefulWidget {
 }
 
 class _WalletCategoryPieChartState extends State<WalletCategoryPieChart> {
-  TransactionCategory? selectedCategory = null;
+  TransactionCategory? selectedCategory;
   bool isIncome = false;
   GlobalKey<PieChartDisplayState> _pieChartDisplayStateKey = GlobalKey();
   bool showAllSubcategories = appStateSettings["showAllSubcategories"];

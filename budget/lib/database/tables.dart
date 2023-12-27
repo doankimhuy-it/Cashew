@@ -5669,7 +5669,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     Budget? budget,
     bool allTime = false,
     List<String>? walletPks,
-    bool? isIncome = null,
+    bool? isIncome,
     bool followCustomPeriodCycle = false,
     String? mainCategoryPkIfSubCategories,
     String cycleSettingsExtension = "",
@@ -5752,7 +5752,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     Budget? budget,
     bool allTime = false,
     List<String>? walletPks,
-    bool? isIncome = null,
+    bool? isIncome,
     bool followCustomPeriodCycle = false,
     String? mainCategoryPkIfSubCategories,
     bool includeAllSubCategories = false,
@@ -5897,7 +5897,7 @@ class FinanceDatabase extends _$FinanceDatabase {
   }
 
   Stream<TotalWithCount?> watchTotalWithCountOfWallet({
-    bool? isIncome = null,
+    bool? isIncome,
     DateTime? startDate,
     required AllWallets allWallets,
     bool followCustomPeriodCycle = false,
@@ -5949,7 +5949,7 @@ class FinanceDatabase extends _$FinanceDatabase {
 
   Stream<double?> watchTotalOfWalletNoConversion(
     String walletPk, {
-    bool? isIncome = null,
+    bool? isIncome,
     DateTime? startDate,
   }) {
     final totalAmt = transactions.amount.sum();

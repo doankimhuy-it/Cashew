@@ -31,8 +31,8 @@ class PageFramework extends StatefulWidget {
     this.appBarBackgroundColor,
     this.appBarBackgroundColorStart,
     this.backButton = true,
-    this.subtitle = null,
-    this.subtitleSize = null,
+    this.subtitle,
+    this.subtitleSize,
     this.subtitleAnimationSpeed,
     this.onBottomReached,
     this.pinned = true,
@@ -414,7 +414,7 @@ class PageFrameworkState extends State<PageFramework>
               ],
             ),
     );
-    Widget? dragDownToDismissScaffold = null;
+    Widget? dragDownToDismissScaffold;
     if (widget.dragDownToDismiss) {
       dragDownToDismissScaffold = Listener(
         onPointerMove: (ptr) => {_onPointerMove(ptr)},
@@ -578,8 +578,8 @@ class PageFrameworkSliverAppBar extends StatelessWidget {
     this.appBarBackgroundColor,
     this.appBarBackgroundColorStart,
     this.backButton = true,
-    this.subtitle = null,
-    this.subtitleSize = null,
+    this.subtitle,
+    this.subtitleSize,
     this.subtitleAnimationSpeed,
     this.onBottomReached,
     this.pinned = true,

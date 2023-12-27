@@ -1109,7 +1109,7 @@ class BudgetSpenderSummary extends StatefulWidget {
 class _BudgetSpenderSummaryState extends State<BudgetSpenderSummary> {
   Stream<List<double?>>? mergedStreams;
   Set<String> members = {};
-  String? selectedMember = null;
+  String? selectedMember;
 
   @override
   initState() {

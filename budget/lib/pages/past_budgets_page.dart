@@ -773,7 +773,7 @@ class PastBudgetContainerList extends StatefulWidget {
 }
 
 class _PastBudgetContainerListState extends State<PastBudgetContainerList> {
-  int? touchedBudgetIndex = null;
+  int? touchedBudgetIndex;
 
   final _debouncer = Debouncer(milliseconds: 50);
 

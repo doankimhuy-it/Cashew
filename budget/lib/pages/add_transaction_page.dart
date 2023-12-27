@@ -120,9 +120,9 @@ class _AddTransactionPageState extends State<AddTransactionPage>
   double? selectedAmount;
   String? selectedAmountCalculation;
   String? selectedTitle;
-  TransactionSpecialType? selectedType = null;
+  TransactionSpecialType? selectedType;
   DateTime selectedDate = DateTime.now();
-  DateTime? selectedEndDate = null;
+  DateTime? selectedEndDate;
   int selectedPeriodLength = 1;
   String selectedRecurrence = "Monthly";
   String selectedRecurrenceDisplay = "month";
@@ -2745,7 +2745,7 @@ Future<TransactionAssociatedTitle?> getLikeAssociatedTitle(String text) async {
 }
 
 getRelatingAssociatedTitle(String text) async {
-  String? categoryFk = null;
+  String? categoryFk;
   TransactionAssociatedTitle? selectedTitleLocal;
 
   // getLikeAssociatedTitle is more efficient since it uses queries

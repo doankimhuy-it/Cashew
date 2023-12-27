@@ -17,7 +17,7 @@ class CountUp extends StatefulWidget {
     this.fontWeight = FontWeight.normal,
     this.textAlign = TextAlign.start,
     this.textColor,
-    this.maxLines = null,
+    this.maxLines,
     this.duration = const Duration(milliseconds: 3000),
     this.decimals = 2,
     this.curve = Curves.easeOutExpo,

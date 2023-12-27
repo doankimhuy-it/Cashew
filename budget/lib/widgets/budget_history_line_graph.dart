@@ -239,7 +239,7 @@ class _BudgetHistoryLineGraph extends StatefulWidget {
 
 class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
   bool loaded = false;
-  int? touchedValue = null;
+  int? touchedValue;
 
   @override
   void initState() {

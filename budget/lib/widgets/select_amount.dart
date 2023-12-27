@@ -1101,7 +1101,7 @@ class CalculatorButton extends StatelessWidget {
     Key? key,
     required this.label,
     required this.editAmount,
-    this.onLongPress = null,
+    this.onLongPress,
     this.disabled = false,
   }) : super(key: key);
   final String label;

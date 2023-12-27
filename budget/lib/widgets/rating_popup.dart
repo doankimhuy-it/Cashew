@@ -38,7 +38,7 @@ class RatingPopup extends StatefulWidget {
 }
 
 class _RatingPopupState extends State<RatingPopup> {
-  int? selectedStars = null;
+  int? selectedStars;
   bool writingFeedback = false;
   TextEditingController _feedbackController = TextEditingController();
   TextEditingController _feedbackControllerEmail = TextEditingController();

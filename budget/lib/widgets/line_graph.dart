@@ -298,7 +298,7 @@ class _LineChartState extends State<_LineChart> with WidgetsBindingObserver {
   //       ),
   //     );
 
-  int? touchedValue = null;
+  int? touchedValue;
 
   LineTouchData get lineTouchData => LineTouchData(
         enabled: true,

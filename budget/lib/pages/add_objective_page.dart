@@ -67,7 +67,7 @@ class _AddObjectivePageState extends State<AddObjectivePage>
   String? selectedEmoji;
   double selectedAmount = 0;
   DateTime selectedStartDate = DateTime.now();
-  DateTime? selectedEndDate = null;
+  DateTime? selectedEndDate;
   late bool selectedIncome = widget.selectedIncome ?? true;
   bool selectedPin = true;
   String selectedWalletPk = appStateSettings["selectedWalletPk"];
@@ -842,8 +842,8 @@ class InstallmentObjectivePopup extends StatefulWidget {
 
 class _InstallmentObjectivePopupState extends State<InstallmentObjectivePopup> {
   bool isNegative = false;
-  TimeOfDay? selectedTime = null;
-  DateTime? selectedDateTime = null;
+  TimeOfDay? selectedTime;
+  DateTime? selectedDateTime;
   String selectedTitle = "";
   String selectedWalletPk = appStateSettings["selectedWalletPk"];
   TransactionCategory? selectedCategory;
@@ -854,8 +854,8 @@ class _InstallmentObjectivePopupState extends State<InstallmentObjectivePopup> {
   String selectedRecurrenceDisplay = "month";
   BudgetReoccurence selectedRecurrenceEnum = BudgetReoccurence.monthly;
 
-  int? numberOfInstallmentPayments = null;
-  double? amountPerInstallmentPayment = null;
+  int? numberOfInstallmentPayments;
+  double? amountPerInstallmentPayment;
 
   @override
   void initState() {

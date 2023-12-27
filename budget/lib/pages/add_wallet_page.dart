@@ -748,8 +748,8 @@ class CorrectBalancePopup extends StatefulWidget {
 class _CorrectBalancePopupState extends State<CorrectBalancePopup> {
   double enteredAmount = 0;
   bool isNegative = false;
-  TimeOfDay? selectedTime = null;
-  DateTime? selectedDateTime = null;
+  TimeOfDay? selectedTime;
+  DateTime? selectedDateTime;
   String selectedTitle = "";
 
   @override

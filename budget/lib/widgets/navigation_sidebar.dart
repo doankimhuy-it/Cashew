@@ -471,7 +471,7 @@ class _SyncButtonState extends State<SyncButton> {
 }
 
 DateTime? getTimeLastSynced() {
-  DateTime? timeLastSynced = null;
+  DateTime? timeLastSynced;
   try {
     if (appStateSettings["lastSynced"] == null) throw ("lastSynced is null!");
     timeLastSynced = DateTime.tryParse(

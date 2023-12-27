@@ -65,7 +65,7 @@ class _SelectChipsState<T> extends State<SelectChips<T>> {
   void initState() {
     if (widget.wrapped == false) {
       Future.delayed(Duration(milliseconds: 0), () {
-        int? scrollToIndex = null;
+        int? scrollToIndex;
         int currentIndex = 0;
         for (T item in widget.items) {
           if (widget.getSelected(item)) {

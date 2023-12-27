@@ -122,7 +122,7 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
   List<String>? selectedMemberTransactionFilters;
   FocusNode _titleFocusNode = FocusNode();
   bool increaseBudgetWarningShown = false;
-  List<String>? selectedWalletFks = null;
+  List<String>? selectedWalletFks;
   String selectedWalletPk = appStateSettings["selectedWalletPk"];
 
   // BudgetsCompanion budget = BudgetsCompanion();

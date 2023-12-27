@@ -92,10 +92,9 @@ class _BudgetPageContent extends StatefulWidget {
 
 class _BudgetPageContentState extends State<_BudgetPageContent> {
   double budgetHeaderHeight = 0;
-  String? selectedMember = null;
+  String? selectedMember;
   bool showAllSubcategories = appStateSettings["showAllSubcategories"];
-  TransactionCategory? selectedCategory =
-      null; //We shouldn't always rely on this, if for example the user changes the category and we are still on this page. But for less important info and O(1) we can reference it quickly.
+  TransactionCategory? selectedCategory; //We shouldn't always rely on this, if for example the user changes the category and we are still on this page. But for less important info and O(1) we can reference it quickly.
   GlobalKey<PieChartDisplayState> _pieChartDisplayStateKey = GlobalKey();
 
   @override

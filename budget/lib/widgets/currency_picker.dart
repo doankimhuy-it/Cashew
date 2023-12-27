@@ -31,7 +31,7 @@ class CurrencyPicker extends StatefulWidget {
 
 class _CurrencyPickerState extends State<CurrencyPicker> {
   bool viewAll = false;
-  String? selectedCurrency = null;
+  String? selectedCurrency;
   String? searchText = "";
   Map<String, dynamic> currencies = {};
   late String? initialCurrency = widget.initialCurrency;
