@@ -450,9 +450,9 @@ Future openLoadingPopupTryCatch(
     return result;
   } catch (e) {
     Navigator.pop(context ?? navigatorKey.currentContext!, null);
-    if (onError != null)
+    if (onError != null) {
       onError(e);
-    else
+    } else {
       openSnackbar(
         SnackbarMessage(
           title: "an-error-occured".tr(),
@@ -462,6 +462,7 @@ Future openLoadingPopupTryCatch(
           description: e.toString(),
         ),
       );
+    }
   }
   return null;
 }

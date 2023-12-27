@@ -189,8 +189,9 @@ class _SelectCategoryState extends State<SelectCategory> {
                             selectedCategories.add(category.categoryPk);
                           });
                           Future.delayed(Duration(milliseconds: 70), () {
-                            if (widget.popRoute)
+                            if (widget.popRoute) {
                               Navigator.pop(context, category);
+                            }
                             if (widget.next != null) {
                               widget.next!();
                             }
@@ -415,16 +416,16 @@ class _SelectCategoryState extends State<SelectCategory> {
                           ),
                         ),
                     ],
-                    onReorder: (_intPrevious, _intNew) async {
+                    onReorder: (intPrevious, intNew) async {
                       TransactionCategory oldCategory =
-                          snapshot.data![_intPrevious];
+                          snapshot.data![intPrevious];
 
-                      if (_intNew > _intPrevious) {
+                      if (intNew > intPrevious) {
                         await database.moveCategory(
-                            oldCategory.categoryPk, _intNew, oldCategory.order);
+                            oldCategory.categoryPk, intNew, oldCategory.order);
                       } else {
                         await database.moveCategory(
-                            oldCategory.categoryPk, _intNew, oldCategory.order);
+                            oldCategory.categoryPk, intNew, oldCategory.order);
                       }
                       return true;
                     },

@@ -90,8 +90,9 @@ class CategoryEntry extends StatelessWidget {
     List<CategoryWithTotal> subCategoriesWithTotal =
         subcategoriesWithTotalMap?[category.categoryPk] ?? [];
 
-    if (category.mainCategoryPk != null && subcategoriesWithTotalMap != null)
+    if (category.mainCategoryPk != null && subcategoriesWithTotalMap != null) {
       return SizedBox.shrink();
+    }
 
     bool hasSubCategories =
         subCategoriesWithTotal.length > 0 && expandSubcategories != false;

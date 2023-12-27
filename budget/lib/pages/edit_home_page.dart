@@ -252,7 +252,7 @@ class _EditHomePageState extends State<EditHomePage> {
                       ],
                     ],
                     colorFilter: (budgetPk) {
-                      for (Budget budget in allBudgets)
+                      for (Budget budget in allBudgets) {
                         if (budget.budgetPk.toString() == budgetPk.toString()) {
                           return dynamicPastel(
                             context,
@@ -267,15 +267,18 @@ class _EditHomePageState extends State<EditHomePage> {
                             amount: 0.1,
                           );
                         }
+                      }
                       return null;
                     },
                     displayFilter: (budgetPk) {
-                      for (Budget budget in allBudgets)
+                      for (Budget budget in allBudgets) {
                         if (budget.budgetPk.toString() == budgetPk.toString()) {
                           return budget.name;
                         }
-                      if (budgetPk == customLabel)
+                      }
+                      if (budgetPk == customLabel) {
                         return ('${customLabel} (${getWordedDateShortMore(DateTime.parse(appStateSettings["lineGraphStartDate"]), includeYear: true)})');
+                      }
                       return budgetPk;
                     },
                     initial: appStateSettings["lineGraphDisplayType"] ==
@@ -460,10 +463,11 @@ class _EditHomePageState extends State<EditHomePage> {
               });
             },
             itemBuilder: (context, index) {
-              if (keyOrder.length <= index)
+              if (keyOrder.length <= index) {
                 return Container(
                   key: ValueKey(index),
                 );
+              }
               String key = keyOrder[index];
 
               if (["ORDER:LEFT", "ORDER:RIGHT"].contains(key)) {
@@ -476,10 +480,11 @@ class _EditHomePageState extends State<EditHomePage> {
                 );
               }
 
-              if (editHomePageItems[key] == null)
+              if (editHomePageItems[key] == null) {
                 return Container(
                   key: ValueKey(index),
                 );
+              }
 
               return EditRowEntry(
                 canReorder: true,
@@ -730,12 +735,14 @@ void switchHomeScreenSection(
 
 bool isHomeScreenSectionEnabled(BuildContext context, String sectionSetting) {
   if (enableDoubleColumn(context)) {
-    if (appStateSettings[sectionSetting + "FullScreen"] != null)
+    if (appStateSettings[sectionSetting + "FullScreen"] != null) {
       return appStateSettings[sectionSetting + "FullScreen"];
+    }
     return false;
   } else {
-    if (appStateSettings[sectionSetting] != null)
+    if (appStateSettings[sectionSetting] != null) {
       return appStateSettings[sectionSetting];
+    }
     return false;
   }
 }

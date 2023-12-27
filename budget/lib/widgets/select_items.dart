@@ -100,14 +100,16 @@ class _SelectItemsState extends State<SelectItems> {
                       ? Theme.of(context).colorScheme.secondaryContainer
                       : Colors.transparent,
               onTap: () {
-                if (currentItems.contains(item))
+                if (currentItems.contains(item)) {
                   currentItems.remove(item);
-                else
+                } else {
                   currentItems.add(item);
+                }
                 setState(() {});
                 if (widget.onChanged != null) widget.onChanged!(currentItems);
-                if (widget.onChangedSingleItem != null)
+                if (widget.onChangedSingleItem != null) {
                   widget.onChangedSingleItem!(item);
+                }
               },
               child: ListTile(
                 title: Transform.translate(

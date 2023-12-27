@@ -130,15 +130,17 @@ class _AddCategoryPageState extends State<AddCategoryPage>
 
   determineBottomButton() {
     if (selectedTitle != null) {
-      if (canAddCategory != true)
+      if (canAddCategory != true) {
         this.setState(() {
           canAddCategory = true;
         });
+      }
     } else {
-      if (canAddCategory != false)
+      if (canAddCategory != false) {
         this.setState(() {
           canAddCategory = false;
         });
+      }
     }
   }
 
@@ -459,11 +461,12 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                                   if (titleRecommendation != null &&
                                       (userAttemptedToChangeTitle == false ||
                                           selectedTitle == "" ||
-                                          selectedTitle == null))
+                                          selectedTitle == null)) {
                                     setSelectedTitle(
                                         titleRecommendation
                                             .capitalizeFirstofEach,
                                         modifyControllerValue: true);
+                                  }
                                 },
                               ),
                             ),
@@ -698,7 +701,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                   List<TransactionCategory> subCategories = snapshot.data ?? [];
                   if (subCategories.length <= 0 &&
                       widget.routesToPopAfterDelete !=
-                          RoutesToPopAfterDelete.PreventDelete)
+                          RoutesToPopAfterDelete.PreventDelete) {
                     return SliverToBoxAdapter(
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -714,13 +717,14 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                               : Icons.move_to_inbox_rounded,
                           label: "make-subcategory".tr(),
                           onTap: () async {
-                            if (widget.category != null)
+                            if (widget.category != null) {
                               makeSubCategoryPopup(
                                 context,
                                 categoryOriginal: widget.category!,
                                 routesToPopAfterDelete:
                                     widget.routesToPopAfterDelete,
                               );
+                            }
                           },
                           color:
                               Theme.of(context).colorScheme.secondaryContainer,
@@ -730,6 +734,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                         ),
                       ),
                     );
+                  }
                   return SliverReorderableList(
                     onReorderStart: (index) {
                       HapticFeedback.heavyImpact();
@@ -845,21 +850,21 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                       );
                     },
                     itemCount: subCategories.length,
-                    onReorder: (_intPrevious, _intNew) async {
+                    onReorder: (intPrevious, intNew) async {
                       TransactionCategory oldCategory =
-                          subCategories[_intPrevious];
+                          subCategories[intPrevious];
 
-                      if (_intNew > _intPrevious) {
+                      if (intNew > intPrevious) {
                         await database.moveCategory(
                           oldCategory.categoryPk,
-                          _intNew - 1,
+                          intNew - 1,
                           oldCategory.order,
                           mainCategoryPk: oldCategory.mainCategoryPk,
                         );
                       } else {
                         await database.moveCategory(
                           oldCategory.categoryPk,
-                          _intNew,
+                          intNew,
                           oldCategory.order,
                           mainCategoryPk: oldCategory.mainCategoryPk,
                         );

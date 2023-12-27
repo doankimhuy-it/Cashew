@@ -301,9 +301,10 @@ class HeatMap extends StatelessWidget {
                                               ),
                                         child: Tappable(
                                           onTap: () {
-                                            if (amount != null)
+                                            if (amount != null) {
                                               openTransactionsOnDayBottomSheet(
                                                   context, day);
+                                            }
                                           },
                                           child: Container(
                                             height: dayWidth,

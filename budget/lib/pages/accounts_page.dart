@@ -190,10 +190,11 @@ class AccountsPageState extends State<AccountsPage> {
                                       });
                                       await createBackup(context,
                                           deleteOldBackups: true);
-                                      if (mounted)
+                                      if (mounted) {
                                         setState(() {
                                           currentlyExporting = false;
                                         });
+                                      }
                                     },
                                   ),
                                 ),

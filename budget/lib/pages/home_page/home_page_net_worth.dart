@@ -32,8 +32,9 @@ class HomePageNetWorth extends StatelessWidget {
                 appStateSettings["netWorthAllWallets"] == true) {
               List<String>? walletPks =
                   (snapshot.data ?? []).map((item) => item.walletPk).toList();
-              if (appStateSettings["netWorthAllWallets"] == true)
+              if (appStateSettings["netWorthAllWallets"] == true) {
                 walletPks = null;
+              }
               return Padding(
                 padding: const EdgeInsets.only(bottom: 13, left: 13, right: 13),
                 child: Row(

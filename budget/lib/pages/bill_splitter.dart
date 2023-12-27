@@ -1649,8 +1649,9 @@ class _SummaryPersonRowEntryState extends State<SummaryPersonRowEntry> {
                                     break;
                                   }
                                 }
-                                if (splitPerson == null)
+                                if (splitPerson == null) {
                                   return SizedBox.shrink();
+                                }
 
                                 double percentOfTotal = billSplitterItem
                                         .evenSplit

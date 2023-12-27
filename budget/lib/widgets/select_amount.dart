@@ -451,8 +451,9 @@ class _SelectAmountState extends State<SelectAmount> {
   }
 
   setSelectedWallet(TransactionWallet wallet) {
-    if (widget.setSelectedWalletPk != null)
+    if (widget.setSelectedWalletPk != null) {
       widget.setSelectedWalletPk!(wallet.walletPk);
+    }
     setState(() {
       selectedWalletPk = wallet.walletPk;
       walletPkForCurrency = wallet.walletPk;
@@ -647,13 +648,14 @@ class _SelectAmountState extends State<SelectAmount> {
                                               }
 
                                               if (widget.setSelectedWalletPk !=
-                                                  null)
+                                                  null) {
                                                 widget.setSelectedWalletPk!(
                                                     Provider.of<AllWallets>(
                                                             context,
                                                             listen: false)
                                                         .list[index]
                                                         .walletPk);
+                                              }
                                               setState(() {
                                                 selectedWalletPk =
                                                     Provider.of<AllWallets>(

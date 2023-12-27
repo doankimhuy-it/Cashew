@@ -85,12 +85,13 @@ class _AddAssociatedTitlePageState extends State<AddAssociatedTitlePage> {
       });
     } else {}
     // requestLateAutoFocus
-    if (widget.associatedTitle == null)
+    if (widget.associatedTitle == null) {
       _focusNode.requestFocus();
-    else
+    } else {
       Future.delayed(Duration(milliseconds: 250), () {
         _focusNode.requestFocus();
       });
+    }
   }
 
   updateInitial() async {
@@ -109,15 +110,17 @@ class _AddAssociatedTitlePageState extends State<AddAssociatedTitlePage> {
     if (selectedTitle != null &&
         selectedTitle != "" &&
         selectedCategory != null) {
-      if (canAddTitle != true)
+      if (canAddTitle != true) {
         this.setState(() {
           canAddTitle = true;
         });
+      }
     } else {
-      if (canAddTitle != false)
+      if (canAddTitle != false) {
         this.setState(() {
           canAddTitle = false;
         });
+      }
     }
   }
 

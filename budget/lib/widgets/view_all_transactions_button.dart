@@ -14,15 +14,16 @@ class ViewAllTransactionsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return LowKeyButton(
       onTap: () {
-        if (onPress != null)
+        if (onPress != null) {
           onPress!();
-        else
+        } else {
           PageNavigationFramework.changePage(
             context,
             1,
             switchNavbar:
                 appStateSettings["customNavBarShortcut1"] == "transactions",
           );
+        }
       },
       text: "view-all-transactions".tr(),
     );

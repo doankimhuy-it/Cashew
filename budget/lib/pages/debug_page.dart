@@ -260,8 +260,9 @@ class DebugPage extends StatelessWidget {
               title: "Test store review integration",
               description: "Available: " + snapshot.data.toString(),
               onTap: () async {
-                if (await inAppReview.isAvailable())
+                if (await inAppReview.isAvailable()) {
                   inAppReview.requestReview();
+                }
               },
             );
           },

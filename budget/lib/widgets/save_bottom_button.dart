@@ -37,10 +37,11 @@ class _SaveBottomButtonState extends State<SaveBottomButton>
   @override
   void didChangeMetrics() {
     bool status = getIsKeyboardOpen(context);
-    if (status != isKeyboardOpen)
+    if (status != isKeyboardOpen) {
       setState(() {
         isKeyboardOpen = status;
       });
+    }
   }
 
   @override

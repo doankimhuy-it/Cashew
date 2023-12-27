@@ -8,9 +8,10 @@ import 'package:universal_html/html.dart' as html;
 
 Future<FinanceDatabase> constructDb(String dbName,
     {Uint8List? initialDataWeb}) async {
-  if (initialDataWeb != null)
+  if (initialDataWeb != null) {
     return FinanceDatabase(
         WebDatabase.withStorage(InMemoryWebStorage(initialDataWeb)));
+  }
 
   return FinanceDatabase(
     WebDatabase.withStorage(

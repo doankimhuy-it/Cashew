@@ -138,9 +138,9 @@ class _UpcomingOverdueTransactionsState
                                     ? 1
                                     : 2,
                             onSelected: (int index) {
-                              if (index == 1)
+                              if (index == 1) {
                                 overdueTransactions = null;
-                              else if (index == 2)
+                              } else if (index == 2)
                                 overdueTransactions = false;
                               else if (index == 3) overdueTransactions = true;
                               setState(() {});

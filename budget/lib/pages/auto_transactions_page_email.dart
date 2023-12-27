@@ -35,8 +35,9 @@ StreamSubscription<ServiceNotificationEvent>? notificationListenerSubscription;
 Future initNotificationScanning() async {
   if (getPlatform(ignoreEmulation: true) != PlatformOS.isAndroid) return;
   notificationListenerSubscription?.cancel();
-  if (appStateSettings["readDismissedNotificationsToCreateTransaction"] != true)
+  if (appStateSettings["readDismissedNotificationsToCreateTransaction"] != true) {
     return;
+  }
 
   bool status = await NotificationListenerService.isPermissionGranted();
   if (status != true) {
@@ -424,7 +425,7 @@ Future<void> parseEmailsInBackground(context,
         emails, // Keep 10 extra in case maybe the user deleted some emails recently
         updateGlobalState: false,
       );
-      if (newEmailCount > 0 || sayUpdates == true)
+      if (newEmailCount > 0 || sayUpdates == true) {
         openSnackbar(
           SnackbarMessage(
             title: "Scanned " + results.messages!.length.toString() + " emails",
@@ -438,6 +439,7 @@ Future<void> parseEmailsInBackground(context,
             },
           ),
         );
+      }
     }
   }
 }

@@ -146,7 +146,7 @@ class HomePageState extends State<HomePage>
                 ],
               )
             : null;
-    if (homePageTransactionsList != null)
+    if (homePageTransactionsList != null) {
       homePageTransactionsList = enableDoubleColumn(context)
           ? KeepAliveClientMixin(
               child: homePageTransactionsList,
@@ -157,6 +157,7 @@ class HomePageState extends State<HomePage>
                 child: homePageTransactionsList,
               ),
             );
+    }
 
     Map<String, Widget?> homePageSections = {
       "wallets": isHomeScreenSectionEnabled(context, "showWalletSwitcher")

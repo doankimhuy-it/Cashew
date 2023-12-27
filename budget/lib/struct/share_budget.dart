@@ -70,7 +70,7 @@ Future<bool> shareBudget(Budget? budgetToShare, context) async {
 Future<bool> removedSharedFromBudget(Budget sharedBudget,
     {bool removeFromServer = true}) async {
   if (appStateSettings["sharedBudgets"] == false) return false;
-  if (removeFromServer)
+  if (removeFromServer) {
     try {
       FirebaseFirestore? db = await firebaseGetDBInstance();
       if (db == null) {
@@ -98,6 +98,7 @@ Future<bool> removedSharedFromBudget(Budget sharedBudget,
     } catch (e) {
       print(e.toString());
     }
+  }
 
   List<Transaction> transactionsFromBudget = await database
       .getAllTransactionsBelongingToSharedBudget(sharedBudget.budgetPk);
@@ -306,7 +307,7 @@ Future<bool> getCloudBudgets() async {
       await downloadTransactionsFromBudgets(db, snapshotOwned.docs);
   int amountSynced =
       snapshotBudgetMembersOf.docs.length + snapshotOwned.docs.length;
-  if (amountSynced > 0 && totalTransactionsUpdated > 0)
+  if (amountSynced > 0 && totalTransactionsUpdated > 0) {
     openSnackbar(
       SnackbarMessage(
         icon: appStateSettings["outlinedIcons"]
@@ -323,6 +324,7 @@ Future<bool> getCloudBudgets() async {
             pluralString(amountSynced == 1, "budget"),
       ),
     );
+  }
   // else if (amountSynced > 0 && totalTransactionsUpdated == 0) {
   //   openSnackbar(SnackbarMessage(
   //     title: "No updates",
@@ -446,12 +448,14 @@ Future<int> downloadTransactionsFromBudgets(
             sharedReferenceBudgetPk: sharedBudget.budgetPk,
           ),
         );
-        if (transactionDecoded["ownerEmail"] != null)
+        if (transactionDecoded["ownerEmail"] != null) {
           allMembersEver.add(transactionDecoded["ownerEmail"]);
+        }
         if (transactionDecoded["name"] != null &&
-            transactionDecoded["name"] != "")
+            transactionDecoded["name"] != "") {
           await addAssociatedTitles(
               transactionDecoded["name"], selectedCategory);
+        }
       } else if (transaction["logType"] == "delete") {
         print("DELETING");
         try {

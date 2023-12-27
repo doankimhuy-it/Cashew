@@ -274,17 +274,17 @@ class _EditWalletsPageState extends State<EditWalletsPage> {
                     );
                   },
                   itemCount: snapshot.data!.length,
-                  onReorder: (_intPrevious, _intNew) async {
+                  onReorder: (intPrevious, intNew) async {
                     WalletWithDetails oldWalletWithDetails =
-                        snapshot.data![_intPrevious];
+                        snapshot.data![intPrevious];
                     TransactionWallet oldWallet = oldWalletWithDetails.wallet;
 
-                    if (_intNew > _intPrevious) {
+                    if (intNew > intPrevious) {
                       await database.moveWallet(
-                          oldWallet.walletPk, _intNew - 1, oldWallet.order);
+                          oldWallet.walletPk, intNew - 1, oldWallet.order);
                     } else {
                       await database.moveWallet(
-                          oldWallet.walletPk, _intNew, oldWallet.order);
+                          oldWallet.walletPk, intNew, oldWallet.order);
                     }
                     return true;
                   },
@@ -454,9 +454,10 @@ Future<TransactionWallet?> selectWalletPopup(
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<TransactionWallet> walletsWithoutOneDeleted = snapshot.data!;
-            if (removeWalletPk != null)
+            if (removeWalletPk != null) {
               walletsWithoutOneDeleted.removeWhere(
                   (TransactionWallet w) => w.walletPk == removeWalletPk);
+            }
             if (walletsWithoutOneDeleted.isEmpty) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 15),
@@ -495,7 +496,7 @@ Future<TransactionWallet?> selectWalletPopup(
                 Navigator.of(context).pop(wallet);
               },
               onLongPress: (TransactionWallet? wallet) {
-                if (allowEditWallet)
+                if (allowEditWallet) {
                   pushRoute(
                     context,
                     AddWalletPage(
@@ -505,6 +506,7 @@ Future<TransactionWallet?> selectWalletPopup(
                       wallet: wallet,
                     ),
                   );
+                }
               },
             );
           } else {

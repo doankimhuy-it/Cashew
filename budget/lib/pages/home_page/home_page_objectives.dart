@@ -240,7 +240,7 @@ class EditHomePagePinnedGoalsPopup extends StatelessWidget {
                         objective.objectivePk.toString()
                     ],
                     getColor: (objectivePk, selected) {
-                      for (Objective objective in allObjectives)
+                      for (Objective objective in allObjectives) {
                         if (objective.objectivePk.toString() ==
                             objectivePk.toString()) {
                           return HexColor(objective.colour,
@@ -248,14 +248,16 @@ class EditHomePagePinnedGoalsPopup extends StatelessWidget {
                                       Theme.of(context).colorScheme.primary)
                               .withOpacity(selected == true ? 0.7 : 0.5);
                         }
+                      }
                       return null;
                     },
                     displayFilter: (objectivePk) {
-                      for (Objective objective in allObjectives)
+                      for (Objective objective in allObjectives) {
                         if (objective.objectivePk.toString() ==
                             objectivePk.toString()) {
                           return objective.name;
                         }
+                      }
                       return "";
                     },
                     initialItems: [

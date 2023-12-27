@@ -224,9 +224,9 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
                             ? 1
                             : 2,
                     onSelected: (int index) {
-                      if (index == 1)
+                      if (index == 1) {
                         isCredit = null;
-                      else if (index == 2)
+                      } else if (index == 2)
                         isCredit = true;
                       else if (index == 3) isCredit = false;
                       setState(() {});

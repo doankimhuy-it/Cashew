@@ -39,10 +39,11 @@ class FAB extends StatelessWidget {
             color:
                 color != null ? color : Theme.of(context).colorScheme.secondary,
             onTap: () {
-              if (onTap != null)
+              if (onTap != null) {
                 onTap!();
-              else
+              } else {
                 openContainer();
+              }
             },
             onLongPress: onLongPressAddAllPopup == false
                 ? null

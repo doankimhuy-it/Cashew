@@ -35,8 +35,9 @@ class _AnimatedCircularProgressState extends State<AnimatedCircularProgress>
   double capPercentage(double percent) {
     if (percent > 3) {
       return 3;
-    } else
+    } else {
       return percent;
+    }
   }
 
   @override
@@ -153,9 +154,10 @@ class _RoundedCircularProgressPainter extends CustomPainter {
     canvas.drawArc(
         rect, startAngleRadians, progressSweepAngle, false, valuePaint);
     if (value > 1.0) {
-      if (value < 2.0)
+      if (value < 2.0) {
         canvas.drawArc(rect, progressSweepAngle - startAngleRadians * 3,
             overageSweepAngle, false, overagePaintShadow);
+      }
       canvas.drawArc(rect, progressSweepAngle - startAngleRadians * 3,
           overageSweepAngle, false, overagePaint);
     }

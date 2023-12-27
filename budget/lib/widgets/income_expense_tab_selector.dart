@@ -67,8 +67,9 @@ class _IncomeExpenseTabSelectorState extends State<IncomeExpenseTabSelector>
           vsync: this,
           initialIndex: selectedIncome ? 1 : 0,
         );
-    if (widget.tabController != null)
+    if (widget.tabController != null) {
       _incomeTabController.addListener(onControllerTabSwitch);
+    }
   }
 
   @override
@@ -91,8 +92,9 @@ class _IncomeExpenseTabSelectorState extends State<IncomeExpenseTabSelector>
   @override
   void dispose() {
     if (widget.tabController == null) _incomeTabController.dispose();
-    if (widget.tabController != null)
+    if (widget.tabController != null) {
       _incomeTabController.removeListener(onControllerTabSwitch);
+    }
     super.dispose();
   }
 
@@ -159,12 +161,13 @@ class _IncomeExpenseTabSelectorState extends State<IncomeExpenseTabSelector>
         ),
       ),
     );
-    if (widget.belowWidgetBuilder == null)
+    if (widget.belowWidgetBuilder == null) {
       return tabSelector;
-    else
+    } else {
       return Column(
         children: [tabSelector, widget.belowWidgetBuilder!(selectedIncome)],
       );
+    }
   }
 }
 

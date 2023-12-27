@@ -91,10 +91,11 @@ class EditRowEntry extends StatelessWidget {
               if (!currentFocus.hasPrimaryFocus) {
                 currentFocus.unfocus();
               }
-              if (onTap != null)
+              if (onTap != null) {
                 onTap!();
-              else
+              } else {
                 openContainer();
+              }
             },
             child: Stack(
               children: [

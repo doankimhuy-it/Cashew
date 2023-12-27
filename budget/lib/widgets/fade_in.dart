@@ -103,7 +103,7 @@ class _ScaleInState extends State<ScaleIn> with SingleTickerProviderStateMixin {
       });
     }
 
-    if (widget.loop)
+    if (widget.loop) {
       _controller.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           Future.delayed(widget.loopDelay, () {
@@ -115,6 +115,7 @@ class _ScaleInState extends State<ScaleIn> with SingleTickerProviderStateMixin {
           _controller.forward();
         }
       });
+    }
   }
 
   @override
@@ -419,10 +420,11 @@ class _ShakeAnimationState extends State<ShakeAnimation> {
   void initState() {
     if (widget.delay != null) {
       _future = Future.delayed(widget.delay!, () {
-        if (mounted)
+        if (mounted) {
           setState(() {
             startAnimation = true;
           });
+        }
       });
     }
     super.initState();

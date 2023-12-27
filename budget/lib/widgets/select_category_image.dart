@@ -178,7 +178,7 @@ class _SelectCategoryImageState extends State<SelectCategoryImage> {
                 } else {
                   show = true;
                 }
-                if (show)
+                if (show) {
                   return ImageIcon(
                     sizePadding: 8,
                     margin: EdgeInsets.all(5),
@@ -188,8 +188,9 @@ class _SelectCategoryImageState extends State<SelectCategoryImage> {
                     onTap: () {
                       widget.setSelectedImage(image.icon);
                       widget.setSelectedEmoji(null);
-                      if (context.locale.toString() == "en")
+                      if (context.locale.toString() == "en") {
                         widget.setSelectedTitle(image.mostLikelyCategoryName);
+                      }
                       setState(() {
                         selectedImage = image.icon;
                       });
@@ -202,6 +203,7 @@ class _SelectCategoryImageState extends State<SelectCategoryImage> {
                     },
                     outline: selectedImage == image.icon,
                   );
+                }
                 return SizedBox.shrink();
               }).toList(),
             ),

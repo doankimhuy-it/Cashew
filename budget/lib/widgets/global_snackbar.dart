@@ -172,8 +172,9 @@ class GlobalSnackbarState extends State<GlobalSnackbar>
                 child: Tappable(
                     hasOpacity: false,
                     onTap: () {
-                      if (currentMessage?.onTap != null)
+                      if (currentMessage?.onTap != null) {
                         currentMessage?.onTap!();
+                      }
                       animateOut();
                     },
                     borderRadius: 13,

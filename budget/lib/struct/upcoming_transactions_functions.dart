@@ -72,12 +72,14 @@ Future createNewSubscriptionTransaction(
         bool willBeOverObjective = (totalSpentOfObjective ?? 0) >=
             (objective.amount * (objective.income ? 1 : -1));
 
-        if (objective.income == false)
+        if (objective.income == false) {
           willBeOverObjective = !willBeOverObjective;
+        }
 
         if ((totalSpentOfObjective ?? 0) ==
-            (objective.amount * (objective.income ? 1 : -1)))
+            (objective.amount * (objective.income ? 1 : -1))) {
           willBeOverObjective = true;
+        }
 
         if (willBeOverObjective) {
           openSnackbar(

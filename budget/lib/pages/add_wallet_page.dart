@@ -176,15 +176,17 @@ class _AddWalletPageState extends State<AddWalletPage> {
 
   determineBottomButton() {
     if (selectedTitle != null && selectedCurrency != "") {
-      if (canAddWallet != true)
+      if (canAddWallet != true) {
         this.setState(() {
           canAddWallet = true;
         });
+      }
     } else {
-      if (canAddWallet != false)
+      if (canAddWallet != false) {
         this.setState(() {
           canAddWallet = false;
         });
+      }
     }
   }
 
@@ -623,13 +625,14 @@ class _AddWalletPageState extends State<AddWalletPage> {
                             : Icons.merge_rounded,
                         label: "merge-account".tr(),
                         onTap: () async {
-                          if (widget.wallet != null)
+                          if (widget.wallet != null) {
                             mergeWalletPopup(
                               context,
                               walletOriginal: widget.wallet!,
                               routesToPopAfterDelete:
                                   widget.routesToPopAfterDelete,
                             );
+                          }
                         },
                         color: Theme.of(context).colorScheme.secondaryContainer,
                         textColor:
@@ -932,10 +935,11 @@ class _CorrectBalancePopupState extends State<CorrectBalancePopup> {
                   onSwitched: (value) {
                     setState(() {
                       isNegative = value;
-                      if (isNegative == true)
+                      if (isNegative == true) {
                         enteredAmount = enteredAmount.abs() * -1;
-                      else
+                      } else {
                         enteredAmount = enteredAmount.abs();
+                      }
                     });
                   },
                   enableBorderRadius: true,
@@ -947,10 +951,11 @@ class _CorrectBalancePopupState extends State<CorrectBalancePopup> {
                 amountPassed: "0",
                 setSelectedAmount: (amount, calculation) {
                   setState(() {
-                    if (isNegative == true)
+                    if (isNegative == true) {
                       enteredAmount = amount.abs() * -1;
-                    else
+                    } else {
                       enteredAmount = amount.abs();
+                    }
                   });
                 },
                 allowZero: true,
@@ -1280,10 +1285,11 @@ class _TransferBalancePopupState extends State<TransferBalancePopup> {
                   onTap: () {
                     setState(() {
                       isNegative = !isNegative;
-                      if (isNegative == true)
+                      if (isNegative == true) {
                         enteredAmount = enteredAmount.abs() * -1;
-                      else
+                      } else {
                         enteredAmount = enteredAmount.abs();
+                      }
                     });
                   },
                   child: Padding(
@@ -1350,10 +1356,11 @@ class _TransferBalancePopupState extends State<TransferBalancePopup> {
             amountPassed: enteredAmount.toString(),
             setSelectedAmount: (amount, calculation) {
               setState(() {
-                if (isNegative == true)
+                if (isNegative == true) {
                   enteredAmount = amount.abs() * -1;
-                else
+                } else {
                   enteredAmount = amount.abs();
+                }
               });
             },
             allowZero: true,

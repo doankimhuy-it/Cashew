@@ -62,8 +62,9 @@ DateTimeRange? getDateTimeRangeForPassedSearchFilters(
     {required String cycleSettingsExtension,
     DateTimeRange? selectedDateTimeRange}) {
   if (selectedDateTimeRange != null) return selectedDateTimeRange;
-  if (getStartDateOfSelectedCustomPeriod(cycleSettingsExtension) == null)
+  if (getStartDateOfSelectedCustomPeriod(cycleSettingsExtension) == null) {
     return null;
+  }
   try {
     return DateTimeRange(
       start: getStartDateOfSelectedCustomPeriod(cycleSettingsExtension) ??
@@ -1460,10 +1461,11 @@ class _SelectedPeriodAppBarState extends State<SelectedPeriodAppBar> {
     bool tempDropdown;
     if (widget.scrollController.offset /
             widget.scrollController.position.maxScrollExtent >=
-        0.99)
+        0.99) {
       tempDropdown = true;
-    else
+    } else {
       tempDropdown = false;
+    }
 
     if (tempDropdown != dropdown) {
       setState(() {
@@ -2237,8 +2239,9 @@ class _AllSpendingPastSpendingGraphState
 
   @override
   Widget build(BuildContext context) {
-    if (mergedStreamsIncome == null && mergedStreamsExpense == null)
+    if (mergedStreamsIncome == null && mergedStreamsExpense == null) {
       return SliverToBoxAdapter(child: SizedBox.shrink());
+    }
     return StreamBuilder<double?>(
       stream: database.watchTotalNetBeforeStartDate(
         searchFilters: widget.searchFilters
@@ -2276,10 +2279,11 @@ class _AllSpendingPastSpendingGraphState
                   builder: (context, snapshotExpense) {
                     List<TotalWithCount?> expenseData =
                         snapshotExpense.data ?? [];
-                    if (expenseData.length <= 0 && incomeData.length <= 0)
+                    if (expenseData.length <= 0 && incomeData.length <= 0) {
                       return SliverToBoxAdapter(
                         child: SizedBox.shrink(),
                       );
+                    }
                     double minimumYValue = 0.00000000001;
                     List<List<FlSpot>> allSpots = [];
                     if (widget.appStateSettingsNetAllSpendingTotal) {

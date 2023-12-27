@@ -183,10 +183,11 @@ class PieChartDisplayState extends State<PieChartDisplay> {
       int numCategories = (await database.getAllCategories()).length;
       for (int i = 1; i <= numCategories + 25; i++) {
         await Future.delayed(const Duration(milliseconds: 70));
-        if (mounted)
+        if (mounted) {
           setState(() {
             showLabels = showLabels + 1;
           });
+        }
       }
     });
   }
@@ -208,10 +209,11 @@ class PieChartDisplayState extends State<PieChartDisplay> {
       }
       index++;
     }
-    if (found == false)
+    if (found == false) {
       setTouchedIndex(-1);
-    else
+    } else {
       setTouchedIndex(index);
+    }
   }
 
   @override

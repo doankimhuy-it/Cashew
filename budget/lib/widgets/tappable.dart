@@ -39,8 +39,9 @@ class Tappable extends StatelessWidget {
         color: color ?? Theme.of(context).canvasColor,
         onLongPress: onLongPress != null
             ? () {
-                if (getPlatform() == PlatformOS.isIOS)
+                if (getPlatform() == PlatformOS.isIOS) {
                   HapticFeedback.heavyImpact();
+                }
                 onLongPress!();
               }
             : null,
@@ -65,7 +66,7 @@ class Tappable extends StatelessWidget {
       return tappable;
     }
 
-    Future<void> _onPointerDown(PointerDownEvent event) async {
+    Future<void> onPointerDown(PointerDownEvent event) async {
       // Check if right mouse button clicked
       if (event.kind == PointerDeviceKind.mouse &&
           event.buttons == kSecondaryMouseButton) {
@@ -75,7 +76,7 @@ class Tappable extends StatelessWidget {
 
     return Listener(
       child: tappable,
-      onPointerDown: _onPointerDown,
+      onPointerDown: onPointerDown,
     );
   }
 }
@@ -215,7 +216,7 @@ class _FadedButtonState extends State<FadedButton>
       return tappable;
     }
 
-    Future<void> _onPointerDown(PointerDownEvent event) async {
+    Future<void> onPointerDown(PointerDownEvent event) async {
       // Check if right mouse button clicked
       if (event.kind == PointerDeviceKind.mouse &&
           event.buttons == kSecondaryMouseButton) {
@@ -225,7 +226,7 @@ class _FadedButtonState extends State<FadedButton>
 
     return Listener(
       child: tappable,
-      onPointerDown: _onPointerDown,
+      onPointerDown: onPointerDown,
     );
   }
 }

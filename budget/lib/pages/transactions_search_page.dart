@@ -220,10 +220,11 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
                               },
                               onChanged: (value) {
                                 _debouncer.run(() {
-                                  if (searchFilters.searchQuery != value)
+                                  if (searchFilters.searchQuery != value) {
                                     setState(() {
                                       searchFilters.searchQuery = value;
                                     });
+                                  }
                                 });
                               },
                               padding: EdgeInsets.all(0),

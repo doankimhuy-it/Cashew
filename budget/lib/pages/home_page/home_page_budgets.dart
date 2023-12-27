@@ -220,7 +220,7 @@ class EditHomePagePinnedBudgetsPopup extends StatelessWidget {
                             budget.budgetPk.toString()
                         ],
                         getColor: (budgetPk, selected) {
-                          for (Budget budget in allBudgets)
+                          for (Budget budget in allBudgets) {
                             if (budget.budgetPk.toString() ==
                                 budgetPk.toString()) {
                               return HexColor(budget.colour,
@@ -228,14 +228,16 @@ class EditHomePagePinnedBudgetsPopup extends StatelessWidget {
                                           Theme.of(context).colorScheme.primary)
                                   .withOpacity(selected == true ? 0.7 : 0.5);
                             }
+                          }
                           return null;
                         },
                         displayFilter: (budgetPk) {
-                          for (Budget budget in allBudgets)
+                          for (Budget budget in allBudgets) {
                             if (budget.budgetPk.toString() ==
                                 budgetPk.toString()) {
                               return budget.name;
                             }
+                          }
                           return "";
                         },
                         initialItems: [

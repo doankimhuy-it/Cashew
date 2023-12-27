@@ -125,8 +125,9 @@ String convertToMoney(
     return "Infinity";
   }
   amount = double.parse(amount.toStringAsFixed(numberDecimals));
-  if (finalNumber != null)
+  if (finalNumber != null) {
     finalNumber = double.parse(finalNumber.toStringAsFixed(numberDecimals));
+  }
   NumberFormat currency = NumberFormat.currency(
     decimalDigits: forceAllDecimals
         ? decimals
@@ -360,9 +361,10 @@ DateTime getDatePastToDetermineBudgetDate(int index, Budget budget,
   if (isChecking && reoccurrence == BudgetReoccurence.monthly) {
     DateTimeRange budgetRange = getBudgetDate(
         budget, getDatePastToDetermineBudgetDate(0, budget, isChecking: false));
-    if (budgetRange.end.isBefore(DateTime.now().subtract(Duration(days: 1))))
+    if (budgetRange.end.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
       return getDatePastToDetermineBudgetDate(index - 1, budget,
           isChecking: false);
+    }
   }
 
   return DateTime(year, month, day, 0, 0, 1);
@@ -603,9 +605,9 @@ String getWelcomeMessage() {
     "greetings-late-2".tr()
   ];
   if (randomInt[0] % 2 == 0) {
-    if (h24 <= 12 && h24 >= 6)
+    if (h24 <= 12 && h24 >= 6) {
       return greetingsMorning[randomInt[0] % (greetingsMorning.length)];
-    else if (h24 <= 16 && h24 >= 13)
+    } else if (h24 <= 16 && h24 >= 13)
       return greetingsAfternoon[randomInt[0] % (greetingsAfternoon.length)];
     else if (h24 <= 22 && h24 >= 19)
       return greetingsEvening[randomInt[0] % (greetingsEvening.length)];
@@ -754,10 +756,11 @@ List<BoxShadow>? boxShadowCheck(list) {
 }
 
 String pluralString(bool condition, String string) {
-  if (condition)
+  if (condition) {
     return string;
-  else
+  } else {
     return string + "s";
+  }
 }
 
 bool lockAppWaitForRestart = false;
@@ -935,20 +938,22 @@ String cleanupNoteStringWithURLs(String text) {
   String modifiedText = text;
 
   for (Match match in matches) {
-    if (match.group(0) != null)
+    if (match.group(0) != null) {
       modifiedText = modifiedText.replaceFirst(
           match.group(0)!, getDomainNameFromURL(match.group(0)!));
+    }
   }
 
   return modifiedText;
 }
 
 void openUrl(String link) async {
-  if (await canLaunchUrl(Uri.parse(link)))
+  if (await canLaunchUrl(Uri.parse(link))) {
     await launchUrl(
       Uri.parse(link),
       mode: LaunchMode.externalApplication,
     );
+  }
 }
 
 List<String> popularCurrencies = [
@@ -990,7 +995,7 @@ String getDevicesDefaultCurrencyCode() {
 void copyToClipboard(String text, {bool showSnackbar = true}) async {
   HapticFeedback.mediumImpact();
   await Clipboard.setData(ClipboardData(text: text));
-  if (showSnackbar)
+  if (showSnackbar) {
     openSnackbar(
       SnackbarMessage(
         title: "copied-to-clipboard".tr(),
@@ -1001,13 +1006,14 @@ void copyToClipboard(String text, {bool showSnackbar = true}) async {
         timeout: Duration(milliseconds: 2500),
       ),
     );
+  }
 }
 
 Future<String?> readClipboard({bool showSnackbar = true}) async {
   HapticFeedback.mediumImpact();
   final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
   String? clipboardText = clipboardData?.text;
-  if (showSnackbar)
+  if (showSnackbar) {
     openSnackbar(
       SnackbarMessage(
         title: "pasted-from-clipboard".tr(),
@@ -1017,6 +1023,7 @@ Future<String?> readClipboard({bool showSnackbar = true}) async {
         timeout: Duration(milliseconds: 2500),
       ),
     );
+  }
   return clipboardText;
 }
 
@@ -1102,8 +1109,9 @@ Future<int?> getAndroidVersion() async {
 
 Future<bool> setHighRefreshRate() async {
   try {
-    if (getPlatform() == PlatformOS.isAndroid)
+    if (getPlatform() == PlatformOS.isAndroid) {
       await FlutterDisplayMode.setHighRefreshRate();
+    }
     return true;
   } catch (e) {
     print("Error setting high refresh rate: " + e.toString());

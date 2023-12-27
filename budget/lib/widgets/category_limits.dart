@@ -464,7 +464,7 @@ class SubCategoriesContainer extends StatelessWidget {
         extraButtonEnd ?? SizedBox.shrink(),
       ],
     );
-    if (getPlatform() == PlatformOS.isIOS)
+    if (getPlatform() == PlatformOS.isIOS) {
       return Column(
         children: [
           HorizontalBreak(padding: EdgeInsets.zero),
@@ -478,6 +478,7 @@ class SubCategoriesContainer extends StatelessWidget {
           SizedBox(height: 6),
         ],
       );
+    }
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
       child: ClipRRect(

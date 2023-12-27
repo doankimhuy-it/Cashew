@@ -257,8 +257,9 @@ class _AddTransactionPageState extends State<AddTransactionPage>
           selectedBudgetPassed == null ? null : selectedBudgetPassed.budgetPk;
       selectedBudget = selectedBudgetPassed;
       selectedBudgetIsShared = isSharedBudget;
-      if (selectedBudgetPk != null && selectedPayer == null)
+      if (selectedBudgetPk != null && selectedPayer == null) {
         selectedPayer = appStateSettings["currentUserEmail"] ?? "";
+      }
       if (isSharedBudget == false || selectedBudgetPassed?.sharedKey == null) {
         selectedPayer = null;
       }
@@ -290,8 +291,9 @@ class _AddTransactionPageState extends State<AddTransactionPage>
         isAddedToLoanObjective = true;
         selectedObjectivePk = null;
         if (selectedType == TransactionSpecialType.credit ||
-            selectedType == TransactionSpecialType.debt)
+            selectedType == TransactionSpecialType.debt) {
           setSelectedType("Default");
+        }
       }
     });
     return;
@@ -2279,10 +2281,11 @@ class _SelectTitleState extends State<SelectTitle> {
 
   void selectTitle() {
     widget.setSelectedCategory(selectedCategory!);
-    if (foundFromCategory == false)
+    if (foundFromCategory == false) {
       widget.setSelectedTitle(selectedAssociatedTitle?.title ?? "");
-    else
+    } else {
       widget.setSelectedTitle("");
+    }
     Navigator.pop(context);
     if (widget.next != null) {
       widget.next!();
@@ -2577,10 +2580,11 @@ class _SelectTextState extends State<SelectText> {
     super.initState();
     input = widget.selectedText;
     _focusNode = new FocusNode();
-    if (widget.requestLateAutoFocus)
+    if (widget.requestLateAutoFocus) {
       Future.delayed(Duration(milliseconds: 250), () {
         _focusNode.requestFocus();
       });
+    }
   }
 
   @override
@@ -3101,7 +3105,7 @@ class _SelectExcludeBudgetState extends State<SelectExcludeBudget> {
       stream: database.watchAllNonAddableBudgets(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          if (snapshot.data!.length <= 0)
+          if (snapshot.data!.length <= 0) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: TextFont(
@@ -3110,6 +3114,7 @@ class _SelectExcludeBudgetState extends State<SelectExcludeBudget> {
                 textAlign: TextAlign.center,
               ),
             );
+          }
           return Padding(
               padding: const EdgeInsets.only(top: 5),
               child: SelectChips(
@@ -3566,8 +3571,9 @@ class TransactionTypeInfoEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (transactionTypesToShow?.contains(transactionType) == false)
+    if (transactionTypesToShow?.contains(transactionType) == false) {
       return SizedBox.shrink();
+    }
     if (onlyShowOneTransactionType == null ||
         onlyShowOneTransactionType == transactionType) {
       return Padding(
@@ -3670,8 +3676,9 @@ Future<MainAndSubcategory> selectCategorySequence(
                     Tappable(
                       color: Theme.of(context).colorScheme.secondaryContainer,
                       onTap: () {
-                        if (setSelectedSubCategory != null)
+                        if (setSelectedSubCategory != null) {
                           setSelectedSubCategory(null);
+                        }
                         Navigator.pop(context, false);
                       },
                       borderRadius: 18,
@@ -4425,14 +4432,14 @@ List<dynamic>
     ...TransactionSpecialType.values,
     "installments"
   ];
-  if (isAddedToLoanObjective)
+  if (isAddedToLoanObjective) {
     return [
       null,
       TransactionSpecialType.upcoming,
       TransactionSpecialType.repetitive,
       TransactionSpecialType.subscription,
     ];
-  else if (transactionType == null)
+  } else if (transactionType == null)
     return defaultList;
   else if ([TransactionSpecialType.credit, TransactionSpecialType.debt]
       .contains(transactionType))
@@ -4483,10 +4490,11 @@ class _TitleInputState extends State<TitleInput> {
           children: [
             Focus(
               onFocusChange: (value) {
-                if (value == false)
+                if (value == false) {
                   setState(() {
                     foundAssociatedTitles = [];
                   });
+                }
               },
               child: TextInput(
                 borderRadius: BorderRadius.zero,

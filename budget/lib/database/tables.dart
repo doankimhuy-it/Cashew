@@ -1555,13 +1555,14 @@ class FinanceDatabase extends _$FinanceDatabase {
       ..where(transactions.dateCreated.isNotNull())
       ..limit(limit ?? DEFAULT_LIMIT, offset: null);
 
-    if (limit == null)
+    if (limit == null) {
       return query.map((row) => row.read(transactions.dateCreated)).watch();
-    else
+    } else {
       return query
           .map((row) => row.read(transactions.dateCreated))
           .watch()
           .map((list) => list.reversed.toList());
+    }
   }
 
   Future<List<String?>> getUniqueCurrenciesFromWallets() {
@@ -2908,11 +2909,12 @@ class FinanceDatabase extends _$FinanceDatabase {
     if (direction == -1 || direction == 1) {
       List<TransactionAssociatedTitle> associatedTitlesNeedUpdating = [];
       for (TransactionAssociatedTitle associatedTitle in associatedTitlesList) {
-        if (associatedTitle.order >= pastIndexIncluding)
+        if (associatedTitle.order >= pastIndexIncluding) {
           associatedTitlesNeedUpdating.add(associatedTitle.copyWith(
             order: associatedTitle.order + direction,
             dateTimeModified: Value(DateTime.now()),
           ));
+        }
       }
       await batch((batch) {
         batch.insertAll(associatedTitles, associatedTitlesNeedUpdating,
@@ -2974,12 +2976,13 @@ class FinanceDatabase extends _$FinanceDatabase {
     bool updateSharedEntry = true,
     Transaction? originalTransaction,
   }) async {
-    if (updateSharedEntry == true && appStateSettings["sharedBudgets"] == false)
+    if (updateSharedEntry == true && appStateSettings["sharedBudgets"] == false) {
       updateSharedEntry = false;
+    }
     double maxAmount = 999999999999;
-    if (transaction.amount >= maxAmount)
+    if (transaction.amount >= maxAmount) {
       transaction = transaction.copyWith(amount: maxAmount);
-    else if (transaction.amount <= -maxAmount)
+    } else if (transaction.amount <= -maxAmount)
       transaction = transaction.copyWith(amount: -maxAmount);
 
     if (transaction.amount == double.infinity ||
@@ -3535,8 +3538,9 @@ class FinanceDatabase extends _$FinanceDatabase {
     DateTime? customDateTimeModified,
     bool insert = false,
   }) async {
-    if (updateSharedEntry == true && appStateSettings["sharedBudgets"] == false)
+    if (updateSharedEntry == true && appStateSettings["sharedBudgets"] == false) {
       updateSharedEntry = false;
+    }
 
     category = category.copyWith(
         dateTimeModified: Value(customDateTimeModified ?? DateTime.now()));
@@ -3552,8 +3556,9 @@ class FinanceDatabase extends _$FinanceDatabase {
     int result = await into(categories)
         .insert((companionToInsert), mode: InsertMode.insertOrReplace);
 
-    if (updateSharedEntry)
+    if (updateSharedEntry) {
       updateTransactionOnServerAfterChangingCategoryInformation(category);
+    }
     return result;
   }
 
@@ -3722,9 +3727,9 @@ class FinanceDatabase extends _$FinanceDatabase {
     int maxTimePeriodWeeks = 500;
     int maxTimePeriodDays = 1000;
     if (budget.reoccurrence == BudgetReoccurence.yearly &&
-        budget.periodLength >= maxTimePeriodYears)
+        budget.periodLength >= maxTimePeriodYears) {
       budget = budget.copyWith(periodLength: maxTimePeriodYears);
-    else if (budget.reoccurrence == BudgetReoccurence.monthly &&
+    } else if (budget.reoccurrence == BudgetReoccurence.monthly &&
         budget.periodLength >= maxTimePeriodMonths)
       budget = budget.copyWith(periodLength: maxTimePeriodMonths);
     else if (budget.reoccurrence == BudgetReoccurence.weekly &&
@@ -3750,8 +3755,9 @@ class FinanceDatabase extends _$FinanceDatabase {
     double maxAmount = 999999999999;
     if (budget.amount >= maxAmount) budget = budget.copyWith(amount: maxAmount);
 
-    if (updateSharedEntry == true && appStateSettings["sharedBudgets"] == false)
+    if (updateSharedEntry == true && appStateSettings["sharedBudgets"] == false) {
       updateSharedEntry = false;
+    }
 
     print(budget);
 
@@ -4062,8 +4068,9 @@ class FinanceDatabase extends _$FinanceDatabase {
     List<Budget> sharedBudgets = await getAllBudgets(sharedBudgetsOnly: true);
     Set<String> members = {};
     for (Budget budget in sharedBudgets) {
-      for (String member in budget.sharedAllMembersEver ?? [])
+      for (String member in budget.sharedAllMembersEver ?? []) {
         members.add(member);
+      }
     }
     return members.toList();
   }
@@ -4259,8 +4266,9 @@ class FinanceDatabase extends _$FinanceDatabase {
   //delete transaction given key
   Future deleteTransaction(String transactionPk,
       {bool updateSharedEntry = true}) async {
-    if (updateSharedEntry == true && appStateSettings["sharedBudgets"] == false)
+    if (updateSharedEntry == true && appStateSettings["sharedBudgets"] == false) {
       updateSharedEntry = false;
+    }
     // Send the delete log to the server
     if (updateSharedEntry) {
       Transaction transactionToDelete =
@@ -4280,8 +4288,9 @@ class FinanceDatabase extends _$FinanceDatabase {
 
   Future deleteTransactions(List<String> transactionPks,
       {bool updateSharedEntry = true}) async {
-    if (updateSharedEntry == true && appStateSettings["sharedBudgets"] == false)
+    if (updateSharedEntry == true && appStateSettings["sharedBudgets"] == false) {
       updateSharedEntry = false;
+    }
     // Send the delete log to the server
     for (String transactionPk in transactionPks) {
       if (updateSharedEntry) {
@@ -5124,10 +5133,12 @@ class FinanceDatabase extends _$FinanceDatabase {
 
     Expression<bool> isLongTermLoanBorrowed = Constant(false);
     Expression<bool> isLongTermLoanLent = Constant(false);
-    if (searchFilters.transactionTypes.contains(TransactionSpecialType.credit))
+    if (searchFilters.transactionTypes.contains(TransactionSpecialType.credit)) {
       isLongTermLoanLent = tbl.objectiveLoanFk.isNotNull() & tbl.income.not();
-    if (searchFilters.transactionTypes.contains(TransactionSpecialType.debt))
+    }
+    if (searchFilters.transactionTypes.contains(TransactionSpecialType.debt)) {
       isLongTermLoanBorrowed = tbl.objectiveLoanFk.isNotNull() & tbl.income;
+    }
     Expression<bool> isTransactionType =
         searchFilters.transactionTypes.length > 0
             ? tbl.type.isInValues(searchFilters.transactionTypes) |
@@ -5682,8 +5693,9 @@ class FinanceDatabase extends _$FinanceDatabase {
     // we have to convert currencies to account for all wallets
     List<Stream<double?>> mergedStreams = [];
     for (TransactionWallet wallet in allWallets.list) {
-      if (walletPks != null && walletPks.contains(wallet.walletPk) == false)
+      if (walletPks != null && walletPks.contains(wallet.walletPk) == false) {
         continue;
+      }
       final totalAmt = transactions.amount.sum();
       final query = selectOnly(transactions)
         ..addColumns([totalAmt])
@@ -5768,8 +5780,9 @@ class FinanceDatabase extends _$FinanceDatabase {
     List<Stream<List<CategoryWithTotal>>> mergedStreams = [];
 
     for (TransactionWallet wallet in allWallets.list) {
-      if (walletPks != null && walletPks.contains(wallet.walletPk) == false)
+      if (walletPks != null && walletPks.contains(wallet.walletPk) == false) {
         continue;
+      }
       final totalAmt = transactions.amount.sum();
       final totalCount = transactions.transactionPk.count();
 

@@ -79,8 +79,9 @@ Future<bool> createSyncBackup(
   if (appStateSettings["hasSignedIn"] == false) return false;
   if (errorSigningInDuringCloud == true) return false;
   if (appStateSettings["backupSync"] == false) return false;
-  if (changeMadeSync == true && appStateSettings["syncEveryChange"] == false)
+  if (changeMadeSync == true && appStateSettings["syncEveryChange"] == false) {
     return false;
+  }
   // create the auto syncs after 10 seconds of no changes
   if (changeMadeSync == true &&
       appStateSettings["syncEveryChange"] == true &&
@@ -93,12 +94,14 @@ Future<bool> createSyncBackup(
   }
 
   print("Creating sync backup");
-  if (changeMadeSync)
+  if (changeMadeSync) {
     loadingIndeterminateKey.currentState!.setVisibility(true, opacity: 0.4);
+  }
   if (syncTimeoutTimer?.isActive == true) {
     // openSnackbar(SnackbarMessage(title: "Please wait..."));
-    if (changeMadeSync)
+    if (changeMadeSync) {
       loadingIndeterminateKey.currentState!.setVisibility(false);
+    }
     return false;
   } else {
     syncTimeoutTimer = Timer(Duration(milliseconds: 5000), () {
@@ -117,8 +120,9 @@ Future<bool> createSyncBackup(
     hasSignedIn = true;
   }
   if (hasSignedIn == false) {
-    if (changeMadeSync)
+    if (changeMadeSync) {
       loadingIndeterminateKey.currentState!.setVisibility(false);
+    }
     return false;
   }
 
@@ -141,8 +145,9 @@ Future<bool> createSyncBackup(
   }
   await createBackup(null,
       silentBackup: true, deleteOldBackups: true, clientIDForSync: clientID);
-  if (changeMadeSync)
+  if (changeMadeSync) {
     loadingIndeterminateKey.currentState!.setVisibility(false);
+  }
   return true;
 }
 
@@ -435,9 +440,10 @@ Future<bool> syncData(BuildContext context) async {
   }
 
   await database.processSyncLogs(syncLogs);
-  for (drive.File file in filesSyncing)
+  for (drive.File file in filesSyncing) {
     setDateOfLastSyncedWithClient(getDeviceFromSyncBackupFileName(file.name),
         file.modifiedTime?.toLocal() ?? DateTime(0));
+  }
 
   try {
     print("UPDATED WALLET CURRENCY");

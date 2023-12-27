@@ -958,7 +958,7 @@ class _SetNumberFormatPopupState extends State<SetNumberFormatPopup> {
             items: items,
             initial: appStateSettings["numberFormatLocale"],
             displayFilter: (item) {
-              if (item == null)
+              if (item == null) {
                 return "default".tr() +
                     " " +
                     "(" +
@@ -966,6 +966,7 @@ class _SetNumberFormatPopupState extends State<SetNumberFormatPopup> {
                         Provider.of<AllWallets>(context, listen: true), 1000.23,
                         customLocale: Platform.localeName) +
                     ")";
+              }
               return convertToMoney(
                   Provider.of<AllWallets>(context, listen: true), 1000.23,
                   customLocale: item);

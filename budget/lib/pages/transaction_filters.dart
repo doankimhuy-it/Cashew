@@ -174,10 +174,11 @@ class SearchFilters {
         (ignoreSearchQuery == true || searchQuery == null) &&
         (ignoreSearchQuery == true || searchQuery == null) &&
         titleContains == null &&
-        noteContains == null)
+        noteContains == null) {
       return true;
-    else
+    } else {
       return false;
+    }
   }
 
   void loadFilterString(String? filterString,
@@ -410,8 +411,9 @@ class _TransactionFiltersSelectionState
           selectedCategories: selectedFilters.categoryPks,
           setSelectedCategories: (List<String>? categories) async {
             selectedFilters.categoryPks = categories ?? [];
-            if (selectedFilters.categoryPks.length <= 0)
+            if (selectedFilters.categoryPks.length <= 0) {
               selectedFilters.subcategoryPks = [];
+            }
 
             // Remove any subcategories that are selected that no longer
             // have the primary category selected
@@ -478,10 +480,11 @@ class _TransactionFiltersSelectionState
                 rangeLimit: rangeLimit,
                 initialRange: selectedFilters.amountRange,
                 onChange: (RangeValues rangeValue) {
-                  if (rangeLimit == rangeValue)
+                  if (rangeLimit == rangeValue) {
                     selectedFilters.amountRange = null;
-                  else
+                  } else {
                     selectedFilters.amountRange = rangeValue;
+                  }
                 },
               );
             }
@@ -557,8 +560,9 @@ class _TransactionFiltersSelectionState
         StreamBuilder<List<TransactionWallet>>(
           stream: database.watchAllWallets(),
           builder: (context, snapshot) {
-            if (snapshot.data != null && snapshot.data!.length <= 1)
+            if (snapshot.data != null && snapshot.data!.length <= 1) {
               return SizedBox.shrink();
+            }
             if (snapshot.hasData) {
               return SelectChips(
                 items: snapshot.data!,
@@ -608,8 +612,9 @@ class _TransactionFiltersSelectionState
         StreamBuilder<List<Budget>>(
           stream: database.watchAllAddableBudgets(),
           builder: (context, snapshot) {
-            if (snapshot.data != null && snapshot.data!.length <= 0)
+            if (snapshot.data != null && snapshot.data!.length <= 0) {
               return SizedBox.shrink();
+            }
             if (snapshot.hasData) {
               return Column(
                 children: [
@@ -694,8 +699,9 @@ class _TransactionFiltersSelectionState
           stream: database.watchAllExcludedTransactionsBudgetsInUse(),
           builder: (context, snapshot) {
             print(snapshot.data);
-            if (snapshot.data != null && snapshot.data!.length <= 0)
+            if (snapshot.data != null && snapshot.data!.length <= 0) {
               return SizedBox.shrink();
+            }
             if (snapshot.hasData) {
               return Column(
                 children: [
@@ -754,8 +760,9 @@ class _TransactionFiltersSelectionState
           stream: database.watchAllObjectives(
               objectiveType: ObjectiveType.goal, archivedLast: true),
           builder: (context, snapshot) {
-            if (snapshot.data != null && snapshot.data!.length <= 0)
+            if (snapshot.data != null && snapshot.data!.length <= 0) {
               return SizedBox.shrink();
+            }
             if (snapshot.hasData) {
               return SelectChips(
                 items: [null, ...snapshot.data!],
@@ -811,8 +818,9 @@ class _TransactionFiltersSelectionState
           stream: database.watchAllObjectives(
               objectiveType: ObjectiveType.loan, archivedLast: true),
           builder: (context, snapshot) {
-            if (snapshot.data != null && snapshot.data!.length <= 0)
+            if (snapshot.data != null && snapshot.data!.length <= 0) {
               return SizedBox.shrink();
+            }
             if (snapshot.hasData) {
               return SelectChips(
                 items: [null, ...snapshot.data!],
@@ -1099,7 +1107,7 @@ class AppliedFilterChips extends StatelessWidget {
     }
     // Budgets
     for (Budget budget in await database.getAllBudgets()) {
-      if (searchFilters.budgetPks.contains(budget.budgetPk))
+      if (searchFilters.budgetPks.contains(budget.budgetPk)) {
         out.add(AppliedFilterChip(
           label: budget.name,
           customBorderColor: HexColor(
@@ -1108,10 +1116,11 @@ class AppliedFilterChips extends StatelessWidget {
           ),
           openFiltersSelection: openFiltersSelection,
         ));
+      }
     }
     // Excluded Budgets
     for (Budget budget in await database.getAllBudgets()) {
-      if (searchFilters.excludedBudgetPks.contains(budget.budgetPk))
+      if (searchFilters.excludedBudgetPks.contains(budget.budgetPk)) {
         out.add(AppliedFilterChip(
           label: "excluded-from".tr() + ": " + budget.name,
           customBorderColor: HexColor(
@@ -1120,6 +1129,7 @@ class AppliedFilterChips extends StatelessWidget {
           ),
           openFiltersSelection: openFiltersSelection,
         ));
+      }
     }
     if (searchFilters.budgetPks.contains(null)) {
       out.add(AppliedFilterChip(
@@ -1130,7 +1140,7 @@ class AppliedFilterChips extends StatelessWidget {
     // Objectives
     for (Objective objective
         in await database.getAllObjectives(objectiveType: ObjectiveType.goal)) {
-      if (searchFilters.objectivePks.contains(objective.objectivePk))
+      if (searchFilters.objectivePks.contains(objective.objectivePk)) {
         out.add(AppliedFilterChip(
           label: objective.name,
           customBorderColor: HexColor(
@@ -1139,6 +1149,7 @@ class AppliedFilterChips extends StatelessWidget {
           ),
           openFiltersSelection: openFiltersSelection,
         ));
+      }
     }
     if (searchFilters.objectivePks.contains(null)) {
       out.add(AppliedFilterChip(
@@ -1149,7 +1160,7 @@ class AppliedFilterChips extends StatelessWidget {
     // Loan Objectives
     for (Objective objective
         in await database.getAllObjectives(objectiveType: ObjectiveType.loan)) {
-      if (searchFilters.objectiveLoanPks.contains(objective.objectivePk))
+      if (searchFilters.objectiveLoanPks.contains(objective.objectivePk)) {
         out.add(AppliedFilterChip(
           label: objective.name,
           customBorderColor: HexColor(
@@ -1158,6 +1169,7 @@ class AppliedFilterChips extends StatelessWidget {
           ),
           openFiltersSelection: openFiltersSelection,
         ));
+      }
     }
     if (searchFilters.objectiveLoanPks.contains(null)) {
       out.add(AppliedFilterChip(

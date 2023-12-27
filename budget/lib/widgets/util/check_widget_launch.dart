@@ -20,8 +20,9 @@ class AndroidOnly extends StatelessWidget {
   final Widget child;
   @override
   Widget build(BuildContext context) {
-    if (getPlatform(ignoreEmulation: true) != PlatformOS.isAndroid)
+    if (getPlatform(ignoreEmulation: true) != PlatformOS.isAndroid) {
       return SizedBox.shrink();
+    }
     return child;
   }
 }

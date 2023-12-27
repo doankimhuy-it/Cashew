@@ -318,10 +318,11 @@ class _FreePremiumMessageState extends State<FreePremiumMessage> {
   void initState() {
     Future.delayed(Duration.zero, () async {
       for (int i = remainingTime; i > 0; i--) {
-        if (mounted)
+        if (mounted) {
           setState(() {
             remainingTime--;
           });
+        }
         await Future.delayed(const Duration(milliseconds: 1000));
       }
     });
@@ -471,8 +472,9 @@ openManagePurchase() {
     openUrl(
         "https://play.google.com/store/account/subscriptions?sku=cashew.pro.yearly&package=com.budget.tracker_app");
   } else {
-    if (getPlatform(ignoreEmulation: true) == PlatformOS.isAndroid)
+    if (getPlatform(ignoreEmulation: true) == PlatformOS.isAndroid) {
       openUrl("https://play.google.com/store/account/subscriptions");
+    }
   }
 }
 
@@ -797,10 +799,11 @@ class ProductsState extends State<Products> {
       });
     });
     Future.delayed(Duration(milliseconds: 3500), () async {
-      if (loading)
+      if (loading) {
         setState(() {
           loading = false;
         });
+      }
     });
     super.initState();
   }
@@ -1130,7 +1133,7 @@ class LockedFeature extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget child = IgnorePointer(child: this.child);
-    if (showLock)
+    if (showLock) {
       child = Stack(
         alignment: Alignment.center,
         children: [
@@ -1140,6 +1143,7 @@ class LockedFeature extends StatelessWidget {
               : Icons.lock_rounded),
         ],
       );
+    }
     return Tappable(
       onTap: () async {
         bool result = await premiumPopupPushRoute(context);
@@ -1173,10 +1177,11 @@ class _FadeOutAndLockFeatureState extends State<FadeOutAndLockFeature> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
-      if (hidePremiumPopup() == false)
+      if (hidePremiumPopup() == false) {
         setState(() {
           fadeIn = true;
         });
+      }
     });
     super.initState();
   }

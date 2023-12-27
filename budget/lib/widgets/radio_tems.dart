@@ -51,8 +51,9 @@ class _RadioItemsState<T> extends State<RadioItems<T>> {
       index += 1;
       bool selected = false;
       if (currentValue == item ||
-          (widget.getSelected != null && widget.getSelected!(item)))
+          (widget.getSelected != null && widget.getSelected!(item))) {
         selected = true;
+      }
       if (item == null && widget.ifNullSelectNone == true) selected = false;
       bool noDescription = widget.descriptions == null ||
           widget.descriptions!.length <= index ||

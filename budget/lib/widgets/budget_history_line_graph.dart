@@ -420,8 +420,9 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
             touchCallback:
                 (FlTouchEvent event, LineTouchResponse? touchResponse) {
               if (!event.isInterestedForInteractions || touchResponse == null) {
-                if (touchedValue != null) if (widget.onTouchedIndex != null)
+                if (touchedValue != null) if (widget.onTouchedIndex != null) {
                   widget.onTouchedIndex!(null);
+                }
                 touchedValue = null;
                 return;
               }
@@ -432,7 +433,9 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                       (widget.spots.firstOrNull ?? []).length) +
                   touchResponse.lineBarSpots![0].x;
               if (touchedValue != value.toInt()) if (widget.onTouchedIndex !=
-                  null) widget.onTouchedIndex!(value.toInt());
+                  null) {
+                widget.onTouchedIndex!(value.toInt());
+              }
 
               if (event.runtimeType == FlLongPressStart) {
                 HapticFeedback.selectionClick();

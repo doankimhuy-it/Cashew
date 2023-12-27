@@ -2288,10 +2288,11 @@ List<Widget>? getChangelogPointsWidgets(BuildContext context,
         ));
       }
     }
-    if (changelogPoints.length > 0)
+    if (changelogPoints.length > 0) {
       changelogPoints.add(
         SizedBox(height: 10),
       );
+    }
 
     if (!forceShow) changelogPoints.insertAll(0, majorChangelogPointsAtTop);
     return changelogPoints;

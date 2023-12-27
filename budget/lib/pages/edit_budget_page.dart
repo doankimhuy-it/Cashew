@@ -419,18 +419,18 @@ class _EditBudgetPageState extends State<EditBudgetPage> {
                     );
                   },
                   itemCount: snapshot.data!.length,
-                  onReorder: (_intPrevious, _intNew) async {
-                    Budget oldBudget = snapshot.data![_intPrevious];
+                  onReorder: (intPrevious, intNew) async {
+                    Budget oldBudget = snapshot.data![intPrevious];
 
                     // print(oldBudget.name);
                     // print(oldBudget.order);
 
-                    if (_intNew > _intPrevious) {
+                    if (intNew > intPrevious) {
                       await database.moveBudget(
-                          oldBudget.budgetPk, _intNew - 1, oldBudget.order);
+                          oldBudget.budgetPk, intNew - 1, oldBudget.order);
                     } else {
                       await database.moveBudget(
-                          oldBudget.budgetPk, _intNew, oldBudget.order);
+                          oldBudget.budgetPk, intNew, oldBudget.order);
                     }
                     return true;
                   },
@@ -582,10 +582,11 @@ Future<dynamic> selectAddableBudgetPopup(BuildContext context,
               },
               initial: null,
               onChanged: (Budget? budget) async {
-                if (budget == null)
+                if (budget == null) {
                   Navigator.of(context).pop("none");
-                else
+                } else {
                   Navigator.of(context).pop(budget);
+                }
               },
               onLongPress: (Budget? budget) {
                 pushRoute(

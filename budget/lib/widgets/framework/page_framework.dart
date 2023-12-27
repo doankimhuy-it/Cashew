@@ -642,10 +642,11 @@ class PageFrameworkSliverAppBar extends StatelessWidget {
               opacity: animationControllerOpacity!,
               child: IconButton(
                 onPressed: () {
-                  if (onBackButton != null)
+                  if (onBackButton != null) {
                     onBackButton!();
-                  else
+                  } else {
                     Navigator.of(context).maybePop();
+                  }
                 },
                 icon: Icon(
                   getPlatform() == PlatformOS.isIOS

@@ -93,10 +93,11 @@ class _SelectChipsState<T> extends State<SelectChips<T>> {
         }
       });
       Future.delayed(Duration(milliseconds: 1000), () {
-        if (mounted)
+        if (mounted) {
           setState(() {
             isDoneAnimation = true;
           });
+        }
       });
     }
     super.initState();

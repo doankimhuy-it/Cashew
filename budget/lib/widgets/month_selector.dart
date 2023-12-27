@@ -46,25 +46,29 @@ class MonthSelectorState extends State<MonthSelector> {
             2 -
         100;
     if (position > upperBound) {
-      if (showScrollBottom == false)
+      if (showScrollBottom == false) {
         setState(() {
           showScrollBottom = true;
         });
+      }
     } else if (position < lowerBound) {
-      if (showScrollTop == false)
+      if (showScrollTop == false) {
         setState(() {
           showScrollTop = true;
         });
+      }
     }
     if (position > lowerBound && position < upperBound) {
-      if (showScrollTop == true)
+      if (showScrollTop == true) {
         setState(() {
           showScrollTop = false;
         });
-      if (showScrollBottom == true)
+      }
+      if (showScrollBottom == true) {
         setState(() {
           showScrollBottom = false;
         });
+      }
     }
   }
 

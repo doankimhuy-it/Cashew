@@ -777,8 +777,9 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
                               stream:
                                   database.getBudget(widget.budget!.budgetPk),
                               builder: (context, snapshot) {
-                                if (snapshot.data == null)
+                                if (snapshot.data == null) {
                                   return SizedBox.shrink();
+                                }
                                 return EditBudgetLimitsPage(
                                   budget: budget,
                                   currentIsAbsoluteSpendingLimit:
@@ -854,9 +855,9 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
                                 : [])
                           ],
                           getLabel: (String item) {
-                            if (item == "Shared Group Budget")
+                            if (item == "Shared Group Budget") {
                               return item + " (Unsupported)";
-                            else if (item == "All Transactions")
+                            } else if (item == "All Transactions")
                               return "all-transactions".tr();
                             else if (item == "Added Only")
                               return "added-only".tr();
@@ -1016,9 +1017,10 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
                               getSelected: (dynamic item) {
                                 if (selectedBudgetTransactionFilters.contains(
                                     BudgetTransactionFilters
-                                        .defaultBudgetTransactionFilters))
+                                        .defaultBudgetTransactionFilters)) {
                                   return isFilterSelectedWithDefaults(
                                       selectedBudgetTransactionFilters, item);
+                                }
                                 return selectedBudgetTransactionFilters
                                     .contains(item);
                               },
@@ -1066,11 +1068,13 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
                                 },
                                 getSelected: (String item) {
                                   if (item == "All" &&
-                                      selectedMemberTransactionFilters == null)
+                                      selectedMemberTransactionFilters == null) {
                                     return true;
+                                  }
                                   if (item != "All" &&
-                                      selectedMemberTransactionFilters == null)
+                                      selectedMemberTransactionFilters == null) {
                                     return true;
+                                  }
                                   return selectedMemberTransactionFilters!
                                       .contains(item);
                                 },

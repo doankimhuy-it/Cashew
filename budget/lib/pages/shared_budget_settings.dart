@@ -499,9 +499,9 @@ class CategoryMemberContainer extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Tappable(
         onTap: () {
-          if (!canModify)
+          if (!canModify) {
             memberPopup(context, member);
-          else
+          } else {
             openBottomSheet(
               context,
               PopupFramework(
@@ -542,6 +542,7 @@ class CategoryMemberContainer extends StatelessWidget {
                 ),
               ),
             );
+          }
         },
         borderRadius: 15,
         color: getColor(context, "lightDarkAccent"),

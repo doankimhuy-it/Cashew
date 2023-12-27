@@ -118,8 +118,9 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
           onTap: () {
             _shrink();
             if (widget.disabled == false) widget.onTap();
-            if (widget.disabled == true && widget.onDisabled != null)
+            if (widget.disabled == true && widget.onDisabled != null) {
               widget.onDisabled!();
+            }
           },
           borderRadius:
               getPlatform() == PlatformOS.isIOS && widget.borderRadius == null

@@ -51,8 +51,9 @@ Map<String, String> convertStringToMap(String inputString,
         String key = keyValue[0].trim();
         if (keysToShow != null && keysToShow.contains(key) == false) continue;
         if (keysToIgnore.contains(key)) continue;
-        if (keysToReplace.keys.contains(key) && keysToReplace[key] != null)
+        if (keysToReplace.keys.contains(key) && keysToReplace[key] != null) {
           key = keysToReplace[key] ?? "";
+        }
         String value = keyValue[1].trim();
 
         // Remove the key from the string
@@ -74,8 +75,9 @@ Map<String, String> convertStringToMap(String inputString,
       Map<String, String> out = {};
       for (String keyIteration in keysToShow) {
         String key = keyIteration;
-        if (keysToReplace.keys.contains(key) && keysToReplace[key] != null)
+        if (keysToReplace.keys.contains(key) && keysToReplace[key] != null) {
           key = keysToReplace[key] ?? "";
+        }
         out[key] = "";
       }
       return out;

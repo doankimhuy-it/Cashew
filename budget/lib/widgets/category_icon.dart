@@ -118,7 +118,7 @@ class CategoryIcon extends StatelessWidget {
                     ? null
                     : () {
                         if (onLongPress != null) onLongPress!();
-                        if (canEditByLongPress)
+                        if (canEditByLongPress) {
                           pushRoute(
                             context,
                             AddCategoryPage(
@@ -127,6 +127,7 @@ class CategoryIcon extends StatelessWidget {
                                   RoutesToPopAfterDelete.One,
                             ),
                           );
+                        }
                       },
                 borderRadius: borderRadius - 3,
                 child: Center(

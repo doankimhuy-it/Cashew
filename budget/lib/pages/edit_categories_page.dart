@@ -333,18 +333,18 @@ class _EditCategoriesPageState extends State<EditCategoriesPage> {
                           );
                         },
                         itemCount: snapshot.data!.length,
-                        onReorder: (_intPrevious, _intNew) async {
+                        onReorder: (intPrevious, intNew) async {
                           CategoryWithDetails oldCategoryDetails =
-                              snapshot.data![_intPrevious];
+                              snapshot.data![intPrevious];
                           TransactionCategory oldCategory =
                               oldCategoryDetails.category;
 
-                          if (_intNew > _intPrevious) {
+                          if (intNew > intPrevious) {
                             await database.moveCategory(oldCategory.categoryPk,
-                                _intNew - 1, oldCategory.order);
+                                intNew - 1, oldCategory.order);
                           } else {
                             await database.moveCategory(oldCategory.categoryPk,
-                                _intNew, oldCategory.order);
+                                intNew, oldCategory.order);
                           }
                           return true;
                         },
@@ -429,10 +429,11 @@ class RefreshButtonState extends State<RefreshButton>
       });
       await widget.onTap();
       Timer(Duration(seconds: 5), () {
-        if (mounted)
+        if (mounted) {
           setState(() {
             _isEnabled = true;
           });
+        }
       });
     }
   }

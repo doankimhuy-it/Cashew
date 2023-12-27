@@ -248,8 +248,9 @@ void openLanguagePicker(BuildContext context) {
               if (value == "System") {
                 context.resetLocale();
               } else {
-                if (supportedLocales[value] != null)
+                if (supportedLocales[value] != null) {
                   context.setLocale(supportedLocales[value]!);
+                }
               }
               updateSettings(
                 "locale",

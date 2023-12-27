@@ -47,10 +47,12 @@ class BottomNavBarState extends State<BottomNavBar> {
 
     if (index == selectedIndex && allowReApply == false) {
       if (index == 0) homePageStateKey.currentState?.scrollToTop();
-      if (navigationIndex == 1)
+      if (navigationIndex == 1) {
         transactionsListPageStateKey.currentState?.scrollToTop();
-      if (navigationIndex == 2)
+      }
+      if (navigationIndex == 2) {
         budgetsListPageStateKey.currentState?.scrollToTop();
+      }
       if (index == 3) settingsPageStateKey.currentState?.scrollToTop();
     } else {
       // We need to change to the navigation index, however the selectedIndex remains unchanged

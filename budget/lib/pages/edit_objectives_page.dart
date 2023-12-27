@@ -300,15 +300,15 @@ class _EditObjectivesPageState extends State<EditObjectivesPage> {
                     );
                   },
                   itemCount: snapshot.data!.length,
-                  onReorder: (_intPrevious, _intNew) async {
-                    Objective oldObjective = snapshot.data![_intPrevious];
-                    if (_intNew > _intPrevious) {
+                  onReorder: (intPrevious, intNew) async {
+                    Objective oldObjective = snapshot.data![intPrevious];
+                    if (intNew > intPrevious) {
                       await database.moveObjective(oldObjective.objectivePk,
-                          _intNew - 1, oldObjective.order,
+                          intNew - 1, oldObjective.order,
                           objectiveType: widget.objectiveType);
                     } else {
                       await database.moveObjective(
-                          oldObjective.objectivePk, _intNew, oldObjective.order,
+                          oldObjective.objectivePk, intNew, oldObjective.order,
                           objectiveType: widget.objectiveType);
                     }
                     return true;
@@ -461,10 +461,11 @@ Future<dynamic> selectObjectivePopup(
                   },
                   initial: selectedObjective,
                   onChanged: (Objective? objective) async {
-                    if (objective == null)
+                    if (objective == null) {
                       Navigator.of(context).pop("none");
-                    else
+                    } else {
                       Navigator.of(context).pop(objective);
+                    }
                   },
                 );
               } else {

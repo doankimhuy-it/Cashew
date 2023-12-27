@@ -246,20 +246,20 @@ class _EditAssociatedTitlesPageState extends State<EditAssociatedTitlesPage> {
                           );
                         },
                         itemCount: snapshot.data!.length,
-                        onReorder: (_intPrevious, _intNew) async {
+                        onReorder: (intPrevious, intNew) async {
                           TransactionAssociatedTitle oldTitle =
-                              snapshot.data![_intPrevious];
-                          _intNew = snapshot.data!.length - _intNew;
-                          _intPrevious = snapshot.data!.length - _intPrevious;
-                          if (_intNew > _intPrevious) {
+                              snapshot.data![intPrevious];
+                          intNew = snapshot.data!.length - intNew;
+                          intPrevious = snapshot.data!.length - intPrevious;
+                          if (intNew > intPrevious) {
                             await database.moveAssociatedTitle(
                                 oldTitle.associatedTitlePk,
-                                _intNew - 1,
+                                intNew - 1,
                                 oldTitle.order);
                           } else {
                             await database.moveAssociatedTitle(
                                 oldTitle.associatedTitlePk,
-                                _intNew,
+                                intNew,
                                 oldTitle.order);
                           }
 

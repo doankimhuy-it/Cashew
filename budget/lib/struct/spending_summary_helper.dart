@@ -102,10 +102,11 @@ TotalSpentCategoriesSummary watchTotalSpentInTimeRangeHelper({
   for (var categoryWithTotal in dataInput) {
     double? newTotal = s.totalSpentOfCategoriesRemoveUnassignedTransactions[
         categoryWithTotal.category.categoryPk];
-    if (newTotal != null)
+    if (newTotal != null) {
       s.dataFilterUnassignedTransactions.add(
         categoryWithTotal.copyWith(total: newTotal),
       );
+    }
   }
 
   s.hasSubCategories = s.subCategorySpendingIndexedByMainCategoryPk.isNotEmpty;

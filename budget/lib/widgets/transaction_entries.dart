@@ -440,11 +440,12 @@ class TransactionEntries extends StatelessWidget {
                 ),
               ],
             );
-            if (renderType != TransactionEntriesRenderType.slivers)
+            if (renderType != TransactionEntriesRenderType.slivers) {
               widgetsOut.add(totalCashFlowWidget);
+            }
           }
 
-          if (enableSpendingSummary)
+          if (enableSpendingSummary) {
             widgetsOut.insert(
               0,
               TransactionsEntriesSpendingSummary(
@@ -455,6 +456,7 @@ class TransactionEntries extends StatelessWidget {
                 onLongPress: onLongPressSpendingSummary,
               ),
             );
+          }
 
           if (renderType == TransactionEntriesRenderType.slivers) {
             return MultiSliver(
@@ -536,8 +538,9 @@ class TransactionEntries extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (appStateSettings["netSpendingDayTotal"] == false)
+    if (appStateSettings["netSpendingDayTotal"] == false) {
       return transactionEntryListBuilder(null);
+    }
     return StreamBuilder<double?>(
       // Use a reference point and subtract the totals of the transactions from this reference point to
       // get the net at that point in time
@@ -578,12 +581,13 @@ class TransactionEntries extends StatelessWidget {
         if (snapshotNetTotal.hasData == false) if (renderType ==
                 TransactionEntriesRenderType.slivers ||
             renderType ==
-                TransactionEntriesRenderType.implicitlyAnimatedSlivers)
+                TransactionEntriesRenderType.implicitlyAnimatedSlivers) {
           return SliverToBoxAdapter(
             child: SizedBox.shrink(),
           );
-        else
+        } else {
           return SizedBox.shrink();
+        }
         return transactionEntryListBuilder(snapshotNetTotal.data);
       },
     );

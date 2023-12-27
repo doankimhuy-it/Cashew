@@ -69,10 +69,12 @@ Future openBottomSheet(
 }) async {
   //minimize keyboard when open
   FocusScope.of(context).unfocus();
-  if (reAssignBottomSheetControllerGlobal)
+  if (reAssignBottomSheetControllerGlobal) {
     bottomSheetControllerGlobal = new SheetController();
-  if (useCustomController == true)
+  }
+  if (useCustomController == true) {
     bottomSheetControllerGlobalCustomAssigned = new SheetController();
+  }
   return await showSlidingBottomSheet(context,
       resizeToAvoidBottomInset: resizeForKeyboard,
       // getOSInsideWeb() == "iOS" ? false : resizeForKeyboard,

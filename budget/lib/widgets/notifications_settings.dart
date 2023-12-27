@@ -339,8 +339,9 @@ Future<bool> scheduleDailyNotification(
     String chosenMessage =
         _reminderStrings[Random().nextInt(_reminderStrings.length)].tr();
     tz.TZDateTime dateTime = _nextInstanceOfSetTime(timeOfDay, dayOffset: i);
-    if (scheduleNowDebug)
+    if (scheduleNowDebug) {
       dateTime = tz.TZDateTime.now(tz.local).add(Duration(seconds: i * 5));
+    }
     NotificationDetails notificationDetails = NotificationDetails(
       android: androidNotificationDetails,
       iOS: darwinNotificationDetails,

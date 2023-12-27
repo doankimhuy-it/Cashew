@@ -839,10 +839,11 @@ class _AnimatedProgressState extends State<AnimatedProgress> {
       });
     });
     _future = Future.delayed(Duration(milliseconds: 500), () {
-      if (mounted)
+      if (mounted) {
         setState(() {
           fadeIn = true;
         });
+      }
     });
     super.initState();
   }
@@ -971,10 +972,11 @@ class _TodayIndicatorState extends State<TodayIndicator> {
 
   @override
   void didUpdateWidget(covariant TodayIndicator oldWidget) {
-    if (oldWidget.percent != widget.percent)
+    if (oldWidget.percent != widget.percent) {
       setState(() {
         percent = widget.percent;
       });
+    }
     super.didUpdateWidget(oldWidget);
   }
 

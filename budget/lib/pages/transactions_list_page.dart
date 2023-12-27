@@ -462,8 +462,9 @@ class ShowTransactionsBalanceTransferTabSettingToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Provider.of<AllWallets>(context).indexedByPk.keys.length <= 1)
+    if (Provider.of<AllWallets>(context).indexedByPk.keys.length <= 1) {
       return SizedBox.shrink();
+    }
     return SettingsContainerSwitch(
       title: "show-balance-transfer-tab".tr(),
       description: "show-balance-transfer-tab-description".tr(),

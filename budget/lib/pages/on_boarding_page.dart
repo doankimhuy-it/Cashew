@@ -673,8 +673,9 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                       child: ButtonIcon(
                         onTap: () {
                           if (currentIndex < children.length - 1 ||
-                              getPlatform() == PlatformOS.isIOS)
+                              getPlatform() == PlatformOS.isIOS) {
                             nextOnBoardPage(children.length);
+                          }
                         },
                         icon: getPlatform() == PlatformOS.isIOS
                             ? appStateSettings["outlinedIcons"]

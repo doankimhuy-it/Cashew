@@ -352,15 +352,17 @@ class _AddObjectivePageState extends State<AddObjectivePage>
 
   determineBottomButton() {
     if (selectedTitle != null) {
-      if (canAddObjective != true)
+      if (canAddObjective != true) {
         this.setState(() {
           canAddObjective = true;
         });
+      }
     } else {
-      if (canAddObjective != false)
+      if (canAddObjective != false) {
         this.setState(() {
           canAddObjective = false;
         });
+      }
     }
   }
 

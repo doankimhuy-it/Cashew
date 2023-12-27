@@ -257,7 +257,7 @@ class TransactionTag extends StatelessWidget {
         ],
       ),
     );
-    if (progress != null)
+    if (progress != null) {
       return Padding(
         padding: const EdgeInsets.only(left: 3),
         child: Stack(
@@ -286,6 +286,7 @@ class TransactionTag extends StatelessWidget {
           ],
         ),
       );
+    }
     return Padding(padding: EdgeInsets.only(left: 3), child: tagWidget);
   }
 }

@@ -68,7 +68,6 @@ class BudgetPage extends StatelessWidget {
           }
           return SizedBox.shrink();
         });
-    ;
   }
 }
 

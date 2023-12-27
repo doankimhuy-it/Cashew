@@ -148,8 +148,9 @@ Future<bool> signInGoogle(
         throw ("Login failed");
       }
     }
-    if (waitForCompletion == true && context != null)
+    if (waitForCompletion == true && context != null) {
       Navigator.of(context).pop();
+    }
     next != null ? next() : 0;
 
     if (appStateSettings["hasSignedIn"] == false) {
@@ -159,8 +160,9 @@ Future<bool> signInGoogle(
     return true;
   } catch (e) {
     print(e);
-    if (waitForCompletion == true && context != null)
+    if (waitForCompletion == true && context != null) {
       Navigator.of(context).pop();
+    }
     openSnackbar(
       SnackbarMessage(
         title: "sign-in-error".tr(),
@@ -384,9 +386,10 @@ Future<void> createBackup(
   }
 
   try {
-    if (deleteOldBackups)
+    if (deleteOldBackups) {
       await deleteRecentBackups(context, appStateSettings["backupLimit"],
           silentDelete: true);
+    }
 
     DBFileInfo currentDBFileInfo = await getCurrentDBFileInfo();
 
@@ -403,15 +406,16 @@ Future<void> createBackup(
     // -$timestamp
     driveFile.name =
         "db-v$schemaVersionGlobal-${getCurrentDeviceName()}.sqlite";
-    if (clientIDForSync != null)
+    if (clientIDForSync != null) {
       driveFile.name =
           getCurrentDeviceSyncBackupFileName(clientIDForSync: clientIDForSync);
+    }
     driveFile.modifiedTime = DateTime.now().toUtc();
     driveFile.parents = ["appDataFolder"];
 
     await driveApi.files.create(driveFile, uploadMedia: media);
 
-    if (clientIDForSync == null)
+    if (clientIDForSync == null) {
       openSnackbar(
         SnackbarMessage(
           title: "backup-created".tr(),
@@ -421,9 +425,11 @@ Future<void> createBackup(
               : Icons.backup_rounded,
         ),
       );
-    if (clientIDForSync == null)
+    }
+    if (clientIDForSync == null) {
       updateSettings("lastBackup", DateTime.now().toString(),
           pagesNeedingRefresh: [], updateGlobalState: false);
+    }
 
     if (silentBackup == false || silentBackup == null) {
       loadingIndeterminateKey.currentState!.setVisibility(false);
@@ -1013,9 +1019,10 @@ class _BackupManagementState extends State<BackupManagement> {
                                     Navigator.pop(context);
                                   },
                                 );
-                                if (result == true)
+                                if (result == true) {
                                   loadBackup(
                                       context, driveApiState, file.value);
+                                }
                               }
                               // else {
                               //   await openPopup(
@@ -1231,7 +1238,7 @@ class _BackupManagementState extends State<BackupManagement> {
                                                       });
                                                       // bottomSheetControllerGlobal
                                                       //     .snapToExtent(0);
-                                                      if (widget.isClientSync)
+                                                      if (widget.isClientSync) {
                                                         updateSettings(
                                                             "devicesHaveBeenSynced",
                                                             appStateSettings[
@@ -1239,6 +1246,7 @@ class _BackupManagementState extends State<BackupManagement> {
                                                                 1,
                                                             updateGlobalState:
                                                                 false);
+                                                      }
                                                       if (widget.isManaging) {
                                                         updateSettings(
                                                             "numBackups",
