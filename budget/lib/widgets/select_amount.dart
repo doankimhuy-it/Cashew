@@ -37,8 +37,8 @@ String getDecimalSeparator() {
 }
 
 class SelectAmount extends StatefulWidget {
-  SelectAmount({
-    Key? key,
+  const SelectAmount({
+    super.key,
     required this.setSelectedAmount,
     this.amountPassed = "", //the string of calculations
     this.next,
@@ -59,7 +59,7 @@ class SelectAmount extends StatefulWidget {
     this.hideWalletPickerIfOneCurrency = false,
     this.hideNextButton = false,
     this.decimals,
-  }) : super(key: key);
+  });
   final Function(double, String) setSelectedAmount;
   final String amountPassed;
   final VoidCallback? next;
@@ -88,7 +88,7 @@ class SelectAmount extends StatefulWidget {
 class _SelectAmountState extends State<SelectAmount> {
   String amount = "";
 
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
   late FocusAttachment _focusAttachment;
   late String? walletPkForCurrency;
   late String? selectedWalletPk = widget.selectedWalletPk;
@@ -274,38 +274,38 @@ class _SelectAmountState extends State<SelectAmount> {
     // bottomSheetControllerGlobal.snapToExtent(0);
     String amountClone = amount;
     if (input == "." &&
-        !decimalCheck(operationsWithSpaces(amountClone + "."))) {
-    } else if (amount.length == 0 && !includesOperations(input, false)) {
+        !decimalCheck(operationsWithSpaces("$amountClone."))) {
+    } else if (amount.isEmpty && !includesOperations(input, false)) {
       if (input == "0") {
       } else if (input == ".") {
         setState(() {
-          amount += "0" + input;
+          amount += "0$input";
         });
       } else {
         setState(() {
           amount += input;
         });
       }
-    } else if (amount.length != 0 &&
+    } else if (amount.isNotEmpty &&
             (!includesOperations(amount.substring(amount.length - 1), true) &&
                 includesOperations(input, true)) ||
         !includesOperations(input, true)) {
       setState(() {
         amount += input;
       });
-    } else if (amount.length != 0 &&
+    } else if (amount.isNotEmpty &&
         includesOperations(amount.substring(amount.length - 1), false) &&
         input == ".") {
       setState(() {
-        amount += "0" + input;
+        amount += "0$input";
       });
-    } else if (amount.length != 0 &&
+    } else if (amount.isNotEmpty &&
         amount.substring(amount.length - 1) == "." &&
         includesOperations(input, false)) {
       setState(() {
         amount = amount.substring(0, amount.length - 1) + input;
       });
-    } else if (amount.length != 0 &&
+    } else if (amount.isNotEmpty &&
         includesOperations(amount.substring(amount.length - 1), false) &&
         includesOperations(input, false)) {
       //replace last input operation with a new one
@@ -325,7 +325,7 @@ class _SelectAmountState extends State<SelectAmount> {
   void removeToAmount() {
     // bottomSheetControllerGlobal.snapToExtent(0);
     setState(() {
-      if (amount.length > 0) {
+      if (amount.isNotEmpty) {
         amount = amount.substring(0, amount.length - 1);
       }
     });
@@ -349,7 +349,7 @@ class _SelectAmountState extends State<SelectAmount> {
                 ? calculateResult(amount)
                 : double.tryParse(amount) ?? 0),
         amount);
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       bottomSheetControllerGlobal.snapToExtent(0);
     });
   }
@@ -403,7 +403,7 @@ class _SelectAmountState extends State<SelectAmount> {
     double result = 0;
     try {
       ContextModel cm = ContextModel();
-      Parser p = new Parser();
+      Parser p = Parser();
       Expression exp = p.parse(changedInput);
       result = exp.evaluate(EvaluationType.REAL, cm);
     } catch (e) {
@@ -436,7 +436,7 @@ class _SelectAmountState extends State<SelectAmount> {
           icon: appStateSettings["outlinedIcons"]
               ? Icons.paste_outlined
               : Icons.paste_rounded,
-          timeout: Duration(milliseconds: 2500),
+          timeout: const Duration(milliseconds: 2500),
         ),
       );
     }
@@ -510,7 +510,7 @@ class _SelectAmountState extends State<SelectAmount> {
                     crossAxisAlignment: WrapCrossAlignment.end,
                     children: [
                       AnimatedSwitcher(
-                        duration: Duration(milliseconds: 400),
+                        duration: const Duration(milliseconds: 400),
                         child: FractionallySizedBox(
                           key: ValueKey(amount),
                           widthFactor: 0.5,
@@ -529,7 +529,7 @@ class _SelectAmountState extends State<SelectAmount> {
                         ),
                       ),
                       AnimatedSwitcher(
-                        duration: Duration(milliseconds: 200),
+                        duration: const Duration(milliseconds: 200),
                         child: FractionallySizedBox(
                           key: ValueKey(amount),
                           widthFactor: 0.5,
@@ -593,8 +593,10 @@ class _SelectAmountState extends State<SelectAmount> {
                                       (widget.hideWalletPickerIfOneCurrency &&
                                           Provider.of<AllWallets>(context)
                                               .allContainSameCurrency())
-                                  ? SizedBox.shrink()
+                                  ? const SizedBox.shrink()
                                   : MediaQuery(
+                                      data: MediaQuery.of(context).copyWith(
+                                          textScaler: const TextScaler.linear(1.0)),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 3.0),
@@ -702,12 +704,12 @@ class _SelectAmountState extends State<SelectAmount> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
-                                                  Icon(
+                                                  const Icon(
                                                     Icons
                                                         .currency_exchange_rounded,
                                                     size: 16,
                                                   ),
-                                                  SizedBox(height: 2),
+                                                  const SizedBox(height: 2),
                                                   TextFont(
                                                     text: Provider.of<
                                                                     AllWallets>(
@@ -727,8 +729,6 @@ class _SelectAmountState extends State<SelectAmount> {
                                           ),
                                         ),
                                       ),
-                                      data: MediaQuery.of(context).copyWith(
-                                          textScaler: TextScaler.linear(1.0)),
                                     ),
                             ],
                           ),
@@ -742,7 +742,7 @@ class _SelectAmountState extends State<SelectAmount> {
                       (widget.hideWalletPickerIfOneCurrency &&
                           Provider.of<AllWallets>(context)
                               .allContainSameCurrency())
-                  ? SizedBox.shrink()
+                  ? const SizedBox.shrink()
                   : Padding(
                       padding: const EdgeInsets.only(top: 3),
                       child: SelectChips(
@@ -769,10 +769,7 @@ class _SelectAmountState extends State<SelectAmount> {
                           return wallet.name ==
                                   wallet.currency.toString().toUpperCase()
                               ? wallet.currency.toString().toUpperCase()
-                              : wallet.name +
-                                  " (" +
-                                  wallet.currency.toString().toUpperCase() +
-                                  ")";
+                              : "${wallet.name} (${wallet.currency.toString().toUpperCase()})";
                         },
                         getCustomBorderColor: (TransactionWallet item) {
                           return dynamicPastel(
@@ -820,19 +817,19 @@ class _SelectAmountState extends State<SelectAmount> {
                                     : Icons.expand_more_rounded,
                               )
                             : null,
-                        extraWidgetAfter: SelectChipsAddButtonExtraWidget(
+                        extraWidgetAfter: const SelectChipsAddButtonExtraWidget(
                           openPage: AddWalletPage(
                             routesToPopAfterDelete: RoutesToPopAfterDelete.None,
                           ),
                         ),
                       ),
                     ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Padding(
                 padding: widget.padding,
                 child: Center(
                   child: Container(
-                    constraints: BoxConstraints(maxWidth: 400),
+                    constraints: const BoxConstraints(maxWidth: 400),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(
                           getPlatform() == PlatformOS.isIOS ? 10 : 20),
@@ -942,7 +939,7 @@ class _SelectAmountState extends State<SelectAmount> {
                                             onLongPress: () async {
                                               await openBottomSheet(
                                                 context,
-                                                PopupFramework(
+                                                const PopupFramework(
                                                   hasPadding: true,
                                                   child: Column(
                                                     children: [
@@ -969,7 +966,7 @@ class _SelectAmountState extends State<SelectAmount> {
                                               onLongPress: () async {
                                                 await openBottomSheet(
                                                   context,
-                                                  PopupFramework(
+                                                  const PopupFramework(
                                                     hasPadding: true,
                                                     child: Column(
                                                       children: [
@@ -1052,15 +1049,15 @@ class _SelectAmountState extends State<SelectAmount> {
                   ),
                 ),
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               if (widget.hideNextButton == false)
                 Padding(
                   padding: widget.padding,
                   child: AnimatedSwitcher(
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     child: widget.allowZero || (amount != "" && amount != "0")
                         ? Button(
-                            key: Key("addSuccess"),
+                            key: const Key("addSuccess"),
                             label: widget.nextLabel ?? "",
                             width: MediaQuery.sizeOf(context).width,
                             onTap: () {
@@ -1082,7 +1079,7 @@ class _SelectAmountState extends State<SelectAmount> {
                             },
                           )
                         : Button(
-                            key: Key("addNoSuccess"),
+                            key: const Key("addNoSuccess"),
                             label: widget.nextLabel ?? "",
                             width: MediaQuery.sizeOf(context).width,
                             onTap: () {},
@@ -1099,13 +1096,13 @@ class _SelectAmountState extends State<SelectAmount> {
 }
 
 class CalculatorButton extends StatelessWidget {
-  CalculatorButton({
-    Key? key,
+  const CalculatorButton({
+    super.key,
     required this.label,
     required this.editAmount,
     this.onLongPress,
     this.disabled = false,
-  }) : super(key: key);
+  });
   final String label;
   final VoidCallback editAmount;
   final VoidCallback? onLongPress;
@@ -1114,7 +1111,7 @@ class CalculatorButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: AnimatedOpacity(
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         opacity: disabled ? 0.5 : 1,
         child: IgnorePointer(
           ignoring: disabled,
@@ -1126,7 +1123,7 @@ class CalculatorButton extends StatelessWidget {
                     : getColor(context, "lightDarkAccentHeavyLight"),
             onLongPress: onLongPress,
             onTap: editAmount,
-            child: Container(
+            child: SizedBox(
               height: 60,
               child: Center(
                 child: label != "<"
@@ -1147,8 +1144,8 @@ class CalculatorButton extends StatelessWidget {
 }
 
 class SelectAmountValue extends StatefulWidget {
-  SelectAmountValue({
-    Key? key,
+  const SelectAmountValue({
+    super.key,
     required this.setSelectedAmount,
     this.amountPassed = "", //the string of calculations
     this.next,
@@ -1157,7 +1154,7 @@ class SelectAmountValue extends StatefulWidget {
     this.suffix = "",
     this.showEnteredNumber = true,
     this.extraWidgetAboveNumbers,
-  }) : super(key: key);
+  });
   final Function(double, String) setSelectedAmount;
   final String amountPassed;
   final VoidCallback? next;
@@ -1174,7 +1171,7 @@ class SelectAmountValue extends StatefulWidget {
 class _SelectAmountValueState extends State<SelectAmountValue> {
   String amount = "";
 
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
   late FocusAttachment _focusAttachment;
 
   @override
@@ -1283,7 +1280,7 @@ class _SelectAmountValueState extends State<SelectAmountValue> {
       if (amount == "0" || amount == "") {
         if (input == ".") {
           setState(() {
-            amount = "0" + input;
+            amount = "0$input";
           });
         } else {
           setState(() {
@@ -1301,7 +1298,7 @@ class _SelectAmountValueState extends State<SelectAmountValue> {
 
   void removeToAmount() {
     setState(() {
-      if (amount.length > 0) {
+      if (amount.isNotEmpty) {
         amount = amount.substring(0, amount.length - 1);
       }
     });
@@ -1326,7 +1323,7 @@ class _SelectAmountValueState extends State<SelectAmountValue> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: AnimatedSwitcher(
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               child: FractionallySizedBox(
                 key: ValueKey(amount),
                 widthFactor: 1,
@@ -1345,7 +1342,7 @@ class _SelectAmountValueState extends State<SelectAmountValue> {
         Container(height: 10),
         Center(
           child: Container(
-            constraints: BoxConstraints(maxWidth: 400),
+            constraints: const BoxConstraints(maxWidth: 400),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(
                   getPlatform() == PlatformOS.isIOS ? 10 : 20),
@@ -1448,10 +1445,10 @@ class _SelectAmountValueState extends State<SelectAmountValue> {
         ),
         Container(height: 15),
         AnimatedSwitcher(
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           child: amount != "" || widget.allowZero
               ? Button(
-                  key: Key("addSuccess"),
+                  key: const Key("addSuccess"),
                   label: widget.nextLabel ?? "",
                   width: MediaQuery.sizeOf(context).width,
                   onTap: () {
@@ -1461,7 +1458,7 @@ class _SelectAmountValueState extends State<SelectAmountValue> {
                   },
                 )
               : Button(
-                  key: Key("addNoSuccess"),
+                  key: const Key("addNoSuccess"),
                   label: widget.nextLabel ?? "",
                   width: MediaQuery.sizeOf(context).width,
                   onTap: () {},

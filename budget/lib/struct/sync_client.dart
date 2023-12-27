@@ -32,8 +32,8 @@ bool isCurrentDeviceSyncBackupFile(String? backupFileName) {
 }
 
 String getCurrentDeviceSyncBackupFileName({String? clientIDForSync}) {
-  if (clientIDForSync == null) clientIDForSync = clientID;
-  return "sync-" + clientIDForSync + ".sqlite";
+  clientIDForSync ??= clientID;
+  return "sync-$clientIDForSync.sqlite";
 }
 
 String getDeviceFromSyncBackupFileName(String? backupFileName) {
@@ -54,7 +54,7 @@ Future<DateTime> getDateOfLastSyncedWithClient(String clientIDForSync) async {
   try {
     return DateTime.parse(lastTimeSynced);
   } catch (e) {
-    print("Error getting time of last sync " + e.toString());
+    print("Error getting time of last sync $e");
     return DateTime(0);
   }
 }
@@ -104,7 +104,7 @@ Future<bool> createSyncBackup(
     }
     return false;
   } else {
-    syncTimeoutTimer = Timer(Duration(milliseconds: 5000), () {
+    syncTimeoutTimer = Timer(const Duration(milliseconds: 5000), () {
       syncTimeoutTimer!.cancel();
     });
   }
@@ -255,7 +255,7 @@ Future<bool> syncData(BuildContext context) async {
 
     String? fileId = file.id;
     if (fileId == null) continue;
-    print("SYNCING WITH " + (file.name ?? ""));
+    print("SYNCING WITH ${file.name ?? ""}");
     filesSyncing.add(file);
 
     List<int> dataStore = [];
@@ -405,7 +405,7 @@ Future<bool> syncData(BuildContext context) async {
           icon: appStateSettings["outlinedIcons"]
               ? Icons.sync_problem_outlined
               : Icons.sync_problem_rounded,
-          timeout: Duration(milliseconds: 5500),
+          timeout: const Duration(milliseconds: 5500),
         ),
       );
       filesSyncing.remove(file);
@@ -415,7 +415,7 @@ Future<bool> syncData(BuildContext context) async {
       await openPopup(
         context,
         title: "syncing-failed".tr(),
-        description: "sync-fail-reason".tr() + "\n\n" + file.name.toString(),
+        description: "${"sync-fail-reason".tr()}\n\n${file.name}",
         icon: appStateSettings["outlinedIcons"]
             ? Icons.sync_problem_outlined
             : Icons.sync_problem_rounded,
@@ -449,7 +449,7 @@ Future<bool> syncData(BuildContext context) async {
     print("UPDATED WALLET CURRENCY");
     await database.getWalletInstance(appStateSettings["selectedWalletPk"]);
   } catch (e) {
-    print("Selected wallet not found: " + e.toString());
+    print("Selected wallet not found: $e");
     await setPrimaryWallet((await database.getAllWallets())[0].walletPk);
   }
 
@@ -462,7 +462,7 @@ Future<bool> syncData(BuildContext context) async {
 
   loadingProgressKey.currentState!.setProgressPercentage(0.999);
 
-  Future.delayed(Duration(milliseconds: 300), () {
+  Future.delayed(const Duration(milliseconds: 300), () {
     loadingProgressKey.currentState!.setProgressPercentage(1);
   });
 

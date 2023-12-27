@@ -81,8 +81,8 @@ dynamic transactionTypeDisplayToEnum = {
 };
 
 class AddTransactionPage extends StatefulWidget {
-  AddTransactionPage({
-    Key? key,
+  const AddTransactionPage({
+    super.key,
     this.transaction,
     this.selectedBudget,
     this.selectedType,
@@ -94,7 +94,7 @@ class AddTransactionPage extends StatefulWidget {
     this.startInitialAddTransactionSequence = true,
     this.transferBalancePopup = false,
     required this.routesToPopAfterDelete,
-  }) : super(key: key);
+  });
 
   //When a transaction is passed in, we are editing that transaction
   final Transaction? transaction;
@@ -254,7 +254,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
       {bool isSharedBudget = false}) {
     setState(() {
       selectedBudgetPk =
-          selectedBudgetPassed == null ? null : selectedBudgetPassed.budgetPk;
+          selectedBudgetPassed?.budgetPk;
       selectedBudget = selectedBudgetPassed;
       selectedBudgetIsShared = isSharedBudget;
       if (selectedBudgetPk != null && selectedPayer == null) {
@@ -368,7 +368,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                         expandedLayout: true,
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Flexible(
                       child: Button(
                         label: "ok".tr(),
@@ -407,24 +407,24 @@ class _AddTransactionPageState extends State<AddTransactionPage>
 
         // If these fields are touched they will not trigger the popup
         if (addDefaultMissingValues(widget.transaction!).copyWith(
-              dateTimeModified: Value(null),
+              dateTimeModified: const Value(null),
               walletFk: "",
               name: "",
               note: "",
               income: false,
               amount: widget.transaction!.amount.abs(),
-              objectiveFk: Value(null),
-              objectiveLoanFk: Value(null),
+              objectiveFk: const Value(null),
+              objectiveLoanFk: const Value(null),
             ) !=
             createdTransaction.copyWith(
-              dateTimeModified: Value(null),
+              dateTimeModified: const Value(null),
               walletFk: "",
               name: "",
               note: "",
               income: false,
               amount: createdTransaction.amount.abs(),
-              objectiveFk: Value(null),
-              objectiveLoanFk: Value(null),
+              objectiveFk: const Value(null),
+              objectiveLoanFk: const Value(null),
             )) {
           Transaction? closelyRelatedTransferCorrectionTransaction =
               await database.getCloselyRelatedBalanceCorrectionTransaction(
@@ -438,7 +438,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
               descriptionWidget: IgnorePointer(
                 child: Column(
                   children: [
-                    HorizontalBreak(
+                    const HorizontalBreak(
                         padding: EdgeInsets.only(top: 15, bottom: 10)),
                     TransactionEntry(
                       useHorizontalPaddingConstrained: false,
@@ -450,7 +450,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                           .withOpacity(0.4),
                       customPadding: EdgeInsets.zero,
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     TransactionEntry(
                       useHorizontalPaddingConstrained: false,
                       openPage: Container(),
@@ -502,7 +502,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
           if (widget.transaction == null &&
               transactionJustAdded.dateCreated.isAfter(
                 DateTime.now().subtract(
-                  Duration(minutes: 5),
+                  const Duration(minutes: 5),
                 ),
               )) {
             flashTransaction(transactionJustAdded.transactionPk, flashCount: 2);
@@ -673,9 +673,9 @@ class _AddTransactionPageState extends State<AddTransactionPage>
       //We are editing a transaction
       //Fill in the information from the passed in transaction
       _titleInputController =
-          new TextEditingController(text: widget.transaction!.name);
+          TextEditingController(text: widget.transaction!.name);
       _noteInputController =
-          new LinkHighlighter(initialText: widget.transaction!.note);
+          LinkHighlighter(initialText: widget.transaction!.note);
       selectedTitle = widget.transaction!.name;
       selectedDate = widget.transaction!.dateCreated;
       selectedEndDate = widget.transaction!.endDate;
@@ -714,10 +714,10 @@ class _AddTransactionPageState extends State<AddTransactionPage>
         selectedType = widget.selectedType;
       }
 
-      _titleInputController = new TextEditingController();
-      _noteInputController = new LinkHighlighter();
+      _titleInputController = TextEditingController();
+      _noteInputController = LinkHighlighter();
 
-      Future.delayed(Duration(milliseconds: 0), () async {
+      Future.delayed(const Duration(milliseconds: 0), () async {
         if (widget.transferBalancePopup) {
           openTransferBalancePopup();
           return;
@@ -742,9 +742,9 @@ class _AddTransactionPageState extends State<AddTransactionPage>
             ),
           );
           // Fix over-scroll stretch when keyboard pops up quickly
-          Future.delayed(Duration(milliseconds: 100), () {
+          Future.delayed(const Duration(milliseconds: 100), () {
             bottomSheetControllerGlobal.scrollTo(0,
-                duration: Duration(milliseconds: 100));
+                duration: const Duration(milliseconds: 100));
           });
         } else {
           afterSetTitle();
@@ -873,7 +873,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
           enableWalletPicker: true,
           selectedWalletPk: selectedWalletPk,
           setSelectedWalletPk: setSelectedWalletPk,
-          padding: EdgeInsets.symmetric(horizontal: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 18),
           walletPkForCurrency: selectedWalletPk,
           // onlyShowCurrencyIcon:
           //     appStateSettings[
@@ -985,7 +985,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
 
     Widget transactionDetailsParameters = Flexible(
       child: Container(
-        constraints: BoxConstraints(maxWidth: 900),
+        constraints: const BoxConstraints(maxWidth: 900),
         child: FractionallySizedBox(
           widthFactor: enableDoubleColumn(context) == false ? 1 : 0.95,
           child: Column(
@@ -994,7 +994,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: AnimatedSwitcher(
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   child: DateButton(
                     key: ValueKey(selectedDate.toString()),
                     initialSelectedDate: selectedDate,
@@ -1011,8 +1011,8 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                 ),
               ),
               enableDoubleColumn(context) == false
-                  ? SizedBox(height: 5)
-                  : SizedBox.shrink(),
+                  ? const SizedBox(height: 5)
+                  : const SizedBox.shrink(),
               HorizontalBreakAbove(
                 enabled: enableDoubleColumn(context),
                 child: Padding(
@@ -1150,9 +1150,9 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                                   },
                                   fontSize: 23,
                                   fontWeight: FontWeight.bold,
-                                  internalPadding: EdgeInsets.symmetric(
+                                  internalPadding: const EdgeInsets.symmetric(
                                       vertical: 4, horizontal: 4),
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       vertical: 0, horizontal: 3),
                                 ),
                                 TappableTextEntry(
@@ -1183,9 +1183,9 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                                   },
                                   fontSize: 23,
                                   fontWeight: FontWeight.bold,
-                                  internalPadding: EdgeInsets.symmetric(
+                                  internalPadding: const EdgeInsets.symmetric(
                                       vertical: 4, horizontal: 4),
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       vertical: 0, horizontal: 3),
                                 ),
                               ],
@@ -1227,16 +1227,16 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                                 },
                                 fontSize: 23,
                                 fontWeight: FontWeight.bold,
-                                internalPadding: EdgeInsets.symmetric(
+                                internalPadding: const EdgeInsets.symmetric(
                                     vertical: 5, horizontal: 4),
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 5),
                               ),
                             ),
                             AnimatedSizeSwitcher(
                               child: selectedEndDate != null
                                   ? Opacity(
-                                      key: ValueKey(1),
+                                      key: const ValueKey(1),
                                       opacity: 0.5,
                                       child: IconButtonScaled(
                                         tooltip: "clear".tr(),
@@ -1249,7 +1249,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                                       ),
                                     )
                                   : Container(
-                                      key: ValueKey(2),
+                                      key: const ValueKey(2),
                                     ),
                             ),
                           ],
@@ -1261,7 +1261,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
               ),
               // Wallet picker is in Select Amount... consider removing?
               Provider.of<AllWallets>(context).list.length <= 1
-                  ? SizedBox.shrink()
+                  ? const SizedBox.shrink()
                   : HorizontalBreakAbove(
                       enabled: enableDoubleColumn(context),
                       child: Padding(
@@ -1333,12 +1333,9 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                             return wallet.name ==
                                     wallet.currency.toString().toUpperCase()
                                 ? wallet.currency.toString().toUpperCase()
-                                : wallet.name +
-                                    " (" +
-                                    wallet.currency.toString().toUpperCase() +
-                                    ")";
+                                : "${wallet.name} (${wallet.currency.toString().toUpperCase()})";
                           },
-                          extraWidgetAfter: SelectChipsAddButtonExtraWidget(
+                          extraWidgetAfter: const SelectChipsAddButtonExtraWidget(
                             openPage: AddWalletPage(
                               routesToPopAfterDelete:
                                   RoutesToPopAfterDelete.None,
@@ -1394,9 +1391,9 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                 ),
               ),
               enableDoubleColumn(context)
-                  ? SizedBox.shrink()
+                  ? const SizedBox.shrink()
                   : transactionTextInput,
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               AnimatedExpanded(
                   expand: showMoreOptions == false &&
                       widget.transaction?.budgetFksExclude != null,
@@ -1420,7 +1417,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                     ? Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: LowKeyButton(
-                          key: ValueKey(1),
+                          key: const ValueKey(1),
                           onTap: () {
                             setState(() {
                               showMoreOptions = true;
@@ -1430,7 +1427,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                         ),
                       )
                     : Column(
-                        key: ValueKey(2),
+                        key: const ValueKey(2),
                         children: [
                           if (widget.transaction != null)
                             HorizontalBreakAbove(
@@ -1493,20 +1490,16 @@ class _AddTransactionPageState extends State<AddTransactionPage>
 
               widget.transaction == null ||
                       widget.transaction!.sharedDateUpdated == null
-                  ? SizedBox.shrink()
+                  ? const SizedBox.shrink()
                   : Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 28),
                       child: TextFont(
-                        text: "synced".tr() +
-                            " " +
-                            getTimeAgo(
+                        text: "${"synced".tr()} ${getTimeAgo(
                               widget.transaction!.sharedDateUpdated!,
-                            ).toLowerCase() +
-                            "\n Created by " +
-                            (widget.transaction!
+                            ).toLowerCase()}\n Created by ${widget.transaction!
                                     .transactionOriginalOwnerEmail ??
-                                ""),
+                                ""}",
                         fontSize: 13,
                         textColor: getColor(context, "textLight"),
                         textAlign: TextAlign.center,
@@ -1525,7 +1518,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
 
     Widget transactionAmountAndCategoryHeader = AnimatedContainer(
       curve: Curves.easeInOut,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       color: categoryColor,
       child: Column(
         children: [
@@ -1534,7 +1527,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
               if (enableBalanceTransferTab) {
                 await openBottomSheet(
                   context,
-                  PopupFramework(
+                  const PopupFramework(
                     hasPadding: false,
                     child: ShowTransactionsBalanceTransferTabSettingToggle(),
                   ),
@@ -1655,7 +1648,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AnimatedSwitcher(
-                        duration: Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 300),
                         child: CategoryIcon(
                           tintEnabled: false,
                           canEditByLongPress: false,
@@ -1707,7 +1700,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                               icon: appStateSettings["outlinedIcons"]
                                   ? Icons.paste_outlined
                                   : Icons.paste_rounded,
-                              timeout: Duration(milliseconds: 2500),
+                              timeout: const Duration(milliseconds: 2500),
                             ),
                           );
                         }
@@ -1728,7 +1721,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                           children: [
                             Container(height: 5),
                             AnimatedSwitcher(
-                              duration: Duration(milliseconds: 350),
+                              duration: const Duration(milliseconds: 350),
                               child: Align(
                                 key: ValueKey(selectedWalletPk.toString() +
                                     selectedAmount.toString()),
@@ -1768,8 +1761,8 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                                             ?.currency)
                                 ? AnimatedSizeSwitcher(
                                     switcherDuration:
-                                        Duration(milliseconds: 350),
-                                    child: Container(
+                                        const Duration(milliseconds: 350),
+                                    child: SizedBox(
                                       key: ValueKey(
                                           selectedCategory?.name ?? ""),
                                       width: double.infinity,
@@ -1782,7 +1775,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                                     ),
                                   )
                                 : AnimatedSwitcher(
-                                    duration: Duration(milliseconds: 350),
+                                    duration: const Duration(milliseconds: 350),
                                     child: Align(
                                       alignment: Alignment.centerRight,
                                       child: TextFont(
@@ -1880,7 +1873,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
           actions: [
             widget.transaction != null
                 ? IconButton(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     tooltip: "delete-transaction".tr(),
                     onPressed: () async {
                       deleteTransactionPopup(
@@ -1894,7 +1887,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                         ? Icons.delete_outlined
                         : Icons.delete_rounded),
                   )
-                : SizedBox.shrink()
+                : const SizedBox.shrink()
           ],
           overlay: Align(
             alignment: Alignment.bottomCenter,
@@ -1943,11 +1936,11 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                                   .tr()
                               : ""),
                           widgetBuilder: (Size? size) {
-                            return Container(
-                              key: ValueKey(1),
+                            return SizedBox(
+                              key: const ValueKey(1),
                               width: size?.width,
                               child: SaveBottomButton(
-                                margin: EdgeInsets.only(left: 5),
+                                margin: const EdgeInsets.only(left: 5),
                                 color: isTransactionActionDealtWith(
                                         createTransaction())
                                     ? Theme.of(context)
@@ -1986,18 +1979,18 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                           },
                         )
                       : Container(
-                          key: ValueKey(2),
+                          key: const ValueKey(2),
                         ),
                 ),
                 AnimatedSizeSwitcher(
                   child: notesInputFocused && getPlatform() == PlatformOS.isIOS
                       ? WidgetSizeBuilder(
                           widgetBuilder: (Size? size) {
-                            return Container(
-                              key: ValueKey(1),
+                            return SizedBox(
+                              key: const ValueKey(1),
                               width: size?.width,
                               child: SaveBottomButton(
-                                margin: EdgeInsets.only(left: 5),
+                                margin: const EdgeInsets.only(left: 5),
                                 color: isTransactionActionDealtWith(
                                         createTransaction())
                                     ? Theme.of(context).colorScheme.primary
@@ -2015,7 +2008,7 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                           },
                         )
                       : Container(
-                          key: ValueKey(2),
+                          key: const ValueKey(2),
                         ),
                 ),
               ],
@@ -2024,19 +2017,19 @@ class _AddTransactionPageState extends State<AddTransactionPage>
           listWidgets: [
             enableDoubleColumn(context) == false
                 ? transactionAmountAndCategoryHeader
-                : SizedBox.shrink(),
+                : const SizedBox.shrink(),
             enableDoubleColumn(context)
-                ? SizedBox(height: 50)
-                : SizedBox.shrink(),
+                ? const SizedBox(height: 50)
+                : const SizedBox.shrink(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 enableDoubleColumn(context) == false
-                    ? SizedBox.shrink()
+                    ? const SizedBox.shrink()
                     : Flexible(
                         child: Container(
-                          constraints: BoxConstraints(maxWidth: 900),
+                          constraints: const BoxConstraints(maxWidth: 900),
                           child: FractionallySizedBox(
                             widthFactor: 0.95,
                             child: Column(
@@ -2045,8 +2038,8 @@ class _AddTransactionPageState extends State<AddTransactionPage>
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 23),
                                   child: ClipRRect(
-                                    child: transactionAmountAndCategoryHeader,
                                     borderRadius: BorderRadius.circular(13),
+                                    child: transactionAmountAndCategoryHeader,
                                   ),
                                 ),
                                 transactionTextInput,
@@ -2067,10 +2060,10 @@ class _AddTransactionPageState extends State<AddTransactionPage>
 
 class SelectedWalletButton extends StatelessWidget {
   const SelectedWalletButton({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.selectedWalletName,
-  }) : super(key: key);
+  });
   final VoidCallback onTap;
   final String selectedWalletName;
   @override
@@ -2089,7 +2082,7 @@ class SelectedWalletButton extends StatelessWidget {
                   : Icons.account_balance_wallet_rounded,
               size: 41,
             ),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Expanded(
               child: TextFont(
                 text: selectedWalletName,
@@ -2106,14 +2099,14 @@ class SelectedWalletButton extends StatelessWidget {
 
 class DateButton extends StatefulWidget {
   const DateButton({
-    Key? key,
+    super.key,
     required this.initialSelectedDate,
     required this.initialSelectedTime,
     required this.setSelectedDate,
     required this.setSelectedTime,
     this.internalPadding =
         const EdgeInsets.only(left: 20, top: 6, bottom: 6, right: 4),
-  }) : super(key: key);
+  });
   final DateTime initialSelectedDate;
   final TimeOfDay initialSelectedTime;
   final Function(DateTime) setSelectedDate;
@@ -2190,7 +2183,7 @@ class _DateButtonState extends State<DateButton> {
                 size: 41,
               ),
             ),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Expanded(
               child: TextFont(
                 text: wordedDate,
@@ -2209,7 +2202,7 @@ class _DateButtonState extends State<DateButton> {
                 ),
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Tappable(
               color: Colors.transparent,
               onTap: () async {
@@ -2243,8 +2236,8 @@ class _DateButtonState extends State<DateButton> {
 }
 
 class SelectTitle extends StatefulWidget {
-  SelectTitle({
-    Key? key,
+  const SelectTitle({
+    super.key,
     required this.setSelectedTitle,
     required this.setSelectedNote,
     this.selectedCategory,
@@ -2252,7 +2245,7 @@ class SelectTitle extends StatefulWidget {
     this.selectedTitle,
     required this.noteInputController,
     this.next,
-  }) : super(key: key);
+  });
   final Function(String) setSelectedTitle;
   final Function(String) setSelectedNote;
   final TransactionCategory? selectedCategory;
@@ -2301,7 +2294,7 @@ class _SelectTitleState extends State<SelectTitle> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             width: getWidthBottomSheet(context) - 36,
             child: TextInput(
               icon: appStateSettings["outlinedIcons"]
@@ -2347,7 +2340,7 @@ class _SelectTitleState extends State<SelectTitle> {
                   TransactionCategory? foundCategory =
                       await database.getCategoryInstance(categoryFk);
                   // Update the size of the bottom sheet
-                  Future.delayed(Duration(milliseconds: 100), () {
+                  Future.delayed(const Duration(milliseconds: 100), () {
                     bottomSheetControllerGlobal.snapToExtent(0);
                   });
                   setState(() {
@@ -2362,7 +2355,7 @@ class _SelectTitleState extends State<SelectTitle> {
                     foundFromCategory = foundFromCategoryLocal;
                   });
                   // Update the size of the bottom sheet
-                  Future.delayed(Duration(milliseconds: 300), () {
+                  Future.delayed(const Duration(milliseconds: 300), () {
                     bottomSheetControllerGlobal.snapToExtent(0);
                   });
                 }
@@ -2372,17 +2365,17 @@ class _SelectTitleState extends State<SelectTitle> {
             ),
           ),
           AnimatedSizeSwitcher(
-            sizeDuration: Duration(milliseconds: 400),
+            sizeDuration: const Duration(milliseconds: 400),
             sizeCurve: Curves.easeInOut,
             child: selectedCategory == null
                 ? Container(
-                    key: ValueKey(0),
+                    key: const ValueKey(0),
                     width: getWidthBottomSheet(context) - 36,
                   )
                 : Container(
                     key: ValueKey(selectedCategory?.categoryPk),
                     width: getWidthBottomSheet(context) - 36,
-                    padding: EdgeInsets.only(top: 13),
+                    padding: const EdgeInsets.only(top: 13),
                     child: Tappable(
                       borderRadius: 15,
                       color: Colors.transparent,
@@ -2400,7 +2393,7 @@ class _SelectTitleState extends State<SelectTitle> {
                               selectTitle();
                             },
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -2427,7 +2420,7 @@ class _SelectTitleState extends State<SelectTitle> {
                   appStateSettings["askForTransactionNoteWithTitle"]
               ? Padding(
                   padding: const EdgeInsets.only(top: 13),
-                  child: Container(
+                  child: SizedBox(
                     width: getWidthBottomSheet(context) - 36,
                     child: TransactionNotesTextInput(
                       noteInputController: widget.noteInputController,
@@ -2439,14 +2432,14 @@ class _SelectTitleState extends State<SelectTitle> {
 
                         // Update the size of the bottom sheet
                         // Need to do it slowly because the link container size is animated slowly
-                        Future.delayed(Duration(milliseconds: 200), () {
+                        Future.delayed(const Duration(milliseconds: 200), () {
                           bottomSheetControllerGlobal.scrollTo(0);
                         });
                       },
                     ),
                   ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           // AnimatedSwitcher(
           //   duration: Duration(milliseconds: 300),
           //   child: CategoryIcon(
@@ -2484,8 +2477,8 @@ class _SelectTitleState extends State<SelectTitle> {
                     }
                   },
                 )
-              : SizedBox.shrink(),
-          SizedBox(height: 10),
+              : const SizedBox.shrink(),
+          const SizedBox(height: 10),
         ],
       ),
     );
@@ -2531,8 +2524,8 @@ class _SelectTitleState extends State<SelectTitle> {
 // }
 
 class SelectText extends StatefulWidget {
-  SelectText({
-    Key? key,
+  const SelectText({
+    super.key,
     required this.setSelectedText,
     this.selectedText,
     this.labelText = "",
@@ -2549,7 +2542,7 @@ class SelectText extends StatefulWidget {
     this.inputFormatters,
     this.backgroundColor,
     this.margin = const EdgeInsets.only(bottom: 14),
-  }) : super(key: key);
+  });
   final Function(String) setSelectedText;
   final String? selectedText;
   final VoidCallback? next;
@@ -2579,9 +2572,9 @@ class _SelectTextState extends State<SelectText> {
   void initState() {
     super.initState();
     input = widget.selectedText;
-    _focusNode = new FocusNode();
+    _focusNode = FocusNode();
     if (widget.requestLateAutoFocus) {
-      Future.delayed(Duration(milliseconds: 250), () {
+      Future.delayed(const Duration(milliseconds: 250), () {
         _focusNode.requestFocus();
       });
     }
@@ -2597,11 +2590,9 @@ class _SelectTextState extends State<SelectText> {
         inputFormatters: widget.inputFormatters,
         focusNode: _focusNode,
         textCapitalization: widget.textCapitalization,
-        icon: widget.icon != null
-            ? widget.icon
-            : appStateSettings["outlinedIcons"]
+        icon: widget.icon ?? (appStateSettings["outlinedIcons"]
                 ? Icons.title_outlined
-                : Icons.title_rounded,
+                : Icons.title_rounded),
         initialValue: widget.selectedText,
         autoFocus: widget.autoFocus,
         readOnly: widget.readOnly,
@@ -2633,13 +2624,13 @@ class _SelectTextState extends State<SelectText> {
 
 class EnterTextButton extends StatefulWidget {
   const EnterTextButton({
-    Key? key,
+    super.key,
     required this.title,
     required this.placeholder,
     this.defaultValue,
     required this.setSelectedText,
     this.icon,
-  }) : super(key: key);
+  });
 
   final String title;
   final String placeholder;
@@ -2658,7 +2649,7 @@ class _EnterTextButtonState extends State<EnterTextButton> {
   void initState() {
     super.initState();
     if (widget.defaultValue != null) {
-      _textController = new TextEditingController(text: widget.defaultValue);
+      _textController = TextEditingController(text: widget.defaultValue);
     }
   }
 
@@ -2890,7 +2881,7 @@ class _SelectAddedBudgetState extends State<SelectAddedBudget> {
       stream: database.watchAllAddableBudgets(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          if (snapshot.data!.length <= 0) return Container();
+          if (snapshot.data!.isEmpty) return Container();
           return HorizontalBreakAbove(
             enabled:
                 enableDoubleColumn(context) && widget.horizontalBreak == true,
@@ -2910,7 +2901,7 @@ class _SelectAddedBudgetState extends State<SelectAddedBudget> {
                       ),
                     );
                   },
-                  extraWidgetAfter: SelectChipsAddButtonExtraWidget(
+                  extraWidgetAfter: const SelectChipsAddButtonExtraWidget(
                     openPage: AddBudgetPage(
                       isAddedOnlyBudget: true,
                       routesToPopAfterDelete: RoutesToPopAfterDelete.One,
@@ -2998,7 +2989,7 @@ class _SelectObjectiveState extends State<SelectObjective> {
           objectiveType: widget.objectiveType, archivedLast: true),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          if (snapshot.data!.length <= 0) return Container();
+          if (snapshot.data!.isEmpty) return Container();
           return HorizontalBreakAbove(
             enabled:
                 enableDoubleColumn(context) && widget.horizontalBreak == true,
@@ -3018,7 +3009,7 @@ class _SelectObjectiveState extends State<SelectObjective> {
                       ),
                     );
                   },
-                  extraWidgetAfter: SelectChipsAddButtonExtraWidget(
+                  extraWidgetAfter: const SelectChipsAddButtonExtraWidget(
                     openPage: AddObjectivePage(
                       routesToPopAfterDelete: RoutesToPopAfterDelete.One,
                     ),
@@ -3105,7 +3096,7 @@ class _SelectExcludeBudgetState extends State<SelectExcludeBudget> {
       stream: database.watchAllNonAddableBudgets(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          if (snapshot.data!.length <= 0) {
+          if (snapshot.data!.isEmpty) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: TextFont(
@@ -3130,7 +3121,7 @@ class _SelectExcludeBudgetState extends State<SelectExcludeBudget> {
                     ),
                   );
                 },
-                extraWidgetAfter: SelectChipsAddButtonExtraWidget(
+                extraWidgetAfter: const SelectChipsAddButtonExtraWidget(
                   openPage: AddBudgetPage(
                     routesToPopAfterDelete: RoutesToPopAfterDelete.One,
                   ),
@@ -3194,7 +3185,7 @@ class HorizontalBreakAbove extends StatelessWidget {
     return Column(
       children: [
         // Divider(indent: 10, endIndent: 10),
-        HorizontalBreak(),
+        const HorizontalBreak(),
         child,
       ],
     );
@@ -3216,7 +3207,7 @@ class HorizontalBreak extends StatelessWidget {
       height: 2,
       decoration: BoxDecoration(
         color: color ?? getColor(context, "dividerColor"),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
       ),
     );
   }
@@ -3271,7 +3262,7 @@ Future checkToDeleteCloselyRelatedBalanceCorrectionTransaction(
         descriptionWidget: IgnorePointer(
           child: Column(
             children: [
-              HorizontalBreak(padding: EdgeInsets.only(top: 15, bottom: 10)),
+              const HorizontalBreak(padding: EdgeInsets.only(top: 15, bottom: 10)),
               TransactionEntry(
                 useHorizontalPaddingConstrained: false,
                 openPage: Container(),
@@ -3282,7 +3273,7 @@ Future checkToDeleteCloselyRelatedBalanceCorrectionTransaction(
                     .withOpacity(0.4),
                 customPadding: EdgeInsets.zero,
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               TransactionEntry(
                 useHorizontalPaddingConstrained: false,
                 openPage: Container(),
@@ -3318,11 +3309,9 @@ Future deleteTransactionsPopup(
   DeletePopupAction? action = await openDeletePopup(
     context,
     title: "delete-selected-transactions".tr(),
-    subtitle: transactionPks.length.toString() +
-        " " +
-        (transactionPks.length == 1
+    subtitle: "${transactionPks.length} ${transactionPks.length == 1
             ? "transaction".tr().toLowerCase()
-            : "transactions".tr().toLowerCase()),
+            : "transactions".tr().toLowerCase()}",
   );
   if (action == DeletePopupAction.Delete) {
     if (routesToPopAfterDelete == RoutesToPopAfterDelete.All) {
@@ -3336,11 +3325,9 @@ Future deleteTransactionsPopup(
         SnackbarMessage(
           title: "deleted-transactions".tr(),
           icon: Icons.delete,
-          description: transactionPks.length.toString() +
-              " " +
-              (transactionPks.length == 1
+          description: "${transactionPks.length} ${transactionPks.length == 1
                   ? "transaction".tr().toLowerCase()
-                  : "transactions".tr().toLowerCase()),
+                  : "transactions".tr().toLowerCase()}",
         ),
       );
     });
@@ -3460,7 +3447,7 @@ class SelectTransactionTypePopup extends StatelessWidget {
           ],
           onlyShowOneTransactionType: onlyShowOneTransactionType,
         ),
-        SizedBox(height: 13),
+        const SizedBox(height: 13),
         Tappable(
           color: dynamicPastel(
             context,
@@ -3472,7 +3459,7 @@ class SelectTransactionTypePopup extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15),
             child: Column(
               children: [
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFont(
@@ -3482,7 +3469,7 @@ class SelectTransactionTypePopup extends StatelessWidget {
                     text: "mark-transaction-help-description".tr(),
                   ),
                 ),
-                SizedBox(height: 18),
+                const SizedBox(height: 18),
                 IgnorePointer(
                   child: TransactionEntry(
                     highlightActionButton: true,
@@ -3503,7 +3490,7 @@ class SelectTransactionTypePopup extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -3556,8 +3543,8 @@ class TransactionTypeInfoEntry extends StatelessWidget {
   final VoidCallback? onTap;
   final List<dynamic>? transactionTypesToShow;
 
-  TransactionTypeInfoEntry({
-    Key? key,
+  const TransactionTypeInfoEntry({
+    super.key,
     required this.setTransactionType,
     required this.selectedTransactionType,
     this.childrenDescription,
@@ -3567,12 +3554,12 @@ class TransactionTypeInfoEntry extends StatelessWidget {
     this.onlyShowOneTransactionType,
     this.onTap,
     this.transactionTypesToShow,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     if (transactionTypesToShow?.contains(transactionType) == false) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
     if (onlyShowOneTransactionType == null ||
         onlyShowOneTransactionType == transactionType) {
@@ -3585,7 +3572,7 @@ class TransactionTypeInfoEntry extends StatelessWidget {
                 filled: selectedTransactionType == transactionType,
                 alignLeft: true,
                 alignBeside: true,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 text: title,
                 iconData: icon ?? getTransactionTypeIcon(transactionType),
                 onTap: onTap ??
@@ -3606,7 +3593,7 @@ class TransactionTypeInfoEntry extends StatelessWidget {
         ),
       );
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 }
@@ -3682,7 +3669,7 @@ Future<MainAndSubcategory> selectCategorySequence(
                         Navigator.pop(context, false);
                       },
                       borderRadius: 18,
-                      child: Container(
+                      child: SizedBox(
                         height: constraints.maxWidth < 70
                             ? constraints.maxWidth
                             : 66,
@@ -3700,7 +3687,7 @@ Future<MainAndSubcategory> selectCategorySequence(
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 2),
+                      margin: const EdgeInsets.only(top: 2),
                       child: Center(
                         child: TextFont(
                           textAlign: TextAlign.center,
@@ -3772,9 +3759,9 @@ class _SelectCategoryWithIncomeExpenseSelectorState
     setState(() {
       selectedIncome = value;
     });
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       bottomSheetControllerGlobal.snapToExtent(0,
-          duration: Duration(milliseconds: 400));
+          duration: const Duration(milliseconds: 400));
     });
   }
 
@@ -3823,7 +3810,7 @@ class _SelectCategoryWithIncomeExpenseSelectorState
                       : Icons.flip_to_front_rounded,
                   action: () async {
                     Navigator.pop(context);
-                    openBottomSheet(context, ReorderCategoriesPopup());
+                    openBottomSheet(context, const ReorderCategoriesPopup());
                   },
                 ),
               ],
@@ -3862,8 +3849,8 @@ class ReorderCategoriesPopup extends StatelessWidget {
       subtitle: "drag-and-drop-categories-to-rearrange".tr(),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 8.0),
             child: SelectCategory(
               skipIfSet: false,
               selectedIncome: null, // needs to be null
@@ -3925,7 +3912,7 @@ class LinkInNotes extends StatelessWidget {
                       ? Icons.link_outlined
                       : Icons.link_rounded),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: TextFont(
                 text: getDomainNameFromURL(link),
@@ -3965,10 +3952,7 @@ class _TransactionNotesTextInputState extends State<TransactionNotesTextInput> {
 
   void addAttachmentLinkToNote(String? link) {
     if (link == null) return;
-    String noteUpdated = widget.noteInputController.text +
-        (widget.noteInputController.text == "" ? "" : "\n") +
-        (link) +
-        " ";
+    String noteUpdated = "${widget.noteInputController.text}${widget.noteInputController.text == "" ? "" : "\n"}$link ";
 
     widget.setSelectedNoteController(noteUpdated);
     updateExtractedLinks(noteUpdated);
@@ -3977,9 +3961,9 @@ class _TransactionNotesTextInputState extends State<TransactionNotesTextInput> {
   void removeLinkFromNote(String link) {
     String originalText = widget.noteInputController.text;
     String noteUpdated =
-        widget.noteInputController.text.replaceAll(link + " ", "");
+        widget.noteInputController.text.replaceAll("$link ", "");
     if (noteUpdated == originalText) {
-      noteUpdated = widget.noteInputController.text.replaceAll(link + "\n", "");
+      noteUpdated = widget.noteInputController.text.replaceAll("$link\n", "");
     }
     widget.setSelectedNoteController(noteUpdated);
     updateExtractedLinks(noteUpdated);
@@ -4085,7 +4069,7 @@ class _TransactionNotesTextInputState extends State<TransactionNotesTextInput> {
                                 filled: false,
                                 alignLeft: true,
                                 alignBeside: true,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 20),
                                 text: "take-photo".tr(),
                                 iconData: appStateSettings["outlinedIcons"]
@@ -4115,7 +4099,7 @@ class _TransactionNotesTextInputState extends State<TransactionNotesTextInput> {
                                 filled: false,
                                 alignLeft: true,
                                 alignBeside: true,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 20),
                                 text: "select-photo".tr(),
                                 iconData: appStateSettings["outlinedIcons"]
@@ -4145,7 +4129,7 @@ class _TransactionNotesTextInputState extends State<TransactionNotesTextInput> {
                                 filled: false,
                                 alignLeft: true,
                                 alignBeside: true,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 20),
                                 text: "select-file".tr(),
                                 iconData: appStateSettings["outlinedIcons"]
@@ -4172,9 +4156,9 @@ class _TransactionNotesTextInputState extends State<TransactionNotesTextInput> {
             },
           ),
           AnimatedSizeSwitcher(
-            child: extractedLinks.length <= 0
+            child: extractedLinks.isEmpty
                 ? Container(
-                    key: ValueKey(1),
+                    key: const ValueKey(1),
                   )
                 : Column(
                     children: [
@@ -4229,7 +4213,7 @@ class _TransactionNotesTextInputState extends State<TransactionNotesTextInput> {
 Future<void> selectPeriodLength({
   required BuildContext context,
   required int selectedPeriodLength,
-  required setSelectedPeriodLength(double period),
+  required Function(double period) setSelectedPeriodLength,
 }) async {
   openBottomSheet(
     context,
@@ -4253,17 +4237,17 @@ Future<void> selectRecurrence(
     {required BuildContext context,
     required String selectedRecurrence,
     required int selectedPeriodLength,
-    required onChanged(
+    required Function(
       String selectedRecurrence,
       BudgetReoccurence selectedRecurrenceEnum,
       String selectedRecurrenceDisplay,
-    )}) async {
+    ) onChanged}) async {
   openBottomSheet(
     context,
     PopupFramework(
       title: "select-period".tr(),
       child: RadioItems(
-        items: ["Daily", "Weekly", "Monthly", "Yearly"],
+        items: const ["Daily", "Weekly", "Monthly", "Yearly"],
         initial: selectedRecurrence,
         displayFilter: (item) {
           return item.toString().toLowerCase().tr();
@@ -4289,10 +4273,10 @@ Future<void> selectRecurrence(
 void setSelectedPeriodLength({
   required double period,
   required String selectedRecurrence,
-  required setPeriodLength(
+  required Function(
     int selectedPeriodLength,
     String selectedRecurrenceDisplay,
-  ),
+  ) setPeriodLength,
 }) {
   int selectedPeriodLength;
   String selectedRecurrenceDisplay;
@@ -4335,7 +4319,7 @@ class SelectSubcategoryChips extends StatelessWidget {
       builder: (context, snapshot) {
         List<TransactionCategory> subCategories = snapshot.data ?? [];
         return AnimatedSizeSwitcher(
-          child: (subCategories.length <= 0)
+          child: (subCategories.isEmpty)
               ? Container()
               : Column(
                   children: [
@@ -4513,13 +4497,13 @@ class _TitleInputState extends State<TitleInput> {
               ),
             ),
             AnimatedSizeSwitcher(
-              child: foundAssociatedTitles.length <= 0
+              child: foundAssociatedTitles.isEmpty
                   ? Container(
-                      key: ValueKey(0),
+                      key: const ValueKey(0),
                     )
                   : AnimatedSize(
-                      key: ValueKey(1),
-                      duration: Duration(milliseconds: 200),
+                      key: const ValueKey(1),
+                      duration: const Duration(milliseconds: 200),
                       curve: Curves.easeInOut,
                       alignment: Alignment.topCenter,
                       child: Column(
@@ -4572,7 +4556,7 @@ class _TitleInputState extends State<TitleInput> {
                                         borderRadius: 0,
                                       ),
                                     ),
-                                    SizedBox(width: 13),
+                                    const SizedBox(width: 13),
                                     Expanded(
                                       child: TextFont(
                                         text: foundAssociatedTitle.title,
@@ -4598,7 +4582,7 @@ class _TitleInputState extends State<TitleInput> {
                                         },
                                       ),
                                     ),
-                                    SizedBox(width: 5),
+                                    const SizedBox(width: 5),
                                   ],
                                 ),
                               ),

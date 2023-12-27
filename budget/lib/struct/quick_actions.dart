@@ -14,13 +14,13 @@ import "package:provider/provider.dart";
 import "package:quick_actions/quick_actions.dart";
 
 void runQuickActionsPayLoads(context) async {
-  final QuickActions quickActions = const QuickActions();
+  const QuickActions quickActions = QuickActions();
   quickActions.initialize((String quickAction) async {
     if (Navigator.of(context).canPop() == false || entireAppLoaded) {
       if (quickAction == "addTransaction") {
         pushRoute(
           context,
-          AddTransactionPage(
+          const AddTransactionPage(
             routesToPopAfterDelete: RoutesToPopAfterDelete.None,
           ),
         );
@@ -71,7 +71,7 @@ void runQuickActionsPayLoads(context) async {
       ),
     for (Budget budget in budgets)
       ShortcutItem(
-        type: "openBudget-" + budget.budgetPk.toString(),
+        type: "openBudget-${budget.budgetPk}",
         localizedTitle: budget.name,
         icon: "piggybank",
       ),

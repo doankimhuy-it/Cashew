@@ -67,7 +67,7 @@ class HomePageAllSpendingSummary extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 13),
+                  const SizedBox(width: 13),
                   Expanded(
                     child: TransactionsAmountBox(
                       onLongPress: () async {
@@ -100,7 +100,7 @@ class HomePageAllSpendingSummary extends StatelessWidget {
               ),
             );
           }
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         },
       ),
     );
@@ -113,7 +113,7 @@ Future openAllSpendingSettings(BuildContext context) {
     PopupFramework(
       title: "income-and-expenses".tr(),
       subtitle: "applies-to-homepage".tr(),
-      child: WalletPickerPeriodCycle(
+      child: const WalletPickerPeriodCycle(
         allWalletsSettingKey: "allSpendingSummaryAllWallets",
         cycleSettingsExtension: "AllSpendingSummary",
         homePageWidgetDisplay: HomePageWidgetDisplay.AllSpendingSummary,

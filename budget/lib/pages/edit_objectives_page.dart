@@ -31,10 +31,10 @@ import 'package:budget/modified/reorderable_list.dart';
 import 'package:provider/provider.dart';
 
 class EditObjectivesPage extends StatefulWidget {
-  EditObjectivesPage({
+  const EditObjectivesPage({
     required this.objectiveType,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final ObjectiveType objectiveType;
 
   @override
@@ -89,7 +89,7 @@ class _EditObjectivesPageState extends State<EditObjectivesPage> {
         ),
         actions: [
           IconButton(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             tooltip: widget.objectiveType == ObjectiveType.loan
                 ? "add-loan".tr()
                 : "add-goal".tr(),
@@ -142,7 +142,7 @@ class _EditObjectivesPageState extends State<EditObjectivesPage> {
           SliverToBoxAdapter(
             child: AnimatedExpanded(
               expand: hideIfSearching(searchValue, isFocused, context) == false,
-              child: TotalSpentToggle(isForGoalTotal: true),
+              child: const TotalSpentToggle(isForGoalTotal: true),
             ),
           ),
           StreamBuilder<List<Objective>>(
@@ -151,7 +151,7 @@ class _EditObjectivesPageState extends State<EditObjectivesPage> {
               searchFor: searchValue == "" ? null : searchValue,
             ),
             builder: (context, snapshot) {
-              if (snapshot.hasData && (snapshot.data ?? []).length <= 0) {
+              if (snapshot.hasData && (snapshot.data ?? []).isEmpty) {
                 return SliverToBoxAdapter(
                   child: NoResults(
                     message: widget.objectiveType == ObjectiveType.loan
@@ -160,7 +160,7 @@ class _EditObjectivesPageState extends State<EditObjectivesPage> {
                   ),
                 );
               }
-              if (snapshot.hasData && (snapshot.data ?? []).length > 0) {
+              if (snapshot.hasData && (snapshot.data ?? []).isNotEmpty) {
                 return SliverReorderableList(
                   onReorderStart: (index) {
                     HapticFeedback.heavyImpact();
@@ -197,7 +197,7 @@ class _EditObjectivesPageState extends State<EditObjectivesPage> {
                       currentReorder:
                           currentReorder != -1 && currentReorder != index,
                       padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       key: ValueKey(objective.objectivePk),
                       content: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -256,15 +256,13 @@ class _EditObjectivesPageState extends State<EditObjectivesPage> {
                                         snapshot.data != null) {
                                       return TextFont(
                                         textAlign: TextAlign.left,
-                                        text: snapshot.data.toString() +
-                                            " " +
-                                            (snapshot.data == 1
+                                        text: "${snapshot.data} ${snapshot.data == 1
                                                 ? "transaction"
                                                     .tr()
                                                     .toLowerCase()
                                                 : "transactions"
                                                     .tr()
-                                                    .toLowerCase()),
+                                                    .toLowerCase()}",
                                         fontSize: 14,
                                         textColor: getColor(context, "black")
                                             .withOpacity(0.65),
@@ -320,7 +318,7 @@ class _EditObjectivesPageState extends State<EditObjectivesPage> {
               );
             },
           ),
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: SizedBox(height: 75),
           ),
         ],
@@ -414,7 +412,7 @@ Future<dynamic> selectObjectivePopup(
             stream: database.watchAllObjectives(objectiveType: objectiveType),
             builder: (context, snapshot) {
               if (snapshot.hasData &&
-                  (snapshot.data != null && snapshot.data!.length > 0)) {
+                  (snapshot.data != null && snapshot.data!.isNotEmpty)) {
                 List<Objective> addableObjectives = snapshot.data!;
                 return RadioItems(
                   ifNullSelectNone: true,
@@ -448,15 +446,13 @@ Future<dynamic> selectObjectivePopup(
                                 ? "no-loan".tr()
                                 : "no-goal".tr())) +
                         (includeAmount && objective != null
-                            ? (" (" +
-                                convertToMoney(
+                            ? (" (${convertToMoney(
                                   Provider.of<AllWallets>(context),
                                   objectiveAmountToPrimaryCurrency(
                                           Provider.of<AllWallets>(context),
                                           objective) *
                                       ((objective.income) ? 1 : -1),
-                                ) +
-                                ")")
+                                )})")
                             : "");
                   },
                   initial: selectedObjective,
@@ -485,7 +481,7 @@ Future<dynamic> selectObjectivePopup(
               children: [
                 Expanded(
                   child: AddButton(
-                    padding: EdgeInsets.only(top: 7),
+                    padding: const EdgeInsets.only(top: 7),
                     onTap: () {
                       pushRoute(
                         context,
@@ -514,7 +510,7 @@ class ObjectiveSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TotalSpentToggle(isForGoalTotal: true);
+    return const TotalSpentToggle(isForGoalTotal: true);
   }
 }
 

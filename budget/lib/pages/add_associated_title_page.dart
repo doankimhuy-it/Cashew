@@ -12,10 +12,10 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 class AddAssociatedTitlePage extends StatefulWidget {
-  AddAssociatedTitlePage({
-    Key? key,
+  const AddAssociatedTitlePage({
+    super.key,
     this.associatedTitle,
-  }) : super(key: key);
+  });
 
   //When a Title is passed in, we are editing that Title
   final TransactionAssociatedTitle? associatedTitle;
@@ -72,7 +72,7 @@ class _AddAssociatedTitlePageState extends State<AddAssociatedTitlePage> {
   @override
   void initState() {
     super.initState();
-    _focusNode = new FocusNode();
+    _focusNode = FocusNode();
     if (widget.associatedTitle != null) {
       //We are editing a Title
       //Fill in the information from the passed in Title
@@ -88,7 +88,7 @@ class _AddAssociatedTitlePageState extends State<AddAssociatedTitlePage> {
     if (widget.associatedTitle == null) {
       _focusNode.requestFocus();
     } else {
-      Future.delayed(Duration(milliseconds: 250), () {
+      Future.delayed(const Duration(milliseconds: 250), () {
         _focusNode.requestFocus();
       });
     }
@@ -111,13 +111,13 @@ class _AddAssociatedTitlePageState extends State<AddAssociatedTitlePage> {
         selectedTitle != "" &&
         selectedCategory != null) {
       if (canAddTitle != true) {
-        this.setState(() {
+        setState(() {
           canAddTitle = true;
         });
       }
     } else {
       if (canAddTitle != false) {
-        this.setState(() {
+        setState(() {
           canAddTitle = false;
         });
       }
@@ -175,7 +175,7 @@ class _AddAssociatedTitlePageState extends State<AddAssociatedTitlePage> {
                   onChanged: (text) {
                     setSelectedTitle(text);
                   },
-                  padding: EdgeInsets.only(left: 7, right: 7),
+                  padding: const EdgeInsets.only(left: 7, right: 7),
                   fontSize: getIsFullScreen(context) ? 25 : 23,
                   fontWeight: FontWeight.bold,
                   topContentPadding: 0,
@@ -184,7 +184,7 @@ class _AddAssociatedTitlePageState extends State<AddAssociatedTitlePage> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           canAddTitle ?? false

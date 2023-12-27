@@ -40,8 +40,8 @@ import 'package:budget/widgets/util/right_side_clipper.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<HomePage> createState() => HomePageState();
@@ -114,7 +114,7 @@ class HomePageState extends State<HomePage>
     return countAfter == 0;
   }
 
-  GlobalKey<PieChartDisplayState> _pieChartDisplayStateKey = GlobalKey();
+  final GlobalKey<PieChartDisplayState> _pieChartDisplayStateKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -135,14 +135,14 @@ class HomePageState extends State<HomePage>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   slidingSelector,
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   HomeTransactions(
                       selectedSlidingSelector: selectedSlidingSelector),
-                  SizedBox(height: 7),
-                  Center(
+                  const SizedBox(height: 7),
+                  const Center(
                     child: ViewAllTransactionsButton(),
                   ),
-                  if (enableDoubleColumn(context)) SizedBox(height: 35),
+                  if (enableDoubleColumn(context)) const SizedBox(height: 35),
                 ],
               )
             : null;
@@ -161,34 +161,34 @@ class HomePageState extends State<HomePage>
 
     Map<String, Widget?> homePageSections = {
       "wallets": isHomeScreenSectionEnabled(context, "showWalletSwitcher")
-          ? HomePageWalletSwitcher()
+          ? const HomePageWalletSwitcher()
           : null,
       "walletsList": isHomeScreenSectionEnabled(context, "showWalletList")
-          ? HomePageWalletList()
+          ? const HomePageWalletList()
           : null,
       "budgets": isHomeScreenSectionEnabled(context, "showPinnedBudgets")
-          ? HomePageBudgets()
+          ? const HomePageBudgets()
           : null,
       "overdueUpcoming":
           isHomeScreenSectionEnabled(context, "showOverdueUpcoming")
-              ? HomePageUpcomingTransactions()
+              ? const HomePageUpcomingTransactions()
               : null,
       "allSpendingSummary":
           isHomeScreenSectionEnabled(context, "showAllSpendingSummary")
-              ? HomePageAllSpendingSummary()
+              ? const HomePageAllSpendingSummary()
               : null,
       "netWorth": isHomeScreenSectionEnabled(context, "showNetWorth")
-          ? HomePageNetWorth()
+          ? const HomePageNetWorth()
           : null,
       "objectives": isHomeScreenSectionEnabled(context, "showObjectives")
-          ? HomePageObjectives(objectiveType: ObjectiveType.goal)
+          ? const HomePageObjectives(objectiveType: ObjectiveType.goal)
           : null,
       "creditDebts": isHomeScreenSectionEnabled(context, "showCreditDebt")
-          ? HomePageCreditDebts()
+          ? const HomePageCreditDebts()
           : null,
       "objectiveLoans":
           isHomeScreenSectionEnabled(context, "showObjectiveLoans")
-              ? HomePageObjectives(objectiveType: ObjectiveType.loan)
+              ? const HomePageObjectives(objectiveType: ObjectiveType.loan)
               : null,
       "spendingGraph": isHomeScreenSectionEnabled(context, "showSpendingGraph")
           ? HomePageLineGraph(selectedSlidingSelector: selectedSlidingSelector)
@@ -200,9 +200,9 @@ class HomePageState extends State<HomePage>
             )
           : null,
       "heatMap": isHomeScreenSectionEnabled(context, "showHeatMap")
-          ? HomePageHeatMap()
+          ? const HomePageHeatMap()
           : null,
-      "transactionsList": homePageTransactionsList ?? SizedBox.shrink(),
+      "transactionsList": homePageTransactionsList ?? const SizedBox.shrink(),
     };
     bool showWelcomeBanner =
         isHomeScreenSectionEnabled(context, "showUsernameWelcomeBanner");
@@ -235,16 +235,16 @@ class HomePageState extends State<HomePage>
         scrollController: _scrollController,
         child: Stack(
           children: [
-            AndroidOnly(child: CheckWidgetLaunch()),
-            AndroidOnly(child: RenderHomePageWidgets()),
+            const AndroidOnly(child: CheckWidgetLaunch()),
+            const AndroidOnly(child: RenderHomePageWidgets()),
             Scaffold(
               resizeToAvoidBottomInset: false,
               body: ScrollbarWrap(
                 child: ListView(
                   controller: _scrollController,
                   children: [
-                    PreviewDemoWarning(),
-                    if (useSmallBanner) SizedBox(height: 13),
+                    const PreviewDemoWarning(),
+                    if (useSmallBanner) const SizedBox(height: 13),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -254,13 +254,13 @@ class HomePageState extends State<HomePage>
                             ? HomePageWelcomeBannerSmall(
                                 showUsername: showUsername,
                               )
-                            : SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                         Tooltip(
                           message: "edit-home".tr(),
                           child: IconButton(
-                            padding: EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(15),
                             onPressed: () {
-                              pushRoute(context, EditHomePage());
+                              pushRoute(context, const EditHomePage());
                             },
                             icon: Icon(appStateSettings["outlinedIcons"]
                                 ? Icons.more_vert_outlined
@@ -304,13 +304,13 @@ class HomePageState extends State<HomePage>
                               ),
                             ),
                           )
-                        : SizedBox(height: 5),
+                        : const SizedBox(height: 5),
                     // Not full screen
                     if (enableDoubleColumn(context) != true) ...[
-                      KeepAliveClientMixin(child: HomePageRatingBox()),
+                      const KeepAliveClientMixin(child: HomePageRatingBox()),
                       for (String sectionKey
                           in appStateSettings["homePageOrder"])
-                        homePageSections[sectionKey] ?? SizedBox.shrink(),
+                        homePageSections[sectionKey] ?? const SizedBox.shrink(),
                     ],
                     // Full screen top section
                     if (enableDoubleColumn(context) == true) ...[
@@ -318,7 +318,7 @@ class HomePageState extends State<HomePage>
                           in appStateSettings["homePageOrderFullScreen"])
                         if (homePageSectionsFullScreenCenter
                             .contains(sectionKey))
-                          homePageSections[sectionKey] ?? SizedBox.shrink()
+                          homePageSections[sectionKey] ?? const SizedBox.shrink()
                     ],
                     // Full screen bottom split section
                     if (enableDoubleColumn(context) == true)
@@ -341,7 +341,7 @@ class HomePageState extends State<HomePage>
                                         child: ClipRRect(
                                           clipper: RightSideClipper(),
                                           child: homePageSections[sectionKey] ??
-                                              SizedBox.shrink(),
+                                              const SizedBox.shrink(),
                                         ),
                                       ),
                                 ],
@@ -361,7 +361,7 @@ class HomePageState extends State<HomePage>
                                         child: ClipRRect(
                                           clipper: RightSideClipper(),
                                           child: homePageSections[sectionKey] ??
-                                              SizedBox.shrink(),
+                                              const SizedBox.shrink(),
                                         ),
                                       ),
                                 ],
@@ -384,7 +384,7 @@ class HomePageState extends State<HomePage>
                 ),
               ),
             ),
-            SelectedTransactionsAppBar(
+            const SelectedTransactionsAppBar(
               pageID: "0",
             ),
           ],
@@ -438,17 +438,17 @@ class _HomePageRatingBoxState extends State<HomePageRatingBox> {
     return AnimatedSizeSwitcher(
       child: hidden
           ? Container(
-              key: ValueKey(1),
+              key: const ValueKey(1),
             )
           : Padding(
-              key: ValueKey(2),
+              key: const ValueKey(2),
               padding: const EdgeInsets.only(bottom: 13),
               child: Container(
                 padding:
-                    EdgeInsets.only(left: 15, right: 15, bottom: 18, top: 18),
-                margin: EdgeInsets.symmetric(horizontal: 13),
+                    const EdgeInsets.only(left: 15, right: 15, bottom: 18, top: 18),
+                margin: const EdgeInsets.symmetric(horizontal: 13),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
                   color: getColor(context, "lightDarkAccentHeavyLight"),
                   boxShadow: boxShadowCheck(boxShadowGeneral(context)),
                 ),
@@ -461,7 +461,7 @@ class _HomePageRatingBoxState extends State<HomePageRatingBox> {
                       textAlign: TextAlign.center,
                       maxLines: 3,
                     ),
-                    SizedBox(height: 7),
+                    const SizedBox(height: 7),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: TextFont(
@@ -471,7 +471,7 @@ class _HomePageRatingBoxState extends State<HomePageRatingBox> {
                         maxLines: 5,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ScalingStars(
                       selectedStars: 5,
                       onTap: (i) {
@@ -489,9 +489,9 @@ class _HomePageRatingBoxState extends State<HomePageRatingBox> {
                       size: 50,
                       color: getColor(context, "starYellow"),
                       loop: true,
-                      loopDelay: Duration(milliseconds: 1900),
+                      loopDelay: const Duration(milliseconds: 1900),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Row(
                       children: [
                         Expanded(
@@ -509,7 +509,7 @@ class _HomePageRatingBoxState extends State<HomePageRatingBox> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: Button(
                             label: "rate".tr(),

@@ -6,14 +6,14 @@ import 'package:budget/colors.dart';
 
 class FakeTextInput extends StatelessWidget {
   const FakeTextInput({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.icon,
     this.label = "",
     this.edgeInsetsVertical = 13,
     this.backgroundColor,
     this.content,
-  }) : super(key: key);
+  });
 
   final VoidCallback onTap;
   final String label;

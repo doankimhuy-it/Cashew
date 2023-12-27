@@ -31,7 +31,7 @@ class TextFont extends StatelessWidget {
   final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder;
 
   const TextFont({
-    Key? key,
+    super.key,
     required this.text,
     this.fontSize = 20,
     this.fontWeight = FontWeight.normal,
@@ -49,7 +49,7 @@ class TextFont extends StatelessWidget {
     this.overflow,
     this.softWrap,
     this.overflowReplacement,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,21 +63,21 @@ class TextFont extends StatelessWidget {
     }
 
     final TextStyle textStyle = TextStyle(
-      fontWeight: this.fontWeight,
-      fontSize: this.fontSize,
+      fontWeight: fontWeight,
+      fontSize: fontSize,
       fontFamily: fallbackFontLocales.contains(appStateSettings["locale"]) &&
               appStateSettings["font"] == "Avenir"
           ? "DMSans"
           : appStateSettings["font"],
-      fontFamilyFallback: ['Inter'],
+      fontFamilyFallback: const ['Inter'],
       color: finalTextColor,
       decoration: TextDecoration.underline,
       decorationStyle: TextDecorationStyle.double,
-      decorationColor: Color(0x00FFFFFF),
+      decorationColor: const Color(0x00FFFFFF),
       overflow: overflow,
       shadows: shadow == true
           ? [
-              Shadow(
+              const Shadow(
                 offset: Offset(0.0, 0.5),
                 blurRadius: 8.0,
                 color: Color(0x65000000),
@@ -87,12 +87,12 @@ class TextFont extends StatelessWidget {
     );
     Widget textWidget(textPassed) {
       return AnimatedDefaultTextStyle(
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         style: textStyle,
         child: Transform.translate(
           offset: Offset(
             0,
-            this.fontSize *
+            fontSize *
                 (fallbackFontLocales.contains(appStateSettings["locale"]) ==
                             true ||
                         appStateSettings["font"] != "Avenir"
@@ -145,7 +145,7 @@ class TextFont extends StatelessWidget {
 }
 
 class TextHeader extends StatelessWidget {
-  const TextHeader({required this.text, Key? key}) : super(key: key);
+  const TextHeader({required this.text, super.key});
   final String text;
   @override
   Widget build(BuildContext context) {

@@ -34,11 +34,10 @@ import 'tappable_text_entry.dart';
 
 class SelectedTransactionsAppBar extends StatelessWidget {
   const SelectedTransactionsAppBar(
-      {Key? key,
+      {super.key,
       required this.pageID,
       this.enableSettleAllButton = false,
-      this.colorScheme})
-      : super(key: key);
+      this.colorScheme});
 
   final String pageID;
   final ColorScheme? colorScheme;
@@ -51,11 +50,11 @@ class SelectedTransactionsAppBar extends StatelessWidget {
       valueListenable: globalSelectedID,
       builder: (context, Map<String, List<String>> value, widget) {
         List<String> listOfIDs = value[pageID] ?? [];
-        bool animateIn = value[pageID] != null && listOfIDs.length > 0;
+        bool animateIn = value[pageID] != null && listOfIDs.isNotEmpty;
         return AnimatedPositioned(
           left: 0,
           right: 0,
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           top: animateIn ? 0 : -(MediaQuery.paddingOf(context).top + 80),
           curve: Curves.easeInOutCubic,
           child: Align(
@@ -82,7 +81,7 @@ class SelectedTransactionsAppBar extends StatelessWidget {
                         child: Row(
                           children: [
                             IconButton(
-                              padding: EdgeInsets.all(15),
+                              padding: const EdgeInsets.all(15),
                               color: colorScheme.secondary,
                               icon: Icon(
                                 getPlatform() == PlatformOS.isIOS
@@ -109,7 +108,7 @@ class SelectedTransactionsAppBar extends StatelessWidget {
                                   return CountNumber(
                                     count:
                                         snapshot.hasData ? snapshot.data! : 0,
-                                    duration: Duration(milliseconds: 250),
+                                    duration: const Duration(milliseconds: 250),
                                     initialCount: (0),
                                     textBuilder: (number) {
                                       return Wrap(
@@ -120,16 +119,14 @@ class SelectedTransactionsAppBar extends StatelessWidget {
                                                 vertical: 10),
                                             child: TextFont(
                                               text:
-                                                  listOfIDs.length.toString() +
-                                                      " " +
-                                                      "selected".tr(),
+                                                  "${listOfIDs.length} ${"selected".tr()}",
                                               fontSize: 17.5,
                                               textAlign: TextAlign.left,
                                               maxLines: 1,
                                             ),
                                           ),
                                           Transform.translate(
-                                            offset: Offset(10, 0),
+                                            offset: const Offset(10, 0),
                                             child: Tappable(
                                               color: Colors.transparent,
                                               borderRadius: 15,
@@ -179,7 +176,7 @@ class SelectedTransactionsAppBar extends StatelessWidget {
                       if (appStateSettings["massEditSelectedTransactions"] ==
                           true)
                         IconButton(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           color: colorScheme.secondary,
                           icon: Icon(
                             Icons.edit,
@@ -188,9 +185,7 @@ class SelectedTransactionsAppBar extends StatelessWidget {
                           onPressed: () {
                             openPopupCustom(
                               context,
-                              title: "Edit " +
-                                  (value)[pageID]!.length.toString() +
-                                  " Selected",
+                              title: "Edit ${(value)[pageID]!.length} Selected",
                               child: EditSelectedTransactions(
                                 transactionIDs: listOfIDs,
                               ),
@@ -217,12 +212,11 @@ class SelectedTransactionsAppBar extends StatelessWidget {
 
 class SelectedTransactionsAppBarMenu extends StatelessWidget {
   const SelectedTransactionsAppBarMenu(
-      {Key? key,
+      {super.key,
       required this.pageID,
       required this.enableSettleAllButton,
       required this.colorScheme,
-      required this.selectedTransactionPks})
-      : super(key: key);
+      required this.selectedTransactionPks});
 
   final String pageID;
   final ColorScheme colorScheme;
@@ -242,11 +236,11 @@ class SelectedTransactionsAppBarMenu extends StatelessWidget {
               stream: database.watchAllAddableBudgets(),
               builder: (context, addableBudgetsSnapshot) {
                 bool enableObjectiveLoansSection =
-                    (loansSnapshot.data ?? []).length > 0;
+                    (loansSnapshot.data ?? []).isNotEmpty;
                 bool enableObjectiveSelection =
-                    (goalsSnapshot.data ?? []).length > 0;
+                    (goalsSnapshot.data ?? []).isNotEmpty;
                 bool enableAddableBudgetSelection =
-                    (addableBudgetsSnapshot.data ?? []).length > 0;
+                    (addableBudgetsSnapshot.data ?? []).isNotEmpty;
                 bool enableWalletSelection =
                     Provider.of<AllWallets>(context, listen: true)
                             .indexedByPk
@@ -299,9 +293,7 @@ class SelectedTransactionsAppBarMenu extends StatelessWidget {
                                   : Icons.check_circle_rounded,
                               title: "settled-and-collected".tr(),
                               description:
-                                  selectedTransactionPks.length.toString() +
-                                      " " +
-                                      "transactions".tr().toLowerCase(),
+                                  "${selectedTransactionPks.length} ${"transactions".tr().toLowerCase()}",
                             ),
                           );
                           globalSelectedID.value[pageID] = [];
@@ -337,9 +329,7 @@ class SelectedTransactionsAppBarMenu extends StatelessWidget {
                                     : Icons.file_copy_rounded,
                                 title: "created-copy".tr(),
                                 description:
-                                    selectedTransactionPks.length.toString() +
-                                        " " +
-                                        "transactions".tr().toLowerCase(),
+                                    "${selectedTransactionPks.length} ${"transactions".tr().toLowerCase()}",
                               ),
                             );
                           }
@@ -356,7 +346,7 @@ class SelectedTransactionsAppBarMenu extends StatelessWidget {
                       action: () async {
                         List<Transaction> transactions = await database
                             .getTransactionsFromPk(selectedTransactionPks);
-                        if (transactions.length <= 0) return;
+                        if (transactions.isEmpty) return;
                         DateTime? selectedDate = await showCustomDatePicker(
                             context, transactions.first.dateCreated);
                         if (selectedDate == null) {
@@ -400,13 +390,9 @@ class SelectedTransactionsAppBarMenu extends StatelessWidget {
                                 ? Icons.calendar_month_outlined
                                 : Icons.calendar_month_rounded,
                             title: "changed-date".tr(),
-                            description: "for".tr().capitalizeFirst +
-                                " " +
-                                transactions.length.toString() +
-                                " " +
-                                (transactions.length == 1
+                            description: "${"for".tr().capitalizeFirst} ${transactions.length} ${transactions.length == 1
                                     ? "transaction".tr().toLowerCase()
-                                    : "transactions".tr().toLowerCase()),
+                                    : "transactions".tr().toLowerCase()}",
                           ),
                         );
                         globalSelectedID.value[pageID] = [];
@@ -449,13 +435,9 @@ class SelectedTransactionsAppBarMenu extends StatelessWidget {
                                 ? Icons.category_outlined
                                 : Icons.category_rounded,
                             title: "changed-category".tr(),
-                            description: "for".tr().capitalizeFirst +
-                                " " +
-                                transactions.length.toString() +
-                                " " +
-                                (transactions.length == 1
+                            description: "${"for".tr().capitalizeFirst} ${transactions.length} ${transactions.length == 1
                                     ? "transaction".tr().toLowerCase()
-                                    : "transactions".tr().toLowerCase()),
+                                    : "transactions".tr().toLowerCase()}",
                           ),
                         );
                         globalSelectedID.value[pageID] = [];
@@ -489,13 +471,9 @@ class SelectedTransactionsAppBarMenu extends StatelessWidget {
                                   ? Icons.account_balance_wallet_outlined
                                   : Icons.account_balance_wallet_rounded,
                               title: "changed-account".tr(),
-                              description: "for".tr().capitalizeFirst +
-                                  " " +
-                                  transactions.length.toString() +
-                                  " " +
-                                  (transactions.length == 1
+                              description: "${"for".tr().capitalizeFirst} ${transactions.length} ${transactions.length == 1
                                       ? "transaction".tr().toLowerCase()
-                                      : "transactions".tr().toLowerCase()),
+                                      : "transactions".tr().toLowerCase()}",
                             ),
                           );
                           globalSelectedID.value[pageID] = [];
@@ -541,13 +519,9 @@ class SelectedTransactionsAppBarMenu extends StatelessWidget {
                               title: budget == "none"
                                   ? "removed-from-budget".tr()
                                   : "added-to-budget".tr(),
-                              description: "for".tr().capitalizeFirst +
-                                  " " +
-                                  numberMoved.toString() +
-                                  " " +
-                                  (numberMoved == 1
+                              description: "${"for".tr().capitalizeFirst} $numberMoved ${numberMoved == 1
                                       ? "transaction".tr().toLowerCase()
-                                      : "transactions".tr().toLowerCase()),
+                                      : "transactions".tr().toLowerCase()}",
                             ),
                           );
 
@@ -591,13 +565,9 @@ class SelectedTransactionsAppBarMenu extends StatelessWidget {
                               title: objective == "none"
                                   ? "removed-from-goal".tr()
                                   : "added-to-goal-action".tr(),
-                              description: "for".tr().capitalizeFirst +
-                                  " " +
-                                  numberMoved.toString() +
-                                  " " +
-                                  (numberMoved == 1
+                              description: "${"for".tr().capitalizeFirst} $numberMoved ${numberMoved == 1
                                       ? "transaction".tr().toLowerCase()
-                                      : "transactions".tr().toLowerCase()),
+                                      : "transactions".tr().toLowerCase()}",
                             ),
                           );
 
@@ -640,13 +610,9 @@ class SelectedTransactionsAppBarMenu extends StatelessWidget {
                               title: objective == "none"
                                   ? "removed-from-loan".tr()
                                   : "added-to-loan-action".tr(),
-                              description: "for".tr().capitalizeFirst +
-                                  " " +
-                                  numberMoved.toString() +
-                                  " " +
-                                  (numberMoved == 1
+                              description: "${"for".tr().capitalizeFirst} $numberMoved ${numberMoved == 1
                                       ? "transaction".tr().toLowerCase()
-                                      : "transactions".tr().toLowerCase()),
+                                      : "transactions".tr().toLowerCase()}",
                             ),
                           );
 
@@ -694,7 +660,7 @@ Future duplicateTransaction(
   // Add one second so when transactions sorted, they don't change positions when updated
   // Since the transaction list is sorted by date created
   transaction = transaction.copyWith(
-    dateCreated: transaction.dateCreated.add(Duration(seconds: 1)),
+    dateCreated: transaction.dateCreated.add(const Duration(seconds: 1)),
   );
   await database.createOrUpdateTransaction(
     transaction,
@@ -712,7 +678,7 @@ Future duplicateTransaction(
             ? Icons.file_copy_outlined
             : Icons.file_copy_rounded,
         title: "created-copy".tr(),
-        description: "copied".tr() + " " + transactionName,
+        description: "${"copied".tr()} $transactionName",
       ),
     );
   }
@@ -771,11 +737,11 @@ class _EditSelectedTransactionsState extends State<EditSelectedTransactions> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextFont(
+        const TextFont(
           text: "Modify Amount",
           fontSize: 16,
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -797,8 +763,8 @@ class _EditSelectedTransactionsState extends State<EditSelectedTransactions> {
               },
               fontSize: 35,
               fontWeight: FontWeight.bold,
-              internalPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+              internalPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
             ),
             TappableTextEntry(
               title: convertToMoney(
@@ -811,10 +777,10 @@ class _EditSelectedTransactionsState extends State<EditSelectedTransactions> {
               },
               fontSize: 35,
               fontWeight: FontWeight.bold,
-              internalPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+              internalPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             ButtonIcon(
               onTap: () {
                 setState(() {
@@ -827,12 +793,12 @@ class _EditSelectedTransactionsState extends State<EditSelectedTransactions> {
             ),
           ],
         ),
-        SizedBox(height: 10),
-        TextFont(
+        const SizedBox(height: 10),
+        const TextFont(
           text: "Modify Category",
           fontSize: 16,
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -859,7 +825,7 @@ class _EditSelectedTransactionsState extends State<EditSelectedTransactions> {
               size: 40,
               noBackground: false,
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             ButtonIcon(
               onTap: () {
                 setState(() {
@@ -870,7 +836,7 @@ class _EditSelectedTransactionsState extends State<EditSelectedTransactions> {
             ),
           ],
         ),
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
@@ -881,7 +847,7 @@ class _EditSelectedTransactionsState extends State<EditSelectedTransactions> {
                 Navigator.pop(context);
               },
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             selectedAmount == null && selectedCategory == null
                 ? Button(
                     label: "Apply",
@@ -892,7 +858,7 @@ class _EditSelectedTransactionsState extends State<EditSelectedTransactions> {
                           icon: appStateSettings["outlinedIcons"]
                               ? Icons.warning_outlined
                               : Icons.warning_rounded,
-                          timeout: Duration(milliseconds: 1300),
+                          timeout: const Duration(milliseconds: 1300),
                         ),
                         postIfQueue: false,
                       );
@@ -906,19 +872,15 @@ class _EditSelectedTransactionsState extends State<EditSelectedTransactions> {
                         context,
                         title: "Apply Edits?",
                         description: (selectedAmount != null
-                                ? selectedOperation +
-                                    convertToMoney(
+                                ? "$selectedOperation${convertToMoney(
                                         Provider.of<AllWallets>(context),
-                                        selectedAmount ?? 0) +
-                                    " to selected transactions."
+                                        selectedAmount ?? 0)} to selected transactions."
                                 : "") +
                             (selectedAmount != null && selectedCategory != null
                                 ? "\n"
                                 : "") +
                             (selectedCategory != null
-                                ? "Set category to " +
-                                    selectedCategory!.name +
-                                    "."
+                                ? "Set category to ${selectedCategory!.name}."
                                 : ""),
                         icon: appStateSettings["outlinedIcons"]
                             ? Icons.edit_outlined
@@ -987,11 +949,11 @@ class _EditSelectedTransactionsState extends State<EditSelectedTransactions> {
                                 Transaction transactionEdited =
                                     transaction.copyWith(
                                   categoryFk: selectedCategory!.categoryPk,
-                                  sharedKey: Value(null),
-                                  transactionOwnerEmail: Value(null),
-                                  transactionOriginalOwnerEmail: Value(null),
-                                  sharedStatus: Value(null),
-                                  sharedDateUpdated: Value(null),
+                                  sharedKey: const Value(null),
+                                  transactionOwnerEmail: const Value(null),
+                                  transactionOriginalOwnerEmail: const Value(null),
+                                  sharedStatus: const Value(null),
+                                  sharedDateUpdated: const Value(null),
                                 );
                                 await database.createOrUpdateTransaction(
                                     transactionEdited);

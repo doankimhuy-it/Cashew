@@ -25,8 +25,7 @@ import 'package:flutter/material.dart'
 import 'package:provider/provider.dart';
 
 class ObjectivesListPage extends StatelessWidget {
-  const ObjectivesListPage({required this.backButton, Key? key})
-      : super(key: key);
+  const ObjectivesListPage({required this.backButton, super.key});
   final bool backButton;
 
   @override
@@ -40,12 +39,12 @@ class ObjectivesListPage extends StatelessWidget {
           : 0,
       actions: [
         IconButton(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           tooltip: "edit-goals".tr(),
           onPressed: () {
             pushRoute(
               context,
-              EditObjectivesPage(objectiveType: ObjectiveType.goal),
+              const EditObjectivesPage(objectiveType: ObjectiveType.goal),
             );
           },
           icon: Icon(
@@ -57,12 +56,12 @@ class ObjectivesListPage extends StatelessWidget {
         ),
         if (getIsFullScreen(context))
           IconButton(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             tooltip: "add-goal".tr(),
             onPressed: () {
               pushRoute(
                 context,
-                AddObjectivePage(
+                const AddObjectivePage(
                     routesToPopAfterDelete: RoutesToPopAfterDelete.None),
               );
             },
@@ -74,7 +73,7 @@ class ObjectivesListPage extends StatelessWidget {
             ),
           ),
       ],
-      slivers: [
+      slivers: const [
         ObjectiveList(
             showExamplesIfEmpty: true, objectiveType: ObjectiveType.goal),
         SliverToBoxAdapter(
@@ -113,7 +112,7 @@ class ObjectiveList extends StatelessWidget {
         List<Objective> objectivesList = [...(snapshot.data ?? [])];
         if (showExamplesIfEmpty &&
             (snapshot.hasData == false ||
-                (objectivesList.length <= 0 && snapshot.hasData))) {
+                (objectivesList.isEmpty && snapshot.hasData))) {
           showDemoObjectives = true;
           objectivesList.add(
             Objective(
@@ -121,7 +120,7 @@ class ObjectiveList extends StatelessWidget {
                 name: "example-goals-1".tr(),
                 amount: 1500,
                 order: 0,
-                dateCreated: DateTime.now().subtract(Duration(days: 40)),
+                dateCreated: DateTime.now().subtract(const Duration(days: 40)),
                 income: false,
                 pinned: false,
                 iconName: "coconut-tree.png",
@@ -136,7 +135,7 @@ class ObjectiveList extends StatelessWidget {
                 name: "example-goals-2".tr(),
                 amount: 2000,
                 order: 0,
-                dateCreated: DateTime.now().subtract(Duration(days: 10)),
+                dateCreated: DateTime.now().subtract(const Duration(days: 10)),
                 income: false,
                 pinned: false,
                 iconName: "car(1).png",
@@ -147,7 +146,7 @@ class ObjectiveList extends StatelessWidget {
           );
         }
         Widget addButton = showAddButton == false
-            ? SizedBox.shrink()
+            ? const SizedBox.shrink()
             : Column(
                 children: [
                   Row(
@@ -211,7 +210,7 @@ class ObjectiveList extends StatelessWidget {
                           (showDemoObjectives == false &&
                               index == objectivesList.length)) {
                         return showAddButton == false
-                            ? SizedBox.shrink()
+                            ? const SizedBox.shrink()
                             : AddButton(
                                 onTap: () {},
                                 openPage: AddObjectivePage(
@@ -328,7 +327,7 @@ class ObjectiveContainer extends StatelessWidget {
             openPage: ObjectivePage(objectivePk: objective.objectivePk),
             borderRadius: borderRadius,
             closedColor: containerColor,
-            button: (openContainer()) {
+            button: (Function() openContainer) {
               return Tappable(
                 onLongPress: () {
                   pushRoute(
@@ -344,7 +343,7 @@ class ObjectiveContainer extends StatelessWidget {
                   openContainer();
                 },
                 child: Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     top: 18,
                     bottom: 23,
                   ),
@@ -431,7 +430,7 @@ class ObjectiveContainer extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -451,19 +450,16 @@ class ObjectiveContainer extends StatelessWidget {
                                       textAlign: TextAlign.left,
                                       text:
                                           (objective.type == ObjectiveType.loan
-                                              ? "\n" +
-                                                  (objective.income
+                                              ? "\n${objective.income
                                                       ? "lent-funds".tr()
-                                                      : "borrowed-funds".tr())
-                                              : (numberTransactions.toString() +
-                                                  " " +
-                                                  (numberTransactions == 1
+                                                      : "borrowed-funds".tr()}"
+                                              : ("$numberTransactions ${numberTransactions == 1
                                                       ? "transaction"
                                                           .tr()
                                                           .toLowerCase()
                                                       : "transactions"
                                                           .tr()
-                                                          .toLowerCase()))),
+                                                          .toLowerCase()}")),
                                       fontSize: 15,
                                       textColor: getColor(context, "black")
                                           .withOpacity(0.65),
@@ -510,7 +506,7 @@ class ObjectiveContainer extends StatelessWidget {
                                         padding:
                                             const EdgeInsets.only(bottom: 2),
                                         child: TextFont(
-                                          text: " " + "remaining".tr(),
+                                          text: " ${"remaining".tr()}",
                                           fontSize: 15,
                                           textColor: getColor(context, "black")
                                               .withOpacity(0.3),
@@ -519,11 +515,10 @@ class ObjectiveContainer extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(bottom: 2),
                                       child: TextFont(
-                                        text: " / " +
-                                            convertToMoney(
+                                        text: " / ${convertToMoney(
                                                 Provider.of<AllWallets>(
                                                     context),
-                                                objectiveAmount),
+                                                objectiveAmount)}",
                                         fontSize: 15,
                                         textColor: getColor(context, "black")
                                             .withOpacity(0.3),
@@ -534,7 +529,7 @@ class ObjectiveContainer extends StatelessWidget {
                               }),
                             ],
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                         ]),
                       ),
                       Padding(
@@ -621,7 +616,7 @@ class ObjectiveContainer extends StatelessWidget {
                   height: 1.5,
                   color: getColor(context, "dividerColor"),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           child,
           Container(
             height: 1.5,
@@ -637,7 +632,7 @@ class ObjectiveContainer extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: ColorFiltered(
-              colorFilter: ColorFilter.mode(
+              colorFilter: const ColorFilter.mode(
                 Colors.grey,
                 BlendMode.saturation,
               ),
@@ -677,26 +672,15 @@ String getObjectiveStatus(BuildContext context, Objective objective,
         ? "loan-overdue".tr()
         : "goal-overdue".tr();
   } else {
-    content = (addSpendingSavingIndication
+    content = "${addSpendingSavingIndication
             ? (objective.income
-                ? (objective.type == ObjectiveType.loan
+                ? "${objective.type == ObjectiveType.loan
                         ? "collect".tr()
-                        : "save".tr()) +
-                    " "
-                : (objective.type == ObjectiveType.loan
+                        : "save".tr()} "
+                : "${objective.type == ObjectiveType.loan
                         ? "pay".tr()
-                        : "spend".tr()) +
-                    " ")
-            : "") +
-        convertToMoney(Provider.of<AllWallets>(context), amount.abs()) +
-        "/" +
-        "day".tr() +
-        " " +
-        "for".tr() +
-        " " +
-        remainingDays.toString() +
-        " " +
-        (remainingDays == 1 ? "day".tr() : "days".tr());
+                        : "spend".tr()} ")
+            : ""}${convertToMoney(Provider.of<AllWallets>(context), amount.abs())}/${"day".tr()} ${"for".tr()} $remainingDays ${remainingDays == 1 ? "day".tr() : "days".tr()}";
   }
   return content;
 }

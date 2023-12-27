@@ -26,10 +26,10 @@ import 'package:budget/database/initialize_default_database.dart';
 
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({
-    Key? key,
+    super.key,
     this.popNavigationWhenDone = false,
     this.showPreviewDemoButton = true,
-  }) : super(key: key);
+  });
 
   final bool popNavigationWhenDone;
   final bool showPreviewDemoButton;
@@ -46,10 +46,10 @@ class OnBoardingPage extends StatelessWidget {
 
 class OnBoardingPageBody extends StatefulWidget {
   const OnBoardingPageBody({
-    Key? key,
+    super.key,
     this.popNavigationWhenDone = false,
     this.showPreviewDemoButton = true,
-  }) : super(key: key);
+  });
   final bool popNavigationWhenDone;
   final bool showPreviewDemoButton;
 
@@ -71,13 +71,13 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
   bool selectedIncludeIncome = false;
 
   bool showImage = false;
-  final Image imageLanding1 = Image(
+  final Image imageLanding1 = const Image(
     image: AssetImage("assets/landing/Graph.png"),
   );
-  final Image imageLanding2 = Image(
+  final Image imageLanding2 = const Image(
     image: AssetImage("assets/landing/BankOrPig.png"),
   );
-  final Image imageLanding3 = Image(
+  final Image imageLanding3 = const Image(
     image: AssetImage("assets/landing/PigBank.png"),
   );
 
@@ -135,7 +135,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
     }
   }
 
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
   late FocusAttachment _focusAttachment;
 
   @override
@@ -172,8 +172,8 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
 
   void nextOnBoardPage(int numPages) {
     controller.nextPage(
-      duration: Duration(milliseconds: 1100),
-      curve: ElasticOutCurve(1.3),
+      duration: const Duration(milliseconds: 1100),
+      curve: const ElasticOutCurve(1.3),
     );
     if (currentIndex + 1 == numPages) {
       nextNavigation();
@@ -182,8 +182,8 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
 
   void previousOnBoardPage() {
     controller.previousPage(
-      duration: Duration(milliseconds: 1100),
-      curve: ElasticOutCurve(1.3),
+      duration: const Duration(milliseconds: 1100),
+      curve: const ElasticOutCurve(1.3),
     );
   }
 
@@ -236,7 +236,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                     : 300),
             child: imageLanding1,
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: TextFont(
@@ -247,7 +247,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
               maxLines: 5,
             ),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: TextFont(
@@ -257,7 +257,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
               maxLines: 5,
             ),
           ),
-          SizedBox(height: 55),
+          const SizedBox(height: 55),
         ],
         bottomWidget: widget.showPreviewDemoButton
             ? PreviewDemoButton(
@@ -275,7 +275,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                     : 300),
             child: imageLanding2,
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: TextFont(
@@ -286,7 +286,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
               maxLines: 5,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           BudgetDetails(
             determineBottomButton: () {},
             setSelectedAmount: (amount, _) {
@@ -384,10 +384,10 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                   ),
                 );
               }
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             },
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: TextFont(
@@ -410,7 +410,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                     : 300),
             child: imageLanding3,
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: TextFont(
@@ -421,7 +421,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
               maxLines: 5,
             ),
           ),
-          SizedBox(height: 25),
+          const SizedBox(height: 25),
           getPlatform() == PlatformOS.isIOS
               ? IntrinsicWidth(
                   child: Padding(
@@ -435,9 +435,9 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                     ),
                   ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           getPlatform() == PlatformOS.isIOS
-              ? SizedBox.shrink()
+              ? const SizedBox.shrink()
               : SettingsContainerOutlined(
                   onTap: () async {
                     loadingIndeterminateKey.currentState?.setVisibility(true);
@@ -509,7 +509,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                             ?.setVisibility(false);
                       },
                       onError: (e) {
-                        print("Error signing in: " + e.toString());
+                        print("Error signing in: $e");
                         loadingIndeterminateKey.currentState
                             ?.setVisibility(false);
                       },
@@ -520,10 +520,10 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                   isExpanded: false,
                 ),
           getPlatform() == PlatformOS.isIOS
-              ? SizedBox.shrink()
-              : SizedBox(height: 8),
+              ? const SizedBox.shrink()
+              : const SizedBox(height: 8),
           getPlatform() == PlatformOS.isIOS
-              ? SizedBox.shrink()
+              ? const SizedBox.shrink()
               : Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: TextFont(
@@ -534,10 +534,10 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                   ),
                 ),
           getPlatform() == PlatformOS.isIOS
-              ? SizedBox.shrink()
-              : SizedBox(height: 35),
+              ? const SizedBox.shrink()
+              : const SizedBox(height: 35),
           getPlatform() == PlatformOS.isIOS
-              ? SizedBox.shrink()
+              ? const SizedBox.shrink()
               : LowKeyButton(
                   onTap: () {
                     nextNavigation();
@@ -582,7 +582,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: [0.1, 1],
+                  stops: const [0.1, 1],
                 ),
               ),
             ),
@@ -604,7 +604,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                   children: [
                     AnimatedOpacity(
                       opacity: currentIndex <= 0 ? 0 : 1,
-                      duration: Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 200),
                       child: ButtonIcon(
                         onTap: () {
                           previousOnBoardPage();
@@ -618,8 +618,8 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                                 : Icons.arrow_back_rounded,
                         size: 50,
                         padding: getIsFullScreen(context) == false
-                            ? EdgeInsets.all(3)
-                            : EdgeInsets.all(6),
+                            ? const EdgeInsets.all(3)
+                            : const EdgeInsets.all(6),
                       ),
                     ),
                     Row(
@@ -632,17 +632,17 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                                   Builder(
                                 builder: (BuildContext context) =>
                                     AnimatedScale(
-                                  duration: Duration(milliseconds: 900),
+                                  duration: const Duration(milliseconds: 900),
                                   scale: index - 1 == currentIndex ? 1.3 : 1,
-                                  curve: ElasticOutCurve(0.2),
+                                  curve: const ElasticOutCurve(0.2),
                                   child: AnimatedSwitcher(
-                                    duration: Duration(milliseconds: 400),
+                                    duration: const Duration(milliseconds: 400),
                                     child: Container(
                                       key: ValueKey(index - 1 == currentIndex),
                                       width: 6,
                                       height: 6,
                                       margin:
-                                          EdgeInsets.symmetric(horizontal: 3),
+                                          const EdgeInsets.symmetric(horizontal: 3),
                                       decoration: BoxDecoration(
                                         color: index - 1 == currentIndex
                                             ? Theme.of(context)
@@ -660,7 +660,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                                 ),
                               ),
                             )
-                            .toList(),
+                            ,
                       ],
                     ),
                     AnimatedOpacity(
@@ -669,7 +669,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                           : currentIndex >= children.length - 1
                               ? 0
                               : 1,
-                      duration: Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 200),
                       child: ButtonIcon(
                         onTap: () {
                           if (currentIndex < children.length - 1 ||
@@ -686,8 +686,8 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                                 : Icons.arrow_forward_rounded,
                         size: 50,
                         padding: getIsFullScreen(context) == false
-                            ? EdgeInsets.all(3)
-                            : EdgeInsets.all(6),
+                            ? const EdgeInsets.all(3)
+                            : const EdgeInsets.all(6),
                       ),
                     ),
                   ],
@@ -702,8 +702,7 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
 }
 
 class OnBoardPage extends StatelessWidget {
-  const OnBoardPage({Key? key, required this.widgets, this.bottomWidget})
-      : super(key: key);
+  const OnBoardPage({super.key, required this.widgets, this.bottomWidget});
   final List<Widget> widgets;
   final Widget? bottomWidget;
   @override
@@ -716,9 +715,9 @@ class OnBoardPage extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: [
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ...widgets,
-                  SizedBox(height: 80),
+                  const SizedBox(height: 80),
                 ],
               ),
             ],
@@ -729,7 +728,7 @@ class OnBoardPage extends StatelessWidget {
               bottom: 60 + MediaQuery.paddingOf(context).bottom),
           child: Align(
             alignment: Alignment.bottomCenter,
-            child: bottomWidget ?? SizedBox.shrink(),
+            child: bottomWidget ?? const SizedBox.shrink(),
           ),
         ),
       ],

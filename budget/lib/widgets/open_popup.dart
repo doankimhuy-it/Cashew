@@ -49,14 +49,14 @@ Future<T?> openPopup<T extends Object?>(
       }
       return ScaleTransition(
         scale: tween.animate(
-            new CurvedAnimation(parent: anim, curve: Curves.easeInOutQuart)),
+            CurvedAnimation(parent: anim, curve: Curves.easeInOutQuart)),
         child: FadeTransition(
           opacity: anim,
           child: child,
         ),
       );
     },
-    transitionDuration: Duration(milliseconds: 200),
+    transitionDuration: const Duration(milliseconds: 200),
     pageBuilder: (_, __, ___) {
       double borderRadius = getPlatform() == PlatformOS.isIOS ? 10 : 25;
       return WillPopScope(
@@ -86,10 +86,10 @@ Future<T?> openPopup<T extends Object?>(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Column(
                         children: [
-                          SizedBox(height: 17),
+                          const SizedBox(height: 17),
                           if (icon != null)
                             Padding(
                               padding: const EdgeInsets.symmetric(
@@ -182,7 +182,7 @@ Future<T?> openPopup<T extends Object?>(
                                             }),
                                           ),
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                   onExtraLabel != null
                                       ? IntrinsicWidth(
                                           child: Padding(
@@ -201,7 +201,7 @@ Future<T?> openPopup<T extends Object?>(
                                             ),
                                           ),
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                   onSubmitLabel != null
                                       ? IntrinsicWidth(
                                           child: Padding(
@@ -219,13 +219,13 @@ Future<T?> openPopup<T extends Object?>(
                                             ),
                                           ),
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                 ],
                               ),
                             ),
                           onExtraLabel2 == null
-                              ? SizedBox(height: 17)
-                              : SizedBox(height: 5),
+                              ? const SizedBox(height: 17)
+                              : const SizedBox(height: 5),
                         ],
                       ),
                     ),
@@ -324,14 +324,14 @@ Future<T?> openPopupCustom<T extends Object?>(
       }
       return ScaleTransition(
         scale: tween.animate(
-            new CurvedAnimation(parent: anim, curve: Curves.easeInOutQuart)),
+            CurvedAnimation(parent: anim, curve: Curves.easeInOutQuart)),
         child: FadeTransition(
           opacity: anim,
           child: child,
         ),
       );
     },
-    transitionDuration: Duration(milliseconds: 200),
+    transitionDuration: const Duration(milliseconds: 200),
     pageBuilder: (_, __, ___) {
       return WillPopScope(
         //Stop back button
@@ -355,13 +355,13 @@ Future<T?> openPopupCustom<T extends Object?>(
               boxShadow: boxShadowGeneral(context),
             ),
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   title == null
-                      ? SizedBox.shrink()
+                      ? const SizedBox.shrink()
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 15),
                           child: TextFont(
@@ -398,21 +398,21 @@ Future<T?> openLoadingPopup<T extends Object?>(BuildContext context) {
       }
       return ScaleTransition(
         scale: tween.animate(
-            new CurvedAnimation(parent: anim, curve: Curves.easeInOutQuart)),
+            CurvedAnimation(parent: anim, curve: Curves.easeInOutQuart)),
         child: FadeTransition(
           opacity: anim,
           child: child,
         ),
       );
     },
-    transitionDuration: Duration(milliseconds: 200),
+    transitionDuration: const Duration(milliseconds: 200),
     pageBuilder: (_, __, ___) {
       return WillPopScope(
         //Stop back button
         onWillPop: () async => false,
         child: Center(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             margin: EdgeInsets.only(
               left: 20,
               right: 20,
@@ -428,7 +428,7 @@ Future<T?> openLoadingPopup<T extends Object?>(BuildContext context) {
               borderRadius: BorderRadius.circular(
                   getPlatform() == PlatformOS.isIOS ? 10 : 25),
             ),
-            child: CircularProgressIndicator(),
+            child: const CircularProgressIndicator(),
           ),
         ),
       );
@@ -487,7 +487,7 @@ void discardChangesPopup(context,
     return;
   }
 
-  previousObject = previousObject?.copyWith(dateTimeModified: Value(null));
+  previousObject = previousObject?.copyWith(dateTimeModified: const Value(null));
 
   if (forceShow == false &&
       previousObject != null &&

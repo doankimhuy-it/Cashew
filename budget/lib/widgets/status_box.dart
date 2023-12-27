@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 class StatusBox extends StatelessWidget {
   const StatusBox({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.icon,
     required this.color,
     this.onTap,
     this.forceDark,
-  }) : super(key: key);
+  });
 
   final String title;
   final String description;
@@ -24,20 +24,20 @@ class StatusBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
         border: Border.all(color: color, width: 2),
       ),
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Tappable(
         borderRadius: 12,
         onTap: onTap,
         color: color.withOpacity(0.4),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 10),
           child: Row(
             children: [
               Icon(icon, size: 35),
-              SizedBox(
+              const SizedBox(
                 width: 14,
               ),
               Expanded(
@@ -51,7 +51,7 @@ class StatusBox extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       textColor: forceDark == true ? Colors.black : null,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 2,
                     ),
                     TextFont(

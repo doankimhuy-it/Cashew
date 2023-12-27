@@ -28,7 +28,7 @@ class IncomeExpenseTabSelector extends StatefulWidget {
   final Color? incomeIconColor;
   final Color? expenseIconColor;
 
-  IncomeExpenseTabSelector({
+  const IncomeExpenseTabSelector({super.key, 
     required this.onTabChanged,
     required this.initialTabIsIncome,
     this.color,
@@ -105,23 +105,19 @@ class _IncomeExpenseTabSelectorState extends State<IncomeExpenseTabSelector>
           ? BorderRadius.circular(getPlatform() == PlatformOS.isIOS ? 10 : 15)
           : BorderRadius.zero,
       child: Material(
-        color: widget.unselectedColor == null
-            ? appStateSettings["materialYou"]
+        color: widget.unselectedColor ?? (appStateSettings["materialYou"]
                 ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
                 : Theme.of(context).brightness == Brightness.dark
                     ? getColor(context, "lightDarkAccentHeavyLight")
                         .withOpacity(0.5)
-                    : Colors.black.withOpacity(0.07)
-            : widget.unselectedColor,
+                    : Colors.black.withOpacity(0.07)),
         child: TabBar(
           controller: _incomeTabController,
           dividerColor: Colors.transparent,
           indicatorColor: Colors.transparent,
           indicatorSize: TabBarIndicatorSize.tab,
           indicator: BoxDecoration(
-            color: widget.color != null
-                ? widget.color
-                : (appStateSettings["materialYou"]
+            color: widget.color ?? (appStateSettings["materialYou"]
                     ? Theme.of(context).colorScheme.primary.withOpacity(0.25)
                     : getColor(context, "black").withOpacity(0.15)),
           ),
@@ -200,7 +196,7 @@ class ExpenseIncomeSelectorLabel extends StatelessWidget {
           children: [
             if (showIcons)
               AnimatedOpacity(
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 opacity: (isIncome && selectedIncome) ||
                         (isIncome == false && selectedIncome == false)
                     ? 1
@@ -236,7 +232,7 @@ class ExpenseIncomeSelectorLabel extends StatelessWidget {
     );
     return tabController == null
         ? AnimatedOpacity(
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             opacity: (isIncome && selectedIncome) ||
                     (isIncome == false && selectedIncome == false)
                 ? 1
@@ -250,7 +246,7 @@ class ExpenseIncomeSelectorLabel extends StatelessWidget {
                   ? 0.5 + tabController!.animation!.value * 0.5
                   : 0.5 + (1 - tabController!.animation!.value) * 0.5;
               return AnimatedOpacity(
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 opacity: clampDouble(animationProgress, 0, 1),
                 child: content,
               );
@@ -298,8 +294,8 @@ class _IncomeExpenseButtonSelectorState
                 color: Colors.transparent,
                 child: OutlinedContainer(
                   filled: selectedIncome == false,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: ExpenseIncomeSelectorLabel(
                       selectedIncome: false,
                       showIcons: true,
@@ -310,7 +306,7 @@ class _IncomeExpenseButtonSelectorState
               ),
             ),
           ),
-          SizedBox(width: 13),
+          const SizedBox(width: 13),
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
@@ -330,8 +326,8 @@ class _IncomeExpenseButtonSelectorState
                 color: Colors.transparent,
                 child: OutlinedContainer(
                   filled: selectedIncome == true,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: ExpenseIncomeSelectorLabel(
                       selectedIncome: true,
                       showIcons: true,

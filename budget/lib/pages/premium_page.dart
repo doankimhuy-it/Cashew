@@ -57,7 +57,7 @@ class PremiumPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget premiumPageWidget = Stack(
       children: [
-        PremiumBackground(),
+        const PremiumBackground(),
         PageFramework(
           enableHeader: false,
           dragDownToDismiss: canDismiss,
@@ -84,14 +84,10 @@ class PremiumPage extends StatelessWidget {
                               ),
                               Column(
                                 children: [
-                                  CashewProBanner(large: true),
-                                  SizedBox(height: 4),
+                                  const CashewProBanner(large: true),
+                                  const SizedBox(height: 4),
                                   TextFont(
-                                    text: "budget-like-a-pro".tr() +
-                                        " " +
-                                        globalAppName +
-                                        " " +
-                                        "Pro",
+                                    text: "${"budget-like-a-pro".tr()} $globalAppName Pro",
                                     fontSize: 16,
                                     textColor: Colors.black,
                                     maxLines: 3,
@@ -162,7 +158,7 @@ class PremiumPage extends StatelessWidget {
                                 key: purchasesStateKey,
                                 popRouteWithPurchase: popRouteWithPurchase,
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                             ],
                           ),
                           if (canDismiss == false)
@@ -175,7 +171,7 @@ class PremiumPage extends StatelessWidget {
                                     await openPopupCustom(
                                       context,
                                       barrierDismissible: false,
-                                      child: FreePremiumMessage(),
+                                      child: const FreePremiumMessage(),
                                     );
                                   },
                                   color: darkenPastel(
@@ -208,7 +204,7 @@ class PremiumPage extends StatelessWidget {
                         right: MediaQuery.viewPaddingOf(context).right,
                       ),
                       child: IconButton(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         icon: Icon(
                           getPlatform() == PlatformOS.isIOS
                               ? appStateSettings["outlinedIcons"]
@@ -272,12 +268,12 @@ class PremiumPage extends StatelessWidget {
                         textAlign: TextAlign.center,
                         richTextSpan: [
                           TextSpan(
-                            text: "in-app-subscription-terms-1".tr() + " ",
+                            text: "${"in-app-subscription-terms-1".tr()} ",
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.white.withOpacity(0.3),
                               fontFamily: appStateSettings["font"],
-                              fontFamilyFallback: ['Inter'],
+                              fontFamilyFallback: const ['Inter'],
                             ),
                           ),
                           TextSpan(
@@ -286,7 +282,7 @@ class PremiumPage extends StatelessWidget {
                               fontSize: 12,
                               color: Colors.white.withOpacity(0.3),
                               fontFamily: appStateSettings["font"],
-                              fontFamilyFallback: ['Inter'],
+                              fontFamilyFallback: const ['Inter'],
                               decoration: TextDecoration.underline,
                               decorationStyle: TextDecorationStyle.solid,
                               decorationColor: Colors.white.withOpacity(0.3),
@@ -342,7 +338,7 @@ class _FreePremiumMessageState extends State<FreePremiumMessage> {
           text: "from-the-developer".tr(),
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         TextFont(
             maxLines: 80,
             fontSize: 15.5,
@@ -350,14 +346,14 @@ class _FreePremiumMessageState extends State<FreePremiumMessage> {
             text: "developer-message-1".tr() +
                 (appStateSettings["premiumPopupFreeSeen"]
                     ? "."
-                    : " " + "developer-message-1-1".tr())),
-        SizedBox(height: 10),
+                    : " ${"developer-message-1-1".tr()}")),
+        const SizedBox(height: 10),
         TextFont(
             maxLines: 80,
             fontSize: 15.5,
             textAlign: TextAlign.left,
             text: "developer-message-2".tr()),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Row(
           children: [
             Expanded(
@@ -374,17 +370,17 @@ class _FreePremiumMessageState extends State<FreePremiumMessage> {
                 },
               ),
             ),
-            SizedBox(width: 7),
+            const SizedBox(width: 7),
             Expanded(
               child: AnimatedOpacity(
                 opacity: timerUp ? 1 : 0.5,
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 child: Button(
                   fontSize: 14,
                   expandedLayout: true,
                   label: "unlock-for-free".tr() +
                       (timerUp == false
-                          ? (" " + "(" + remainingTime.toString() + ")")
+                          ? (" ($remainingTime)")
                           : ""),
                   onTap: () {
                     if (timerUp) {
@@ -439,10 +435,10 @@ class CashewProBanner extends StatelessWidget {
           fontSize: large ? 35 : 23,
           textColor: fontColor ?? Colors.black,
         ),
-        SizedBox(width: 2),
+        const SizedBox(width: 2),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 5),
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+          margin: const EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(100),
@@ -503,7 +499,7 @@ class ManageSubscription extends StatelessWidget {
       ).withOpacity(0.45),
       borderRadius: 15,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
         child: Column(
           children: [
             appStateSettings["purchaseID"] == productIDs["lifetime"]
@@ -515,18 +511,18 @@ class ManageSubscription extends StatelessWidget {
                     text: "current-plan".tr(),
                     fontSize: 16,
                   ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             CashewProBanner(fontColor: getColor(context, "black")),
             TextFont(
               text: currentPlanName ?? "",
               fontSize: 23,
               fontWeight: FontWeight.bold,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             appStateSettings["purchaseID"] == productIDs["lifetime"]
-                ? SizedBox.shrink()
+                ? const SizedBox.shrink()
                 : Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     child: Tappable(
                       borderRadius: 15,
                       color: dynamicPastel(
@@ -540,7 +536,7 @@ class ManageSubscription extends StatelessWidget {
                       },
                       child: Container(
                         padding:
-                            EdgeInsets.symmetric(vertical: 6, horizontal: 13),
+                            const EdgeInsets.symmetric(vertical: 6, horizontal: 13),
                         child: TextFont(
                           text: "manage".tr(),
                           fontSize: 12,
@@ -569,7 +565,7 @@ void listenToPurchaseUpdated({
           purchaseDetails.status == PurchaseStatus.restored) {
         updateSettings("purchaseID", purchaseDetails.productID,
             updateGlobalState: false, pagesNeedingRefresh: [3]);
-        print("Purchased " + purchaseDetails.productID);
+        print("Purchased ${purchaseDetails.productID}");
         if (popRouteWithPurchase == true &&
             navigatorKey.currentContext != null) {
           Navigator.pop(navigatorKey.currentContext!, true);
@@ -681,7 +677,7 @@ Future<bool> premiumPopupPushRoute(BuildContext context) async {
   if (hidePremiumPopup()) return true;
   dynamic result = await pushRoute(
     context,
-    PremiumPage(
+    const PremiumPage(
       popRouteWithPurchase: true,
     ),
   );
@@ -694,7 +690,7 @@ Future<bool> premiumPopupPushRoute(BuildContext context) async {
 
 Future<bool> premiumPopupBudgets(BuildContext context) async {
   if (hidePremiumPopup()) return true;
-  if ((await database.getAllBudgets()).length > 0) {
+  if ((await database.getAllBudgets()).isNotEmpty) {
     if (await premiumPopupPushRoute(context) == true) {
       return true;
     } else {
@@ -709,8 +705,7 @@ Future<bool> premiumPopupBudgets(BuildContext context) async {
 Future<bool> premiumPopupObjectives(BuildContext context,
     {required ObjectiveType objectiveType}) async {
   if (hidePremiumPopup()) return true;
-  if ((await database.getAllObjectives(objectiveType: objectiveType)).length >
-      0) {
+  if ((await database.getAllObjectives(objectiveType: objectiveType)).isNotEmpty) {
     if (await premiumPopupPushRoute(context) == true) {
       return true;
     } else {
@@ -735,8 +730,7 @@ Future<bool> premiumPopupPastBudgets(BuildContext context) async {
 Future premiumPopupAddTransaction(BuildContext context) async {
   if (hidePremiumPopup()) return true;
 
-  print("Checking premium before adding transaction - " +
-      appStateSettings["premiumPopupAddTransactionCount"].toString());
+  print("Checking premium before adding transaction - ${appStateSettings["premiumPopupAddTransactionCount"]}");
 
   try {
     DateTime.parse(appStateSettings["premiumPopupAddTransactionLastShown"]);
@@ -748,7 +742,7 @@ Future premiumPopupAddTransaction(BuildContext context) async {
   }
 
   if (DateTime.parse(appStateSettings["premiumPopupAddTransactionLastShown"])
-          .add(Duration(days: 1))
+          .add(const Duration(days: 1))
           .isBefore(DateTime.now()) &&
       appStateSettings["premiumPopupAddTransactionCount"] > 5) {
     updateSettings("premiumPopupAddTransactionCount", 0,
@@ -758,7 +752,7 @@ Future premiumPopupAddTransaction(BuildContext context) async {
         updateGlobalState: false);
     await pushRoute(
       context,
-      PremiumPage(
+      const PremiumPage(
         popRouteWithPurchase: true,
         canDismiss: true,
       ),
@@ -798,7 +792,7 @@ class ProductsState extends State<Products> {
         loading = false;
       });
     });
-    Future.delayed(Duration(milliseconds: 3500), () async {
+    Future.delayed(const Duration(milliseconds: 3500), () async {
       if (loading) {
         setState(() {
           loading = false;
@@ -811,12 +805,12 @@ class ProductsState extends State<Products> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 700),
       child: appStateSettings["purchaseID"] != null
-          ? ManageSubscription()
+          ? const ManageSubscription()
           : hasProducts == false
               ? loading == true
-                  ? SizedBox.shrink()
+                  ? const SizedBox.shrink()
                   : StatusBox(
                       title: "error-getting-products".tr(),
                       description: "error-getting-products-description".tr() +
@@ -840,7 +834,7 @@ class ProductsState extends State<Products> {
                       horizontal:
                           getHorizontalPaddingConstrained(context) + 28),
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 300),
+                    constraints: const BoxConstraints(maxWidth: 300),
                     child: Column(
                       children: [
                         ClipRRect(
@@ -860,7 +854,7 @@ class ProductsState extends State<Products> {
                                             null ||
                                         storeProducts[productIDs["monthly"]] ==
                                             null) {
-                                      return SizedBox.shrink();
+                                      return const SizedBox.shrink();
                                     }
                                     final double monthlyPrice =
                                         storeProducts[productIDs["monthly"]]!
@@ -870,7 +864,7 @@ class ProductsState extends State<Products> {
                                     return storeProducts[
                                                 productIDs["yearly"]] ==
                                             null
-                                        ? SizedBox.shrink()
+                                        ? const SizedBox.shrink()
                                         : SubscriptionOption(
                                             label:
                                                 "yearly".tr().capitalizeFirst,
@@ -878,7 +872,7 @@ class ProductsState extends State<Products> {
                                                     productIDs["yearly"]]!
                                                 .price,
                                             extraPadding:
-                                                EdgeInsets.only(top: 13 / 2),
+                                                const EdgeInsets.only(top: 13 / 2),
                                             onTap: () {
                                               InAppPurchase.instance
                                                   .buyNonConsumable(
@@ -897,7 +891,7 @@ class ProductsState extends State<Products> {
                                   },
                                 ),
                                 storeProducts[productIDs["monthly"]] == null
-                                    ? SizedBox.shrink()
+                                    ? const SizedBox.shrink()
                                     : SubscriptionOption(
                                         label: "monthly".tr().capitalizeFirst,
                                         price: storeProducts[
@@ -914,14 +908,14 @@ class ProductsState extends State<Products> {
                                         },
                                       ),
                                 storeProducts[productIDs["lifetime"]] == null
-                                    ? SizedBox.shrink()
+                                    ? const SizedBox.shrink()
                                     : SubscriptionOption(
                                         label: "lifetime".tr().capitalizeFirst,
                                         price: storeProducts[
                                                 productIDs["lifetime"]]!
                                             .price,
                                         extraPadding:
-                                            EdgeInsets.only(bottom: 13 / 2),
+                                            const EdgeInsets.only(bottom: 13 / 2),
                                         onTap: () {
                                           InAppPurchase.instance
                                               .buyNonConsumable(
@@ -938,7 +932,7 @@ class ProductsState extends State<Products> {
                         ),
                         Padding(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                           child: Tappable(
                             borderRadius: 15,
                             color: dynamicPastel(
@@ -951,7 +945,7 @@ class ProductsState extends State<Products> {
                               restorePurchases(context);
                             },
                             child: Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   vertical: 6, horizontal: 13),
                               child: TextFont(
                                 text: "restore-purchases".tr(),
@@ -993,14 +987,14 @@ class SubscriptionFeature extends StatelessWidget {
               color: Theme.of(context).colorScheme.primary,
               boxShadow: boxShadowGeneral(context),
             ),
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Icon(
               iconData,
               size: 23,
               color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
-          SizedBox(width: 15),
+          const SizedBox(width: 15),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1019,7 +1013,7 @@ class SubscriptionFeature extends StatelessWidget {
                         textColor: Colors.black,
                         maxLines: 5,
                       )
-                    : SizedBox.shrink(),
+                    : const SizedBox.shrink(),
               ],
             ),
           ),
@@ -1086,7 +1080,7 @@ class SubscriptionOption extends StatelessWidget {
                                     getColor(context, "black").withOpacity(0.7),
                                 fontSize: 14,
                                 fontFamily: appStateSettings["font"],
-                                fontFamilyFallback: ['Inter'],
+                                fontFamilyFallback: const ['Inter'],
                               ),
                             ),
                             TextSpan(
@@ -1094,7 +1088,7 @@ class SubscriptionOption extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 12,
                                 fontFamily: appStateSettings["font"],
-                                fontFamilyFallback: ['Inter'],
+                                fontFamilyFallback: const ['Inter'],
                               ),
                             ),
                             TextSpan(
@@ -1103,7 +1097,7 @@ class SubscriptionOption extends StatelessWidget {
                                 color: getColor(context, "black"),
                                 fontSize: 17,
                                 fontFamily: appStateSettings["font"],
-                                fontFamilyFallback: ['Inter'],
+                                fontFamilyFallback: const ['Inter'],
                               ),
                             ),
                           ],
@@ -1124,8 +1118,7 @@ class SubscriptionOption extends StatelessWidget {
 
 class LockedFeature extends StatelessWidget {
   const LockedFeature(
-      {required this.child, this.actionAfter, this.showLock = false, Key? key})
-      : super(key: key);
+      {required this.child, this.actionAfter, this.showLock = false, super.key});
   final Widget child;
   final Function? actionAfter;
   final bool showLock;
@@ -1213,26 +1206,26 @@ class _FadeOutAndLockFeatureState extends State<FadeOutAndLockFeature> {
           IgnorePointer(
             child: AnimatedOpacity(
               opacity: fadeIn ? 0.23 : 1,
-              duration: Duration(milliseconds: 5000),
+              duration: const Duration(milliseconds: 5000),
               child: AnimatedOpacity(
                 opacity: fadeIn ? 0.25 : 1,
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 child: widget.child,
               ),
             ),
           ),
           AnimatedOpacity(
             opacity: fadeIn ? 1 : 0,
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             child: Column(
               children: [
                 TextFont(
                   text: "unlock-with".tr(),
                   fontSize: 15,
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 CashewProBanner(fontColor: getColor(context, "black")),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 LowKeyButton(
                   onTap: openPremiumPopup,
                   text: "learn-more".tr(),
@@ -1304,8 +1297,8 @@ class PremiumBackground extends StatelessWidget {
               type: PlasmaType.infinity,
               particles: 7,
               color: Theme.of(context).brightness == Brightness.light
-                  ? Color(0x28B4B4B4)
-                  : Color(0x44B6B6B6),
+                  ? const Color(0x28B4B4B4)
+                  : const Color(0x44B6B6B6),
               blur: 0.4,
               size: 0.8,
               speed: Theme.of(context).brightness == Brightness.light ? 4 : 3,
@@ -1321,7 +1314,7 @@ class PremiumBackground extends StatelessWidget {
     if (disableAnimation) {
       return BreathingWidget(
         curve: Curves.easeIn,
-        duration: Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 1000),
         endScale: 1.7,
         child: background,
       );
@@ -1346,7 +1339,7 @@ class PremiumBanner extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 9, vertical: 0),
       child: OpenContainerNavigation(
         borderRadius: borderRadius,
-        openPage: PremiumPage(canDismiss: true, popRouteWithPurchase: false),
+        openPage: const PremiumPage(canDismiss: true, popRouteWithPurchase: false),
         closedColor: Theme.of(context).brightness == Brightness.light
             ? Theme.of(context).colorScheme.secondaryContainer
             : Theme.of(context).colorScheme.secondary,
@@ -1386,12 +1379,12 @@ class PremiumBanner extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    CashewProBanner(),
+                                    const CashewProBanner(),
                                     purchased
                                         ? Container(
-                                            margin: EdgeInsets.symmetric(
+                                            margin: const EdgeInsets.symmetric(
                                                 horizontal: 5),
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 12, vertical: 5),
                                             decoration: BoxDecoration(
                                               color: Theme.of(context)
@@ -1416,20 +1409,16 @@ class PremiumBanner extends StatelessWidget {
                                               fontSize: 15,
                                             ),
                                           )
-                                        : SizedBox.shrink(),
+                                        : const SizedBox.shrink(),
                                   ],
                                 ),
                                 purchased
-                                    ? SizedBox.shrink()
+                                    ? const SizedBox.shrink()
                                     : Row(
                                         children: [
                                           Flexible(
                                             child: TextFont(
-                                              text: "budget-like-a-pro".tr() +
-                                                  " " +
-                                                  globalAppName +
-                                                  " " +
-                                                  "Pro",
+                                              text: "${"budget-like-a-pro".tr()} $globalAppName Pro",
                                               fontSize: 15,
                                               maxLines: 3,
                                               textColor: Colors.black,
@@ -1441,7 +1430,7 @@ class PremiumBanner extends StatelessWidget {
                             ),
                           ),
                           appStateSettings["purchaseID"] != null
-                              ? SizedBox.shrink()
+                              ? const SizedBox.shrink()
                               : Icon(
                                   appStateSettings["outlinedIcons"]
                                       ? Icons.arrow_forward_ios_outlined

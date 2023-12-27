@@ -62,14 +62,14 @@ class HomePageNetWorth extends StatelessWidget {
                               SearchFilters(walletPks: walletPks ?? []),
                         ),
                         textColor: getColor(context, "black"),
-                        openPage: WalletDetailsPage(wallet: null),
+                        openPage: const WalletDetailsPage(wallet: null),
                       ),
                     ),
                   ],
                 ),
               );
             }
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }),
     );
   }
@@ -106,13 +106,13 @@ class _WalletPickerPeriodCycleState extends State<WalletPickerPeriodCycle> {
             children: [
               Expanded(
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   opacity: allWalletsSelected ? 1 : 0.5,
                   child: OutlinedButtonStacked(
                     filled: allWalletsSelected,
                     alignLeft: true,
                     alignBeside: true,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     text: "all-accounts".tr(),
                     iconData: appStateSettings["outlinedIcons"]
                         ? Icons.account_balance_wallet_outlined
@@ -132,7 +132,7 @@ class _WalletPickerPeriodCycleState extends State<WalletPickerPeriodCycle> {
           ),
         if (widget.homePageWidgetDisplay != null &&
             widget.allWalletsSettingKey != null)
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
         // CheckItems(
         //   triggerInitialOnChanged: false,
         //   minVerticalPadding: 0,
@@ -215,9 +215,9 @@ Future openNetWorthSettings(BuildContext context) {
       title: "net-worth".tr(),
       subtitle: "applies-to-homepage".tr() +
           (getPlatform(ignoreEmulation: true) == PlatformOS.isAndroid
-              ? " " + "and-applies-to-widget".tr()
+              ? " ${"and-applies-to-widget".tr()}"
               : ""),
-      child: WalletPickerPeriodCycle(
+      child: const WalletPickerPeriodCycle(
         allWalletsSettingKey: "netWorthAllWallets",
         cycleSettingsExtension: "NetWorth",
         homePageWidgetDisplay: HomePageWidgetDisplay.NetWorth,

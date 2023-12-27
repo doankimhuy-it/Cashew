@@ -16,8 +16,8 @@ class TransactionEntryNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return transaction.note.toString().trim() != ""
         ? Tooltip(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            margin: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 15),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: getColor(context, "lightDarkAccent"),
@@ -30,7 +30,7 @@ class TransactionEntryNote extends StatelessWidget {
                         : getColor(context, "shadowColorLight")
                             .withOpacity(0.1),
                     blurRadius: 6,
-                    offset: Offset(0, 4),
+                    offset: const Offset(0, 4),
                     spreadRadius: 4,
                   ),
                 ],
@@ -39,10 +39,10 @@ class TransactionEntryNote extends StatelessWidget {
             textStyle: TextStyle(
               color: getColor(context, "black"),
               fontFamily: appStateSettings["font"],
-              fontFamilyFallback: ['Inter'],
+              fontFamilyFallback: const ['Inter'],
             ),
             triggerMode: TooltipTriggerMode.tap,
-            showDuration: Duration(milliseconds: 10000),
+            showDuration: const Duration(milliseconds: 10000),
             message: cleanupNoteStringWithURLs(transaction.note),
             child: Padding(
               padding:
@@ -56,6 +56,6 @@ class TransactionEntryNote extends StatelessWidget {
               ),
             ),
           )
-        : SizedBox.shrink();
+        : const SizedBox.shrink();
   }
 }

@@ -5,7 +5,7 @@ ValueNotifier<bool> cancelParentScroll = ValueNotifier<bool>(false);
 
 class MultiDirectionalInfiniteScroll extends StatefulWidget {
   const MultiDirectionalInfiniteScroll({
-    Key? key,
+    super.key,
     required this.itemBuilder,
     this.initialItems,
     this.overBoundsDetection = 50,
@@ -15,7 +15,7 @@ class MultiDirectionalInfiniteScroll extends StatefulWidget {
     this.onTopLoaded,
     this.onBottomLoaded,
     this.onScroll,
-  }) : super(key: key);
+  });
   final int? initialItems;
   final int overBoundsDetection;
   final Function(int index) itemBuilder;
@@ -53,7 +53,7 @@ class MultiDirectionalInfiniteScrollState
       _scrollController.animateTo(
         widget.startingScrollPosition,
         duration: widget.duration,
-        curve: ElasticOutCurve(0.7),
+        curve: const ElasticOutCurve(0.7),
       );
     });
   }
@@ -66,7 +66,7 @@ class MultiDirectionalInfiniteScrollState
 
   scrollTo(duration, {double? position}) {
     _scrollController.animateTo(
-      position == null ? widget.startingScrollPosition : position,
+      position ?? widget.startingScrollPosition,
       duration: duration,
       curve: Curves.fastOutSlowIn,
     );
@@ -123,16 +123,16 @@ class MultiDirectionalInfiniteScrollState
             _scrollController.animateTo(
               _scrollController.offset + event.scrollDelta.dy,
               curve: Curves.linear,
-              duration: Duration(milliseconds: 100),
+              duration: const Duration(milliseconds: 100),
             );
           }
         },
-        child: Container(
+        child: SizedBox(
           height: widget.height,
           child: CustomScrollView(
             scrollDirection: Axis.horizontal,
             controller: _scrollController,
-            center: ValueKey('second-sliver-list'),
+            center: const ValueKey('second-sliver-list'),
             slivers: <Widget>[
               SliverList(
                 delegate: SliverChildBuilderDelegate(
@@ -143,7 +143,7 @@ class MultiDirectionalInfiniteScrollState
                 ),
               ),
               SliverList(
-                key: ValueKey('second-sliver-list'),
+                key: const ValueKey('second-sliver-list'),
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     return widget.itemBuilder(bottom[index]);

@@ -15,8 +15,7 @@ import 'package:flutter/material.dart'
     hide SliverReorderableList, ReorderableDelayedDragStartListener;
 
 class BudgetsListPage extends StatefulWidget {
-  const BudgetsListPage({required this.enableBackButton, Key? key})
-      : super(key: key);
+  const BudgetsListPage({required this.enableBackButton, super.key});
   final bool enableBackButton;
 
   @override
@@ -50,12 +49,12 @@ class BudgetsListPageState extends State<BudgetsListPage>
           : 0,
       actions: [
         IconButton(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           tooltip: "edit-budgets".tr(),
           onPressed: () {
             pushRoute(
               context,
-              EditBudgetPage(),
+              const EditBudgetPage(),
             );
           },
           icon: Icon(
@@ -67,12 +66,12 @@ class BudgetsListPageState extends State<BudgetsListPage>
         ),
         if (getIsFullScreen(context))
           IconButton(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             tooltip: "add-budget".tr(),
             onPressed: () {
               pushRoute(
                 context,
-                AddBudgetPage(
+                const AddBudgetPage(
                     routesToPopAfterDelete: RoutesToPopAfterDelete.None),
               );
             },
@@ -88,13 +87,13 @@ class BudgetsListPageState extends State<BudgetsListPage>
         StreamBuilder<List<Budget>>(
           stream: database.watchAllBudgets(hideArchived: true),
           builder: (context, snapshot) {
-            if (snapshot.hasData && (snapshot.data ?? []).length <= 0) {
+            if (snapshot.hasData && (snapshot.data ?? []).isEmpty) {
               return SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 7, horizontal: 13),
+                padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 13),
                 sliver: SliverToBoxAdapter(
                   child: AddButton(
                     onTap: () {},
-                    openPage: AddBudgetPage(
+                    openPage: const AddBudgetPage(
                       routesToPopAfterDelete:
                           RoutesToPopAfterDelete.PreventDelete,
                     ),
@@ -105,10 +104,10 @@ class BudgetsListPageState extends State<BudgetsListPage>
             }
             if (snapshot.hasData) {
               return SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 7, horizontal: 13),
+                padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 13),
                 sliver: enableDoubleColumn(context)
                     ? SliverGrid(
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 600.0,
                           mainAxisExtent: 190,
                           mainAxisSpacing: 15.0,
@@ -120,7 +119,7 @@ class BudgetsListPageState extends State<BudgetsListPage>
                             if (index == snapshot.data?.length) {
                               return AddButton(
                                 onTap: () {},
-                                openPage: AddBudgetPage(
+                                openPage: const AddBudgetPage(
                                   routesToPopAfterDelete:
                                       RoutesToPopAfterDelete.PreventDelete,
                                 ),
@@ -140,7 +139,7 @@ class BudgetsListPageState extends State<BudgetsListPage>
                             if (index == snapshot.data?.length) {
                               return AddButton(
                                 onTap: () {},
-                                openPage: AddBudgetPage(
+                                openPage: const AddBudgetPage(
                                   routesToPopAfterDelete:
                                       RoutesToPopAfterDelete.PreventDelete,
                                 ),
@@ -162,11 +161,11 @@ class BudgetsListPageState extends State<BudgetsListPage>
                       ),
               );
             } else {
-              return SliverToBoxAdapter();
+              return const SliverToBoxAdapter();
             }
           },
         ),
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: SizedBox(height: 50),
         ),
       ],

@@ -233,7 +233,7 @@ class _ImplicitlyAnimatedDeleteSliverReorderableListState<T>
           key: ValueKey(itemKey),
           expand: deletedIndex != index,
           child: Container(
-            key: ValueKey(1),
+            key: const ValueKey(1),
             child: widget.itemBuilder(
               context,
               index,

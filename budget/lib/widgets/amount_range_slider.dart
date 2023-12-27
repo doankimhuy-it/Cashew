@@ -51,7 +51,7 @@ class _AmountSlideRangerState extends State<AmountRangeSlider> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 35),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 35),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

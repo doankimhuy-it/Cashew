@@ -5,14 +5,14 @@ import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class DateDivider extends StatelessWidget {
-  DateDivider({
-    Key? key,
+  const DateDivider({
+    super.key,
     required this.date,
     this.info,
     this.color,
     this.useHorizontalPaddingConstrained = true,
     this.afterDate = "",
-  }) : super(key: key);
+  });
 
   final DateTime date;
   final String? info;

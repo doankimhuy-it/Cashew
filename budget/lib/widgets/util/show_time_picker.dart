@@ -18,14 +18,14 @@ Future<TimeOfDay?> showCustomTimePicker(
                   onTertiaryContainer:
                       Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
-            textTheme: TextTheme(
+            textTheme: const TextTheme(
               displayLarge: TextStyle(
                 fontSize: 65,
                 fontWeight: FontWeight.w300,
               ),
             ),
           ),
-          child: child ?? SizedBox.shrink(),
+          child: child ?? const SizedBox.shrink(),
         );
       }
       return Theme(
@@ -35,16 +35,16 @@ Future<TimeOfDay?> showCustomTimePicker(
                 colorScheme: ColorScheme.light(
                     primary: Theme.of(context).colorScheme.primary),
                 buttonTheme:
-                    ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                    const ButtonThemeData(textTheme: ButtonTextTheme.primary),
               )
             : ThemeData.dark().copyWith(
                 primaryColor: Theme.of(context).colorScheme.secondary,
                 colorScheme: ColorScheme.dark(
                     primary: Theme.of(context).colorScheme.secondary),
                 buttonTheme:
-                    ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                    const ButtonThemeData(textTheme: ButtonTextTheme.primary),
               ),
-        child: child ?? SizedBox.shrink(),
+        child: child ?? const SizedBox.shrink(),
       );
     },
   );

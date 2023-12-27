@@ -36,8 +36,8 @@ class EditRowEntry extends StatelessWidget {
     this.hasMoreOptionsIcon = false,
     this.disableActions = false,
     this.opacity,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final int index;
   final Widget content;
   final Color? accentColor;
@@ -80,11 +80,11 @@ class EditRowEntry extends StatelessWidget {
         openPage: openPage,
         closedColor: containerColor,
         borderRadius:
-            useDismissToDelete && boxShadow.length == 0 ? 0 : borderRadius,
+            useDismissToDelete && boxShadow.isEmpty ? 0 : borderRadius,
         button: (openContainer) {
           return Tappable(
             borderRadius:
-                useDismissToDelete && boxShadow.length == 0 ? 0 : borderRadius,
+                useDismissToDelete && boxShadow.isEmpty ? 0 : borderRadius,
             color: containerColor,
             onTap: () {
               FocusScopeNode currentFocus = FocusScope.of(context);
@@ -104,7 +104,7 @@ class EditRowEntry extends StatelessWidget {
                   top: 0,
                   child: AnimatedContainer(
                     curve: Curves.easeInOutCubicEmphasized,
-                    duration: Duration(milliseconds: 1000),
+                    duration: const Duration(milliseconds: 1000),
                     width: accentColor == null
                         ? 0
                         : getPlatform() == PlatformOS.isIOS
@@ -120,7 +120,7 @@ class EditRowEntry extends StatelessWidget {
                 ),
                 AnimatedPadding(
                   curve: Curves.easeInOutCubicEmphasized,
-                  duration: Duration(milliseconds: 1000),
+                  duration: const Duration(milliseconds: 1000),
                   padding: EdgeInsets.only(
                     left: accentColor == null
                         ? 0
@@ -138,7 +138,7 @@ class EditRowEntry extends StatelessWidget {
                             Expanded(
                               child: Container(
                                 padding: padding ??
-                                    EdgeInsets.only(
+                                    const EdgeInsets.only(
                                       left: 25 - 3,
                                       right: 10,
                                       top: 15,
@@ -151,6 +151,7 @@ class EditRowEntry extends StatelessWidget {
                                 ? Tappable(
                                     color: Colors.transparent,
                                     borderRadius: borderRadius,
+                                    onTap: disableActions ? null : onExtra,
                                     child: Container(
                                       alignment: iconAlignment,
                                       height: disableIntrinsicContentHeight
@@ -164,17 +165,23 @@ class EditRowEntry extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    onTap: disableActions ? null : onExtra,
                                   )
-                                : SizedBox.shrink(),
+                                : const SizedBox.shrink(),
                             hasMoreOptionsIcon
-                                ? HasMoreOptionsIcon()
-                                : SizedBox.shrink(),
-                            extraWidget ?? SizedBox.shrink(),
+                                ? const HasMoreOptionsIcon()
+                                : const SizedBox.shrink(),
+                            extraWidget ?? const SizedBox.shrink(),
                             canDelete
                                 ? Tappable(
                                     color: Colors.transparent,
                                     borderRadius: borderRadius,
+                                    onTap: onDelete == null
+                                        ? null
+                                        : disableActions
+                                            ? () {}
+                                            : () async {
+                                                await onDelete!();
+                                              },
                                     child: Container(
                                       alignment: iconAlignment,
                                       margin: EdgeInsets.only(
@@ -192,17 +199,10 @@ class EditRowEntry extends StatelessWidget {
                                               ? Icons.delete_outlined
                                               : Icons.delete_rounded),
                                     ),
-                                    onTap: onDelete == null
-                                        ? null
-                                        : disableActions
-                                            ? () {}
-                                            : () async {
-                                                await onDelete!();
-                                              },
                                   )
-                                : SizedBox.shrink(),
+                                : const SizedBox.shrink(),
                             hideReorder == true
-                                ? SizedBox.shrink()
+                                ? const SizedBox.shrink()
                                 : canReorder
                                     ? IgnorePointer(
                                         ignoring: disableActions,
@@ -236,7 +236,7 @@ class EditRowEntry extends StatelessWidget {
                                         opacity: 0.2,
                                         child: Container(
                                           alignment: iconAlignment,
-                                          margin: EdgeInsets.only(right: 10),
+                                          margin: const EdgeInsets.only(right: 10),
                                           width: 40,
                                           height: disableIntrinsicContentHeight
                                               ? null
@@ -247,7 +247,7 @@ class EditRowEntry extends StatelessWidget {
                                                   : Icons.drag_handle_rounded),
                                         ),
                                       ),
-                            showMoreWidget ?? SizedBox.shrink(),
+                            showMoreWidget ?? const SizedBox.shrink(),
                           ],
                         );
                         if (disableIntrinsicContentHeight) return child;
@@ -374,7 +374,7 @@ class EditRowEntry extends StatelessWidget {
       );
     }
     return AnimatedOpacity(
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
       opacity: currentReorder ? 0.6 : (opacity ?? 1),
       child: Column(
         children: [
@@ -383,15 +383,15 @@ class EditRowEntry extends StatelessWidget {
                   height: 1.5,
                   color: getColor(context, "dividerColor"),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: getPlatform() == PlatformOS.isIOS ? 0 : 10,
                 vertical: getPlatform() == PlatformOS.isIOS ? 0 : 5),
             child: ReorderableDelayedDragStartListener(
               index: index,
-              child: container,
               enabled: canReorder,
+              child: container,
             ),
           ),
           getPlatform() == PlatformOS.isIOS
@@ -399,7 +399,7 @@ class EditRowEntry extends StatelessWidget {
                   height: 1.5,
                   color: getColor(context, "dividerColor"),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
         ],
       ),
     );
@@ -432,7 +432,7 @@ class DismissibleEditRowEntry extends StatelessWidget {
               borderRadius: BorderRadius.circular(borderRadius),
               color: Colors.red[700],
             ),
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             alignment: AlignmentDirectional.centerStart,
             child: Icon(
               appStateSettings["outlinedIcons"]
@@ -446,7 +446,7 @@ class DismissibleEditRowEntry extends StatelessWidget {
               borderRadius: BorderRadius.circular(borderRadius),
               color: Colors.red[700],
             ),
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             alignment: AlignmentDirectional.centerEnd,
             child: Icon(
               appStateSettings["outlinedIcons"]
@@ -473,7 +473,7 @@ class DismissibleEditRowEntry extends StatelessWidget {
           },
           child: widget,
         );
-        if (boxShadow.length == 0) {
+        if (boxShadow.isEmpty) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(borderRadius),
             child: child,

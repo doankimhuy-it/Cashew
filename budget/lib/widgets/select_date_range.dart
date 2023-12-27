@@ -61,8 +61,8 @@ class _SelectDateRangeState extends State<SelectDateRange> {
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                   internalPadding:
-                      EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
                 ),
               ),
             ],
@@ -72,8 +72,8 @@ class _SelectDateRangeState extends State<SelectDateRange> {
             children: [
               AnimatedExpanded(
                 expand: selectedEndDate != null,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 5, bottom: 0),
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 5, bottom: 0),
                   child: Icon(
                     Icons.arrow_downward_rounded,
                     size: 25,
@@ -113,14 +113,14 @@ class _SelectDateRangeState extends State<SelectDateRange> {
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                   internalPadding:
-                      EdgeInsets.symmetric(vertical: 5, horizontal: 4),
-                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
                 ),
               ),
               AnimatedSizeSwitcher(
                 child: selectedEndDate != null
                     ? Opacity(
-                        key: ValueKey(1),
+                        key: const ValueKey(1),
                         opacity: 0.5,
                         child: IconButtonScaled(
                           tooltip: "clear".tr(),
@@ -136,7 +136,7 @@ class _SelectDateRangeState extends State<SelectDateRange> {
                         ),
                       )
                     : Container(
-                        key: ValueKey(2),
+                        key: const ValueKey(2),
                       ),
               )
             ],

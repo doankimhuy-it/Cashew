@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 class GlobalLoadingProgress extends StatefulWidget {
   const GlobalLoadingProgress({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<GlobalLoadingProgress> createState() => GlobalLoadingProgressState();
@@ -32,7 +32,7 @@ class GlobalLoadingProgressState extends State<GlobalLoadingProgress> {
           : Alignment.topCenter,
       child: AnimatedOpacity(
         opacity: progressPercentage <= 0 || progressPercentage >= 1 ? 0 : 1,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         child: Stack(
           children: [
             Container(
@@ -44,7 +44,7 @@ class GlobalLoadingProgressState extends State<GlobalLoadingProgress> {
               height: loadingBarHeight,
             ),
             AnimatedContainer(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
               height: loadingBarHeight,
               width: MediaQuery.sizeOf(context).width * progressPercentage,
@@ -52,7 +52,7 @@ class GlobalLoadingProgressState extends State<GlobalLoadingProgress> {
                 color: dynamicPastel(
                     context, Theme.of(context).colorScheme.primary,
                     amount: 0.5),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomRight: Radius.circular(5),
                   topRight: Radius.circular(5),
                 ),
@@ -67,8 +67,8 @@ class GlobalLoadingProgressState extends State<GlobalLoadingProgress> {
 
 class GlobalLoadingIndeterminate extends StatefulWidget {
   const GlobalLoadingIndeterminate({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<GlobalLoadingIndeterminate> createState() =>
@@ -107,17 +107,17 @@ class GlobalLoadingIndeterminateState
               ? Alignment.bottomLeft
               : Alignment.topCenter,
           child: AnimatedContainer(
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
             height: !visible ? 0 : 3,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primaryContainer,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(5),
                 topRight: Radius.circular(5),
               ),
             ),
-            child: ClipRRect(
+            child: const ClipRRect(
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(5),
                 topRight: Radius.circular(5),

@@ -63,7 +63,7 @@ class _CurrencyPickerState extends State<CurrencyPicker> {
   }
 
   void populateCurrencies() {
-    Future.delayed(Duration(milliseconds: 0), () async {
+    Future.delayed(const Duration(milliseconds: 0), () async {
       setState(() {
         currencies = currenciesJSON;
         searchText = "";
@@ -120,7 +120,7 @@ class _CurrencyPickerState extends State<CurrencyPicker> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: widget.padding ?? EdgeInsets.symmetric(horizontal: 8),
+      padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
         children: [
           Row(
@@ -141,7 +141,7 @@ class _CurrencyPickerState extends State<CurrencyPicker> {
                       searchCurrencies(text);
                     },
                     padding: widget.extraButton != null
-                        ? EdgeInsets.only(left: 18)
+                        ? const EdgeInsets.only(left: 18)
                         : EdgeInsets.zero,
                   ),
                 ),
@@ -149,9 +149,9 @@ class _CurrencyPickerState extends State<CurrencyPicker> {
               if (widget.extraButton != null) widget.extraButton!,
             ],
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           searchText != "" || viewAll == true
-              ? SizedBox.shrink()
+              ? const SizedBox.shrink()
               : Wrap(
                   spacing: 7,
                   runSpacing: 7,
@@ -176,7 +176,7 @@ class _CurrencyPickerState extends State<CurrencyPicker> {
                   ],
                 ),
           searchText != "" || viewAll == true
-              ? SizedBox.shrink()
+              ? const SizedBox.shrink()
               : Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: LowKeyButton(
@@ -188,16 +188,16 @@ class _CurrencyPickerState extends State<CurrencyPicker> {
                     text: "view-all-currencies".tr(),
                   ),
                 ),
-          currencies.length <= 0
+          currencies.isEmpty
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 15),
                   child: NoResults(
                     message: "no-currencies-found".tr(),
                   ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           searchText == "" && viewAll == false
-              ? SizedBox.shrink()
+              ? const SizedBox.shrink()
               : Wrap(
                   spacing: 7,
                   runSpacing: 7,
@@ -213,11 +213,11 @@ class _CurrencyPickerState extends State<CurrencyPicker> {
                       )
                   ],
                 ),
-          currencies.length < 9 && currencies.length > 0
-              ? SizedBox(
+          currencies.length < 9 && currencies.isNotEmpty
+              ? const SizedBox(
                   height: 180,
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
         ],
       ),
     );
@@ -240,7 +240,7 @@ class CurrencyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       child: Tappable(
         key: ValueKey(selected),
         onTap: () {
@@ -264,9 +264,9 @@ class CurrencyItem extends StatelessWidget {
                   : Colors.transparent,
             ),
           ),
-          duration: Duration(milliseconds: 450),
+          duration: const Duration(milliseconds: 450),
           child: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: 100, minHeight: 100),
+            constraints: const BoxConstraints(minWidth: 100, minHeight: 100),
             child: Padding(
               padding: const EdgeInsets.all(13),
               child: Column(

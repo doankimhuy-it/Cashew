@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class TappableTextEntry extends StatelessWidget {
   const TappableTextEntry({
-    Key? key,
+    super.key,
     required this.title,
     required this.placeholder,
     required this.onTap,
@@ -21,7 +21,7 @@ class TappableTextEntry extends StatelessWidget {
     this.disabled = false,
     this.customTitleBuilder,
     this.enableAnimatedSwitcher = true,
-  }) : super(key: key);
+  });
 
   final String? title;
   final String placeholder;
@@ -71,7 +71,7 @@ class TappableTextEntry extends StatelessWidget {
           padding: padding,
           child: AnimatedContainer(
             curve: Curves.easeInOut,
-            duration: Duration(milliseconds: 250),
+            duration: const Duration(milliseconds: 250),
             padding: internalPadding,
             decoration: BoxDecoration(
               border: Border(

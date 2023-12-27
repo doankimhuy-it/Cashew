@@ -59,8 +59,8 @@ import 'package:universal_io/io.dart';
 
 class MoreActionsPage extends StatefulWidget {
   const MoreActionsPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<MoreActionsPage> createState() => MoreActionsPageState();
@@ -90,9 +90,9 @@ class MoreActionsPageState extends State<MoreActionsPage>
         title: "more-actions".tr(),
         backButton: false,
         horizontalPadding: getHorizontalPaddingConstrained(context),
-        listWidgets: [
+        listWidgets: const [
           Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
+            padding: EdgeInsets.only(bottom: 8.0),
             child: PremiumBanner(),
           ),
           MorePages()
@@ -137,7 +137,7 @@ class MorePages extends StatelessWidget {
               children: [
                 Expanded(
                   child: SettingsContainerOpenPage(
-                    openPage: WalletDetailsPage(wallet: null),
+                    openPage: const WalletDetailsPage(wallet: null),
                     title: navBarIconsData["allSpending"]!.labelLong.tr(),
                     icon: navBarIconsData["allSpending"]!.iconData,
                     description: "all-spending-description".tr(),
@@ -152,7 +152,7 @@ class MorePages extends StatelessWidget {
             children: [
               Expanded(
                 child: SettingsContainerOpenPage(
-                  openPage: AboutPage(),
+                  openPage: const AboutPage(),
                   title: "about-app".tr(namedArgs: {"app": globalAppName}),
                   icon: navBarIconsData["about"]!.iconData,
                   isOutlined: true,
@@ -160,10 +160,10 @@ class MorePages extends StatelessWidget {
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
                   child: SettingsContainer(
                     onTap: () {
-                      openBottomSheet(context, RatingPopup(), fullSnap: true);
+                      openBottomSheet(context, const RatingPopup(), fullSnap: true);
                     },
                     title: "feedback".tr(),
                     icon: appStateSettings["outlinedIcons"]
@@ -181,13 +181,13 @@ class MorePages extends StatelessWidget {
               children: [
                 Expanded(
                   child: SettingsContainerOpenPage(
-                    openPage: NotificationsPage(),
+                    openPage: const NotificationsPage(),
                     title: navBarIconsData["notifications"]!.label.tr(),
                     icon: navBarIconsData["notifications"]!.iconData,
                     isOutlined: true,
                   ),
                 ),
-                Expanded(child: GoogleAccountLoginButton()),
+                const Expanded(child: GoogleAccountLoginButton()),
               ],
             ),
           if (hasSideNavigation == false)
@@ -196,7 +196,7 @@ class MorePages extends StatelessWidget {
               children: [
                 Expanded(
                   child: SettingsContainerOpenPage(
-                    openPage: SubscriptionsPage(),
+                    openPage: const SubscriptionsPage(),
                     title: navBarIconsData["subscriptions"]!.label.tr(),
                     icon: navBarIconsData["subscriptions"]!.iconData,
                     isOutlined: true,
@@ -205,7 +205,7 @@ class MorePages extends StatelessWidget {
                 Expanded(
                   child: SettingsContainerOpenPage(
                     openPage:
-                        UpcomingOverdueTransactions(overdueTransactions: null),
+                        const UpcomingOverdueTransactions(overdueTransactions: null),
                     title: navBarIconsData["scheduled"]!.label.tr(),
                     icon: navBarIconsData["scheduled"]!.iconData,
                     isOutlined: true,
@@ -219,7 +219,7 @@ class MorePages extends StatelessWidget {
               children: [
                 Expanded(
                   child: SettingsContainerOpenPage(
-                    openPage: ObjectivesListPage(
+                    openPage: const ObjectivesListPage(
                       backButton: true,
                     ),
                     title: navBarIconsData["goals"]!.label.tr(),
@@ -229,7 +229,7 @@ class MorePages extends StatelessWidget {
                 ),
                 Expanded(
                   child: SettingsContainerOpenPage(
-                    openPage: CreditDebtTransactions(isCredit: null),
+                    openPage: const CreditDebtTransactions(isCredit: null),
                     title: navBarIconsData["loans"]!.label.tr(),
                     icon: navBarIconsData["loans"]!.iconData,
                     isOutlined: true,
@@ -245,7 +245,7 @@ class MorePages extends StatelessWidget {
                   flex: 1,
                   child: SettingsContainerOpenPage(
                     isOutlinedColumn: true,
-                    openPage: EditWalletsPage(),
+                    openPage: const EditWalletsPage(),
                     title: navBarIconsData["accountDetails"]!.label.tr(),
                     icon: navBarIconsData["accountDetails"]!.iconData,
                     isOutlined: true,
@@ -260,8 +260,8 @@ class MorePages extends StatelessWidget {
                                 "budgets" &&
                             appStateSettings["customNavBarShortcut2"] !=
                                 "budgets"
-                        ? BudgetsListPage(enableBackButton: true)
-                        : EditBudgetPage(),
+                        ? const BudgetsListPage(enableBackButton: true)
+                        : const EditBudgetPage(),
                     title: navBarIconsData["budgetDetails"]!.label.tr(),
                     icon: navBarIconsData["budgetDetails"]!.iconData,
                     iconScale: navBarIconsData["budgetDetails"]!.iconScale,
@@ -272,7 +272,7 @@ class MorePages extends StatelessWidget {
                   flex: 1,
                   child: SettingsContainerOpenPage(
                     isOutlinedColumn: true,
-                    openPage: EditCategoriesPage(),
+                    openPage: const EditCategoriesPage(),
                     title: navBarIconsData["categoriesDetails"]!.label.tr(),
                     icon: navBarIconsData["categoriesDetails"]!.iconData,
                     isOutlined: true,
@@ -282,7 +282,7 @@ class MorePages extends StatelessWidget {
                   flex: 1,
                   child: SettingsContainerOpenPage(
                     isOutlinedColumn: true,
-                    openPage: EditAssociatedTitlesPage(),
+                    openPage: const EditAssociatedTitlesPage(),
                     title: navBarIconsData["titlesDetails"]!.label.tr(),
                     icon: navBarIconsData["titlesDetails"]!.iconData,
                     isOutlined: true,
@@ -290,7 +290,7 @@ class MorePages extends StatelessWidget {
                 )
               ],
             ),
-          if (hasSideNavigation) SettingsPageContent(),
+          if (hasSideNavigation) const SettingsPageContent(),
         ],
       ),
     );
@@ -299,8 +299,8 @@ class MorePages extends StatelessWidget {
 
 class EnterName extends StatelessWidget {
   const EnterName({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -310,9 +310,9 @@ class EnterName extends StatelessWidget {
       onTap: () {
         enterNameBottomSheet(context);
         // Fix over-scroll stretch when keyboard pops up quickly
-        Future.delayed(Duration(milliseconds: 100), () {
+        Future.delayed(const Duration(milliseconds: 100), () {
           bottomSheetControllerGlobal.scrollTo(0,
-              duration: Duration(milliseconds: 100));
+              duration: const Duration(milliseconds: 100));
         });
       },
     );
@@ -365,7 +365,7 @@ class SettingsPageFrameworkState extends State<SettingsPageFramework> {
     return PageFramework(
       title: "settings".tr(),
       dragDownToDismiss: true,
-      listWidgets: [SettingsPageContent()],
+      listWidgets: const [SettingsPageContent()],
     );
   }
 }
@@ -409,7 +409,7 @@ class SettingsPageContent extends StatelessWidget {
                                   enableBorderRadius: true,
                                 ),
                               )
-                            : SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                         SelectColor(
                           includeThemeColor: false,
                           selectedColor: selectedColor,
@@ -438,7 +438,7 @@ class SettingsPageContent extends StatelessWidget {
           },
         ),
         getPlatform() == PlatformOS.isIOS
-            ? SizedBox.shrink()
+            ? const SizedBox.shrink()
             : SettingsContainerSwitch(
                 title: "material-you".tr(),
                 description: "material-you-description".tr(),
@@ -460,7 +460,7 @@ class SettingsPageContent extends StatelessWidget {
                   ? Icons.dark_mode_outlined
                   : Icons.dark_mode_rounded,
           initial: appStateSettings["theme"].toString().capitalizeFirst,
-          items: ["Light", "Dark", "System"],
+          items: const ["Light", "Dark", "System"],
           onChanged: (value) async {
             if (value == "Light") {
               await updateSettings("theme", "light", updateGlobalState: true);
@@ -480,7 +480,7 @@ class SettingsPageContent extends StatelessWidget {
         SettingsHeader(title: "preferences".tr()),
 
         SettingsContainerOpenPage(
-          openPage: EditHomePage(),
+          openPage: const EditHomePage(),
           title: "edit-home-page".tr(),
           icon: appStateSettings["outlinedIcons"]
               ? Icons.home_outlined
@@ -489,15 +489,15 @@ class SettingsPageContent extends StatelessWidget {
 
         getIsFullScreen(context) == false
             ? SettingsContainerOpenPage(
-                openPage: NotificationsPage(),
+                openPage: const NotificationsPage(),
                 title: "notifications".tr(),
                 icon: appStateSettings["outlinedIcons"]
                     ? Icons.notifications_outlined
                     : Icons.notifications_rounded,
               )
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
 
-        BiometricsSettingToggle(),
+        const BiometricsSettingToggle(),
 
         SettingsContainer(
           title: "language".tr(),
@@ -522,7 +522,7 @@ class SettingsPageContent extends StatelessWidget {
         ),
 
         SettingsContainerOpenPage(
-          openPage: MoreOptionsPagePreferences(),
+          openPage: const MoreOptionsPagePreferences(),
           title: "more-options".tr(),
           description: "more-options-description".tr(),
           icon: appStateSettings["outlinedIcons"]
@@ -546,7 +546,7 @@ class SettingsPageContent extends StatelessWidget {
           onTap: () {
             openBottomSheet(
               context,
-              PopupFramework(
+              const PopupFramework(
                 hasPadding: false,
                 child: UpcomingOverdueSettings(),
               ),
@@ -556,16 +556,16 @@ class SettingsPageContent extends StatelessWidget {
 
         appStateSettings["emailScanning"]
             ? SettingsContainerOpenPage(
-                openPage: AutoTransactionsPageEmail(),
+                openPage: const AutoTransactionsPageEmail(),
                 title: "auto-email-transactions".tr(),
                 icon: appStateSettings["outlinedIcons"]
                     ? Icons.mark_email_unread_outlined
                     : Icons.mark_email_unread_rounded,
               )
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
 
         SettingsContainerOpenPage(
-          openPage: BillSplitter(),
+          openPage: const BillSplitter(),
           title: "bill-splitter".tr(),
           icon: appStateSettings["outlinedIcons"]
               ? Icons.summarize_outlined
@@ -574,15 +574,15 @@ class SettingsPageContent extends StatelessWidget {
 
         SettingsHeader(title: "import-and-export".tr()),
 
-        ExportCSV(),
+        const ExportCSV(),
 
-        ImportCSV(),
+        const ImportCSV(),
 
         SettingsHeader(title: "backups".tr()),
 
-        ExportDB(),
+        const ExportDB(),
 
-        ImportDB(),
+        const ImportDB(),
 
         GoogleAccountLoginButton(
           isOutlinedButton: false,
@@ -604,14 +604,14 @@ class MoreOptionsPagePreferences extends StatelessWidget {
       horizontalPadding: getHorizontalPaddingConstrained(context),
       listWidgets: [
         SettingsHeader(title: "style".tr()),
-        HeaderHeightSetting(),
-        OutlinedIconsSetting(),
-        FontPickerSetting(),
-        IncreaseTextContrastSetting(),
+        const HeaderHeightSetting(),
+        const OutlinedIconsSetting(),
+        const FontPickerSetting(),
+        const IncreaseTextContrastSetting(),
         SettingsHeader(title: "transactions".tr()),
-        TransactionsSettings(),
+        const TransactionsSettings(),
         SettingsHeader(title: "accounts".tr()),
-        ShowAccountLabelSettingToggle(),
+        const ShowAccountLabelSettingToggle(),
         SettingsContainerOpenPage(
           onOpen: () {
             checkIfExchangeRateChangeBefore();
@@ -619,26 +619,26 @@ class MoreOptionsPagePreferences extends StatelessWidget {
           onClosed: () {
             checkIfExchangeRateChangeAfter();
           },
-          openPage: ExchangeRates(),
+          openPage: const ExchangeRates(),
           title: "exchange-rates".tr(),
           icon: appStateSettings["outlinedIcons"]
               ? Icons.account_balance_wallet_outlined
               : Icons.account_balance_wallet_rounded,
         ),
         SettingsHeader(title: "budgets".tr()),
-        BudgetSettings(),
+        const BudgetSettings(),
         SettingsHeader(title: "goals".tr()),
-        ObjectiveSettings(),
+        const ObjectiveSettings(),
         SettingsHeader(title: "titles".tr()),
-        AskForTitlesToggle(),
-        AutoTitlesToggle(),
+        const AskForTitlesToggle(),
+        const AutoTitlesToggle(),
         if (getPlatform(ignoreEmulation: true) == PlatformOS.isAndroid)
           SettingsHeader(title: "widgets".tr()),
         if (getPlatform(ignoreEmulation: true) == PlatformOS.isAndroid)
-          NetWorthWidgetSetting(),
+          const NetWorthWidgetSetting(),
         SettingsHeader(title: "formatting".tr()),
-        NumberFormattingSetting(),
-        ExtraZerosButtonSetting(),
+        const NumberFormattingSetting(),
+        const ExtraZerosButtonSetting(),
       ],
     );
   }
@@ -717,7 +717,7 @@ class _BiometricsSettingToggleState extends State<BiometricsSettingToggle> {
                         ? Icons.lock_open_outlined
                         : Icons.lock_open_rounded,
               )
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
       ],
     );
   }
@@ -738,7 +738,7 @@ class HeaderHeightSetting extends StatelessWidget {
             ? Icons.subtitles_outlined
             : Icons.subtitles_rounded,
         initial: appStateSettings["forceSmallHeader"].toString(),
-        items: ["true", "false"],
+        items: const ["true", "false"],
         onChanged: (value) async {
           bool boolValue = false;
           if (value == "true") {
@@ -770,7 +770,7 @@ class OutlinedIconsSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsContainerDropdown(
-      items: ["rounded", "outlined"],
+      items: const ["rounded", "outlined"],
       onChanged: (value) async {
         if (value == "rounded") {
           await updateSettings("outlinedIcons", false,
@@ -860,7 +860,7 @@ void openFontPicker(BuildContext context) {
       title: "font".tr(),
       child: RadioItems(
         itemsAreFonts: true,
-        items: [
+        items: const [
           // These values match that of pubspec font family
           "Avenir",
           "DMSans",
@@ -874,7 +874,7 @@ void openFontPicker(BuildContext context) {
         displayFilter: fontNameDisplayFilter,
         onChanged: (value) async {
           updateSettings("font", value, updateGlobalState: true);
-          await Future.delayed(Duration(milliseconds: 50));
+          await Future.delayed(const Duration(milliseconds: 50));
           Navigator.pop(context);
         },
       ),
@@ -925,7 +925,7 @@ class NumberFormattingSetting extends StatelessWidget {
         await openBottomSheet(
           context,
           fullSnap: true,
-          SetNumberFormatPopup(),
+          const SetNumberFormatPopup(),
         );
       },
     );
@@ -959,13 +959,9 @@ class _SetNumberFormatPopupState extends State<SetNumberFormatPopup> {
             initial: appStateSettings["numberFormatLocale"],
             displayFilter: (item) {
               if (item == null) {
-                return "default".tr() +
-                    " " +
-                    "(" +
-                    convertToMoney(
+                return "${"default".tr()} (${convertToMoney(
                         Provider.of<AllWallets>(context, listen: true), 1000.23,
-                        customLocale: Platform.localeName) +
-                    ")";
+                        customLocale: Platform.localeName)})";
               }
               return convertToMoney(
                   Provider.of<AllWallets>(context, listen: true), 1000.23,
@@ -977,7 +973,7 @@ class _SetNumberFormatPopupState extends State<SetNumberFormatPopup> {
               Navigator.of(context).pop();
             },
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: TextFont(
@@ -1006,7 +1002,7 @@ class ExtraZerosButtonSetting extends StatelessWidget {
           ? Icons.check_box_outline_blank_outlined
           : Icons.check_box_outline_blank_rounded,
       initial: appStateSettings["extraZerosButton"].toString(),
-      items: ["", "00", "000"],
+      items: const ["", "00", "000"],
       onChanged: (value) async {
         updateSettings(
           "extraZerosButton",

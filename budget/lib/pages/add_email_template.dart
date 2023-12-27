@@ -18,11 +18,11 @@ import 'package:budget/colors.dart';
 import 'package:googleapis/gmail/v1.dart' as gMail;
 
 class AddEmailTemplate extends StatefulWidget {
-  AddEmailTemplate({
-    Key? key,
+  const AddEmailTemplate({
+    super.key,
     required this.messagesList,
     this.scannerTemplate,
-  }) : super(key: key);
+  });
   final List<gMail.Message> messagesList;
   //When a transaction is passed in, we are editing that transaction
   final ScannerTemplate? scannerTemplate;
@@ -136,31 +136,31 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFont(
+          const TextFont(
             text: "Only these emails that contain this text will be scanned.",
             fontSize: 14,
             maxLines: 10,
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 5),
-          TextFont(
+          const SizedBox(height: 5),
+          const TextFont(
             text:
                 "Long press/double tap to select text. Press the 'Done' button at the bottom after selected",
             fontSize: 14,
             maxLines: 10,
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
               color: getColor(context, "lightDarkAccentHeavy"),
             ),
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: SelectableText(
                 messageString,
-                toolbarOptions: ToolbarOptions(
+                toolbarOptions: const ToolbarOptions(
                     copy: false, cut: false, paste: false, selectAll: false),
                 onSelectionChanged: (selection, changeCause) {
                   selectedSubject = messageString.substring(
@@ -171,7 +171,7 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Button(
             label: "done".tr(),
             onTap: () {
@@ -192,32 +192,32 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFont(
+          const TextFont(
             text: "Select the amount of the transaction.",
             fontSize: 14,
             fontWeight: FontWeight.bold,
             maxLines: 10,
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 5),
-          TextFont(
+          const SizedBox(height: 5),
+          const TextFont(
             text:
                 "Long press/double tap to select text. Press the 'Done' button at the bottom after selected",
             fontSize: 14,
             maxLines: 10,
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
               color: getColor(context, "lightDarkAccentHeavy"),
             ),
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: SelectableText(
                 messageString,
-                toolbarOptions: ToolbarOptions(
+                toolbarOptions: const ToolbarOptions(
                     copy: false, cut: false, paste: false, selectAll: false),
                 onSelectionChanged: (selection, changeCause) {
                   if (selection.baseOffset - characterPadding < 0) {
@@ -245,7 +245,7 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Button(
             label: "done".tr(),
             onTap: () {
@@ -266,32 +266,32 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFont(
+          const TextFont(
             text: "Select the title of the transaction.",
             fontSize: 14,
             fontWeight: FontWeight.bold,
             maxLines: 10,
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 5),
-          TextFont(
+          const SizedBox(height: 5),
+          const TextFont(
             text:
                 "Long press/double tap to select text. Press the 'Done' button at the bottom after selected",
             fontSize: 14,
             maxLines: 10,
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
               color: getColor(context, "lightDarkAccentHeavy"),
             ),
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: SelectableText(
                 messageString,
-                toolbarOptions: ToolbarOptions(
+                toolbarOptions: const ToolbarOptions(
                     copy: false, cut: false, paste: false, selectAll: false),
                 onSelectionChanged: (selection, changeCause) {
                   if (selection.baseOffset - characterPadding < 0) {
@@ -320,7 +320,7 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Button(
             label: "done".tr(),
             onTap: () {
@@ -431,7 +431,7 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
                       onChanged: (text) {
                         setSelectedName(text);
                       },
-                      padding: EdgeInsets.only(left: 7, right: 7),
+                      padding: const EdgeInsets.only(left: 7, right: 7),
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                       topContentPadding: 20,
@@ -446,7 +446,7 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
                       fontSize: 16,
                     ),
                   ),
-                  SizedBox(height: 2),
+                  const SizedBox(height: 2),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFont(
@@ -457,14 +457,14 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
                       maxLines: 5,
                     ),
                   ),
-                  SizedBox(height: 3),
+                  const SizedBox(height: 3),
                   SelectCategory(
                     horizontalList: true,
                     selectedCategory: selectedCategory,
                     setSelectedCategory: setSelectedCategory,
                     popRoute: false,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Button(
@@ -510,7 +510,7 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
                           );
                         }),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: selectedMessageString == null
@@ -532,7 +532,7 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
                                 secondaryLabel:
                                     "All emails containing this text will be checked.",
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               TemplateInfoBox(
                                 onTap: () {
                                   openBottomSheet(
@@ -553,7 +553,7 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
                                 extraCheckMessage:
                                     "Please select a valid number!",
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               TemplateInfoBox(
                                 onTap: () {
                                   openBottomSheet(
@@ -574,12 +574,12 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
                   ),
                   widget.scannerTemplate == null &&
                           selectedMessageString == null
-                      ? SizedBox.shrink()
+                      ? const SizedBox.shrink()
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Container(
-                            margin: EdgeInsets.symmetric(vertical: 10),
-                            padding: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 18, vertical: 15),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
@@ -588,7 +588,7 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextFont(
+                                const TextFont(
                                   text: "Sample",
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
@@ -602,29 +602,21 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
                                   textColor:
                                       Theme.of(context).colorScheme.primary,
                                 ),
-                                SizedBox(height: 2),
+                                const SizedBox(height: 2),
                                 TextFont(
-                                  text: (amountTransactionBefore ?? "")
-                                          .replaceAll("\n", "") +
-                                      "..." +
-                                      " [Amount] " +
-                                      "..." +
-                                      (amountTransactionAfter ?? "")
-                                          .replaceAll("\n", ""),
+                                  text: "${(amountTransactionBefore ?? "")
+                                          .replaceAll("\n", "")}... [Amount] ...${(amountTransactionAfter ?? "")
+                                          .replaceAll("\n", "")}",
                                   fontSize: 16,
                                   maxLines: 10,
                                   textColor:
                                       Theme.of(context).colorScheme.secondary,
                                 ),
-                                SizedBox(height: 2),
+                                const SizedBox(height: 2),
                                 TextFont(
-                                  text: (titleTransactionBefore ?? "")
-                                          .replaceAll("\n", "") +
-                                      "..." +
-                                      " [Title] " +
-                                      "..." +
-                                      (titleTransactionAfter ?? "")
-                                          .replaceAll("\n", ""),
+                                  text: "${(titleTransactionBefore ?? "")
+                                          .replaceAll("\n", "")}... [Title] ...${(titleTransactionAfter ?? "")
+                                          .replaceAll("\n", "")}",
                                   fontSize: 16,
                                   maxLines: 10,
                                   textColor:
@@ -634,7 +626,7 @@ class _AddEmailTemplateState extends State<AddEmailTemplate> {
                             ),
                           ),
                         ),
-                  SizedBox(height: 70),
+                  const SizedBox(height: 70),
                 ],
               ),
               Align(
@@ -719,8 +711,8 @@ class TemplateInfoBox extends StatelessWidget {
                     textColor: getColor(context, "black").withOpacity(0.9),
                     maxLines: 10,
                   )
-                : SizedBox.shrink(),
-            SizedBox(height: 3),
+                : const SizedBox.shrink(),
+            const SizedBox(height: 3),
             TextFont(
               fontSize: 14,
               text: secondaryLabel,

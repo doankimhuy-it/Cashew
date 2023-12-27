@@ -49,16 +49,16 @@ class ObjectivePage extends StatelessWidget {
               objective: snapshot.data!,
             );
           }
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         });
   }
 }
 
 class _ObjectivePageContent extends StatefulWidget {
   const _ObjectivePageContent({
-    Key? key,
+    super.key,
     required this.objective,
-  }) : super(key: key);
+  });
 
   final Objective objective;
 
@@ -98,7 +98,7 @@ class _ObjectivePageContentState extends State<_ObjectivePageContent> {
   confettiListener() {
     if (mounted &&
         confettiController.state == ConfettiControllerState.playing) {
-      Future.delayed(Duration(milliseconds: 2000), () {
+      Future.delayed(const Duration(milliseconds: 2000), () {
         if (mounted) confettiController.stop();
       });
     }
@@ -117,7 +117,7 @@ class _ObjectivePageContentState extends State<_ObjectivePageContent> {
     String pageId = widget.objective.objectivePk;
     return WillPopScope(
       onWillPop: () async {
-        if ((globalSelectedID.value[pageId] ?? []).length > 0) {
+        if ((globalSelectedID.value[pageId] ?? []).isNotEmpty) {
           globalSelectedID.value[pageId] = [];
           globalSelectedID.notifyListeners();
           return false;
@@ -222,7 +222,7 @@ class _ObjectivePageContentState extends State<_ObjectivePageContent> {
                                   Flexible(
                                     child: Container(
                                       constraints:
-                                          BoxConstraints(maxWidth: 250),
+                                          const BoxConstraints(maxWidth: 250),
                                       child: AspectRatio(
                                         aspectRatio: 1,
                                         child: AnimatedCircularProgress(
@@ -266,10 +266,10 @@ class _ObjectivePageContentState extends State<_ObjectivePageContent> {
                                     canEditByLongPress: false,
                                     margin: EdgeInsets.zero,
                                   ),
-                                  SizedBox(height: 10),
+                                  const SizedBox(height: 10),
                                   CountNumber(
                                     count: percentageTowardsGoal * 100,
-                                    duration: Duration(milliseconds: 1000),
+                                    duration: const Duration(milliseconds: 1000),
                                     initialCount: (0),
                                     textBuilder: (value) {
                                       return TextFont(
@@ -323,22 +323,19 @@ class _ObjectivePageContentState extends State<_ObjectivePageContent> {
                                                       const EdgeInsets.only(
                                                           bottom: 1),
                                                   child: TextFont(
-                                                    text: (isShowingAmountRemaining(
+                                                    text: "${isShowingAmountRemaining(
                                                                 showTotalSpent:
                                                                     showTotalSpent,
                                                                 objectiveAmount:
                                                                     objectiveAmount,
                                                                 totalAmount:
                                                                     totalAmount)
-                                                            ? " " +
-                                                                "remaining".tr()
-                                                            : "") +
-                                                        " / " +
-                                                        convertToMoney(
+                                                            ? " ${"remaining".tr()}"
+                                                            : ""} / ${convertToMoney(
                                                             Provider.of<
                                                                     AllWallets>(
                                                                 context),
-                                                            objectiveAmount),
+                                                            objectiveAmount)}",
                                                     fontSize: 13,
                                                     textColor: getColor(
                                                             context, "black")
@@ -387,13 +384,12 @@ class _ObjectivePageContentState extends State<_ObjectivePageContent> {
                                                 DateTime.now().year,
                                       ) +
                                       (widget.objective.endDate != null
-                                          ? " – " +
-                                              getWordedDateShortMore(
+                                          ? " – ${getWordedDateShortMore(
                                                 widget.objective.endDate!,
                                                 includeYear: widget.objective
                                                         .endDate!.year !=
                                                     DateTime.now().year,
-                                              )
+                                              )}"
                                           : ""),
                                   maxLines: 3,
                                   textAlign: TextAlign.center,
@@ -426,7 +422,7 @@ class _ObjectivePageContentState extends State<_ObjectivePageContent> {
                 ),
               ),
               SliverPadding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 5,
                   left: 20,
                   right: 20,
@@ -442,16 +438,14 @@ class _ObjectivePageContentState extends State<_ObjectivePageContent> {
                       if (snapshot.hasData && snapshot.data != null) {
                         return TextFont(
                           textAlign: TextAlign.center,
-                          text: snapshot.data.toString() +
-                              " " +
-                              (snapshot.data == 1
+                          text: "${snapshot.data} ${snapshot.data == 1
                                   ? "transaction".tr().toLowerCase()
-                                  : "transactions".tr().toLowerCase()),
+                                  : "transactions".tr().toLowerCase()}",
                           fontSize: 16,
                           maxLines: 3,
                         );
                       } else {
-                        return TextFont(
+                        return const TextFont(
                           textAlign: TextAlign.center,
                           text: "/ transactions",
                           fontSize: 16,
@@ -496,13 +490,13 @@ class _ObjectivePageContentState extends State<_ObjectivePageContent> {
                                 : Icons.punch_clock_rounded,
                             text: "setup-installment-payments".tr(),
                           )
-                        : SizedBox.shrink(),
+                        : const SizedBox.shrink(),
               ),
               // Wipe all remaining pixels off - sometimes graphics artifacts are left behind
               SliverToBoxAdapter(
                 child: Container(height: 1, color: pageBackgroundColor),
               ),
-              SliverToBoxAdapter(child: SizedBox(height: 45))
+              const SliverToBoxAdapter(child: SizedBox(height: 45))
             ],
           ),
           SelectedTransactionsAppBar(
@@ -516,8 +510,8 @@ class _ObjectivePageContentState extends State<_ObjectivePageContent> {
               confettiController: confettiController,
               gravity: 0.2,
               blastDirectionality: BlastDirectionality.explosive,
-              maximumSize: Size(15, 15),
-              minimumSize: Size(10, 10),
+              maximumSize: const Size(15, 15),
+              minimumSize: const Size(10, 10),
               numberOfParticles: 15,
             ),
           )

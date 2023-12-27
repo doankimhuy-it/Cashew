@@ -115,11 +115,11 @@ class _HomePageHeatMapState extends State<HomePageHeatMap> {
                     loadMoreMonths: loadMoreMonths,
                   );
                 }
-                return SizedBox.shrink();
+                return const SizedBox.shrink();
               },
             );
           }
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         },
       ),
     );
@@ -201,10 +201,10 @@ class HeatMap extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 13),
       child: Container(
-        padding: EdgeInsets.only(left: 0, right: 0, bottom: 12, top: 15),
-        margin: EdgeInsets.symmetric(horizontal: 13),
+        padding: const EdgeInsets.only(left: 0, right: 0, bottom: 12, top: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 13),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
           color: backgroundColor,
           boxShadow: boxShadowCheck(boxShadowGeneral(context)),
         ),
@@ -224,7 +224,7 @@ class HeatMap extends StatelessWidget {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               reverse: true,
-              padding: EdgeInsets.symmetric(horizontal: 13),
+              padding: const EdgeInsets.symmetric(horizontal: 13),
               child: Stack(
                 children: [
                   Padding(
@@ -290,7 +290,7 @@ class HeatMap extends StatelessWidget {
                                                     );
                                       return Tooltip(
                                         waitDuration:
-                                            Duration(milliseconds: 200),
+                                            const Duration(milliseconds: 200),
                                         message: day == null
                                             ? ""
                                             : getWordedDate(
@@ -306,6 +306,8 @@ class HeatMap extends StatelessWidget {
                                                   context, day);
                                             }
                                           },
+                                          borderRadius: 5,
+                                          color: color,
                                           child: Container(
                                             height: dayWidth,
                                             width: dayWidth,
@@ -325,8 +327,6 @@ class HeatMap extends StatelessWidget {
                                                   BorderRadius.circular(5),
                                             ),
                                           ),
-                                          borderRadius: 5,
-                                          color: color,
                                         ),
                                       );
                                     },
@@ -338,7 +338,7 @@ class HeatMap extends StatelessWidget {
                     ),
                   ),
                   loadMoreMonths == null
-                      ? SizedBox.shrink()
+                      ? const SizedBox.shrink()
                       : Positioned(
                           left: 0,
                           child: Tooltip(
@@ -371,7 +371,7 @@ class HeatMap extends StatelessWidget {
                               weekWidth: dayPadding * 2 + dayWidth,
                             ),
                           )
-                        : SizedBox.shrink()
+                        : const SizedBox.shrink()
                 ],
               ),
             ),
@@ -417,10 +417,10 @@ Future<dynamic> openTransactionsOnDayBottomSheet(
                   AnimatedSizeSwitcher(
                     child: snapshot.data == 0
                         ? Container(
-                            key: ValueKey(1),
+                            key: const ValueKey(1),
                           )
                         : IncomeOutcomeArrow(
-                            key: ValueKey(2),
+                            key: const ValueKey(2),
                             color: textColor,
                             isIncome: snapshot.data! > 0,
                             width: 15,
@@ -443,10 +443,17 @@ Future<dynamic> openTransactionsOnDayBottomSheet(
               ),
             );
           } else {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
         },
       ),
+      title: day == null
+          ? ""
+          : getWordedDate(
+              day,
+              includeMonthDate: true,
+              includeYearIfNotCurrentYear: true,
+            ),
       child: TransactionEntries(
         renderType: TransactionEntriesRenderType.nonSlivers,
         day,
@@ -460,16 +467,9 @@ Future<dynamic> openTransactionsOnDayBottomSheet(
         includeDateDivider: false,
         allowSelect: false,
         useHorizontalPaddingConstrained: false,
-        noResultsPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        noResultsPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         limitPerDay: 50,
       ),
-      title: day == null
-          ? ""
-          : getWordedDate(
-              day,
-              includeMonthDate: true,
-              includeYearIfNotCurrentYear: true,
-            ),
     ),
   );
 }

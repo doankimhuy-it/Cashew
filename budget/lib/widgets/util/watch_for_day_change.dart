@@ -21,7 +21,7 @@ class _WatchForDayChangeState extends State<WatchForDayChange> {
   }
 
   void _startTimer() {
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       if (DateTime.now().day != _currentDate.day) {
         setState(() {
           _currentDate = DateTime.now();

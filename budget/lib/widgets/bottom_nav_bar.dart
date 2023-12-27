@@ -17,7 +17,7 @@ import 'package:budget/colors.dart';
 import 'package:flutter/services.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({required this.onChanged, Key? key}) : super(key: key);
+  const BottomNavBar({required this.onChanged, super.key});
   final Function(int) onChanged;
 
   @override
@@ -42,7 +42,7 @@ class BottomNavBarState extends State<BottomNavBar> {
                 .navigationIndexedStackIndex;
       }
     } catch (e) {
-      print(e.toString() + " Problem accessing the navigation index");
+      print("$e Problem accessing the navigation index");
     }
 
     if (index == selectedIndex && allowReApply == false) {
@@ -74,7 +74,7 @@ class BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    if (getIsFullScreen(context)) return SizedBox.shrink();
+    if (getIsFullScreen(context)) return const SizedBox.shrink();
     if (getPlatform() == PlatformOS.isIOS) {
       return Container(
         decoration: BoxDecoration(
@@ -91,7 +91,7 @@ class BottomNavBarState extends State<BottomNavBar> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 2),
               child: Column(
                 children: [
                   Row(
@@ -170,7 +170,7 @@ class BottomNavBarState extends State<BottomNavBar> {
             if (states.contains(MaterialState.selected)) {
               return TextStyle(
                 fontFamily: appStateSettings["font"],
-                fontFamilyFallback: ['Inter'],
+                fontFamilyFallback: const ['Inter'],
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
                 overflow: TextOverflow.clip,
@@ -178,7 +178,7 @@ class BottomNavBarState extends State<BottomNavBar> {
             } else {
               return TextStyle(
                 fontFamily: appStateSettings["font"],
-                fontFamilyFallback: ['Inter'],
+                fontFamilyFallback: const ['Inter'],
                 fontSize: 13,
                 overflow: TextOverflow.clip,
               );
@@ -187,7 +187,7 @@ class BottomNavBarState extends State<BottomNavBar> {
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         ),
         child: NavigationBar(
-          animationDuration: Duration(milliseconds: 1000),
+          animationDuration: const Duration(milliseconds: 1000),
           destinations: [
             NavigationDestination(
               icon: Icon(navBarIconsData["home"]!.iconData),
@@ -287,7 +287,7 @@ class SelectNavBarShortcutPopup extends StatelessWidget {
           onSettings: () {
             openBottomSheet(
               context,
-              PopupFramework(
+              const PopupFramework(
                 hasPadding: false,
                 child: TransactionsSettings(),
               ),
@@ -300,7 +300,7 @@ class SelectNavBarShortcutPopup extends StatelessWidget {
           onSettings: () {
             openBottomSheet(
               context,
-              PopupFramework(
+              const PopupFramework(
                 hasPadding: false,
                 child: BudgetSettings(),
               ),
@@ -313,7 +313,7 @@ class SelectNavBarShortcutPopup extends StatelessWidget {
           onSettings: () {
             openBottomSheet(
               context,
-              PopupFramework(
+              const PopupFramework(
                 hasPadding: false,
                 child: ObjectiveSettings(),
               ),
@@ -330,7 +330,7 @@ class SelectNavBarShortcutPopup extends StatelessWidget {
           onSettings: () {
             openBottomSheet(
               context,
-              PopupFramework(
+              const PopupFramework(
                 hasPadding: false,
                 child: SubscriptionSettings(),
               ),
@@ -343,7 +343,7 @@ class SelectNavBarShortcutPopup extends StatelessWidget {
           onSettings: () {
             openBottomSheet(
               context,
-              PopupFramework(
+              const PopupFramework(
                 hasPadding: false,
                 child: UpcomingOverdueSettings(),
               ),
@@ -388,8 +388,8 @@ class NavBarShortcutSelection extends StatelessWidget {
               alignLeft: true,
               alignBeside: true,
               padding: onSettings == null
-                  ? EdgeInsets.symmetric(horizontal: 20, vertical: 15)
-                  : EdgeInsets.only(
+                  ? const EdgeInsets.symmetric(horizontal: 20, vertical: 15)
+                  : const EdgeInsets.only(
                       left: 20,
                       right: 5,
                       top: 3,
@@ -406,7 +406,7 @@ class NavBarShortcutSelection extends StatelessWidget {
               infoButton: onSettings == null
                   ? null
                   : IconButton(
-                      padding: EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
                       onPressed: onSettings,
                       icon: Icon(
                         appStateSettings["outlinedIcons"]
@@ -445,7 +445,7 @@ class NavBarIcon extends StatelessWidget {
       children: [
         selected
             ? ScaleIn(
-                duration: Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 200),
                 curve: Curves.fastOutSlowIn,
                 child: Container(
                   decoration: BoxDecoration(
@@ -459,17 +459,17 @@ class NavBarIcon extends StatelessWidget {
                   ),
                   height: 52,
                   width: 52,
-                  margin: EdgeInsets.all(5),
+                  margin: const EdgeInsets.all(5),
                 ),
               )
             : Container(
                 color: Colors.transparent,
                 height: 52,
                 width: 52,
-                margin: EdgeInsets.all(5),
+                margin: const EdgeInsets.all(5),
               ),
         IconButton(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           color: selected
               ? Theme.of(context).colorScheme.onSecondaryContainer
               : null,

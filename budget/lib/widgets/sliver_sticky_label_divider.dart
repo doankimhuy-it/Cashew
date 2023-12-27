@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/src/widgets/sliver_sticky_header.dart';
 
 class SliverStickyLabelDivider extends StatelessWidget {
-  SliverStickyLabelDivider({
-    Key? key,
+  const SliverStickyLabelDivider({
+    super.key,
     required this.info,
     this.extraInfo,
     this.extraInfoWidget,
     this.color,
     required this.sliver,
     this.visible = true,
-  }) : super(key: key);
+  });
 
   final String info;
   final String? extraInfo;
@@ -29,7 +29,7 @@ class SliverStickyLabelDivider extends StatelessWidget {
       sliver: SliverStickyHeader(
         sliver: sliver,
         header: Transform.translate(
-          offset: Offset(0, -1),
+          offset: const Offset(0, -1),
           child: AnimatedExpanded(
             expand: visible && sliver != null,
             child: StickyLabelDivider(
@@ -64,8 +64,8 @@ class StickyLabelDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: color == null ? Theme.of(context).canvasColor : color,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+      color: color ?? Theme.of(context).canvasColor,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       alignment: Alignment.centerLeft,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

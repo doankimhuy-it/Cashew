@@ -130,7 +130,7 @@ class _DailyNotificationsSettingsState
                   expand: selectedReminderType !=
                       ReminderNotificationType.DayFromOpen,
                   child: SettingsContainer(
-                    key: ValueKey(1),
+                    key: const ValueKey(1),
                     title: "alert-time".tr(),
                     icon: Icons.timer,
                     onTap: () async {
@@ -214,10 +214,10 @@ class _UpcomingTransactionsNotificationsSettingsState
           ignoring: !notificationsEnabled,
           child: AnimatedOpacity(
             opacity: notificationsEnabled ? 1 : 0,
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: appStateSettings["materialYou"]
@@ -266,10 +266,8 @@ class _UpcomingTransactionsNotificationsSettingsState
                                         transaction.type),
                                     title: getTransactionLabelSync(
                                         transaction, snapshot.data!),
-                                    description: getWordedDateShortMore(
-                                            transaction.dateCreated) +
-                                        ", " +
-                                        getWordedTime(transaction.dateCreated),
+                                    description: "${getWordedDateShortMore(
+                                            transaction.dateCreated)}, ${getWordedTime(transaction.dateCreated)}",
                                     onSwitched: (value) async {
                                       await database.createOrUpdateTransaction(
                                           transaction.copyWith(
@@ -292,7 +290,7 @@ class _UpcomingTransactionsNotificationsSettingsState
                         ],
                       );
                     }
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   },
                 ),
               ),
@@ -305,7 +303,7 @@ class _UpcomingTransactionsNotificationsSettingsState
 }
 
 List<String> _reminderStrings = [
-  for (int i = 1; i <= 26; i++) "notification-reminder-" + i.toString()
+  for (int i = 1; i <= 26; i++) "notification-reminder-$i"
 ];
 
 Future<bool> scheduleDailyNotification(
@@ -326,7 +324,7 @@ Future<bool> scheduleDailyNotification(
   );
 
   DarwinNotificationDetails darwinNotificationDetails =
-      DarwinNotificationDetails(threadIdentifier: 'transactionReminders');
+      const DarwinNotificationDetails(threadIdentifier: 'transactionReminders');
 
   // schedule 2 weeks worth of notifications
   for (int i = (ReminderNotificationType
@@ -360,12 +358,7 @@ Future<bool> scheduleDailyNotification(
       // which are only meant for calendar/reminder based applications
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     );
-    print("Notification " +
-        chosenMessage +
-        " scheduled for " +
-        dateTime.toString() +
-        " with id " +
-        i.toString());
+    print("Notification $chosenMessage scheduled for $dateTime with id $i");
   }
 
   // final List<PendingNotificationRequest> pendingNotificationRequests =
@@ -396,7 +389,7 @@ Future<bool> scheduleUpcomingTransactionsNotification(context) async {
   );
 
   DarwinNotificationDetails darwinNotificationDetails =
-      DarwinNotificationDetails(threadIdentifier: 'upcomingTransactions');
+      const DarwinNotificationDetails(threadIdentifier: 'upcomingTransactions');
 
   List<Transaction> upcomingTransactions =
       await database.getAllUpcomingTransactions(
@@ -451,12 +444,7 @@ Future<bool> scheduleUpcomingTransactionsNotification(context) async {
       print("Cannot set up notification before current time!");
     }
 
-    print("Notification " +
-        chosenMessage +
-        " scheduled for " +
-        dateTime.toString() +
-        " with id " +
-        upcomingTransaction.transactionPk.toString());
+    print("Notification $chosenMessage scheduled for $dateTime with id ${upcomingTransaction.transactionPk}");
   }
 
   return true;
@@ -531,7 +519,7 @@ Future<bool> checkNotificationsPermissionAll() async {
     if (Platform.isAndroid) return await checkNotificationsPermissionAndroid();
     if (Platform.isIOS) return await checkNotificationsPermissionIOS();
   } catch (e) {
-    print("Error setting up notifications: " + e.toString());
+    print("Error setting up notifications: $e");
     return false;
   }
   return false;

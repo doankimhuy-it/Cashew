@@ -35,13 +35,13 @@ import 'package:flutter/services.dart' hide TextInput;
 import 'package:budget/widgets/extra_info_boxes.dart';
 
 class AddCategoryPage extends StatefulWidget {
-  AddCategoryPage({
-    Key? key,
+  const AddCategoryPage({
+    super.key,
     this.category,
     required this.routesToPopAfterDelete,
     this.mainCategoryPkWhenSubCategory,
     this.initiallyIsExpense = true,
-  }) : super(key: key);
+  });
 
   //When a category is passed in, we are editing that category
   final TransactionCategory? category;
@@ -65,10 +65,10 @@ class _AddCategoryPageState extends State<AddCategoryPage>
   bool? canAddCategory;
   TransactionCategory? widgetCategory;
   List<String>? selectedMembers;
-  TextEditingController _titleController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
   bool userAttemptedToChangeTitle = false;
-  FocusNode _titleFocusNode = FocusNode();
-  late TabController _incomeTabController =
+  final FocusNode _titleFocusNode = FocusNode();
+  late final TabController _incomeTabController =
       TabController(length: 2, vsync: this);
   late bool isSubCategory = widget.mainCategoryPkWhenSubCategory != null ||
       widget.category?.mainCategoryPk != null;
@@ -131,13 +131,13 @@ class _AddCategoryPageState extends State<AddCategoryPage>
   determineBottomButton() {
     if (selectedTitle != null) {
       if (canAddCategory != true) {
-        this.setState(() {
+        setState(() {
           canAddCategory = true;
         });
       }
     } else {
       if (canAddCategory != false) {
-        this.setState(() {
+        setState(() {
           canAddCategory = false;
         });
       }
@@ -160,7 +160,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
           icon: appStateSettings["outlinedIcons"]
               ? Icons.move_to_inbox_outlined
               : Icons.move_to_inbox_rounded,
-          description: (selectedTitle ?? "") + " → " + categoryMain.name,
+          description: "${selectedTitle ?? ""} → ${categoryMain.name}",
         ),
       );
     }
@@ -199,9 +199,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
       mainCategoryPk: canSelectIfSubCategoryOrMainCategory() &&
               mainCategoryPkForSubcategoryWhenCreating != null
           ? mainCategoryPkForSubcategoryWhenCreating
-          : widget.mainCategoryPkWhenSubCategory != null
-              ? widget.mainCategoryPkWhenSubCategory
-              : widget.category?.mainCategoryPk,
+          : widget.mainCategoryPkWhenSubCategory ?? widget.category?.mainCategoryPk,
     );
   }
 
@@ -313,9 +311,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                       .watchCategory(widget.mainCategoryPkWhenSubCategory!),
                   builder: (context, snapshot) {
                     return TextFont(
-                      text: "for".tr().capitalizeFirst +
-                          " " +
-                          (snapshot.data?.name ?? ""),
+                      text: "${"for".tr().capitalizeFirst} ${snapshot.data?.name ?? ""}",
                       fontSize: getCenteredTitle(
                                       context: context,
                                       backButtonEnabled: true) ==
@@ -359,7 +355,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                     widget.routesToPopAfterDelete !=
                         RoutesToPopAfterDelete.PreventDelete
                 ? IconButton(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     tooltip: "delete-category".tr(),
                     onPressed: () {
                       deleteCategoryPopup(
@@ -372,7 +368,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                         ? Icons.delete_outlined
                         : Icons.delete_rounded),
                   )
-                : SizedBox.shrink()
+                : const SizedBox.shrink()
           ],
           overlay: Align(
             alignment: Alignment.bottomCenter,
@@ -381,7 +377,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                     label: "set-name".tr(),
                     onTap: () async {
                       FocusScope.of(context).unfocus();
-                      Future.delayed(Duration(milliseconds: 100), () {
+                      Future.delayed(const Duration(milliseconds: 100), () {
                         _titleFocusNode.requestFocus();
                       });
                     },
@@ -454,8 +450,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                               child: SelectCategoryImage(
                                 setSelectedImage: setSelectedImage,
                                 setSelectedEmoji: setSelectedEmoji,
-                                selectedImage: "assets/categories/" +
-                                    selectedImage.toString(),
+                                selectedImage: "assets/categories/$selectedImage",
                                 setSelectedTitle:
                                     (String? titleRecommendation) {
                                   if (titleRecommendation != null &&
@@ -481,7 +476,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               AnimatedSwitcher(
-                                duration: Duration(milliseconds: 300),
+                                duration: const Duration(milliseconds: 300),
                                 child: CategoryIcon(
                                   key: ValueKey((selectedImage ?? "") +
                                       selectedColor.toString()),
@@ -530,7 +525,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                                     fontWeight: FontWeight.bold,
                                   ),
                                   if (widget.category?.categoryPk != "0")
-                                    SizedBox(height: 17),
+                                    const SizedBox(height: 17),
                                   if (widget.category?.categoryPk == "0")
                                     AnimatedOpacity(
                                       opacity: selectedTitle !=
@@ -541,7 +536,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                                                       .capitalizeFirstofEach
                                           ? 1
                                           : 0,
-                                      duration: Duration(milliseconds: 500),
+                                      duration: const Duration(milliseconds: 500),
                                       child: Padding(
                                         padding: const EdgeInsets.only(left: 5),
                                         child: TextFont(
@@ -570,7 +565,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                         settingsString: null,
                       ),
                     ),
-                  Container(
+                  SizedBox(
                     height: 65,
                     child: SelectColor(
                       horizontalList: true,
@@ -582,9 +577,9 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                           widgetCategory == null ||
                           widget.routesToPopAfterDelete ==
                               RoutesToPopAfterDelete.PreventDelete
-                      ? SizedBox.shrink()
+                      ? const SizedBox.shrink()
                       : Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             left: 20,
                             right: 20,
                             top: 20,
@@ -626,9 +621,9 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                           widget.routesToPopAfterDelete ==
                               RoutesToPopAfterDelete.PreventDelete ||
                           isSubCategory == false
-                      ? SizedBox.shrink()
+                      ? const SizedBox.shrink()
                       : Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             left: 20,
                             right: 20,
                             top: 10,
@@ -654,12 +649,12 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                           ),
                         ),
                   widget.category?.categoryPk == "0" || widgetCategory == null
-                      ? SizedBox.shrink()
-                      : SizedBox(height: 20),
+                      ? const SizedBox.shrink()
+                      : const SizedBox(height: 20),
                   widget.category?.categoryPk == "0" ||
                           widgetCategory == null ||
                           isSubCategory
-                      ? SizedBox.shrink()
+                      ? const SizedBox.shrink()
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFont(
@@ -669,8 +664,8 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                           ),
                         ),
                   widget.category?.categoryPk == "0" || widgetCategory == null
-                      ? SizedBox.shrink()
-                      : SizedBox(height: 5),
+                      ? const SizedBox.shrink()
+                      : const SizedBox(height: 5),
                 ],
               ),
             ),
@@ -699,12 +694,12 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                     widget.category!.categoryPk),
                 builder: (context, snapshot) {
                   List<TransactionCategory> subCategories = snapshot.data ?? [];
-                  if (subCategories.length <= 0 &&
+                  if (subCategories.isEmpty &&
                       widget.routesToPopAfterDelete !=
                           RoutesToPopAfterDelete.PreventDelete) {
                     return SliverToBoxAdapter(
                       child: Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: 20,
                           right: 20,
                           top: 10,
@@ -767,7 +762,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                         content: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(width: 3),
+                            const SizedBox(width: 3),
                             CategoryIcon(
                               categoryPk: category.categoryPk,
                               size: 25,
@@ -779,7 +774,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                               onTap: null,
                               canEditByLongPress: false,
                             ),
-                            SizedBox(width: 15),
+                            const SizedBox(width: 15),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -803,15 +798,13 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                                           snapshot.data != null) {
                                         return TextFont(
                                           textAlign: TextAlign.left,
-                                          text: snapshot.data![0].toString() +
-                                              " " +
-                                              (snapshot.data![0] == 1
+                                          text: "${snapshot.data![0]} ${snapshot.data![0] == 1
                                                   ? "transaction"
                                                       .tr()
                                                       .toLowerCase()
                                                   : "transactions"
                                                       .tr()
-                                                      .toLowerCase()),
+                                                      .toLowerCase()}",
                                           fontSize: 14,
                                           textColor: getColor(context, "black")
                                               .withOpacity(0.65),
@@ -882,7 +875,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                   widget.category?.categoryPk == "0" ||
                           widgetCategory == null ||
                           isSubCategory
-                      ? SizedBox.shrink()
+                      ? const SizedBox.shrink()
                       : Row(
                           children: [
                             Expanded(
@@ -893,7 +886,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                                   mainCategoryPkWhenSubCategory:
                                       widget.category!.categoryPk,
                                 ),
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                   left: 13,
                                   right: 13,
                                   bottom: 6,
@@ -905,10 +898,10 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                           ],
                         ),
                   widgetCategory == null
-                      ? SizedBox.shrink()
-                      : SizedBox(height: 20),
+                      ? const SizedBox.shrink()
+                      : const SizedBox(height: 20),
                   widget.category == null || isSubCategory
-                      ? SizedBox.shrink()
+                      ? const SizedBox.shrink()
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFont(
@@ -918,10 +911,10 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                           ),
                         ),
                   widget.category == null || isSubCategory
-                      ? SizedBox.shrink()
-                      : SizedBox(height: 5),
+                      ? const SizedBox.shrink()
+                      : const SizedBox(height: 5),
                   widget.category == null || isSubCategory
-                      ? SizedBox.shrink()
+                      ? const SizedBox.shrink()
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFont(
@@ -932,15 +925,15 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                           ),
                         ),
                   widget.category == null || isSubCategory
-                      ? SizedBox.shrink()
-                      : SizedBox(height: 10),
+                      ? const SizedBox.shrink()
+                      : const SizedBox(height: 10),
                   widget.category == null || isSubCategory
-                      ? SizedBox.shrink()
+                      ? const SizedBox.shrink()
                       : Row(
                           children: [
                             Expanded(
                               child: AddButton(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     left: 15,
                                     right: 15,
                                     bottom: 9,
@@ -982,18 +975,18 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                                       ),
                                     );
                                     // Fix over-scroll stretch when keyboard pops up quickly
-                                    Future.delayed(Duration(milliseconds: 100),
+                                    Future.delayed(const Duration(milliseconds: 100),
                                         () {
                                       bottomSheetControllerGlobal.scrollTo(0,
                                           duration:
-                                              Duration(milliseconds: 100));
+                                              const Duration(milliseconds: 100));
                                     });
                                   }),
                             ),
                           ],
                         ),
                   widget.category == null
-                      ? SizedBox.shrink()
+                      ? const SizedBox.shrink()
                       : StreamBuilder<List<TransactionAssociatedTitle>>(
                           stream: database.watchAllAssociatedTitlesInCategory(
                             widget.category == null
@@ -1004,7 +997,7 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                           builder: (context, snapshot) {
                             // print(snapshot.data);
                             if (snapshot.hasData &&
-                                (snapshot.data ?? []).length > 0) {
+                                (snapshot.data ?? []).isNotEmpty) {
                               return Column(
                                 children: [
                                   for (int i = 0;
@@ -1045,9 +1038,9 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                                 ],
                               );
                             }
-                            return SizedBox();
+                            return const SizedBox();
                           }),
-                  SizedBox(height: 80),
+                  const SizedBox(height: 80),
                 ],
               ),
             ),
@@ -1060,10 +1053,10 @@ class _AddCategoryPageState extends State<AddCategoryPage>
 
 class AssociatedTitleContainer extends StatelessWidget {
   const AssociatedTitleContainer({
-    Key? key,
+    super.key,
     required this.title,
     required this.setTitle,
-  }) : super(key: key);
+  });
 
   final TransactionAssociatedTitle title;
   final Function(String) setTitle;
@@ -1098,9 +1091,9 @@ class AssociatedTitleContainer extends StatelessWidget {
             ),
           );
           // Fix over-scroll stretch when keyboard pops up quickly
-          Future.delayed(Duration(milliseconds: 100), () {
+          Future.delayed(const Duration(milliseconds: 100), () {
             bottomSheetControllerGlobal.scrollTo(0,
-                duration: Duration(milliseconds: 100));
+                duration: const Duration(milliseconds: 100));
           });
         },
         borderRadius: 15,
@@ -1148,7 +1141,7 @@ class AssociatedTitleContainer extends StatelessWidget {
 
 class AddButton extends StatelessWidget {
   const AddButton({
-    Key? key,
+    super.key,
     required this.onTap,
     this.padding = EdgeInsets.zero,
     this.width = 110,
@@ -1158,7 +1151,7 @@ class AddButton extends StatelessWidget {
     this.icon,
     this.afterOpenPage,
     this.onOpenPage,
-  }) : super(key: key);
+  });
 
   final VoidCallback onTap;
   final EdgeInsets padding;
@@ -1293,7 +1286,7 @@ class SelectIsSubcategory extends StatelessWidget {
                   filled: isMainCategoryWhenCreating,
                   alignLeft: true,
                   alignBeside: true,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   text: "main-category".tr(),
                   iconData: appStateSettings["outlinedIcons"]
                       ? Icons.category_outlined
@@ -1305,7 +1298,7 @@ class SelectIsSubcategory extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 13),
+          const SizedBox(height: 13),
           Row(
             children: [
               Expanded(
@@ -1314,7 +1307,7 @@ class SelectIsSubcategory extends StatelessWidget {
                   transitionWhenFilled: false,
                   alignLeft: true,
                   alignBeside: true,
-                  padding: EdgeInsets.only(left: 20, right: 12, top: 15),
+                  padding: const EdgeInsets.only(left: 20, right: 12, top: 15),
                   text: "subcategory".tr(),
                   iconData: appStateSettings["outlinedIcons"]
                       ? Icons.move_to_inbox_outlined
@@ -1328,7 +1321,7 @@ class SelectIsSubcategory extends StatelessWidget {
                     onTap: () {
                       openBottomSheet(
                         context,
-                        SampleSubcategoriesPopup(),
+                        const SampleSubcategoriesPopup(),
                       );
                     },
                   ),
@@ -1344,7 +1337,7 @@ class SelectIsSubcategory extends StatelessWidget {
                         child: ClipRRect(
                           child: SelectCategory(
                             horizontalList: true,
-                            listPadding: EdgeInsets.symmetric(horizontal: 10),
+                            listPadding: const EdgeInsets.symmetric(horizontal: 10),
                             addButton: false,
                             setSelectedCategory: (category) {
                               setMainCategoryPkForSubcategoryWhenCreating(
@@ -1357,7 +1350,7 @@ class SelectIsSubcategory extends StatelessWidget {
                       )
                     ],
                   ),
-                  afterWidgetPadding: EdgeInsets.only(bottom: 20),
+                  afterWidgetPadding: const EdgeInsets.only(bottom: 20),
                 ),
               ),
             ],
@@ -1383,7 +1376,7 @@ class SampleSubcategoriesPopup extends StatelessWidget {
             fontSize: 16,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           OutlinedContainer(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -1418,7 +1411,7 @@ class SampleSubcategoriesPopup extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           OutlinedContainer(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -1453,7 +1446,7 @@ class SampleSubcategoriesPopup extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           OutlinedContainer(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -1488,7 +1481,7 @@ class SampleSubcategoriesPopup extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           OutlinedContainer(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -1563,7 +1556,7 @@ class FakeCategoryEntryPlaceholder extends StatelessWidget {
     );
     if (showAsSubcategory) {
       return Padding(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           bottom: 10,
           left: 5,
           right: 5,

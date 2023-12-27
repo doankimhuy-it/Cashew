@@ -48,7 +48,7 @@ Future<bool> initializeSettings() async {
       userSettings["databaseJustImported"] = false;
       print("Settings were restored");
     } catch (e) {
-      print("Error restoring imported settings " + e.toString());
+      print("Error restoring imported settings $e");
       if (e is DriftRemoteException) {
         if (e.remoteCause
             .toString()
@@ -90,11 +90,9 @@ Future<bool> initializeSettings() async {
   String? retrievedClientID = sharedPreferences.getString("clientID");
   if (retrievedClientID == null) {
     String systemID = await getDeviceInfo();
-    String newClientID = systemID
+    String newClientID = "${systemID
             .substring(0, (systemID.length > 17 ? 17 : systemID.length))
-            .replaceAll("-", "_") +
-        "-" +
-        DateTime.now().millisecondsSinceEpoch.toString();
+            .replaceAll("-", "_")}-${DateTime.now().millisecondsSinceEpoch}";
     await sharedPreferences.setString('clientID', newClientID);
     clientID = newClientID;
   } else {
@@ -135,10 +133,7 @@ Future<bool> updateSettings(
   if (updateGlobalState == true) {
     // Only refresh global state if the value is different
     if (isChanged || forceGlobalStateUpdate) {
-      print("Rebuilt Main Request from: " +
-          setting.toString() +
-          " : " +
-          value.toString());
+      print("Rebuilt Main Request from: $setting : $value");
       appStateKey.currentState?.refreshAppState();
     }
   } else {
@@ -149,7 +144,7 @@ Future<bool> updateSettings(
     }
     //Refresh any pages listed
     for (int page in pagesNeedingRefresh) {
-      print("Pages Rebuilt and Refreshed: " + pagesNeedingRefresh.toString());
+      print("Pages Rebuilt and Refreshed: $pagesNeedingRefresh");
       if (page == 0) {
         homePageStateKey.currentState?.refreshState();
       } else if (page == 1) {
@@ -233,8 +228,8 @@ void openLanguagePicker(BuildContext context) {
       title: "language".tr(),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 10),
             child: TranslationsHelp(),
           ),
           RadioItems(
@@ -258,7 +253,7 @@ void openLanguagePicker(BuildContext context) {
                 pagesNeedingRefresh: [3],
                 updateGlobalState: false,
               );
-              await Future.delayed(Duration(milliseconds: 50));
+              await Future.delayed(const Duration(milliseconds: 50));
               Navigator.pop(context);
             },
           ),
@@ -324,11 +319,11 @@ class TranslationsHelp extends StatelessWidget {
                     showIcon == true ? TextAlign.start : TextAlign.center,
                 richTextSpan: [
                   TextSpan(
-                    text: "translations-help".tr() + " ",
+                    text: "${"translations-help".tr()} ",
                     style: TextStyle(
                       color: getColor(context, "black"),
                       fontFamily: appStateSettings["font"],
-                      fontFamilyFallback: ['Inter'],
+                      fontFamilyFallback: const ['Inter'],
                     ),
                   ),
                   TextSpan(
@@ -341,7 +336,7 @@ class TranslationsHelp extends StatelessWidget {
                       color:
                           getColor(context, "unPaidOverdue").withOpacity(0.8),
                       fontFamily: appStateSettings["font"],
-                      fontFamilyFallback: ['Inter'],
+                      fontFamilyFallback: const ['Inter'],
                     ),
                   ),
                 ],

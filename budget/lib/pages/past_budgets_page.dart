@@ -36,7 +36,7 @@ import 'package:budget/widgets/animated_expanded.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class PastBudgetsPage extends StatelessWidget {
-  const PastBudgetsPage({super.key, required String this.budgetPk});
+  const PastBudgetsPage({super.key, required this.budgetPk});
   final String budgetPk;
 
   @override
@@ -49,14 +49,13 @@ class PastBudgetsPage extends StatelessWidget {
               budget: snapshot.data!,
             );
           }
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         });
   }
 }
 
 class _PastBudgetsPageContent extends StatefulWidget {
-  const _PastBudgetsPageContent({Key? key, required Budget this.budget})
-      : super(key: key);
+  const _PastBudgetsPageContent({super.key, required this.budget});
   final Budget budget;
 
   @override
@@ -72,7 +71,7 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
   bool amountLoadedPressedOnce = false;
   late List<String> selectedCategoryFks =
       getSelectedCategoryFksConsideringBudget();
-  GlobalKey<_PastBudgetContainerListState>
+  final GlobalKey<_PastBudgetContainerListState>
       _pastBudgetContainerListStateStateKey = GlobalKey();
   GlobalKey<PageFrameworkState> budgetHistoryKey = GlobalKey();
 
@@ -230,7 +229,7 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
                         Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
                 ),
-                SizedBox(width: 13),
+                const SizedBox(width: 13),
                 Expanded(
                   child: Button(
                     expandedLayout: true,
@@ -291,28 +290,28 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
           onPressed: () {
             openWatchCategoriesBottomSheet();
           },
-          padding: EdgeInsets.all(15 - 8),
+          padding: const EdgeInsets.all(15 - 8),
           icon: AnimatedContainer(
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             decoration: BoxDecoration(
-              color: selectedCategoryFks.length > 0
+              color: selectedCategoryFks.isNotEmpty
                   ? budgetColorScheme.tertiary.withOpacity(0.1)
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(100),
             ),
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: Icon(
               appStateSettings["outlinedIcons"]
                   ? Icons.category_outlined
                   : Icons.category_rounded,
-              color: selectedCategoryFks.length > 0
+              color: selectedCategoryFks.isNotEmpty
                   ? budgetColorScheme.tertiary
                   : budgetColorScheme.onSecondaryContainer,
             ),
           ),
         ),
         IconButton(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           tooltip: "edit-budget".tr(),
           onPressed: () {
             pushRoute(
@@ -338,7 +337,7 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
       slivers: [
         SliverStickyHeader(
           header: Transform.translate(
-            offset: Offset(0, -1),
+            offset: const Offset(0, -1),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -392,8 +391,7 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
                                               categorySpentPoints = {};
                                           if (snapshotMergedStreamsCategoriesTotal
                                                   .hasData &&
-                                              (selectedCategoryFks).length >
-                                                  0) {
+                                              (selectedCategoryFks).isNotEmpty) {
                                             maxY = 0.1;
                                             // separate each into a map of their own
                                             int i =
@@ -504,17 +502,17 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
                                         },
                                       );
                                     } else {
-                                      return SizedBox.shrink();
+                                      return const SizedBox.shrink();
                                     }
                                   },
                                 );
                               }
-                              return SizedBox.shrink();
+                              return const SizedBox.shrink();
                             }),
                       ),
                     ),
                     Transform.translate(
-                      offset: Offset(0, -1),
+                      offset: const Offset(0, -1),
                       child: Container(
                         height: 12,
                         foregroundDecoration: BoxDecoration(
@@ -525,7 +523,7 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            stops: [0.1, 1],
+                            stops: const [0.1, 1],
                           ),
                         ),
                       ),
@@ -550,7 +548,7 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
                   ],
                 ),
                 Transform.translate(
-                  offset: Offset(0, -1),
+                  offset: const Offset(0, -1),
                   child: Container(
                     height: 12,
                     foregroundDecoration: BoxDecoration(
@@ -561,7 +559,7 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
                         ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        stops: [0.1, 1],
+                        stops: const [0.1, 1],
                       ),
                     ),
                   ),
@@ -582,9 +580,9 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
                         allTime: true,
                         isLarge: true,
                       )
-                    : SizedBox.shrink(),
+                    : const SizedBox.shrink(),
               ),
-              selectedCategoryFks.length > 0
+              selectedCategoryFks.isNotEmpty
                   ? SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 10),
@@ -666,19 +664,19 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
                                             children: children,
                                           );
                                         } else {
-                                          return SizedBox.shrink();
+                                          return const SizedBox.shrink();
                                         }
                                       },
                                     );
                                   } else {
-                                    return SizedBox.shrink();
+                                    return const SizedBox.shrink();
                                   }
                                 },
                               );
                             }),
                       ),
                     )
-                  : SliverToBoxAdapter(child: SizedBox.shrink()),
+                  : const SliverToBoxAdapter(child: SizedBox.shrink()),
               PastBudgetContainerList(
                 key: _pastBudgetContainerListStateStateKey,
                 budget: widget.budget,
@@ -700,7 +698,7 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
                     // This is set insetAmountLoaded
                   } else {
                     loadLines(amountLoaded);
-                    Future.delayed(Duration(milliseconds: 150), () {
+                    Future.delayed(const Duration(milliseconds: 150), () {
                       budgetHistoryKey.currentState!
                           .scrollToBottom(duration: 4000);
                     });
@@ -729,7 +727,7 @@ class LoadMorePeriodsButton extends StatelessWidget {
       right: 0,
       top: 0,
       child: Transform.translate(
-        offset: Offset(2, -2),
+        offset: const Offset(2, -2),
         child: Tooltip(
           message: "view-more".tr(),
           child: IconButton(
@@ -802,9 +800,9 @@ class _PastBudgetContainerListState extends State<PastBudgetContainerList> {
                       DateTime datePast = getDatePastToDetermineBudgetDate(
                           index, widget.budget);
                       return FadeIn(
-                        duration: Duration(milliseconds: 400),
+                        duration: const Duration(milliseconds: 400),
                         child: AnimatedContainer(
-                          duration: Duration(milliseconds: 200),
+                          duration: const Duration(milliseconds: 200),
                           decoration: BoxDecoration(
                             border: getPlatform() == PlatformOS.isIOS
                                 ? Border(
@@ -827,7 +825,7 @@ class _PastBudgetContainerListState extends State<PastBudgetContainerList> {
                                                 1 ==
                                             index
                                     ? boxShadowCheck(boxShadowGeneral(context))
-                                    : [BoxShadow(color: Colors.transparent)],
+                                    : [const BoxShadow(color: Colors.transparent)],
                           ),
                           padding: getPlatform() == PlatformOS.isIOS
                               ? EdgeInsets.zero
@@ -863,7 +861,7 @@ class _PastBudgetContainerListState extends State<PastBudgetContainerList> {
             : SliverPadding(
                 padding: getPlatform() == PlatformOS.isIOS
                     ? EdgeInsets.zero
-                    : EdgeInsets.only(bottom: 15, left: 13, right: 13),
+                    : const EdgeInsets.only(bottom: 15, left: 13, right: 13),
                 sliver: SliverGrid(
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 600,
@@ -876,9 +874,9 @@ class _PastBudgetContainerListState extends State<PastBudgetContainerList> {
                       DateTime datePast = getDatePastToDetermineBudgetDate(
                           index, widget.budget);
                       return FadeIn(
-                        duration: Duration(milliseconds: 400),
+                        duration: const Duration(milliseconds: 400),
                         child: AnimatedOpacity(
-                          duration: Duration(milliseconds: 200),
+                          duration: const Duration(milliseconds: 200),
                           opacity: touchedBudgetIndex == null ||
                                   widget.amountLoaded -
                                           touchedBudgetIndex! -
@@ -911,7 +909,7 @@ class _PastBudgetContainerListState extends State<PastBudgetContainerList> {
                             child: Padding(
                               padding: getPlatform() == PlatformOS.isIOS
                                   ? EdgeInsets.zero
-                                  : EdgeInsets.only(bottom: 13.0),
+                                  : const EdgeInsets.only(bottom: 13.0),
                               child: PastBudgetContainer(
                                 budget: widget.budget,
                                 smallBudgetContainer: true,
@@ -966,8 +964,8 @@ class _PastBudgetContainerListState extends State<PastBudgetContainerList> {
 }
 
 class PastBudgetContainer extends StatelessWidget {
-  PastBudgetContainer({
-    Key? key,
+  const PastBudgetContainer({
+    super.key,
     required this.budget,
     this.smallBudgetContainer = false,
     this.showTodayForSmallBudget = true,
@@ -976,7 +974,7 @@ class PastBudgetContainer extends StatelessWidget {
     this.isPastBudgetButCurrentPeriod = false,
     required this.budgetColorScheme,
     required this.backgroundColor,
-  }) : super(key: key);
+  });
 
   final Budget budget;
   final bool smallBudgetContainer;
@@ -1018,7 +1016,7 @@ class PastBudgetContainer extends StatelessWidget {
           totalSpent = totalSpent * -1;
 
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -1059,7 +1057,7 @@ class PastBudgetContainer extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 2),
+                        const SizedBox(height: 2),
                         budgetAmount - totalSpent >= 0
                             ? Row(
                                 children: [
@@ -1073,7 +1071,7 @@ class PastBudgetContainer extends StatelessWidget {
                                                   "showTotalSpentForBudget"]
                                               ? totalSpent
                                               : budgetAmount - totalSpent,
-                                          duration: Duration(milliseconds: 700),
+                                          duration: const Duration(milliseconds: 700),
                                           initialCount: (0),
                                           textBuilder: (number) {
                                             return TextFont(
@@ -1100,13 +1098,9 @@ class PastBudgetContainer extends StatelessWidget {
                                           child: TextFont(
                                             text: (appStateSettings[
                                                         "showTotalSpentForBudget"]
-                                                    ? " " +
-                                                        "spent-amount-of".tr() +
-                                                        " "
-                                                    : " " +
-                                                        "remaining-amount-of"
-                                                            .tr() +
-                                                        " ") +
+                                                    ? " ${"spent-amount-of".tr()} "
+                                                    : " ${"remaining-amount-of"
+                                                            .tr()} ") +
                                                 convertToMoney(
                                                     Provider.of<AllWallets>(
                                                         context),
@@ -1129,7 +1123,7 @@ class PastBudgetContainer extends StatelessWidget {
                                               "showTotalSpentForBudget"]
                                           ? totalSpent
                                           : -1 * (budgetAmount - totalSpent),
-                                      duration: Duration(milliseconds: 700),
+                                      duration: const Duration(milliseconds: 700),
                                       initialCount: (0),
                                       textBuilder: (number) {
                                         return TextFont(
@@ -1155,12 +1149,8 @@ class PastBudgetContainer extends StatelessWidget {
                                       child: TextFont(
                                         text: (appStateSettings[
                                                     "showTotalSpentForBudget"]
-                                                ? " " +
-                                                    "spent-amount-of".tr() +
-                                                    " "
-                                                : " " +
-                                                    "overspent-amount-of".tr() +
-                                                    " ") +
+                                                ? " ${"spent-amount-of".tr()} "
+                                                : " ${"overspent-amount-of".tr()} ") +
                                             convertToMoney(
                                                 Provider.of<AllWallets>(
                                                     context),
@@ -1176,24 +1166,24 @@ class PastBudgetContainer extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Stack(
                   alignment: Alignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(5 / 2),
-                      child: Container(
+                      padding: const EdgeInsets.all(5 / 2),
+                      child: SizedBox(
                         width: 50,
                         child: CountNumber(
                           count: budgetAmount == 0
                               ? 0
                               : (totalSpent / budgetAmount * 100),
-                          duration: Duration(milliseconds: 1000),
+                          duration: const Duration(milliseconds: 1000),
                           initialCount: (0),
                           textBuilder: (value) {
                             return TextFont(
                               autoSizeText: true,
-                              text: value.toStringAsFixed(0) + "%",
+                              text: "${value.toStringAsFixed(0)}%",
                               fontSize: 16,
                               textAlign: TextAlign.center,
                               fontWeight: FontWeight.bold,
@@ -1205,7 +1195,7 @@ class PastBudgetContainer extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: 60,
                       width: 60,
                       child: AnimatedCircularProgress(
@@ -1224,7 +1214,7 @@ class PastBudgetContainer extends StatelessWidget {
             ),
           );
         } else {
-          return Container(height: 80, width: double.infinity);
+          return const SizedBox(height: 80, width: double.infinity);
         }
       },
     );
@@ -1255,7 +1245,6 @@ class PastBudgetContainer extends StatelessWidget {
               );
             },
             borderRadius: getPlatform() == PlatformOS.isIOS ? 0 : 20,
-            child: widget,
             color: getPlatform() == PlatformOS.isIOS
                 ? backgroundColor
                 : appStateSettings["materialYou"]
@@ -1265,6 +1254,7 @@ class PastBudgetContainer extends StatelessWidget {
                         amount: 0.3,
                       )
                     : getColor(context, "lightDarkAccentHeavyLight"),
+            child: widget,
           );
         },
         openPage: BudgetPage(
@@ -1319,7 +1309,7 @@ class CategoryAverageSpent extends StatelessWidget {
                 margin: EdgeInsets.zero,
                 borderRadius: 1000,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 12,
               ),
               Expanded(
@@ -1333,7 +1323,7 @@ class CategoryAverageSpent extends StatelessWidget {
                         fontSize: 17,
                         maxLines: 1,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 1,
                       ),
                       Row(
@@ -1344,21 +1334,19 @@ class CategoryAverageSpent extends StatelessWidget {
                               count: amountPeriods == 0
                                   ? 0
                                   : (amountSpent / amountPeriods).abs(),
-                              duration: Duration(milliseconds: 400),
+                              duration: const Duration(milliseconds: 400),
                               initialCount: amountPeriods == 0
                                   ? 0
                                   : (amountSpent / amountPeriods).abs(),
                               textBuilder: (number) {
                                 return TextFont(
-                                  text: convertToMoney(
+                                  text: "${convertToMoney(
                                           Provider.of<AllWallets>(context),
                                           number,
                                           finalNumber: amountPeriods == 0
                                               ? 0
                                               : (amountSpent / amountPeriods)
-                                                  .abs()) +
-                                      " " +
-                                      "average-spent".tr().toLowerCase(),
+                                                  .abs())} ${"average-spent".tr().toLowerCase()}",
                                   fontSize: 14,
                                   textColor: getColor(context, "textLight"),
                                 );
@@ -1382,10 +1370,10 @@ class CategoryAverageSpent extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               CountNumber(
                 count: amountSpent.abs(),
-                duration: Duration(milliseconds: 400),
+                duration: const Duration(milliseconds: 400),
                 initialCount: amountSpent.abs(),
                 textBuilder: (number) {
                   return TextFont(

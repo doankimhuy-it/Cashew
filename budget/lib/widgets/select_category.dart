@@ -17,8 +17,8 @@ import 'package:flutter/services.dart';
 import 'package:reorderable_grid_view/reorderable_grid_view.dart';
 
 class SelectCategory extends StatefulWidget {
-  SelectCategory({
-    Key? key,
+  const SelectCategory({
+    super.key,
     this.setSelectedCategory,
     this.setSelectedCategories,
     this.selectedCategory,
@@ -44,7 +44,7 @@ class SelectCategory extends StatefulWidget {
     this.forceSelectAllToFalse = false,
     this.listPadding = const EdgeInsets.symmetric(horizontal: 20),
     this.selectedIncome,
-  }) : super(key: key);
+  });
   final Function(TransactionCategory)? setSelectedCategory;
   final Function(List<String>?)? setSelectedCategories;
   final TransactionCategory? selectedCategory;
@@ -82,7 +82,7 @@ class _SelectCategoryState extends State<SelectCategory> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 0), () {
+    Future.delayed(const Duration(milliseconds: 0), () {
       if (widget.selectedCategory != null && widget.skipIfSet == true) {
         if (widget.popRoute) Navigator.pop(context, widget.selectedCategory);
         if (widget.next != null) {
@@ -157,7 +157,7 @@ class _SelectCategoryState extends State<SelectCategory> {
 
               children.add(AnimatedScale(
                 key: ValueKey(category.categoryPk.toString()),
-                duration: Duration(milliseconds: 1500),
+                duration: const Duration(milliseconds: 1500),
                 curve: Curves.elasticOut,
                 scale: widget.scaleWhenSelected == true &&
                         selectedCategories.contains(category.categoryPk) ==
@@ -166,7 +166,7 @@ class _SelectCategoryState extends State<SelectCategory> {
                     : 1,
                 child: Builder(builder: (context) {
                   return AnimatedOpacity(
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     opacity: widget.fadeOutWhenSelected == true &&
                             selectedCategories.contains(category.categoryPk)
                         ? 0.3
@@ -188,7 +188,7 @@ class _SelectCategoryState extends State<SelectCategory> {
                             selectedCategories = [];
                             selectedCategories.add(category.categoryPk);
                           });
-                          Future.delayed(Duration(milliseconds: 70), () {
+                          Future.delayed(const Duration(milliseconds: 70), () {
                             if (widget.popRoute) {
                               Navigator.pop(context, category);
                             }
@@ -219,11 +219,11 @@ class _SelectCategoryState extends State<SelectCategory> {
               ));
             }
             return IgnorePointer(
-              ignoring: children.length <= 0,
+              ignoring: children.isEmpty,
               child: AnimatedSizeSwitcher(
-                child: Container(
-                  key: ValueKey(children.length <= 0),
-                  height: children.length <= 0
+                child: SizedBox(
+                  key: ValueKey(children.isEmpty),
+                  height: children.isEmpty
                       ? 0
                       : widget.horizontalListViewHeight,
                   child: ListView(
@@ -253,16 +253,16 @@ class _SelectCategoryState extends State<SelectCategory> {
                       if (widget.header != null) ...widget.header!,
                       ...children,
                       widget.addButton == false
-                          ? SizedBox.shrink()
+                          ? const SizedBox.shrink()
                           : Padding(
-                              key: ValueKey(2),
+                              key: const ValueKey(2),
                               padding: const EdgeInsets.only(
                                 bottom: 21,
                                 top: 8,
                               ),
                               child: AddButton(
                                 onTap: () {},
-                                padding: EdgeInsets.symmetric(horizontal: 7),
+                                padding: const EdgeInsets.symmetric(horizontal: 7),
                                 openPage: AddCategoryPage(
                                     routesToPopAfterDelete:
                                         RoutesToPopAfterDelete.None,
@@ -297,7 +297,7 @@ class _SelectCategoryState extends State<SelectCategory> {
             categoryIcons.add(
               AnimatedScale(
                 key: ValueKey(category.categoryPk),
-                duration: Duration(milliseconds: 1500),
+                duration: const Duration(milliseconds: 1500),
                 curve: Curves.elasticOut,
                 scale: widget.scaleWhenSelected == true &&
                         selectedCategories.contains(category.categoryPk) ==
@@ -305,7 +305,7 @@ class _SelectCategoryState extends State<SelectCategory> {
                     ? 0.86
                     : 1,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   opacity: widget.fadeOutWhenSelected == true &&
                           selectedCategories.contains(category.categoryPk)
                       ? 0.3
@@ -328,7 +328,7 @@ class _SelectCategoryState extends State<SelectCategory> {
                           selectedCategories = [];
                           selectedCategories.add(category.categoryPk);
                         });
-                        Future.delayed(Duration(milliseconds: 70), () {
+                        Future.delayed(const Duration(milliseconds: 70), () {
                           if (widget.popRoute) Navigator.pop(context, category);
                           if (widget.next != null) {
                             widget.next!();
@@ -359,8 +359,8 @@ class _SelectCategoryState extends State<SelectCategory> {
             child: Column(
               children: [
                 AnimatedSizeSwitcher(
-                  sizeDuration: Duration(milliseconds: 250),
-                  switcherDuration: Duration(milliseconds: 150),
+                  sizeDuration: const Duration(milliseconds: 250),
+                  switcherDuration: const Duration(milliseconds: 150),
                   child: ReorderableGridView.count(
                     key: ValueKey(snapshot.data!.length),
                     dragEnabled: dragEnabled,
@@ -374,7 +374,7 @@ class _SelectCategoryState extends State<SelectCategory> {
                       );
                     },
                     childAspectRatio: 0.96,
-                    padding: EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.only(top: 5),
                     controller: _scrollController,
                     crossAxisSpacing: 0,
                     mainAxisSpacing: 5,
@@ -383,7 +383,6 @@ class _SelectCategoryState extends State<SelectCategory> {
                         : ((getWidthBottomSheet(context)) ~/ size ~/ 2.1)
                             .toInt(),
                     shrinkWrap: true,
-                    children: categoryIcons,
                     header: widget.header ?? [],
                     footer: [
                       if (widget.addButton != false)
@@ -433,6 +432,7 @@ class _SelectCategoryState extends State<SelectCategory> {
                       database.fixOrderCategories();
                       HapticFeedback.heavyImpact();
                     },
+                    children: categoryIcons,
                   ),
                 ),
                 // Center(
@@ -515,10 +515,10 @@ class _SelectCategoryState extends State<SelectCategory> {
                     children: [
                       Container(height: 15),
                       AnimatedSwitcher(
-                        duration: Duration(milliseconds: 500),
-                        child: selectedCategories.length > 0
+                        duration: const Duration(milliseconds: 500),
+                        child: selectedCategories.isNotEmpty
                             ? Button(
-                                key: Key("addSuccess"),
+                                key: const Key("addSuccess"),
                                 label: widget.nextLabel ?? "",
                                 width: MediaQuery.sizeOf(context).width,
                                 onTap: () {
@@ -528,7 +528,7 @@ class _SelectCategoryState extends State<SelectCategory> {
                                 },
                               )
                             : Button(
-                                key: Key("addNoSuccess"),
+                                key: const Key("addNoSuccess"),
                                 label: widget.nextLabel ?? "",
                                 width: MediaQuery.sizeOf(context).width,
                                 onTap: () {},
@@ -563,8 +563,8 @@ class SelectedCategoryHorizontalExtraButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      key: ValueKey(1),
-      padding: EdgeInsets.only(
+      key: const ValueKey(1),
+      padding: const EdgeInsets.only(
         top: 8,
         left: 8,
         right: 8,
@@ -576,7 +576,7 @@ class SelectedCategoryHorizontalExtraButton extends StatelessWidget {
             onTap: onTap,
             borderRadius: 18,
             child: AnimatedContainer(
-              duration: Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 250),
               decoration: isOutlined
                   ? BoxDecoration(
                       border: Border.all(
@@ -585,14 +585,14 @@ class SelectedCategoryHorizontalExtraButton extends StatelessWidget {
                             amountLight: 0.5, amountDark: 0.4, inverse: true),
                         width: 3,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(18)),
+                      borderRadius: const BorderRadius.all(Radius.circular(18)),
                     )
                   : BoxDecoration(
                       border: Border.all(
                         color: Colors.transparent,
                         width: 0,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
                     ),
               width: 70,
               height: 70,
@@ -605,7 +605,7 @@ class SelectedCategoryHorizontalExtraButton extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 4),
+            margin: const EdgeInsets.only(top: 4),
             width: 60,
             child: Center(
               child: TextFont(

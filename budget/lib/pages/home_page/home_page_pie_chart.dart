@@ -45,7 +45,7 @@ class HomePagePieChart extends StatelessWidget {
             },
             color: getColor(context, "lightDarkAccentHeavyLight"),
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
               child: StreamBuilder<List<CategoryWithTotal>>(
                 stream: database
                     .watchTotalSpentInEachCategoryInTimeRangeFromCategories(
@@ -82,7 +82,7 @@ class HomePagePieChart extends StatelessWidget {
                               Flexible(
                                 flex: 1,
                                 child: Padding(
-                                  padding: EdgeInsets.only(left: 12),
+                                  padding: const EdgeInsets.only(left: 12),
                                   child: TopCategoriesSpentLegend(
                                     categoriesWithTotal: snapshot.data!
                                         .take(
@@ -116,7 +116,7 @@ class HomePagePieChart extends StatelessWidget {
                      },
                     );
                   }
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 },
               ),
             ),
@@ -151,7 +151,7 @@ class TopCategoriesSpentLegend extends StatelessWidget {
                     color: HexColor(categoryWithTotal.category.colour),
                   ),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 Flexible(
                   child: TextFont(
                     text: categoryWithTotal.category.name,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 class FadeIn extends StatefulWidget {
-  FadeIn({Key? key, required this.child, this.duration}) : super(key: key);
+  const FadeIn({super.key, required this.child, this.duration});
 
   final Widget child;
   final Duration? duration;
@@ -21,7 +21,7 @@ class _FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: widget.duration ?? Duration(milliseconds: 500),
+      duration: widget.duration ?? const Duration(milliseconds: 500),
       vsync: this,
     );
 
@@ -57,15 +57,15 @@ class _FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
 }
 
 class ScaleIn extends StatefulWidget {
-  ScaleIn({
-    Key? key,
+  const ScaleIn({
+    super.key,
     required this.child,
     this.duration,
     this.curve = const ElasticOutCurve(0.5),
     this.delay = Duration.zero,
     this.loopDelay = Duration.zero,
     this.loop = false,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final Duration? duration;
@@ -86,7 +86,7 @@ class _ScaleInState extends State<ScaleIn> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: widget.duration ?? Duration(milliseconds: 1500),
+      duration: widget.duration ?? const Duration(milliseconds: 1500),
       vsync: this,
     );
 
@@ -146,7 +146,7 @@ class ScalingWidget extends StatefulWidget {
   final String keyToWatch;
   final Widget child;
 
-  ScalingWidget({required this.keyToWatch, required this.child});
+  const ScalingWidget({super.key, required this.keyToWatch, required this.child});
 
   @override
   _ScalingWidgetState createState() => _ScalingWidgetState();
@@ -215,8 +215,8 @@ class ScaledAnimatedSwitcher extends StatelessWidget {
     required this.keyToWatch,
     required this.child,
     this.duration = const Duration(milliseconds: 450),
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String keyToWatch;
   final Widget child;
@@ -232,14 +232,14 @@ class ScaledAnimatedSwitcher extends StatelessWidget {
         final fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: animation,
-            curve: Interval(0.5, 1),
+            curve: const Interval(0.5, 1),
           ),
         );
 
         final scaleAnimation = Tween<double>(begin: 0, end: 1.0).animate(
           CurvedAnimation(
             parent: animation,
-            curve: Interval(0, 1.0),
+            curve: const Interval(0, 1.0),
           ),
         );
 
@@ -260,7 +260,7 @@ class ScaledAnimatedSwitcher extends StatelessWidget {
 enum Direction { vertical, horizontal }
 
 class SlideFadeTransition extends StatefulWidget {
-  SlideFadeTransition({
+  const SlideFadeTransition({super.key, 
     required this.child,
     this.offset = 1,
     this.curve = Curves.decelerate,
@@ -304,7 +304,7 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition>
         _animationSlide = Tween<Offset>(
                 begin:
                     Offset(0, widget.reverse ? -widget.offset : widget.offset),
-                end: Offset(0, 0))
+                end: const Offset(0, 0))
             .animate(CurvedAnimation(
           curve: widget.curve,
           parent: _animationController,
@@ -313,7 +313,7 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition>
         _animationSlide = Tween<Offset>(
                 begin:
                     Offset(widget.reverse ? -widget.offset : widget.offset, 0),
-                end: Offset(0, 0))
+                end: const Offset(0, 0))
             .animate(CurvedAnimation(
           curve: widget.curve,
           parent: _animationController,
@@ -355,11 +355,11 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition>
 
 class AnimateFABDelayed extends StatefulWidget {
   const AnimateFABDelayed({
-    Key? key,
+    super.key,
     required this.fab,
     this.delay = const Duration(milliseconds: 250),
     this.enabled,
-  }) : super(key: key);
+  });
 
   final Widget fab;
   final Duration delay;
@@ -393,14 +393,14 @@ class _AnimateFABDelayedState extends State<AnimateFABDelayed> {
 
 class ShakeAnimation extends StatefulWidget {
   const ShakeAnimation({
-    Key? key,
+    super.key,
     this.duration = const Duration(milliseconds: 2500),
     this.deltaX = 20,
     this.curve = const ElasticInOutCurve(0.19),
     required this.child,
     this.animate = true,
     this.delay,
-  }) : super(key: key);
+  });
 
   final Duration duration;
   final double deltaX;
@@ -464,8 +464,8 @@ class AnimatedClipRRect extends StatelessWidget {
     this.curve = Curves.linear,
     required this.borderRadius,
     required this.child,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Duration duration;
   final Curve curve;

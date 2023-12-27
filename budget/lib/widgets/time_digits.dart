@@ -31,7 +31,7 @@ class TimeDigits extends StatelessWidget {
               : timeOfDay.hour.toString();
     }
     minutes = timeOfDay.minute.toString().length == 1
-        ? "0" + timeOfDay.minute.toString()
+        ? "0${timeOfDay.minute}"
         : timeOfDay.minute.toString();
     Color backgroundColor = appStateSettings["materialYou"]
         ? dynamicPastel(
@@ -45,7 +45,7 @@ class TimeDigits extends StatelessWidget {
             color: backgroundColor,
             borderRadius: BorderRadius.circular(5),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
           child: TextFont(
             text: hours,
             fontSize: 18,
@@ -53,8 +53,8 @@ class TimeDigits extends StatelessWidget {
           ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 4, vertical: 5),
-          child: TextFont(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+          child: const TextFont(
             text: ":",
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -65,24 +65,24 @@ class TimeDigits extends StatelessWidget {
             color: backgroundColor,
             borderRadius: BorderRadius.circular(5),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
           child: TextFont(
             text: minutes,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 5,
         ),
         use24HourFormat
-            ? SizedBox.shrink()
+            ? const SizedBox.shrink()
             : Container(
                 decoration: BoxDecoration(
                   color: backgroundColor,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
                 child: Transform.scale(
                   scale: 0.8,
                   child: TextFont(

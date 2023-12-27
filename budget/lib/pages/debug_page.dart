@@ -21,13 +21,13 @@ import 'package:budget/struct/random_constants.dart';
 import 'package:budget/widgets/slider_selector.dart';
 
 class DebugPage extends StatelessWidget {
-  const DebugPage({Key? key}) : super(key: key);
+  const DebugPage({super.key});
   @override
   Widget build(BuildContext context) {
     return PageFramework(
       dragDownToDismiss: true,
       title: "Debug Flags",
-      subtitle: TextFont(text: "Use at your own risk"),
+      subtitle: const TextFont(text: "Use at your own risk"),
       subtitleAlignment: Alignment.bottomLeft,
       subtitleSize: 10,
       listWidgets: [
@@ -53,7 +53,7 @@ class DebugPage extends StatelessWidget {
               : Icons.show_chart_rounded,
         ),
         SettingsContainerSwitch(
-          key: ValueKey(1),
+          key: const ValueKey(1),
           title: "Hide Zero Transactions",
           description: "On spending line graphs",
           onSwitched: (value) {
@@ -258,7 +258,7 @@ class DebugPage extends StatelessWidget {
             return SettingsContainer(
               icon: Icons.store,
               title: "Test store review integration",
-              description: "Available: " + snapshot.data.toString(),
+              description: "Available: ${snapshot.data}",
               onTap: () async {
                 if (await inAppReview.isAvailable()) {
                   inAppReview.requestReview();
@@ -317,8 +317,8 @@ class DebugPage extends StatelessWidget {
           initialValue: appStateSettings["showTransactionPk"] == true,
           icon: Icons.password,
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 13, right: 13),
+        const Padding(
+          padding: EdgeInsets.only(top: 8.0, left: 13, right: 13),
           child: TextFont(text: "Animation Scale"),
         ),
         SliderSelector(
@@ -340,14 +340,14 @@ class DebugPage extends StatelessWidget {
             restartAppPopup(context);
           },
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Button(
           label: "Fix transaction polarity",
           onTap: () async {
             await database.fixTransactionPolarity();
           },
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Button(
             label: "View Delete Logs",
             onTap: () async {
@@ -361,7 +361,7 @@ class DebugPage extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return SliverPadding(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 7, horizontal: 13),
                             sliver: SliverList(
                               delegate: SliverChildBuilderDelegate(
@@ -370,16 +370,7 @@ class DebugPage extends StatelessWidget {
                                   return Padding(
                                     padding: const EdgeInsets.only(bottom: 4),
                                     child: TextFont(
-                                      text: (index + 1).toString() +
-                                          ") " +
-                                          deletelog.type.toString() +
-                                          " " +
-                                          deletelog.dateTimeModified
-                                              .toString() +
-                                          ": " +
-                                          deletelog.deleteLogPk +
-                                          " for " +
-                                          deletelog.entryPk,
+                                      text: "${index + 1}) ${deletelog.type} ${deletelog.dateTimeModified}: ${deletelog.deleteLogPk} for ${deletelog.entryPk}",
                                       maxLines: 10,
                                       fontSize: 12,
                                     ),
@@ -390,7 +381,7 @@ class DebugPage extends StatelessWidget {
                             ),
                           );
                         } else {
-                          return SliverToBoxAdapter();
+                          return const SliverToBoxAdapter();
                         }
                       },
                     ),
@@ -398,7 +389,7 @@ class DebugPage extends StatelessWidget {
                 ),
               );
             }),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Button(
             label: "Send Notification",
             onTap: () async {
@@ -406,17 +397,17 @@ class DebugPage extends StatelessWidget {
               scheduleDailyNotification(context, TimeOfDay.now(),
                   scheduleNowDebug: true);
             }),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Button(
             label: "Force auto backup next launch",
             onTap: () async {
               updateSettings(
                 "lastBackup",
-                DateTime.now().subtract(Duration(days: 50)).toString(),
+                DateTime.now().subtract(const Duration(days: 50)).toString(),
                 updateGlobalState: false,
               );
             }),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         DangerousDebugFlag(
           child: Button(
             label: "Create preview data",
@@ -425,7 +416,7 @@ class DebugPage extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         DangerousDebugFlag(
           child: Button(
             label: "Create random transactions",
@@ -437,7 +428,7 @@ class DebugPage extends StatelessWidget {
                   insert: true,
                   Transaction(
                     transactionPk: "-1",
-                    name: "Test" + randomDouble[i].toString(),
+                    name: "Test${randomDouble[i]}",
                     amount: randomInt[i].toDouble(),
                     note: "",
                     categoryFk: categories[i].categoryPk,
@@ -453,7 +444,7 @@ class DebugPage extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Button(
             label: "Snackbar Test",
             onTap: () {
@@ -462,7 +453,7 @@ class DebugPage extends StatelessWidget {
                   title:
                       '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}.${DateTime.now().millisecond}',
                   icon: Icons.time_to_leave,
-                  timeout: Duration(milliseconds: 1000),
+                  timeout: const Duration(milliseconds: 1000),
                 ),
               );
               openSnackbar(
@@ -471,7 +462,7 @@ class DebugPage extends StatelessWidget {
                   description:
                       '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}.${DateTime.now().millisecond}',
                   icon: Icons.abc,
-                  timeout: Duration(milliseconds: 1000),
+                  timeout: const Duration(milliseconds: 1000),
                   onTap: () {},
                 ),
               );
@@ -479,7 +470,7 @@ class DebugPage extends StatelessWidget {
                 SnackbarMessage(
                   title:
                       '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}.${DateTime.now().millisecond}',
-                  timeout: Duration(milliseconds: 1000),
+                  timeout: const Duration(milliseconds: 1000),
                 ),
               );
               openSnackbar(
@@ -487,18 +478,18 @@ class DebugPage extends StatelessWidget {
                   title:
                       '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}.${DateTime.now().millisecond}',
                   description: "Some description",
-                  timeout: Duration(milliseconds: 7000),
+                  timeout: const Duration(milliseconds: 7000),
                 ),
               );
               openSnackbar(
                 SnackbarMessage(
                   title:
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation',
-                  timeout: Duration(milliseconds: 10000),
+                  timeout: const Duration(milliseconds: 10000),
                 ),
               );
             }),
-        TextFont(
+        const TextFont(
             maxLines: 10,
             text: ""),
         ColorBox(color: Theme.of(context).colorScheme.surface, name: "surface"),
@@ -509,7 +500,7 @@ class DebugPage extends StatelessWidget {
             color: Theme.of(context).colorScheme.onBackground,
             name: "onBackground"),
         Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           height: 1,
           color: Colors.grey,
         ),
@@ -523,7 +514,7 @@ class DebugPage extends StatelessWidget {
             color: Theme.of(context).colorScheme.onPrimaryContainer,
             name: "onPrimaryContainer"),
         Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           height: 1,
           color: Colors.grey,
         ),
@@ -539,7 +530,7 @@ class DebugPage extends StatelessWidget {
             color: Theme.of(context).colorScheme.onSecondaryContainer,
             name: "onSecondaryContainer"),
         Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           height: 1,
           color: Colors.grey,
         ),
@@ -555,7 +546,7 @@ class DebugPage extends StatelessWidget {
             color: Theme.of(context).colorScheme.onTertiaryContainer,
             name: "onTertiaryContainer"),
         Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           height: 1,
           color: Colors.grey,
         ),
@@ -584,14 +575,13 @@ class DangerousDebugFlag extends StatelessWidget {
         child: child,
       );
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 }
 
 class ColorBox extends StatelessWidget {
-  const ColorBox({Key? key, required this.color, required this.name})
-      : super(key: key);
+  const ColorBox({super.key, required this.color, required this.name});
 
   final Color color;
   final String name;

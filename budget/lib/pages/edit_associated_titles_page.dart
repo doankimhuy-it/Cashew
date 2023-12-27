@@ -24,9 +24,9 @@ import 'package:budget/widgets/edit_row_entry.dart';
 import 'package:budget/modified/reorderable_list.dart';
 
 class EditAssociatedTitlesPage extends StatefulWidget {
-  EditAssociatedTitlesPage({
-    Key? key,
-  }) : super(key: key);
+  const EditAssociatedTitlesPage({
+    super.key,
+  });
 
   @override
   _EditAssociatedTitlesPageState createState() =>
@@ -69,35 +69,35 @@ class _EditAssociatedTitlesPageState extends State<EditAssociatedTitlesPage> {
         floatingActionButton: AnimateFABDelayed(
           fab: FAB(
             tooltip: "add-title".tr(),
-            openPage: SizedBox.shrink(),
+            openPage: const SizedBox.shrink(),
             onTap: () {
               openBottomSheet(
                 context,
                 fullSnap: true,
-                AddAssociatedTitlePage(),
+                const AddAssociatedTitlePage(),
               );
-              Future.delayed(Duration(milliseconds: 100), () {
+              Future.delayed(const Duration(milliseconds: 100), () {
                 // Fix over-scroll stretch when keyboard pops up quickly
                 bottomSheetControllerGlobal.scrollTo(0,
-                    duration: Duration(milliseconds: 100));
+                    duration: const Duration(milliseconds: 100));
               });
             },
           ),
         ),
         actions: [
           IconButton(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             tooltip: "add-title".tr(),
             onPressed: () {
               openBottomSheet(
                 context,
                 fullSnap: true,
-                AddAssociatedTitlePage(),
+                const AddAssociatedTitlePage(),
               );
-              Future.delayed(Duration(milliseconds: 100), () {
+              Future.delayed(const Duration(milliseconds: 100), () {
                 // Fix over-scroll stretch when keyboard pops up quickly
                 bottomSheetControllerGlobal.scrollTo(0,
-                    duration: Duration(milliseconds: 100));
+                    duration: const Duration(milliseconds: 100));
               });
             },
             icon: Icon(appStateSettings["outlinedIcons"]
@@ -138,13 +138,13 @@ class _EditAssociatedTitlesPageState extends State<EditAssociatedTitlesPage> {
           SliverToBoxAdapter(
             child: AnimatedExpanded(
               expand: hideIfSearching(searchValue, isFocused, context) == false,
-              child: AskForTitlesToggle(),
+              child: const AskForTitlesToggle(),
             ),
           ),
           SliverToBoxAdapter(
             child: AnimatedExpanded(
               expand: hideIfSearching(searchValue, isFocused, context) == false,
-              child: AutoTitlesToggle(),
+              child: const AutoTitlesToggle(),
             ),
           ),
           StreamBuilder<Map<String, TransactionCategory>>(
@@ -155,14 +155,14 @@ class _EditAssociatedTitlesPageState extends State<EditAssociatedTitlesPage> {
                       searchFor: searchValue == "" ? null : searchValue),
                   builder: (context, snapshot) {
                     // print(snapshot.data);
-                    if (snapshot.hasData && (snapshot.data ?? []).length <= 0) {
+                    if (snapshot.hasData && (snapshot.data ?? []).isEmpty) {
                       return SliverToBoxAdapter(
                         child: NoResults(
                           message: "no-titles-found".tr(),
                         ),
                       );
                     }
-                    if (snapshot.hasData && (snapshot.data ?? []).length > 0) {
+                    if (snapshot.hasData && (snapshot.data ?? []).isNotEmpty) {
                       return SliverReorderableList(
                         onReorderStart: (index) {
                           HapticFeedback.heavyImpact();
@@ -191,10 +191,10 @@ class _EditAssociatedTitlesPageState extends State<EditAssociatedTitlesPage> {
                                   associatedTitle: associatedTitle,
                                 ),
                               );
-                              Future.delayed(Duration(milliseconds: 100), () {
+                              Future.delayed(const Duration(milliseconds: 100), () {
                                 // Fix over-scroll stretch when keyboard pops up quickly
                                 bottomSheetControllerGlobal.scrollTo(0,
-                                    duration: Duration(milliseconds: 100));
+                                    duration: const Duration(milliseconds: 100));
                               });
                             },
                             padding: EdgeInsets.symmetric(
@@ -208,7 +208,7 @@ class _EditAssociatedTitlesPageState extends State<EditAssociatedTitlesPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SizedBox(width: 3),
+                                const SizedBox(width: 3),
                                 CategoryIcon(
                                   categoryPk: associatedTitle.categoryFk,
                                   size: 25,
@@ -218,7 +218,7 @@ class _EditAssociatedTitlesPageState extends State<EditAssociatedTitlesPage> {
                                   category: mappedCategoriesSnapshot
                                       .data![associatedTitle.categoryFk],
                                 ),
-                                SizedBox(width: 15),
+                                const SizedBox(width: 15),
                                 Expanded(
                                   child: TextFont(
                                     text: associatedTitle.title
@@ -273,7 +273,7 @@ class _EditAssociatedTitlesPageState extends State<EditAssociatedTitlesPage> {
                   },
                 );
               }),
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: SizedBox(height: 85),
           ),
         ],
@@ -364,7 +364,7 @@ class _AskForTitlesToggleState extends State<AskForTitlesToggle> {
         AnimatedExpanded(
           expand: getIsFullScreen(context) == false &&
               appStateSettings["askForTransactionTitle"] == true,
-          child: AskForNotesToggle(),
+          child: const AskForNotesToggle(),
         ),
       ],
     );

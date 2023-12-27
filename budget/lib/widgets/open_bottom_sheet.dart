@@ -70,10 +70,10 @@ Future openBottomSheet(
   //minimize keyboard when open
   FocusScope.of(context).unfocus();
   if (reAssignBottomSheetControllerGlobal) {
-    bottomSheetControllerGlobal = new SheetController();
+    bottomSheetControllerGlobal = SheetController();
   }
   if (useCustomController == true) {
-    bottomSheetControllerGlobalCustomAssigned = new SheetController();
+    bottomSheetControllerGlobalCustomAssigned = SheetController();
   }
   return await showSlidingBottomSheet(context,
       resizeToAvoidBottomInset: resizeForKeyboard,
@@ -105,7 +105,7 @@ Future openBottomSheet(
       avoidStatusBar: true,
       extendBody: true,
       headerBuilder: (context, state) {
-        return SizedBox(height: 10);
+        return const SizedBox(height: 10);
       },
       // headerBuilder: (context, _) {
       //   if (handle) {
@@ -153,7 +153,7 @@ Future openBottomSheet(
               amountDark: 0.3, amountLight: 0.6)
           : getColor(context, "lightDarkAccent"),
       cornerRadius: getPlatform() == PlatformOS.isIOS ? 10 : 20,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       builder: (context, state) {
         return Material(
           child: SingleChildScrollView(

@@ -28,9 +28,9 @@ import 'package:budget/widgets/edit_row_entry.dart';
 import 'package:budget/modified/reorderable_list.dart';
 
 class EditCategoriesPage extends StatefulWidget {
-  EditCategoriesPage({
-    Key? key,
-  }) : super(key: key);
+  const EditCategoriesPage({
+    super.key,
+  });
 
   @override
   _EditCategoriesPageState createState() => _EditCategoriesPageState();
@@ -71,19 +71,19 @@ class _EditCategoriesPageState extends State<EditCategoriesPage> {
         floatingActionButton: AnimateFABDelayed(
           fab: FAB(
             tooltip: "add-category".tr(),
-            openPage: AddCategoryPage(
+            openPage: const AddCategoryPage(
               routesToPopAfterDelete: RoutesToPopAfterDelete.None,
             ),
           ),
         ),
         actions: [
           IconButton(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             tooltip: "add-category".tr(),
             onPressed: () {
               pushRoute(
                 context,
-                AddCategoryPage(
+                const AddCategoryPage(
                   routesToPopAfterDelete: RoutesToPopAfterDelete.None,
                 ),
               );
@@ -126,14 +126,14 @@ class _EditCategoriesPageState extends State<EditCategoriesPage> {
                   stream: database.watchAllMainCategoriesWithDetails(
                       searchFor: searchValue == "" ? null : searchValue),
                   builder: (context, snapshot) {
-                    if (snapshot.hasData && (snapshot.data ?? []).length <= 0) {
+                    if (snapshot.hasData && (snapshot.data ?? []).isEmpty) {
                       return SliverToBoxAdapter(
                         child: NoResults(
                           message: "no-categories-found".tr(),
                         ),
                       );
                     }
-                    if (snapshot.hasData && (snapshot.data ?? []).length > 0) {
+                    if (snapshot.hasData && (snapshot.data ?? []).isNotEmpty) {
                       return SliverReorderableList(
                         onReorderStart: (index) {
                           HapticFeedback.heavyImpact();
@@ -162,11 +162,11 @@ class _EditCategoriesPageState extends State<EditCategoriesPage> {
                                 (snapshot.data ?? []).length != 1,
                             currentReorder:
                                 currentReorder != -1 && currentReorder != index,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 5),
                             key: ValueKey(category.categoryPk),
                             extraWidgetsBelow: [
-                              if (subCategories.length > 0)
+                              if (subCategories.isNotEmpty)
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 4),
                                   child: SelectChips(
@@ -290,11 +290,8 @@ class _EditCategoriesPageState extends State<EditCategoriesPage> {
                                           ),
                                           TextFont(
                                             textAlign: TextAlign.left,
-                                            text: categoryDetails
-                                                    .numberTransactions
-                                                    .toString() +
-                                                " " +
-                                                (categoryDetails
+                                            text: "${categoryDetails
+                                                    .numberTransactions} ${categoryDetails
                                                             .numberTransactions ==
                                                         1
                                                     ? "transaction"
@@ -302,7 +299,7 @@ class _EditCategoriesPageState extends State<EditCategoriesPage> {
                                                         .toLowerCase()
                                                     : "transactions"
                                                         .tr()
-                                                        .toLowerCase()),
+                                                        .toLowerCase()}",
                                             fontSize: 14,
                                             textColor:
                                                 getColor(context, "black")
@@ -356,7 +353,7 @@ class _EditCategoriesPageState extends State<EditCategoriesPage> {
                   },
                 );
               }),
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: SizedBox(height: 75),
           ),
         ],
@@ -374,7 +371,7 @@ class RefreshButton extends StatefulWidget {
   final bool? halfAnimation;
   final bool iconOnly;
 
-  RefreshButton({
+  const RefreshButton({
     required this.onTap,
     this.padding,
     this.visualDensity,
@@ -382,8 +379,8 @@ class RefreshButton extends StatefulWidget {
     this.flipIcon,
     this.halfAnimation,
     this.iconOnly = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   RefreshButtonState createState() => RefreshButtonState();
@@ -400,7 +397,7 @@ class RefreshButtonState extends State<RefreshButton>
   void initState() {
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     );
     _animation = CurvedAnimation(
       parent: _animationController,
@@ -428,7 +425,7 @@ class RefreshButtonState extends State<RefreshButton>
         _isEnabled = false;
       });
       await widget.onTap();
-      Timer(Duration(seconds: 5), () {
+      Timer(const Duration(seconds: 5), () {
         if (mounted) {
           setState(() {
             _isEnabled = true;
@@ -445,7 +442,7 @@ class RefreshButtonState extends State<RefreshButton>
       builder: (context, child) {
         return AnimatedOpacity(
           opacity: _isEnabled ? 1 : 0.3,
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           child: Transform.rotate(
             angle: _tween.evaluate(_animation),
             child: Transform(
@@ -460,7 +457,7 @@ class RefreshButtonState extends State<RefreshButton>
                       color: Theme.of(context).colorScheme.secondary,
                     )
                   : IconButton(
-                      padding: widget.padding ?? EdgeInsets.all(15),
+                      padding: widget.padding ?? const EdgeInsets.all(15),
                       icon: Icon(widget.customIcon ??
                           (appStateSettings["outlinedIcons"]
                               ? Icons.refresh_outlined
@@ -577,10 +574,10 @@ void mergeCategoryPopup(
         allowRearrange: false,
         popRoute: true,
         setSelectedCategory: (category) async {
-          Future.delayed(Duration(milliseconds: 90), () async {
+          Future.delayed(const Duration(milliseconds: 90), () async {
             final result = await openPopup(
               context,
-              title: "merge-into".tr() + " " + category.name + "?",
+              title: "${"merge-into".tr()} ${category.name}?",
               description: "merge-into-description-categories".tr(),
               icon: appStateSettings["outlinedIcons"]
                   ? Icons.merge_outlined
@@ -609,7 +606,7 @@ void mergeCategoryPopup(
                     icon: appStateSettings["outlinedIcons"]
                         ? Icons.merge_outlined
                         : Icons.merge_rounded,
-                    description: categoryOriginal.name + " → " + category.name,
+                    description: "${categoryOriginal.name} → ${category.name}",
                   ),
                 );
               });
@@ -637,10 +634,10 @@ void mergeSubcategoryPopup(
         popRoute: true,
         mainCategoryPks: [subcategoryOriginal.mainCategoryPk ?? ""],
         setSelectedCategory: (subcategory) async {
-          Future.delayed(Duration(milliseconds: 90), () async {
+          Future.delayed(const Duration(milliseconds: 90), () async {
             final result = await openPopup(
               context,
-              title: "merge-into".tr() + " " + subcategory.name + "?",
+              title: "${"merge-into".tr()} ${subcategory.name}?",
               description: "merge-into-description-subcategories".tr(),
               icon: appStateSettings["outlinedIcons"]
                   ? Icons.merge_outlined
@@ -670,7 +667,7 @@ void mergeSubcategoryPopup(
                         ? Icons.merge_outlined
                         : Icons.merge_rounded,
                     description:
-                        subcategoryOriginal.name + " → " + subcategory.name,
+                        "${subcategoryOriginal.name} → ${subcategory.name}",
                   ),
                 );
               });
@@ -739,10 +736,10 @@ void makeSubCategoryPopup(
         allowRearrange: false,
         popRoute: true,
         setSelectedCategory: (category) async {
-          Future.delayed(Duration(milliseconds: 90), () async {
+          Future.delayed(const Duration(milliseconds: 90), () async {
             final result = await openPopup(
               context,
-              title: "make-subcategory-of".tr() + " " + category.name + "?",
+              title: "${"make-subcategory-of".tr()} ${category.name}?",
               description: "make-subcategory-description-categories".tr(),
               icon: appStateSettings["outlinedIcons"]
                   ? Icons.move_up_outlined
@@ -771,7 +768,7 @@ void makeSubCategoryPopup(
                     icon: appStateSettings["outlinedIcons"]
                         ? Icons.move_to_inbox_outlined
                         : Icons.move_to_inbox_rounded,
-                    description: categoryOriginal.name + " → " + category.name,
+                    description: "${categoryOriginal.name} → ${category.name}",
                   ),
                 );
               });

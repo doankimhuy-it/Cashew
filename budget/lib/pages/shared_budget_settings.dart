@@ -22,10 +22,10 @@ import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/struct/random_constants.dart';
 
 class SharedBudgetSettings extends StatefulWidget {
-  SharedBudgetSettings({
-    Key? key,
+  const SharedBudgetSettings({
+    super.key,
     required this.budget,
-  }) : super(key: key);
+  });
 
   final Budget budget;
 
@@ -124,7 +124,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextFont(
@@ -135,7 +135,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
               fontSize: 16,
             ),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextFont(
@@ -145,7 +145,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
               maxLines: 10,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Center(
             child: Icon(
               appStateSettings["outlinedIcons"]
@@ -155,14 +155,14 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
               size: 40,
             ),
           ),
-          Center(
+          const Center(
             child: TextFont(
               text: "Connection Error",
               fontSize: 15,
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
         ],
       );
     }
@@ -170,7 +170,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: TextFont(
@@ -181,7 +181,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
             fontSize: 16,
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: TextFont(
@@ -191,14 +191,14 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
             maxLines: 10,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         widget.budget.sharedOwnerMember == SharedOwnerMember.owner
             ? isLoaded
                 ? Row(
                     children: [
                       Expanded(
                         child: AddButton(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               left: 15,
                               right: 15,
                               bottom: 9,
@@ -224,7 +224,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
                     ],
                   )
                 : Shimmer.fromColors(
-                    period: Duration(milliseconds: 1000),
+                    period: const Duration(milliseconds: 1000),
                     baseColor: appStateSettings["materialYou"]
                         ? Theme.of(context).colorScheme.secondaryContainer
                         : getColor(context, "lightDarkAccentHeavyLight"),
@@ -238,7 +238,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Container(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: 15,
                           right: 15,
                           bottom: 9,
@@ -266,7 +266,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
                       ),
                     ),
                   )
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
         !isLoaded
             ? Column(
                 children: [
@@ -305,7 +305,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
                                   color: Colors.white,
@@ -314,7 +314,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
                                 width: 85 + randomDouble[i % 10] * 40,
                               ),
                               Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
                                   color: Colors.white,
@@ -362,7 +362,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
                     ),
                 ],
               ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         widget.budget.sharedOwnerMember == SharedOwnerMember.owner
             ? Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -438,7 +438,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
                     Navigator.pop(context);
                     openPopup(
                       context,
-                      title: "Delete " + widget.budget.name + " budget?",
+                      title: "Delete ${widget.budget.name} budget?",
                       description:
                           "This will delete all transactions associated with this category. This will only delete the transactions on your device.",
                       icon: appStateSettings["outlinedIcons"]
@@ -456,7 +456,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
                         Navigator.pop(context);
                         openSnackbar(
                           SnackbarMessage(
-                            title: "Deleted " + widget.budget.name,
+                            title: "Deleted ${widget.budget.name}",
                             icon: Icons.delete,
                           ),
                         );
@@ -469,7 +469,7 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
                   textColor: Theme.of(context).colorScheme.errorContainer,
                 ),
               ),
-        SizedBox(height: 25),
+        const SizedBox(height: 25),
       ],
     );
   }
@@ -477,14 +477,14 @@ class _SharedBudgetSettingsState extends State<SharedBudgetSettings> {
 
 class CategoryMemberContainer extends StatelessWidget {
   const CategoryMemberContainer({
-    Key? key,
+    super.key,
     required this.member,
     required this.setMember,
     required this.onDelete,
     required this.isOwner,
     required this.isYou,
     required this.canModify,
-  }) : super(key: key);
+  });
 
   final String member;
   final Function(String) setMember;
@@ -561,17 +561,17 @@ class CategoryMemberContainer extends StatelessWidget {
                           ? isYou
                               ? getMemberNickname(member) == member
                                   ? "Owner (You)"
-                                  : getMemberNickname(member) + " (Owner - You)"
+                                  : "${getMemberNickname(member)} (Owner - You)"
                               : getMemberNickname(member) == member
                                   ? "Owner"
-                                  : getMemberNickname(member) + " (Owner)"
+                                  : "${getMemberNickname(member)} (Owner)"
                           : isYou
                               ? getMemberNickname(member) != "Me"
-                                  ? getMemberNickname(member) + " (Member - Me)"
+                                  ? "${getMemberNickname(member)} (Member - Me)"
                                   : "Me (Member)"
                               : getMemberNickname(member) == member
                                   ? "Member"
-                                  : getMemberNickname(member) + " (Member)",
+                                  : "${getMemberNickname(member)} (Member)",
                       fontSize: 15,
                       textColor: Theme.of(context).colorScheme.secondary,
                     ),
@@ -618,7 +618,7 @@ class CategoryMemberContainer extends StatelessWidget {
                       ),
                     ),
                   )
-                : SizedBox.shrink(),
+                : const SizedBox.shrink(),
           ],
         ),
       ),

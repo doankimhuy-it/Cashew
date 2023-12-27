@@ -56,7 +56,7 @@ void main() async {
       .decode(await rootBundle.loadString('assets/static/language-names.json'));
   await initializeSettings();
   tz.initializeTimeZones();
-  final String? locationName = await FlutterNativeTimezone.getLocalTimezone();
+  final String locationName = await FlutterNativeTimezone.getLocalTimezone();
   tz.setLocalLocation(tz.getLocation(locationName ?? "America/New_York"));
   iconObjects.sort((a, b) => (a.mostLikelyCategoryName ?? a.icon)
       .compareTo((b.mostLikelyCategoryName ?? b.icon)));
@@ -67,7 +67,7 @@ void main() async {
       builder: (context) => EasyLocalization(
         // The custom LocaleLoader only references the LangCode
         useOnlyLangCode: false,
-        assetLoader: RootBundleAssetLoaderCustomLocaleLoader(),
+        assetLoader: const RootBundleAssetLoaderCustomLocaleLoader(),
         supportedLocales: supportedLocales.values.toList(),
         path: 'assets/translations/generated',
         fallbackLocale: supportedLocales.values.toList().first,
@@ -90,7 +90,7 @@ GlobalKey<PageNavigationFrameworkState> pageNavigationFrameworkKey =
     GlobalKey();
 
 class InitializeApp extends StatefulWidget {
-  InitializeApp({Key? key}) : super(key: key);
+  const InitializeApp({super.key});
 
   @override
   State<InitializeApp> createState() => _InitializeAppState();
@@ -103,6 +103,7 @@ class _InitializeAppState extends State<InitializeApp> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: prefer_const_constructors
     return App(key: ValueKey("Main App"));
   }
 }
@@ -110,7 +111,7 @@ class _InitializeAppState extends State<InitializeApp> {
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -131,20 +132,20 @@ class App extends StatelessWidget {
       // },
       shortcuts: shortcuts,
       actions: keyboardIntents,
-      themeAnimationDuration: Duration(milliseconds: 300),
-      key: ValueKey(1),
+      themeAnimationDuration: const Duration(milliseconds: 300),
+      key: const ValueKey(1),
       title: 'Cashew',
       navigatorKey: navigatorKey,
       theme: ThemeData(
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           // the page route animation is set in pushRoute() - functions.dart
           TargetPlatform.android: appStateSettings["iOSNavigation"]
-              ? CupertinoPageTransitionsBuilder()
-              : ZoomPageTransitionsBuilder(),
-          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+              ? const CupertinoPageTransitionsBuilder()
+              : const ZoomPageTransitionsBuilder(),
+          TargetPlatform.iOS: const CupertinoPageTransitionsBuilder(),
         }),
         fontFamily: appStateSettings["font"],
-        fontFamilyFallback: ['Inter'],
+        fontFamilyFallback: const ['Inter'],
         colorScheme: getColorScheme(Brightness.light),
         useMaterial3: true,
         applyElevationOverlayColor: false,
@@ -171,12 +172,12 @@ class App extends StatelessWidget {
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           // the page route animation is set in pushRoute() - functions.dart
           TargetPlatform.android: appStateSettings["iOSNavigation"]
-              ? CupertinoPageTransitionsBuilder()
-              : ZoomPageTransitionsBuilder(),
-          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+              ? const CupertinoPageTransitionsBuilder()
+              : const ZoomPageTransitionsBuilder(),
+          TargetPlatform.iOS: const CupertinoPageTransitionsBuilder(),
         }),
         fontFamily: appStateSettings["font"],
-        fontFamilyFallback: ['Inter'],
+        fontFamilyFallback: const ['Inter'],
         colorScheme: getColorScheme(Brightness.dark),
         useMaterial3: true,
         typography: Typography.material2014(),
@@ -203,18 +204,18 @@ class App extends StatelessWidget {
       scrollBehavior: ScrollBehaviorOverride(),
       themeMode: getSettingConstants(appStateSettings)["theme"],
       home: AnimatedSwitcher(
-          duration: Duration(milliseconds: 1200),
+          duration: const Duration(milliseconds: 1200),
           switchInCurve: Curves.easeInOutCubic,
           switchOutCurve: Curves.easeInOutCubic,
           transitionBuilder: (Widget child, Animation<double> animation) {
             final inAnimation =
-                Tween<Offset>(begin: Offset(-1.0, 0.0), end: Offset(0.0, 0.0))
+                Tween<Offset>(begin: const Offset(-1.0, 0.0), end: const Offset(0.0, 0.0))
                     .animate(animation);
             final outAnimation =
-                Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0))
+                Tween<Offset>(begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0))
                     .animate(animation);
 
-            if (child.key == ValueKey("Onboarding")) {
+            if (child.key == const ValueKey("Onboarding")) {
               return ClipRect(
                 child: SlideTransition(
                   position: inAnimation,
@@ -228,7 +229,7 @@ class App extends StatelessWidget {
             }
           },
           child: appStateSettings["hasOnboarded"] != true
-              ? OnBoardingPage(key: ValueKey("Onboarding"))
+              ? const OnBoardingPage(key: ValueKey("Onboarding"))
               : PageNavigationFramework(key: pageNavigationFrameworkKey)),
       builder: (context, child) {
         if (kReleaseMode) {
@@ -251,7 +252,7 @@ class App extends StatelessWidget {
                         children: [
                           AnimatedContainer(
                             duration: getIsFullScreen(context)
-                                ? Duration(milliseconds: 1500)
+                                ? const Duration(milliseconds: 1500)
                                 : Duration.zero,
                             curve: Curves.easeInOutCubicEmphasized,
                             width: getWidthNavigationSidebar(context),
@@ -273,7 +274,7 @@ class App extends StatelessWidget {
                                       ? Container(
                                           color: Theme.of(context).canvasColor,
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                   hasRightSafeArea || hasLeftSafeArea
                                       ? Padding(
                                           padding: EdgeInsets.only(
@@ -288,16 +289,16 @@ class App extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.horizontal(
                                                 right: hasRightSafeArea
-                                                    ? Radius.circular(25)
-                                                    : Radius.circular(0),
+                                                    ? const Radius.circular(25)
+                                                    : const Radius.circular(0),
                                                 left: hasLeftSafeArea
-                                                    ? Radius.circular(25)
-                                                    : Radius.circular(0),
+                                                    ? const Radius.circular(25)
+                                                    : const Radius.circular(0),
                                               ),
                                               child:
-                                                  child ?? SizedBox.shrink()),
+                                                  child ?? const SizedBox.shrink()),
                                         )
-                                      : child ?? SizedBox.shrink(),
+                                      : child ?? const SizedBox.shrink(),
                                   GlobalSnackbar(key: snackbarKey),
                                   hasRightSafeArea
                                       ? Align(
@@ -308,7 +309,7 @@ class App extends StatelessWidget {
                                                 Theme.of(context).canvasColor,
                                           ),
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                   hasLeftSafeArea
                                       ? Align(
                                           alignment: Alignment.centerLeft,
@@ -318,7 +319,7 @@ class App extends StatelessWidget {
                                                 Theme.of(context).canvasColor,
                                           ),
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                   // Gradient fade to right overflow, disabled for now
                                   // because many pages have full screen elements/banners etc
                                   // hasRightSafeArea

@@ -61,7 +61,7 @@ class TransactionEntryTag extends StatelessWidget {
                         TransactionCategory? category = snapshot.data!;
                         return SubCategoryTag(category: category);
                       }
-                      return SizedBox.shrink();
+                      return const SizedBox.shrink();
                     },
                   );
                 }
@@ -166,7 +166,7 @@ class SubCategoryTag extends StatelessWidget {
       color: HexColor(category.colour,
           defaultColor: Theme.of(context).colorScheme.primary),
       name: (category.emojiIconName != null
-              ? ((category.emojiIconName ?? "") + " ")
+              ? ("${category.emojiIconName ?? ""} ")
               : "") +
           category.name,
       leading: category.emojiIconName != null
@@ -207,10 +207,8 @@ class ObjectivePercentTag extends StatelessWidget {
               child: TransactionTag(
                 color: HexColor(objective.colour,
                     defaultColor: Theme.of(context).colorScheme.primary),
-                name: objective.name +
-                    ": " +
-                    convertToPercent(percentageTowardsGoal * 100,
-                        numberDecimals: 0),
+                name: "${objective.name}: ${convertToPercent(percentageTowardsGoal * 100,
+                        numberDecimals: 0)}",
                 progress: percentageTowardsGoal,
               ),
             ),
@@ -227,7 +225,7 @@ class TransactionTag extends StatelessWidget {
   final Widget? leading;
   final double? progress;
 
-  TransactionTag({
+  const TransactionTag({super.key, 
     required this.color,
     required this.name,
     this.leading,
@@ -241,11 +239,11 @@ class TransactionTag extends StatelessWidget {
         color: color.withOpacity(progress != null ? 0.15 : 0.25),
         borderRadius: BorderRadius.circular(6),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 4.5, vertical: 1.05),
+      padding: const EdgeInsets.symmetric(horizontal: 4.5, vertical: 1.05),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          leading ?? SizedBox.shrink(),
+          leading ?? const SizedBox.shrink(),
           Flexible(
             child: TextFont(
               text: name,
@@ -287,7 +285,7 @@ class TransactionTag extends StatelessWidget {
         ),
       );
     }
-    return Padding(padding: EdgeInsets.only(left: 3), child: tagWidget);
+    return Padding(padding: const EdgeInsets.only(left: 3), child: tagWidget);
   }
 }
 
@@ -305,7 +303,7 @@ class SharedBudgetLabel extends StatelessWidget {
               ? Padding(
                   padding: const EdgeInsets.only(top: 2.0),
                   child: InfiniteRotationAnimation(
-                    duration: Duration(milliseconds: 5000),
+                    duration: const Duration(milliseconds: 5000),
                     child: Icon(
                       transaction.sharedStatus == SharedStatus.waiting
                           ? appStateSettings["outlinedIcons"]
@@ -339,12 +337,12 @@ class SharedBudgetLabel extends StatelessWidget {
                     color: getColor(context, "black").withOpacity(0.7),
                   ),
                 ),
-          SizedBox(width: 2),
+          const SizedBox(width: 2),
           Expanded(
             child: Row(
               children: [
                 transaction.sharedReferenceBudgetPk == null
-                    ? SizedBox.shrink()
+                    ? const SizedBox.shrink()
                     : Expanded(
                         child: StreamBuilder<Budget>(
                           stream: database
@@ -353,7 +351,7 @@ class SharedBudgetLabel extends StatelessWidget {
                             if (snapshot.hasData) {
                               return TextFont(
                                 overflow: TextOverflow.ellipsis,
-                                text: (transaction.transactionOwnerEmail
+                                text: "${transaction.transactionOwnerEmail
                                                 .toString() ==
                                             appStateSettings["currentUserEmail"]
                                         ? getMemberNickname(appStateSettings[
@@ -371,9 +369,7 @@ class SharedBudgetLabel extends StatelessWidget {
                                                     "currentUserEmail"])
                                             : getMemberNickname(transaction
                                                 .transactionOwnerEmail
-                                                .toString())) +
-                                    " for " +
-                                    snapshot.data!.name,
+                                                .toString())} for ${snapshot.data!.name}",
                                 fontSize: 12.5,
                                 textColor:
                                     getColor(context, "black").withOpacity(0.7),

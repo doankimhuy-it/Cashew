@@ -47,14 +47,14 @@ class _UpcomingOverdueTransactionsState
     extends State<UpcomingOverdueTransactions> {
   late bool? overdueTransactions = widget.overdueTransactions;
   String? searchValue;
-  FocusNode _searchFocusNode = FocusNode();
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     String pageId = "OverdueUpcoming";
     return WillPopScope(
       onWillPop: () async {
-        if ((globalSelectedID.value[pageId] ?? []).length > 0) {
+        if ((globalSelectedID.value[pageId] ?? []).isNotEmpty) {
           globalSelectedID.value[pageId] = [];
           globalSelectedID.notifyListeners();
           return false;
@@ -71,7 +71,7 @@ class _UpcomingOverdueTransactionsState
               fab: AnimateFABDelayed(
                 fab: FAB(
                   tooltip: "add-upcoming".tr(),
-                  openPage: AddTransactionPage(
+                  openPage: const AddTransactionPage(
                     selectedType: TransactionSpecialType.upcoming,
                     routesToPopAfterDelete: RoutesToPopAfterDelete.None,
                   ),
@@ -95,7 +95,7 @@ class _UpcomingOverdueTransactionsState
                     action: () {
                       openBottomSheet(
                           context,
-                          PopupFramework(
+                          const PopupFramework(
                             hasPadding: false,
                             child: UpcomingOverdueSettings(),
                           ));
@@ -125,11 +125,11 @@ class _UpcomingOverdueTransactionsState
                       horizontal: getHorizontalPaddingConstrained(context)),
                   child: Row(
                     children: [
-                      SizedBox(width: 13),
+                      const SizedBox(width: 13),
                       Flexible(
                         child: AnimatedSize(
                           clipBehavior: Clip.none,
-                          duration: Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 500),
                           child: SlidingSelectorIncomeExpense(
                             useHorizontalPaddingConstrained: false,
                             initialIndex: overdueTransactions == null
@@ -145,7 +145,7 @@ class _UpcomingOverdueTransactionsState
                               else if (index == 3) overdueTransactions = true;
                               setState(() {});
                             },
-                            options: ["all", "upcoming", "overdue"],
+                            options: const ["all", "upcoming", "overdue"],
                             customPadding: EdgeInsets.zero,
                           ),
                         ),
@@ -155,7 +155,7 @@ class _UpcomingOverdueTransactionsState
                             ? Padding(
                                 padding: const EdgeInsets.only(left: 7.0),
                                 child: ButtonIcon(
-                                  key: ValueKey(1),
+                                  key: const ValueKey(1),
                                   onTap: () {
                                     setState(() {
                                       searchValue = "";
@@ -168,10 +168,10 @@ class _UpcomingOverdueTransactionsState
                                 ),
                               )
                             : Container(
-                                key: ValueKey(2),
+                                key: const ValueKey(2),
                               ),
                       ),
-                      SizedBox(width: 13),
+                      const SizedBox(width: 13),
                     ],
                   ),
                 ),
@@ -206,7 +206,7 @@ class _UpcomingOverdueTransactionsState
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(
                 child: SizedBox(height: 15),
               ),
               StreamBuilder<List<Transaction>>(
@@ -215,7 +215,7 @@ class _UpcomingOverdueTransactionsState
                     searchString: searchValue),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    if (snapshot.data!.length <= 0) {
+                    if (snapshot.data!.isEmpty) {
                       return SliverToBoxAdapter(
                         child: Center(
                           child:
@@ -227,9 +227,9 @@ class _UpcomingOverdueTransactionsState
                       items: snapshot.data!,
                       areItemsTheSame: (a, b) =>
                           a.transactionPk == b.transactionPk,
-                      insertDuration: Duration(milliseconds: 500),
-                      removeDuration: Duration(milliseconds: 500),
-                      updateDuration: Duration(milliseconds: 500),
+                      insertDuration: const Duration(milliseconds: 500),
+                      removeDuration: const Duration(milliseconds: 500),
+                      updateDuration: const Duration(milliseconds: 500),
                       itemBuilder: (BuildContext context,
                           Animation<double> animation,
                           Transaction item,
@@ -252,18 +252,18 @@ class _UpcomingOverdueTransactionsState
                                 transaction: item,
                                 listID: pageId,
                               ),
-                              SizedBox(height: 12),
+                              const SizedBox(height: 12),
                             ],
                           ),
                         );
                       },
                     );
                   } else {
-                    return SliverToBoxAdapter();
+                    return const SliverToBoxAdapter();
                   }
                 },
               ),
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(
                 child: SizedBox(height: 75),
               ),
             ],
@@ -299,7 +299,7 @@ class CenteredAmountAndNumTransactions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         StreamBuilder<TotalWithCount?>(
           stream: totalWithCountStream,
           builder: (context, snapshot) {
@@ -317,7 +317,7 @@ class CenteredAmountAndNumTransactions extends StatelessWidget {
                           textColor: getColor(context, "textLight"),
                         )
                       : Container(
-                          key: ValueKey(2),
+                          key: const ValueKey(2),
                         ),
                 ),
                 Tappable(
@@ -342,20 +342,20 @@ class CenteredAmountAndNumTransactions extends StatelessWidget {
                             ? AnimatedSizeSwitcher(
                                 child: totalSpent == 0
                                     ? Container(
-                                        key: ValueKey(1),
+                                        key: const ValueKey(1),
                                       )
                                     : IncomeOutcomeArrow(
-                                        key: ValueKey(2),
+                                        key: const ValueKey(2),
                                         color: textColor,
                                         isIncome: totalSpent > 0,
                                         iconSize: 30,
                                         width: 20,
                                       ),
                               )
-                            : SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                         CountNumber(
                           count: totalSpent.abs(),
-                          duration: Duration(milliseconds: 450),
+                          duration: const Duration(milliseconds: 450),
                           initialCount: (0),
                           textBuilder: (number) {
                             return TextFont(
@@ -375,11 +375,9 @@ class CenteredAmountAndNumTransactions extends StatelessWidget {
                   ),
                 ),
                 TextFont(
-                  text: totalCount.toString() +
-                      " " +
-                      (totalCount == 1
+                  text: "$totalCount ${totalCount == 1
                           ? "transaction".tr().toLowerCase()
-                          : "transactions".tr().toLowerCase()),
+                          : "transactions".tr().toLowerCase()}",
                   fontSize: 16,
                   textColor: getColor(context, "textLight"),
                 ),
@@ -387,7 +385,7 @@ class CenteredAmountAndNumTransactions extends StatelessWidget {
             );
           },
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }
@@ -447,7 +445,7 @@ class MarkAsPaidOnDaySetting extends StatelessWidget {
           ? Icons.event_available_outlined
           : Icons.event_available_rounded,
       initial: appStateSettings["markAsPaidOnOriginalDay"].toString(),
-      items: ["false", "true"],
+      items: const ["false", "true"],
       onChanged: (value) async {
         updateSettings(
             "markAsPaidOnOriginalDay", value == "true" ? true : false,
@@ -466,7 +464,7 @@ class UpcomingOverdueSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         AutoPayUpcomingSetting(),
         AutoPayRepetitiveSetting(),

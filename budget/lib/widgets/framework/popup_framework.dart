@@ -6,8 +6,8 @@ import 'package:budget/widgets/text_widgets.dart';
 import 'package:budget/colors.dart';
 
 class PopupFramework extends StatelessWidget {
-  PopupFramework({
-    Key? key,
+  const PopupFramework({
+    super.key,
     required this.child,
     this.title,
     this.subtitle,
@@ -19,7 +19,7 @@ class PopupFramework extends StatelessWidget {
     this.hasBottomSafeArea = true,
     this.icon,
     this.outsideExtraWidget,
-  }) : super(key: key);
+  });
   final Widget child;
   final String? title;
   final String? subtitle;
@@ -44,7 +44,7 @@ class PopupFramework extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (title != null) SizedBox(height: 17),
+              if (title != null) const SizedBox(height: 17),
               getPlatform() == PlatformOS.isIOS
                   ? Stack(
                       alignment: Alignment.topLeft,
@@ -56,7 +56,7 @@ class PopupFramework extends StatelessWidget {
                           children: [
                             if (title != null)
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 18),
+                                padding: const EdgeInsets.symmetric(horizontal: 18),
                                 child: TextFont(
                                   text: (title ?? "").capitalizeFirstofEach,
                                   fontSize: 23,
@@ -68,7 +68,7 @@ class PopupFramework extends StatelessWidget {
                             if (subtitle != null ||
                                 customSubtitleWidget != null)
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 18),
+                                padding: const EdgeInsets.symmetric(horizontal: 18),
                                 child: customSubtitleWidget ??
                                     TextFont(
                                       text: subtitle ?? "",
@@ -83,22 +83,22 @@ class PopupFramework extends StatelessWidget {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .secondaryContainer,
-                                margin: EdgeInsets.only(top: 10, bottom: 5),
+                                margin: const EdgeInsets.only(top: 10, bottom: 5),
                               )
                             else
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                           ],
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
                             left: 10,
                           ),
-                          child: icon ?? SizedBox.shrink(),
+                          child: icon ?? const SizedBox.shrink(),
                         )
                       ],
                     )
                   : Padding(
-                      padding: EdgeInsets.only(left: 18, right: 18, top: 5),
+                      padding: const EdgeInsets.only(left: 18, right: 18, top: 5),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,7 +120,7 @@ class PopupFramework extends StatelessWidget {
                                     customSubtitleWidget != null)
                                   Padding(
                                     padding:
-                                        EdgeInsets.only(left: 2, bottom: 4),
+                                        const EdgeInsets.only(left: 2, bottom: 4),
                                     child: customSubtitleWidget ??
                                         TextFont(
                                           text: subtitle ?? "",
@@ -131,15 +131,15 @@ class PopupFramework extends StatelessWidget {
                               ],
                             ),
                           ),
-                          icon ?? SizedBox.shrink()
+                          icon ?? const SizedBox.shrink()
                         ],
                       ),
                     ),
               if (title != null || underTitleSpace == true)
-                SizedBox(height: 13),
+                const SizedBox(height: 13),
               Padding(
                 padding: hasPadding
-                    ? EdgeInsets.symmetric(horizontal: 18)
+                    ? const EdgeInsets.symmetric(horizontal: 18)
                     : EdgeInsets.zero,
                 child: child,
               ),
@@ -162,7 +162,7 @@ class PopupFramework extends StatelessWidget {
                       // print(bottomSafeAreaPadding);
                       return SizedBox(height: bottomSafeAreaPadding);
                     })
-                  : SizedBox.shrink()
+                  : const SizedBox.shrink()
             ],
           ),
         ),

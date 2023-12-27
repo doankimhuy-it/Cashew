@@ -6,8 +6,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 
 class Tappable extends StatelessWidget {
-  Tappable({
-    Key? key,
+  const Tappable({
+    super.key,
     this.onTap,
     this.onHighlightChanged,
     this.borderRadius = 0,
@@ -17,7 +17,7 @@ class Tappable extends StatelessWidget {
     required this.child,
     this.onLongPress,
     this.hasOpacity = true,
-  }) : super(key: key);
+  });
 
   final double borderRadius;
   final BorderRadius? customBorderRadius;
@@ -33,7 +33,6 @@ class Tappable extends StatelessWidget {
   Widget build(BuildContext context) {
     if (getPlatform() == PlatformOS.isIOS) {
       return FadedButton(
-        child: child,
         onTap: onTap,
         borderRadius: customBorderRadius ?? BorderRadius.circular(borderRadius),
         color: color ?? Theme.of(context).canvasColor,
@@ -46,6 +45,7 @@ class Tappable extends StatelessWidget {
               }
             : null,
         pressedOpacity: hasOpacity ? 0.5 : 1,
+        child: child,
       );
     }
 
@@ -58,8 +58,8 @@ class Tappable extends StatelessWidget {
         borderRadius: customBorderRadius ?? BorderRadius.circular(borderRadius),
         onTap: onTap,
         onHighlightChanged: onHighlightChanged,
-        child: child,
         onLongPress: onLongPress,
+        child: child,
       ),
     );
     if (onLongPress != null) {
@@ -75,8 +75,8 @@ class Tappable extends StatelessWidget {
     }
 
     return Listener(
-      child: tappable,
       onPointerDown: onPointerDown,
+      child: tappable,
     );
   }
 }
@@ -225,8 +225,8 @@ class _FadedButtonState extends State<FadedButton>
     }
 
     return Listener(
-      child: tappable,
       onPointerDown: onPointerDown,
+      child: tappable,
     );
   }
 }

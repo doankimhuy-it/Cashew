@@ -11,6 +11,8 @@ import 'package:budget/widgets/wallet_entry.dart';
 import 'package:flutter/material.dart';
 
 class HomePageWalletList extends StatelessWidget {
+  const HomePageWalletList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return KeepAliveClientMixin(
@@ -32,17 +34,17 @@ class HomePageWalletList extends StatelessWidget {
                   return Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      if (snapshot.hasData && snapshot.data!.length > 0)
-                        SizedBox(height: 8),
+                      if (snapshot.hasData && snapshot.data!.isNotEmpty)
+                        const SizedBox(height: 8),
                       for (WalletWithDetails walletDetails in snapshot.data!)
                         WalletEntryRow(
                           selected: appStateSettings["selectedWalletPk"] ==
                               walletDetails.wallet.walletPk,
                           walletWithDetails: walletDetails,
                         ),
-                      if (snapshot.hasData && snapshot.data!.length > 0)
-                        SizedBox(height: 8),
-                      if (snapshot.hasData && snapshot.data!.length <= 0)
+                      if (snapshot.hasData && snapshot.data!.isNotEmpty)
+                        const SizedBox(height: 8),
+                      if (snapshot.hasData && snapshot.data!.isEmpty)
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -51,7 +53,7 @@ class HomePageWalletList extends StatelessWidget {
                                 onTap: () {
                                   openBottomSheet(
                                     context,
-                                    EditHomePagePinnedWalletsPopup(
+                                    const EditHomePagePinnedWalletsPopup(
                                       homePageWidgetDisplay:
                                           HomePageWidgetDisplay.WalletList,
                                     ),

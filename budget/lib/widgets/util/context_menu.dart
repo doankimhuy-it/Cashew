@@ -32,7 +32,7 @@ class CustomContextMenu extends StatelessWidget {
               },
             ),
             FadeIn(
-              duration: Duration(milliseconds: 125),
+              duration: const Duration(milliseconds: 125),
               child: AdaptiveTextSelectionToolbar.buttonItems(
                 anchors: TextSelectionToolbarAnchors(
                   primaryAnchor: newOffset,
@@ -84,7 +84,7 @@ class _ContextMenuRegionState extends State<ContextMenuRegion> {
     super.dispose();
   }
 
-  Offset position = Offset(0, 0);
+  Offset position = const Offset(0, 0);
 
   @override
   Widget build(BuildContext context) {

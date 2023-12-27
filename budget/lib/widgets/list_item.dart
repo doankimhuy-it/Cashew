@@ -2,7 +2,7 @@ import 'package:budget/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
 
 class ListItem extends StatelessWidget {
-  ListItem(this.text);
+  const ListItem(this.text, {super.key});
   final String text;
 
   @override
@@ -12,7 +12,7 @@ class ListItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFont(
+          const TextFont(
             text: "• ",
             maxLines: 1,
             fontSize: 15.5,

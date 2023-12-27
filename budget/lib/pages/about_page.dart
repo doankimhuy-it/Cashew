@@ -22,7 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
 
 class AboutPage extends StatelessWidget {
-  const AboutPage({Key? key}) : super(key: key);
+  const AboutPage({super.key});
 
   showChangelogForce(BuildContext context) {
     showChangelog(
@@ -37,7 +37,7 @@ class AboutPage extends StatelessWidget {
           label: "view-detailed-changelog".tr(),
           onTap: () {
             Navigator.pop(context);
-            pushRoute(context, DetailedChangelogPage());
+            pushRoute(context, const DetailedChangelogPage());
           },
         ),
       ),
@@ -60,7 +60,7 @@ class AboutPage extends StatelessWidget {
             spacing: 10,
             runSpacing: 10,
             children: [
-              Image(
+              const Image(
                 image: AssetImage("assets/icon/icon-small.png"),
                 height: 70,
               ),
@@ -74,7 +74,7 @@ class AboutPage extends StatelessWidget {
                       if (allowDebugFlags) {
                         pushRoute(
                           context,
-                          DebugPage(),
+                          const DebugPage(),
                         );
                       }
                     },
@@ -111,7 +111,7 @@ class AboutPage extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Tappable(
@@ -135,8 +135,8 @@ class AboutPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(MoreIcons.github),
-                      SizedBox(width: 10),
+                      const Icon(MoreIcons.github),
+                      const SizedBox(width: 10),
                       Flexible(
                         child: TextFont(
                           text: "app-is-open-source"
@@ -152,7 +152,7 @@ class AboutPage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 7),
+        const SizedBox(height: 7),
         Row(
           children: [
             Expanded(
@@ -163,7 +163,7 @@ class AboutPage extends StatelessWidget {
                   onTap: () {
                     pushRoute(
                       context,
-                      OnBoardingPage(
+                      const OnBoardingPage(
                         popNavigationWhenDone: true,
                         showPreviewDemoButton: false,
                       ),
@@ -173,7 +173,7 @@ class AboutPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(right: 15),
@@ -188,7 +188,7 @@ class AboutPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
           child: Center(
@@ -281,7 +281,7 @@ class AboutPage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Row(
           children: [
             Expanded(
@@ -297,16 +297,14 @@ class AboutPage extends StatelessWidget {
                         context: context,
                         applicationVersion: getVersionString(),
                         applicationLegalese:
-                            "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE." +
-                                "\n\n" +
-                                "exchange-rate-notice-description".tr());
+                            "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n${"exchange-rate-notice-description".tr()}");
                   },
                 ),
               ),
             )
           ],
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Row(
           children: [
             Expanded(
@@ -325,7 +323,7 @@ class AboutPage extends StatelessWidget {
             )
           ],
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Button(
@@ -366,16 +364,16 @@ class AboutPage extends StatelessWidget {
                                 child: SyncCloudBackupButton(
                                   onTap: () async {
                                     Navigator.pop(context);
-                                    pushRoute(context, AccountsPage());
+                                    pushRoute(context, const AccountsPage());
                                   },
                                 ),
                               ),
-                              SizedBox(width: 18),
+                              const SizedBox(width: 18),
                               Expanded(
                                 child: BackupsCloudBackupButton(
                                   onTap: () async {
                                     Navigator.pop(context);
-                                    pushRoute(context, AccountsPage());
+                                    pushRoute(context, const AccountsPage());
                                   },
                                 ),
                               ),
@@ -417,21 +415,21 @@ class AboutPage extends StatelessWidget {
             textColor: Theme.of(context).colorScheme.onError,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
           child: Center(
             child: TextFont(
-              text: "made-in-canada".tr() + " " + "🍁",
+              text: "${"made-in-canada".tr()} 🍁",
               fontSize: 14,
               textAlign: TextAlign.center,
               maxLines: 5,
             ),
           ),
         ),
-        SizedBox(height: 20),
-        HorizontalBreak(),
-        SizedBox(height: 10),
+        const SizedBox(height: 20),
+        const HorizontalBreak(),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
           child: Center(
@@ -469,19 +467,19 @@ class AboutPage extends StatelessWidget {
             ),
           ),
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Flutter",
           link: "https://flutter.dev/",
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Google Cloud APIs",
           link: "https://cloud.google.com/",
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Drift SQL Database",
           link: "https://drift.simonbinder.eu/",
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "FL Charts",
           link: "https://github.com/imaNNeoFighT/fl_chart",
         ),
@@ -513,71 +511,71 @@ class AboutPage extends StatelessWidget {
                 : getColor(context, "lightDarkAccent")),
           ),
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Italian",
           list: ["Thomas B."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Polish",
           list: ["Michał S."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Serbian",
           list: ["Jovan P."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Swahili",
           list: ["Anthony K."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "German",
           list: ["Fabian S."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Arabic",
           list: ["Dorra Y."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Portuguese",
           list: ["Alexander G.", "Jean J.", "João P"],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Bulgarian",
           list: ["Денислав С."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Chinese (Simplified)",
           list: ["Clyde"],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Chinese (Traditional)",
           list: ["qazlll456"],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Hindi",
           list: ["Dikshant S."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Vietnamese",
           list: ["Ngọc A."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "French",
           list: ["Antoine C."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Indonesian",
           list: ["Gusairi P."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Ukrainian",
           list: ["Chris M."],
         ),
-        AboutInfoBox(
+        const AboutInfoBox(
           title: "Russian",
           list: ["Ilya A."],
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }
@@ -594,13 +592,13 @@ Future clearDatabase(BuildContext context) async {
 
 class AboutInfoBox extends StatelessWidget {
   const AboutInfoBox({
-    Key? key,
+    super.key,
     required this.title,
     this.link,
     this.list,
     this.color,
     this.padding,
-  }) : super(key: key);
+  });
 
   final String title;
   final String? link;
@@ -638,7 +636,7 @@ class AboutInfoBox extends StatelessWidget {
                 textAlign: TextAlign.center,
                 maxLines: 5,
               ),
-              SizedBox(height: 6),
+              const SizedBox(height: 6),
               if (link != null)
                 TextFont(
                   text: link ?? "",

@@ -55,7 +55,7 @@ class EmptyPieChart extends StatelessWidget {
 
 class PieChartWrapper extends StatelessWidget {
   const PieChartWrapper({
-    Key? key,
+    super.key,
     required this.data,
     required this.totalSpent,
     required this.setSelectedCategory,
@@ -63,7 +63,7 @@ class PieChartWrapper extends StatelessWidget {
     required this.pieChartDisplayStateKey,
     this.middleColor,
     this.percentLabelOnTop = false,
-  }) : super(key: key);
+  });
   final List<CategoryWithTotal> data;
   final double totalSpent;
   final Function(String categoryPk, TransactionCategory? category)
@@ -86,7 +86,7 @@ class PieChartWrapper extends StatelessWidget {
         dataFiltered.add(categoryWithTotal);
       }
     }
-    return Container(
+    return SizedBox(
       width: enableDoubleColumn(context) == false ? 200 : 300,
       height: enableDoubleColumn(context) == false ? 200 : 300,
       child: Stack(
@@ -94,11 +94,11 @@ class PieChartWrapper extends StatelessWidget {
         children: [
           ScaledAnimatedSwitcher(
             keyToWatch:
-                (data.length <= 0 || numberZeroTransactions == data.length)
+                (data.isEmpty || numberZeroTransactions == data.length)
                     .toString(),
-            child: data.length <= 0 || numberZeroTransactions == data.length
+            child: data.isEmpty || numberZeroTransactions == data.length
                 ? Container(
-                    key: ValueKey(1),
+                    key: const ValueKey(1),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Theme.of(context)
@@ -148,13 +148,13 @@ class PieChartWrapper extends StatelessWidget {
 GlobalKey<PieChartDisplayState> pieChartDisplayStatePastBudgetKey = GlobalKey();
 
 class PieChartDisplay extends StatefulWidget {
-  PieChartDisplay({
-    Key? key,
+  const PieChartDisplay({
+    super.key,
     required this.data,
     required this.totalSpent,
     required this.setSelectedCategory,
     this.percentLabelOnTop = false,
-  }) : super(key: key);
+  });
   final List<CategoryWithTotal> data;
   final double totalSpent;
   final Function(String categoryPk, TransactionCategory? category)
@@ -173,13 +173,13 @@ class PieChartDisplayState extends State<PieChartDisplay> {
   void initState() {
     super.initState();
     if (!appStateSettings["batterySaver"]) {
-      Future.delayed(Duration(milliseconds: 0), () {
+      Future.delayed(const Duration(milliseconds: 0), () {
         setState(() {
           scaleIn = true;
         });
       });
     }
-    Future.delayed(Duration(milliseconds: 500), () async {
+    Future.delayed(const Duration(milliseconds: 500), () async {
       int numCategories = (await database.getAllCategories()).length;
       for (int i = 1; i <= numCategories + 25; i++) {
         await Future.delayed(const Duration(milliseconds: 70));
@@ -219,8 +219,8 @@ class PieChartDisplayState extends State<PieChartDisplay> {
   @override
   Widget build(BuildContext context) {
     return PinWheelReveal(
-      delay: Duration(milliseconds: 0),
-      duration: Duration(milliseconds: 850),
+      delay: const Duration(milliseconds: 0),
+      duration: const Duration(milliseconds: 850),
       child: PieChart(
         PieChartData(
           startDegreeOffset: -45,
@@ -263,8 +263,8 @@ class PieChartDisplayState extends State<PieChartDisplay> {
           centerSpaceRadius: 0,
           sections: showingSections(),
         ),
-        swapAnimationDuration: Duration(milliseconds: 1300),
-        swapAnimationCurve: ElasticOutCurve(0.6),
+        swapAnimationDuration: const Duration(milliseconds: 1300),
+        swapAnimationCurve: const ElasticOutCurve(0.6),
       ),
     );
   }
@@ -338,7 +338,7 @@ class _Badge extends StatelessWidget {
   final bool percentLabelOnTop;
 
   const _Badge({
-    Key? key,
+    super.key,
     required this.scale,
     required this.color,
     required this.iconName,
@@ -348,20 +348,20 @@ class _Badge extends StatelessWidget {
     required this.showLabels,
     required this.categoryColor,
     required this.percentLabelOnTop,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     bool showIcon = percent.abs() < 5;
     return AnimatedScale(
-      curve: showIcon ? Curves.easeInOutCubicEmphasized : ElasticOutCurve(0.6),
+      curve: showIcon ? Curves.easeInOutCubicEmphasized : const ElasticOutCurve(0.6),
       duration:
-          showIcon ? Duration(milliseconds: 700) : Duration(milliseconds: 1300),
+          showIcon ? const Duration(milliseconds: 700) : const Duration(milliseconds: 1300),
       scale: showIcon && isTouched == false
           ? 0
           : (showLabels || isTouched ? (showIcon ? 1 : scale) : 0),
       child: AnimatedSwitcher(
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         child: Container(
           key: ValueKey(iconName),
           width: 45,
@@ -377,15 +377,15 @@ class _Badge extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               AnimatedOpacity(
-                duration: Duration(milliseconds: 200),
-                opacity: this.scale == 1 ? 0 : 1,
+                duration: const Duration(milliseconds: 200),
+                opacity: scale == 1 ? 0 : 1,
                 child: Center(
                   child: Transform.translate(
                     offset: Offset(0, percentLabelOnTop ? -34 : 34),
                     child: IntrinsicWidth(
                       child: Container(
                         height: 20,
-                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(
@@ -396,14 +396,14 @@ class _Badge extends StatelessWidget {
                         ),
                         child: Center(
                           child: MediaQuery(
+                            data: MediaQuery.of(context)
+                                .copyWith(textScaler: const TextScaler.linear(1.0)),
                             child: TextFont(
-                              text: percent.toStringAsFixed(0) + '%',
+                              text: '${percent.toStringAsFixed(0)}%',
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               textAlign: TextAlign.center,
                             ),
-                            data: MediaQuery.of(context)
-                                .copyWith(textScaler: TextScaler.linear(1.0)),
                           ),
                         ),
                       ),
@@ -435,7 +435,7 @@ class _Badge extends StatelessWidget {
                           : Colors.transparent,
                       shape: BoxShape.circle,
                     ),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: emojiIconName != null
                         ? Container()
                         : CacheCategoryIcon(
@@ -450,7 +450,7 @@ class _Badge extends StatelessWidget {
                       emojiIconName: emojiIconName,
                       size: 34 * 0.7,
                     )
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
             ],
           ),
         ),

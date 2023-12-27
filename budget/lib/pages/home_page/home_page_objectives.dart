@@ -37,7 +37,7 @@ class _HomePageObjectivesState extends State<HomePageObjectives> {
             .$1,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data!.length == 0) {
+            if (snapshot.data!.isEmpty) {
               return AddButton(
                 onTap: () {
                   openBottomSheet(
@@ -91,7 +91,7 @@ class _HomePageObjectivesState extends State<HomePageObjectives> {
                   },
                   height: null,
                   width: null,
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                   // icon: Icons.format_list_bulleted_add,
                 ),
               ),
@@ -128,6 +128,9 @@ class _HomePageObjectivesState extends State<HomePageObjectives> {
                             addAutomaticKeepAlives: true,
                             clipBehavior: Clip.none,
                             scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                            ),
                             children: [
                               for (Widget widget in objectiveItems)
                                 Padding(
@@ -138,9 +141,6 @@ class _HomePageObjectivesState extends State<HomePageObjectives> {
                                   ),
                                 )
                             ],
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
                           ),
                         )
                       : CarouselSlider(
@@ -159,7 +159,7 @@ class _HomePageObjectivesState extends State<HomePageObjectives> {
               ],
             );
           } else {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
         },
       ),
@@ -216,9 +216,9 @@ class EditHomePagePinnedGoalsPopup extends StatelessWidget {
                   if (showGoalsTotalLabelSetting)
                     ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child: TotalSpentToggle(isForGoalTotal: true),
+                      child: const TotalSpentToggle(isForGoalTotal: true),
                     ),
-                  if (allObjectives.length <= 0)
+                  if (allObjectives.isEmpty)
                     NoResultsCreate(
                       message: objectiveType == ObjectiveType.goal
                           ? "no-goals-found".tr()
@@ -286,7 +286,7 @@ class EditHomePagePinnedGoalsPopup extends StatelessWidget {
                       );
                     },
                   ),
-                  if (allObjectives.length > 0)
+                  if (allObjectives.isNotEmpty)
                     AddButton(
                       onTap: () {},
                       height: 50,
@@ -302,7 +302,7 @@ class EditHomePagePinnedGoalsPopup extends StatelessWidget {
                         objectiveType: objectiveType,
                       ),
                       afterOpenPage: () {
-                        Future.delayed(Duration(milliseconds: 100), () {
+                        Future.delayed(const Duration(milliseconds: 100), () {
                           bottomSheetControllerGlobalCustomAssigned
                               ?.snapToExtent(0);
                         });

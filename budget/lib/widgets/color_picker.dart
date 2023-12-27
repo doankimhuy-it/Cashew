@@ -36,7 +36,7 @@ class ColorPicker extends StatefulWidget {
   final double? colorSliderPosition;
   final double? shadeSliderPosition;
   final Function(Color, double, double) onChange;
-  ColorPicker({
+  const ColorPicker({super.key, 
     required this.width,
     required this.ringColor,
     required this.ringSize,
@@ -50,20 +50,20 @@ class ColorPicker extends StatefulWidget {
 
 class _ColorPickerState extends State<ColorPicker> {
   final List<Color> _colors = [
-    Color.fromARGB(255, 255, 255, 255),
-    Color.fromARGB(255, 255, 0, 0),
-    Color.fromARGB(255, 255, 128, 0),
-    Color.fromARGB(255, 255, 255, 0),
-    Color.fromARGB(255, 128, 255, 0),
-    Color.fromARGB(255, 0, 255, 0),
-    Color.fromARGB(255, 0, 255, 128),
-    Color.fromARGB(255, 0, 255, 255),
-    Color.fromARGB(255, 0, 128, 255),
-    Color.fromARGB(255, 0, 0, 255),
-    Color.fromARGB(255, 127, 0, 255),
-    Color.fromARGB(255, 255, 0, 255),
-    Color.fromARGB(255, 255, 0, 127),
-    Color.fromARGB(255, 255, 0, 0),
+    const Color.fromARGB(255, 255, 255, 255),
+    const Color.fromARGB(255, 255, 0, 0),
+    const Color.fromARGB(255, 255, 128, 0),
+    const Color.fromARGB(255, 255, 255, 0),
+    const Color.fromARGB(255, 128, 255, 0),
+    const Color.fromARGB(255, 0, 255, 0),
+    const Color.fromARGB(255, 0, 255, 128),
+    const Color.fromARGB(255, 0, 255, 255),
+    const Color.fromARGB(255, 0, 128, 255),
+    const Color.fromARGB(255, 0, 0, 255),
+    const Color.fromARGB(255, 127, 0, 255),
+    const Color.fromARGB(255, 255, 0, 255),
+    const Color.fromARGB(255, 255, 0, 127),
+    const Color.fromARGB(255, 255, 0, 0),
   ];
   double _colorSliderPosition = 0;
   bool _tapDownColor = false;
@@ -201,7 +201,7 @@ class _ColorPickerState extends State<ColorPicker> {
             color: _shadedColor,
             shape: BoxShape.circle,
           ),
-          margin: EdgeInsets.only(bottom: 5),
+          margin: const EdgeInsets.only(bottom: 5),
         ),
         Center(
           child: GestureDetector(
@@ -231,7 +231,7 @@ class _ColorPickerState extends State<ColorPicker> {
             //This outside padding makes it much easier to grab the   slider because the gesture detector has
             // the extra padding to recognize gestures inside of
             child: Padding(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: Container(
                 width: widget.width,
                 height: 15,
@@ -242,8 +242,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 child: AnimatedScale(
                   alignment:
                       Alignment(_colorSliderPosition / widget.width * 2 - 1, 0),
-                  duration: Duration(milliseconds: 1000),
-                  curve: ElasticOutCurve(0.5),
+                  duration: const Duration(milliseconds: 1000),
+                  curve: const ElasticOutCurve(0.5),
                   scale: _tapDownColor ? 1.5 : 1,
                   child: CustomPaint(
                     painter: _SliderIndicatorPainter(_colorSliderPosition,
@@ -282,7 +282,7 @@ class _ColorPickerState extends State<ColorPicker> {
             //This outside padding makes it much easier to grab the slider because the gesture detector has
             // the extra padding to recognize gestures inside of
             child: Padding(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: Container(
                 width: widget.width,
                 height: 15,
@@ -294,8 +294,8 @@ class _ColorPickerState extends State<ColorPicker> {
                 child: AnimatedScale(
                   alignment:
                       Alignment(_shadeSliderPosition / widget.width * 2 - 1, 0),
-                  duration: Duration(milliseconds: 1000),
-                  curve: ElasticOutCurve(0.5),
+                  duration: const Duration(milliseconds: 1000),
+                  curve: const ElasticOutCurve(0.5),
                   scale: _tapDownShade ? 1.5 : 1,
                   child: CustomPaint(
                     painter: _SliderIndicatorPainter(_shadeSliderPosition,

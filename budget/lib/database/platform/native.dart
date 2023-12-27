@@ -14,7 +14,7 @@ Future<FinanceDatabase> constructDb(String dbName,
     // put the database file, called db.sqlite here, into the documents folder
     // for your app.
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, dbName + '.sqlite'));
+    final file = File(p.join(dbFolder.path, '$dbName.sqlite'));
     // return NativeDatabase(file);
     QueryExecutor foregroundExecutor = NativeDatabase(file);
     QueryExecutor backgroundExecutor = NativeDatabase.createInBackground(file);

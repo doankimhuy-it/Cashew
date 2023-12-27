@@ -23,7 +23,7 @@ refreshPageFrameworks() async {
 
 class PageFramework extends StatefulWidget {
   const PageFramework({
-    Key? key,
+    super.key,
     this.title = "",
     this.titleWidget,
     this.slivers = const [],
@@ -61,7 +61,7 @@ class PageFramework extends StatefulWidget {
     this.customScrollViewBuilder,
     this.bodyBuilder,
     this.scrollController,
-  }) : super(key: key);
+  });
 
   final String title;
   final Widget? titleWidget;
@@ -118,10 +118,10 @@ class PageFrameworkState extends State<PageFramework>
       AnimationController(vsync: this);
   late AnimationController _animationControllerOpacity;
   late AnimationController _animationControllerDragY;
-  late AnimationController _scrollToTopAnimationController =
+  late final AnimationController _scrollToTopAnimationController =
       AnimationController(
     vsync: this,
-    duration: Duration(milliseconds: 500),
+    duration: const Duration(milliseconds: 500),
   );
 
   void scrollToTop({int duration = 1200}) {
@@ -165,7 +165,7 @@ class PageFrameworkState extends State<PageFramework>
 
     _animationControllerOpacity = AnimationController(vsync: this, value: 0.5);
     _animationControllerDragY = AnimationController(vsync: this, value: 0);
-    _animationControllerDragY.duration = Duration(milliseconds: 1000);
+    _animationControllerDragY.duration = const Duration(milliseconds: 1000);
     _scrollController = widget.scrollController ?? ScrollController();
     _scrollController.addListener(_scrollListener);
 
@@ -394,7 +394,7 @@ class PageFrameworkState extends State<PageFramework>
                                                             context)
                                                         .bottom +
                                                     15)
-                                            : SizedBox.shrink(),
+                                            : const SizedBox.shrink(),
                                       ]),
                                     ),
                                   )
@@ -405,12 +405,12 @@ class PageFrameworkState extends State<PageFramework>
                                                 MediaQuery.paddingOf(context)
                                                         .bottom +
                                                     15)
-                                        : SizedBox.shrink(),
+                                        : const SizedBox.shrink(),
                                   ),
                           ],
                         ),
                 ),
-                widget.overlay ?? SizedBox.shrink(),
+                widget.overlay ?? const SizedBox.shrink(),
               ],
             ),
     );
@@ -448,11 +448,11 @@ class PageFrameworkState extends State<PageFramework>
                     );
                   },
                 ),
-                widget.overlay ?? SizedBox.shrink(),
+                widget.overlay ?? const SizedBox.shrink(),
                 // Catch any horizontal drag starts, we catch these so the use cannot scroll while back swiping
                 appStateSettings["iOSNavigation"]
-                    ? SizedBox.shrink()
-                    : Container(
+                    ? const SizedBox.shrink()
+                    : SizedBox(
                         width: leftBackSwipeDetectionWidth,
                         child: GestureDetector(
                           onHorizontalDragStart: (details) => {},
@@ -525,7 +525,7 @@ class PageFrameworkState extends State<PageFramework>
                             ),
                           ),
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                   widget.floatingActionButton ?? Container(),
                 ],
               ),
@@ -561,8 +561,8 @@ class PageFrameworkState extends State<PageFramework>
 
     if (widget.backButton == false) {
       return PullDownToRefreshSync(
-        child: childListener,
         scrollController: _scrollController,
+        child: childListener,
       );
     } else {
       return childListener;
@@ -572,7 +572,7 @@ class PageFrameworkState extends State<PageFramework>
 
 class PageFrameworkSliverAppBar extends StatelessWidget {
   const PageFrameworkSliverAppBar({
-    Key? key,
+    super.key,
     this.title = "",
     this.titleWidget,
     this.appBarBackgroundColor,
@@ -595,7 +595,7 @@ class PageFrameworkSliverAppBar extends StatelessWidget {
     this.centeredTitle,
     this.centeredTitleSmall,
     this.belowAppBarPaddingWhenCenteredTitleSmall,
-  }) : super(key: key);
+  });
 
   final String title;
   final Widget? titleWidget;
@@ -687,9 +687,9 @@ class PageFrameworkSliverAppBar extends StatelessWidget {
         String titleString = title.capitalizeFirst;
         return FlexibleSpaceBar(
           centerTitle: centeredTitleWithDefault,
-          titlePadding: EdgeInsets.symmetric(vertical: 15, horizontal: 18),
+          titlePadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 18),
           title: MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
+            data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
             child: Transform.translate(
               offset: centeredTitleWithDefault
                   ? Offset(
@@ -716,9 +716,7 @@ class PageFrameworkSliverAppBar extends StatelessWidget {
                             ? (enableDoubleColumn(context) ? 19 : 16)
                             : 22,
                         fontWeight: FontWeight.bold,
-                        textColor: textColor == null
-                            ? Theme.of(context).colorScheme.onSecondaryContainer
-                            : textColor,
+                        textColor: textColor ?? Theme.of(context).colorScheme.onSecondaryContainer,
                         textAlign: centeredTitleWithDefault
                             ? TextAlign.center
                             : TextAlign.left,
@@ -771,14 +769,14 @@ class PageFrameworkSliverAppBar extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 0),
                                 child: Transform.translate(
-                                  offset: Offset(0, -4),
+                                  offset: const Offset(0, -4),
                                   child: subtitle,
                                 ),
                               ),
                             ),
                           ));
                     })
-                  : SizedBox(),
+                  : const SizedBox(),
             ],
           ),
         );
@@ -811,9 +809,7 @@ Color calculateAppBarBGColor({
   required Color? appBarBackgroundColor,
   required bool centeredTitleSmall,
 }) {
-  Color appBarBGColorCalculated = appBarBackgroundColor == null
-      ? Theme.of(context).colorScheme.secondaryContainer
-      : appBarBackgroundColor;
+  Color appBarBGColorCalculated = appBarBackgroundColor ?? Theme.of(context).colorScheme.secondaryContainer;
   if (centeredTitleSmall && getPlatform() == PlatformOS.isIOS) {
     appBarBGColorCalculated =
         appBarBackgroundColor ?? Theme.of(context).canvasColor;
@@ -846,15 +842,13 @@ List<Widget> getAppBarBackgroundColorLayers({
       height: MediaQuery.sizeOf(context).height - 1,
     ),
     centeredTitleSmall && appBarBackgroundColorStart == null
-        ? SizedBox.shrink()
+        ? const SizedBox.shrink()
         : Container(
             // Fixes backdrop not fading correctly when using Impeller (iOS - Flutter v3.13)
             width: MediaQuery.sizeOf(context).width,
             height: MediaQuery.sizeOf(context).height - 1,
 
-            color: appBarBackgroundColorStart == null
-                ? Theme.of(context).canvasColor
-                : appBarBackgroundColorStart,
+            color: appBarBackgroundColorStart ?? Theme.of(context).canvasColor,
           ),
     (animationControllerOpacity != null || percent != null) &&
             centeredTitleSmall
@@ -891,10 +885,10 @@ List<Widget> getAppBarBackgroundColorLayers({
                           opacity: clampDouble(percent, 0, 1),
                           child: container,
                         )
-                      : SizedBox.shrink();
+                      : const SizedBox.shrink();
             },
           )
-        : SizedBox.shrink(),
+        : const SizedBox.shrink(),
     (animationControllerOpacity != null || percent != null) &&
             centeredTitleSmall == false
         ? Builder(
@@ -923,10 +917,10 @@ List<Widget> getAppBarBackgroundColorLayers({
                           opacity: clampDouble(percent, 0, 1),
                           child: container,
                         )
-                      : SizedBox.shrink();
+                      : const SizedBox.shrink();
             },
           )
-        : SizedBox.shrink(),
+        : const SizedBox.shrink(),
     (animationControllerOpacity != null || percent != null) &&
             centeredTitleSmall &&
             getPlatform() == PlatformOS.isIOS
@@ -938,9 +932,7 @@ List<Widget> getAppBarBackgroundColorLayers({
                   height: 1.2,
                   color: dynamicPastel(
                     context,
-                    appBarBackgroundColor != null
-                        ? appBarBackgroundColor
-                        : dynamicPastel(context,
+                    appBarBackgroundColor ?? dynamicPastel(context,
                             Theme.of(context).colorScheme.secondaryContainer,
                             amount:
                                 appStateSettings["materialYou"] ? 0.4 : 0.55),
@@ -968,10 +960,10 @@ List<Widget> getAppBarBackgroundColorLayers({
                           opacity: clampDouble(percent, 0, 1),
                           child: container,
                         )
-                      : SizedBox.shrink();
+                      : const SizedBox.shrink();
             },
           )
-        : SizedBox.shrink(),
+        : const SizedBox.shrink(),
   ];
 }
 

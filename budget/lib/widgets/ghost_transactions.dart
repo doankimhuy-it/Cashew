@@ -6,8 +6,8 @@ import 'package:budget/struct/random_constants.dart';
 
 class GhostTransactionsList extends StatelessWidget {
   const GhostTransactionsList({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +45,13 @@ class GhostTransactions extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
                     color: color,
                   ),
                   height: 20,
@@ -59,7 +59,7 @@ class GhostTransactions extends StatelessWidget {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
                     color: color,
                   ),
                   height: 20,
@@ -67,14 +67,14 @@ class GhostTransactions extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             ...[
               for (int index = 0; index < 1 + randomInt[i % 10] % 3; index++)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
                       color: color,
                     ),
                     height: 51,

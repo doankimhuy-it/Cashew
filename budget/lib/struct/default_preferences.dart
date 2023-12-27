@@ -18,7 +18,7 @@ Future<Map<String, dynamic>> getDefaultPreferences() async {
     "theme": "system",
     "selectedWalletPk": "0",
     "selectedSubscriptionType": 0,
-    "accentColor": toHexString(Color(0xFF1B447A)),
+    "accentColor": toHexString(const Color(0xFF1B447A)),
     "accentSystemColor": await systemColorByDefault(),
     // FullScreen is added if the section has its own preference when full screen (double column)
     "showWalletSwitcher": true,
@@ -105,7 +105,7 @@ Future<Map<String, dynamic>> getDefaultPreferences() async {
     "autoBackups": true,
     "autoBackupsFrequency": 3, //in days
     "hasSignedIn": false,
-    "lastBackup": DateTime.now().subtract(Duration(days: 1)).toString(),
+    "lastBackup": DateTime.now().subtract(const Duration(days: 1)).toString(),
     "lastLoginVersion": "",
     "numLogins": 0,
     "openedStoreRating": false,
@@ -287,17 +287,12 @@ dynamic attemptToMigrateCyclePreferences(
             currentUserSettings[key] == null &&
             // We have a current setting for the previous associated value
             currentUserSettings[migrateCyclePreferencesKeys[key]] != null) {
-      print("Migrating cycle setting " +
-          key.toString() +
-          " to the value of " +
-          currentUserSettings[migrateCyclePreferencesKeys[key]].toString() +
-          " from key " +
-          migrateCyclePreferencesKeys[key].toString());
+      print("Migrating cycle setting $key to the value of ${currentUserSettings[migrateCyclePreferencesKeys[key]]} from key ${migrateCyclePreferencesKeys[key]}");
       currentUserSettings[key] =
           currentUserSettings[migrateCyclePreferencesKeys[key]];
     }
   } catch (e) {
-    print("Error migrating cycle preferences " + e.toString());
+    print("Error migrating cycle preferences $e");
   }
 
   return currentUserSettings;

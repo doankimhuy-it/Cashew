@@ -7,15 +7,15 @@ import 'package:budget/widgets/tappable.dart';
 import 'package:flutter/material.dart';
 
 class FAB extends StatelessWidget {
-  FAB({
-    Key? key,
+  const FAB({
+    super.key,
     required this.openPage,
     this.onTap,
     this.tooltip = "",
     this.color,
     this.colorPlus,
     this.onLongPressAddAllPopup = true,
-  }) : super(key: key);
+  });
 
   final Widget openPage;
   final String tooltip;
@@ -31,13 +31,13 @@ class FAB extends StatelessWidget {
       closedElevation: 10,
       borderRadius: getIsFullScreen(context) == false ? 18 : 22,
       closedColor:
-          color != null ? color : Theme.of(context).colorScheme.secondary,
+          color ?? Theme.of(context).colorScheme.secondary,
       button: (openContainer) {
         return Tooltip(
           message: tooltip,
           child: Tappable(
             color:
-                color != null ? color : Theme.of(context).colorScheme.secondary,
+                color ?? Theme.of(context).colorScheme.secondary,
             onTap: () {
               if (onTap != null) {
                 onTap!();
@@ -50,7 +50,7 @@ class FAB extends StatelessWidget {
                 : () {
                     openBottomSheet(
                       context,
-                      PopupFramework(
+                      const PopupFramework(
                         child: AddMoreThingsPopup(),
                       ),
                     );
@@ -63,9 +63,7 @@ class FAB extends StatelessWidget {
                   appStateSettings["outlinedIcons"]
                       ? Icons.add_outlined
                       : Icons.add_rounded,
-                  color: colorPlus != null
-                      ? colorPlus
-                      : Theme.of(context).colorScheme.onSecondary,
+                  color: colorPlus ?? Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
             ),

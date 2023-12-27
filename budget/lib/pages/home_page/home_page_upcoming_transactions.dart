@@ -28,11 +28,11 @@ class HomePageUpcomingTransactions extends StatelessWidget {
             // Since the query uses DateTime.now()
             // We need to refresh every so often to get new data...
             // Is there a better way to do this? listen to database updates?
-            TimerBuilder.periodic(Duration(seconds: 5), builder: (context) {
+            TimerBuilder.periodic(const Duration(seconds: 5), builder: (context) {
               return Expanded(
                 child: TransactionsAmountBox(
                   openPage:
-                      UpcomingOverdueTransactions(overdueTransactions: false),
+                      const UpcomingOverdueTransactions(overdueTransactions: false),
                   label: "upcoming".tr(),
                   totalWithCountStream:
                       database.watchTotalWithCountOfUpcomingOverdue(
@@ -49,12 +49,12 @@ class HomePageUpcomingTransactions extends StatelessWidget {
                 ),
               );
             }),
-            SizedBox(width: 13),
-            TimerBuilder.periodic(Duration(seconds: 5), builder: (context) {
+            const SizedBox(width: 13),
+            TimerBuilder.periodic(const Duration(seconds: 5), builder: (context) {
               return Expanded(
                 child: TransactionsAmountBox(
                   openPage:
-                      UpcomingOverdueTransactions(overdueTransactions: true),
+                      const UpcomingOverdueTransactions(overdueTransactions: true),
                   label: "overdue".tr(),
                   totalWithCountStream:
                       database.watchTotalWithCountOfUpcomingOverdue(
@@ -85,7 +85,7 @@ Future openOverdueUpcomingSettings(BuildContext context) {
     PopupFramework(
       title: "overdue-and-upcoming".tr(),
       subtitle: "applies-to-homepage".tr(),
-      child: PeriodCyclePicker(cycleSettingsExtension: "OverdueUpcoming"),
+      child: const PeriodCyclePicker(cycleSettingsExtension: "OverdueUpcoming"),
     ),
   );
 }

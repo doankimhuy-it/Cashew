@@ -27,17 +27,17 @@ class TotalSpentCategoriesSummary {
     this.hasSubCategories = false,
   }) {
     subCategorySpendingIndexedByMainCategoryPk =
-        this.subCategorySpendingIndexedByMainCategoryPk.isEmpty
+        subCategorySpendingIndexedByMainCategoryPk.isEmpty
             ? {}
-            : this.subCategorySpendingIndexedByMainCategoryPk;
+            : subCategorySpendingIndexedByMainCategoryPk;
     totalSpentOfCategoriesRemoveUnassignedTransactions =
-        this.totalSpentOfCategoriesRemoveUnassignedTransactions.isEmpty
+        totalSpentOfCategoriesRemoveUnassignedTransactions.isEmpty
             ? {}
-            : this.totalSpentOfCategoriesRemoveUnassignedTransactions;
+            : totalSpentOfCategoriesRemoveUnassignedTransactions;
     dataFilterUnassignedTransactions =
-        this.dataFilterUnassignedTransactions.isEmpty == true
+        dataFilterUnassignedTransactions.isEmpty == true
             ? []
-            : this.dataFilterUnassignedTransactions;
+            : dataFilterUnassignedTransactions;
   }
 }
 
@@ -145,7 +145,7 @@ class PieChartOptions extends StatelessWidget {
                   enabled: useHorizontalPaddingConstrained) +
               2),
       child: Transform.translate(
-        offset: Offset(0, 5),
+        offset: const Offset(0, 5),
         child: Align(
           alignment: Alignment.bottomRight,
           child: Builder(builder: (context) {
@@ -156,12 +156,12 @@ class PieChartOptions extends StatelessWidget {
               children: [
                 AnimatedScale(
                   scale: showClearButton ? 1 : 0,
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   curve: Curves.easeInOutCubicEmphasized,
                   child: Tooltip(
                     message: "clear-selection".tr(),
                     child: IconButton(
-                      padding: EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
                       onPressed: onClearSelection,
                       icon: Icon(
                         appStateSettings["outlinedIcons"]
@@ -181,7 +181,7 @@ class PieChartOptions extends StatelessWidget {
                         child: Tooltip(
                           message: "view-subcategories".tr(),
                           child: IconButton(
-                            padding: EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(15),
                             onPressed: toggleAllSubCategories,
                             icon: ScaledAnimatedSwitcher(
                               keyToWatch: showAllSubcategories.toString(),
@@ -203,7 +203,7 @@ class PieChartOptions extends StatelessWidget {
                       Tooltip(
                         message: "edit-spending-goals".tr(),
                         child: IconButton(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           onPressed: onEditSpendingGoals,
                           icon: Icon(
                             appStateSettings["outlinedIcons"]

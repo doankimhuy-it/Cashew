@@ -28,8 +28,8 @@ class SettingsContainerSwitch extends StatefulWidget {
     this.hasMoreOptionsIcon = false,
     this.runOnSwitchedInitially = false,
     this.descriptionColor,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final String? description;
@@ -98,7 +98,7 @@ class _SettingsContainerSwitchState extends State<SettingsContainerSwitch> {
       description = widget.descriptionWithValue!(value);
     }
     return AnimatedOpacity(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       opacity: waiting ? 0.5 : 1,
       child: SettingsContainer(
         hasMoreOptionsIcon: widget.hasMoreOptionsIcon,
@@ -136,7 +136,7 @@ class _SettingsContainerSwitchState extends State<SettingsContainerSwitch> {
 
 class SettingsContainerOpenPage extends StatelessWidget {
   const SettingsContainerOpenPage({
-    Key? key,
+    super.key,
     required this.openPage,
     this.onClosed,
     this.onOpen,
@@ -149,7 +149,7 @@ class SettingsContainerOpenPage extends StatelessWidget {
     this.isOutlinedColumn,
     this.isWideOutlined,
     this.descriptionColor,
-  }) : super(key: key);
+  });
 
   final Widget openPage;
   final VoidCallback? onClosed;
@@ -170,7 +170,7 @@ class SettingsContainerOpenPage extends StatelessWidget {
     return Padding(
       padding: isOutlined == false || isOutlined == null
           ? EdgeInsets.zero
-          : EdgeInsets.only(top: 5, bottom: 5, left: 4, right: 4),
+          : const EdgeInsets.only(top: 5, bottom: 5, left: 4, right: 4),
       child: OpenContainerNavigation(
         onClosed: onClosed,
         onOpen: onOpen,
@@ -209,7 +209,7 @@ class SettingsContainerOpenPage extends StatelessWidget {
               // );
             },
             afterWidget: isOutlined ?? false
-                ? SizedBox.shrink()
+                ? const SizedBox.shrink()
                 : Icon(
                     appStateSettings["outlinedIcons"]
                         ? Icons.chevron_right_outlined
@@ -231,7 +231,7 @@ class SettingsContainerOpenPage extends StatelessWidget {
 
 class SettingsContainerDropdown extends StatefulWidget {
   const SettingsContainerDropdown({
-    Key? key,
+    super.key,
     required this.title,
     this.description,
     this.icon,
@@ -241,7 +241,7 @@ class SettingsContainerDropdown extends StatefulWidget {
     this.getLabel,
     this.verticalPadding,
     this.enableBorderRadius = false,
-  }) : super(key: key);
+  });
 
   final String title;
   final String? description;
@@ -259,7 +259,7 @@ class SettingsContainerDropdown extends StatefulWidget {
 }
 
 class _SettingsContainerDropdownState extends State<SettingsContainerDropdown> {
-  late GlobalKey<DropdownSelectState>? _dropdownKey = GlobalKey();
+  late final GlobalKey<DropdownSelectState> _dropdownKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +292,7 @@ class _SettingsContainerDropdownState extends State<SettingsContainerDropdown> {
 
 class SettingsContainerOutlined extends StatelessWidget {
   const SettingsContainerOutlined({
-    Key? key,
+    super.key,
     required this.title,
     this.description,
     this.icon,
@@ -305,7 +305,7 @@ class SettingsContainerOutlined extends StatelessWidget {
     this.isExpanded = true,
     this.isOutlinedColumn,
     this.isWideOutlined,
-  }) : super(key: key);
+  });
 
   final String title;
   final String? description;
@@ -344,7 +344,7 @@ class SettingsContainerOutlined extends StatelessWidget {
         child: Column(
           children: [
             icon == null
-                ? SizedBox.shrink()
+                ? const SizedBox.shrink()
                 : Transform.scale(
                     scale: iconScale ?? 1,
                     child: Icon(
@@ -353,7 +353,7 @@ class SettingsContainerOutlined extends StatelessWidget {
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFont(
               text: title,
               fontSize: 13,
@@ -421,7 +421,7 @@ class SettingsContainerOutlined extends StatelessWidget {
               isExpanded == false ? MainAxisSize.min : MainAxisSize.max,
           children: [
             icon == null
-                ? SizedBox.shrink()
+                ? const SizedBox.shrink()
                 : Padding(
                     padding: EdgeInsets.only(
                         right: 8 +
@@ -436,7 +436,7 @@ class SettingsContainerOutlined extends StatelessWidget {
                       ),
                     ),
                   ),
-            isWideOutlined == true ? SizedBox(width: 3) : SizedBox.shrink(),
+            isWideOutlined == true ? const SizedBox(width: 3) : const SizedBox.shrink(),
             isExpanded
                 ? Expanded(child: textContent)
                 : Flexible(
@@ -445,7 +445,7 @@ class SettingsContainerOutlined extends StatelessWidget {
                       child: textContent,
                     ),
                   ),
-            Opacity(opacity: 0.5, child: afterWidget ?? SizedBox())
+            Opacity(opacity: 0.5, child: afterWidget ?? const SizedBox())
           ],
         ),
       );
@@ -462,7 +462,7 @@ class SettingsContainerOutlined extends StatelessWidget {
 
 class SettingsContainer extends StatelessWidget {
   const SettingsContainer({
-    Key? key,
+    super.key,
     required this.title,
     this.description,
     this.icon,
@@ -478,7 +478,7 @@ class SettingsContainer extends StatelessWidget {
     this.isWideOutlined,
     this.hasMoreOptionsIcon,
     this.descriptionColor,
-  }) : super(key: key);
+  });
 
   final String title;
   final String? description;
@@ -534,7 +534,7 @@ class SettingsContainer extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           icon == null
-                              ? SizedBox.shrink()
+                              ? const SizedBox.shrink()
                               : Padding(
                                   padding: const EdgeInsets.only(right: 16),
                                   child: ScaledAnimatedSwitcher(
@@ -589,9 +589,9 @@ class SettingsContainer extends StatelessWidget {
                       ),
                     ),
                     hasMoreOptionsIcon == true
-                        ? HasMoreOptionsIcon()
-                        : SizedBox.shrink(),
-                    afterWidget ?? SizedBox()
+                        ? const HasMoreOptionsIcon()
+                        : const SizedBox.shrink(),
+                    afterWidget ?? const SizedBox()
                   ],
                 ),
               ),
@@ -602,10 +602,10 @@ class SettingsContainer extends StatelessWidget {
 
 class SettingsHeader extends StatelessWidget {
   const SettingsHeader({
-    Key? key,
+    super.key,
     required this.title,
     this.hasLeftPadding = true,
-  }) : super(key: key);
+  });
   final String title;
   final bool hasLeftPadding;
 

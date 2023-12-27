@@ -21,8 +21,8 @@ class PullDownToRefreshSync extends StatefulWidget {
   const PullDownToRefreshSync({
     required this.child,
     required this.scrollController,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget child;
   final ScrollController scrollController;
@@ -55,8 +55,8 @@ class _PullDownToRefreshSyncState extends State<PullDownToRefreshSync>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
-      reverseDuration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
+      reverseDuration: const Duration(milliseconds: 300),
     );
     widget.scrollController.addListener(_onScroll);
   }
@@ -183,7 +183,7 @@ class _PullDownToRefreshSyncState extends State<PullDownToRefreshSync>
                             context, getColor(context, "lightDarkAccent"),
                             amountLight: 0.1, amountDark: 0.3),
                     child: TimerBuilder.periodic(
-                      Duration(seconds: 5),
+                      const Duration(seconds: 5),
                       builder: (context) {
                         return Center(
                           child: TextFont(
@@ -191,11 +191,9 @@ class _PullDownToRefreshSyncState extends State<PullDownToRefreshSync>
                             textColor: getColor(context, "textLight"),
                             fontSize: 13,
                             maxLines: 3,
-                            text: "synced".tr() +
-                                " " +
-                                (getTimeLastSynced() == null
+                            text: "${"synced".tr()} ${getTimeLastSynced() == null
                                     ? "never".tr()
-                                    : getTimeAgo(getTimeLastSynced()!)),
+                                    : getTimeAgo(getTimeLastSynced()!)}",
                           ),
                         );
                       },

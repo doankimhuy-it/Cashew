@@ -29,10 +29,10 @@ class HomePageLineGraph extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 13),
         child: Container(
-          padding: EdgeInsets.only(left: 5, right: 7, bottom: 12, top: 18),
-          margin: EdgeInsets.symmetric(horizontal: 13),
+          padding: const EdgeInsets.only(left: 5, right: 7, bottom: 12, top: 18),
+          margin: const EdgeInsets.symmetric(horizontal: 13),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
             color: getColor(context, "lightDarkAccentHeavyLight"),
             boxShadow: boxShadowCheck(boxShadowGeneral(context)),
           ),
@@ -96,7 +96,7 @@ class HomePageLineGraph extends StatelessWidget {
                                 ],
                               );
                             }
-                            return SizedBox.shrink();
+                            return const SizedBox.shrink();
                           },
                         ),
         ),
@@ -210,11 +210,11 @@ class PastSpendingGraph extends StatelessWidget {
                   builder: (context, snapshotPoints) {
                     Widget lineChartWidget;
                     if (snapshotPoints.hasData == false) {
-                      lineChartWidget = IndeterminateProgressBar();
+                      lineChartWidget = const IndeterminateProgressBar();
                     } else {
                       List<Pair> points = snapshotPoints.data ?? [];
                       if (points.length <= 1 && hideIfOnlyOneEntry == true) {
-                        return SizedBox.shrink();
+                        return const SizedBox.shrink();
                       }
                       lineChartWidget = LineChartWrapper(
                         points: [points],
@@ -232,11 +232,11 @@ class PastSpendingGraph extends StatelessWidget {
                   },
                 );
               }
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             },
           );
         }
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       },
     );
   }
@@ -248,7 +248,7 @@ class PastSpendingGraph extends StatelessWidget {
         stream: database.watchEarliestLatestTransactionDateTime(
             searchFilters: searchFilters),
         builder: (context, snapshot) {
-          if (snapshot.hasData == false) return SizedBox.shrink();
+          if (snapshot.hasData == false) return const SizedBox.shrink();
           return buildLineChart(
             context,
             earliestTransactionDate: snapshot.data?.earliest,

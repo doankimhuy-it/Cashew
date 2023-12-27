@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:budget/colors.dart';
 
 class Button extends StatefulWidget {
-  Button({
-    Key? key,
+  const Button({
+    super.key,
     required this.label,
     this.width,
     // this.height,
@@ -28,7 +28,7 @@ class Button extends StatefulWidget {
     this.flexibleLayout = false,
     this.disabled = false,
     this.onDisabled,
-  }) : super(key: key);
+  });
   final String label;
   final double? width;
   // final double? height;
@@ -59,7 +59,7 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
     setState(() {
       isTapped = true;
     });
-    timer = Timer(Duration(milliseconds: 200), () {
+    timer = Timer(const Duration(milliseconds: 200), () {
       setState(() {
         isTapped = false;
       });
@@ -92,7 +92,7 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
               ? MediaQuery.viewPaddingOf(context).bottom
               : 0),
       child: AnimatedScale(
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         curve: Curves.easeOutCubic,
         scale: widget.changeScale ? (isTapped ? 0.95 : 1) : 1,
         alignment: widget.expandToFillBottomExtraSafeArea
@@ -147,14 +147,12 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
                             child: Icon(
                               widget.icon,
                               size: 21,
-                              color: widget.iconColor == null
-                                  ? Theme.of(context)
+                              color: widget.iconColor ?? Theme.of(context)
                                       .colorScheme
-                                      .onSecondaryContainer
-                                  : widget.iconColor,
+                                      .onSecondaryContainer,
                             ),
                           )
-                        : SizedBox.shrink(),
+                        : const SizedBox.shrink(),
                     widget.flexibleLayout
                         ? Flexible(child: text)
                         : widget.expandedLayout
@@ -173,7 +171,7 @@ class _ButtonState extends State<Button> with TickerProviderStateMixin {
 
 class ButtonIcon extends StatelessWidget {
   const ButtonIcon({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.icon,
     this.size = 44,
@@ -181,7 +179,7 @@ class ButtonIcon extends StatelessWidget {
     this.iconColor,
     this.padding,
     this.iconPadding = 20,
-  }) : super(key: key);
+  });
   final VoidCallback onTap;
   final IconData icon;
   final double size;
@@ -192,23 +190,19 @@ class ButtonIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tappable(
+      color: color ?? Theme.of(context).colorScheme.secondaryContainer,
+      borderRadius: 15,
+      onTap: onTap,
       child: Container(
         height: size,
         width: size,
         margin: padding,
         child: Icon(
           icon,
-          color: iconColor == null
-              ? Theme.of(context).colorScheme.onSecondaryContainer
-              : iconColor,
+          color: iconColor ?? Theme.of(context).colorScheme.onSecondaryContainer,
           size: size - iconPadding,
         ),
       ),
-      color: color == null
-          ? Theme.of(context).colorScheme.secondaryContainer
-          : color,
-      borderRadius: 15,
-      onTap: onTap,
     );
   }
 }

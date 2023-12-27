@@ -23,7 +23,7 @@ Future<String?> getPhotoAndUpload({required ImageSource source}) async {
       throw ("error-getting-photo");
     }
 
-    var fileBytes;
+    Uint8List fileBytes;
     late Stream<List<int>> mediaStream;
     fileBytes = await photo.readAsBytes();
     mediaStream = Stream.value(List<int>.from(fileBytes));
@@ -33,8 +33,7 @@ Future<String?> getPhotoAndUpload({required ImageSource source}) async {
           fileBytes: fileBytes, fileName: photo.name, mediaStream: mediaStream);
     } catch (e) {
       print(
-          "Error uploading file, trying again and requesting new permissions " +
-              e.toString());
+          "Error uploading file, trying again and requesting new permissions $e");
       await signOutGoogle();
       await signInGoogle(
           drivePermissions: true, drivePermissionsAttachments: true);
@@ -77,8 +76,7 @@ Future<String?> getFileAndUpload() async {
       );
     } catch (e) {
       print(
-          "Error uploading file, trying again and requesting new permissions " +
-              e.toString());
+          "Error uploading file, trying again and requesting new permissions $e");
       await signOutGoogle();
       await signInGoogle(
           drivePermissions: true, drivePermissionsAttachments: true);
@@ -139,9 +137,9 @@ Future<String?> uploadFileToDrive({
 
   if (folderId == null) throw ("Folder could not be created in Google Drive");
 
-  drive.Media media = new drive.Media(mediaStream, fileBytes.length);
+  drive.Media media = drive.Media(mediaStream, fileBytes.length);
 
-  drive.File driveFile = new drive.File();
+  drive.File driveFile = drive.File();
   final timestamp =
       DateFormat("yyyy-MM-dd-hhmmss").format(DateTime.now().toUtc());
   driveFile.name = timestamp + fileName;

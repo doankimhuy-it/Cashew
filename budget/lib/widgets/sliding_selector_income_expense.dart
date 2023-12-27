@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 
 class SlidingSelectorIncomeExpense extends StatelessWidget {
   const SlidingSelectorIncomeExpense({
-    Key? key,
+    super.key,
     required this.onSelected,
     this.alternateTheme = false,
     this.useHorizontalPaddingConstrained = true,
     this.customPadding,
     this.options,
     this.initialIndex,
-  }) : super(key: key);
+  });
 
   final Function(int) onSelected;
   final bool alternateTheme;
@@ -85,7 +85,7 @@ class SlidingSelectorIncomeExpense extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: appStateSettings["font"],
-                                  fontFamilyFallback: ['Inter'],
+                                  fontFamilyFallback: const ['Inter'],
                                 ),
                               ),
                             ),
@@ -100,7 +100,7 @@ class SlidingSelectorIncomeExpense extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: appStateSettings["font"],
-                                  fontFamilyFallback: ['Inter'],
+                                  fontFamilyFallback: const ['Inter'],
                                 ),
                               ),
                             ),
@@ -115,7 +115,7 @@ class SlidingSelectorIncomeExpense extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: appStateSettings["font"],
-                                  fontFamilyFallback: ['Inter'],
+                                  fontFamilyFallback: const ['Inter'],
                                 ),
                               ),
                             ),
@@ -133,7 +133,7 @@ class SlidingSelectorIncomeExpense extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontFamily: appStateSettings["font"],
-                                    fontFamilyFallback: ['Inter'],
+                                    fontFamilyFallback: const ['Inter'],
                                   ),
                                 ),
                               ),

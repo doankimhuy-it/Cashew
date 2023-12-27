@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BarGraph extends StatefulWidget {
-  BarGraph({
+  const BarGraph({
     required this.budget,
     required this.color,
     required this.dateRanges,
@@ -16,8 +16,8 @@ class BarGraph extends StatefulWidget {
     required this.initialBars,
     required this.horizontalLineAt,
     required this.maxY,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Color color;
   final List<DateTimeRange> dateRanges;
@@ -38,7 +38,7 @@ class BarGraphState extends State<BarGraph> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 0), () {
+    Future.delayed(const Duration(milliseconds: 0), () {
       setState(() {
         loaded = true;
       });
@@ -53,11 +53,11 @@ class BarGraphState extends State<BarGraph> {
         right: 30,
         top: 5,
       ),
-      child: Container(
+      child: SizedBox(
         height: 190,
         child: BarChart(
           swapAnimationCurve: Curves.easeInOutCubicEmphasized,
-          swapAnimationDuration: Duration(milliseconds: 1700),
+          swapAnimationDuration: const Duration(milliseconds: 1700),
           BarChartData(
             maxY: widget.maxY,
             minY: -1,
@@ -100,7 +100,7 @@ class BarGraphState extends State<BarGraph> {
                     dashArray: [2, 8],
                   );
                 }
-                return FlLine(color: Colors.transparent, strokeWidth: 0);
+                return const FlLine(color: Colors.transparent, strokeWidth: 0);
               },
               getDrawingVerticalLine: (value) {
                 return FlLine(
@@ -113,7 +113,7 @@ class BarGraphState extends State<BarGraph> {
             ),
             titlesData: FlTitlesData(
               show: true,
-              topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
               bottomTitles: AxisTitles(
                 sideTitles: SideTitles(
                     showTitles: true,
@@ -146,7 +146,7 @@ class BarGraphState extends State<BarGraph> {
                     }),
               ),
               rightTitles:
-                  AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
               leftTitles: AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: true,
@@ -160,7 +160,7 @@ class BarGraphState extends State<BarGraph> {
                     } else if (value < widget.maxY && value > 1) {
                       show = true;
                     } else {
-                      return SizedBox.shrink();
+                      return const SizedBox.shrink();
                     }
                     return Padding(
                       padding: const EdgeInsets.only(right: 8.0),
@@ -205,7 +205,7 @@ BarChartGroupData makeGroupData(int x, double y1, double y2, color) {
           end: Alignment.topCenter,
         ),
         width: 13,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(5),
           bottomRight: Radius.circular(5),
           topLeft: Radius.circular(8),

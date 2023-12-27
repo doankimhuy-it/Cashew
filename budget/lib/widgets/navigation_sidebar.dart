@@ -82,7 +82,7 @@ class NavigationSidebarState extends State<NavigationSidebar> {
   Widget build(BuildContext context) {
     double widthNavigationSidebar = getWidthNavigationSidebar(context);
     if (widthNavigationSidebar <= 0) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
     // print(selectedIndex);
     return Listener(
@@ -92,7 +92,7 @@ class NavigationSidebarState extends State<NavigationSidebar> {
         ContextMenuController.removeAny();
       },
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 1500),
+        duration: const Duration(milliseconds: 1500),
         curve: Curves.easeInOutCubicEmphasized,
         width: getWidthNavigationSidebar(context),
         child: Container(
@@ -116,7 +116,7 @@ class NavigationSidebarState extends State<NavigationSidebar> {
               ignoring: appStateSettings["hasOnboarded"] == false ||
                   lockAppWaitForRestart == true,
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 opacity: appStateSettings["hasOnboarded"] == false ||
                         lockAppWaitForRestart == true
                     ? 0.3
@@ -140,7 +140,7 @@ class NavigationSidebarState extends State<NavigationSidebar> {
                               Opacity(
                                 opacity: 0.7,
                                 child: AnimatedPadding(
-                                  duration: Duration(milliseconds: 1500),
+                                  duration: const Duration(milliseconds: 1500),
                                   curve: Curves.easeInOutCubicEmphasized,
                                   padding: EdgeInsets.only(
                                     bottom: appStateSettings[
@@ -157,14 +157,14 @@ class NavigationSidebarState extends State<NavigationSidebar> {
                                         : 7,
                                   ),
                                   child: AnimatedRotation(
-                                    duration: Duration(milliseconds: 1500),
+                                    duration: const Duration(milliseconds: 1500),
                                     turns: appStateSettings[
                                             "expandedNavigationSidebar"]
                                         ? 0
                                         : -0.5,
                                     curve: Curves.easeInOutCubicEmphasized,
                                     child: IconButton(
-                                      padding: EdgeInsets.all(15),
+                                      padding: const EdgeInsets.all(15),
                                       onPressed: () {
                                         updateSettings(
                                             "expandedNavigationSidebar",
@@ -201,7 +201,7 @@ class NavigationSidebarState extends State<NavigationSidebar> {
                                         },
                                         child: AnimatedPadding(
                                           duration:
-                                              Duration(milliseconds: 1500),
+                                              const Duration(milliseconds: 1500),
                                           curve:
                                               Curves.easeInOutCubicEmphasized,
                                           padding: EdgeInsets.only(
@@ -214,7 +214,7 @@ class NavigationSidebarState extends State<NavigationSidebar> {
                                                 ? 18
                                                 : 0,
                                           ),
-                                          child: SidebarClock(),
+                                          child: const SidebarClock(),
                                         ),
                                       ),
                                     ),
@@ -222,7 +222,7 @@ class NavigationSidebarState extends State<NavigationSidebar> {
                                 ],
                               ),
                               AnimatedContainer(
-                                duration: Duration(milliseconds: 1500),
+                                duration: const Duration(milliseconds: 1500),
                                 curve: Curves.easeInOutCubicEmphasized,
                                 height: appStateSettings[
                                         "expandedNavigationSidebar"]
@@ -268,13 +268,13 @@ class NavigationSidebarState extends State<NavigationSidebar> {
                               EditDataButtons(selectedIndex: selectedIndex),
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              SizedBox(height: 40),
+                              const SizedBox(height: 40),
                               GoogleAccountLoginButton(
                                 navigationSidebarButton: true,
                                 onTap: () {
@@ -292,8 +292,8 @@ class NavigationSidebarState extends State<NavigationSidebar> {
                                 navBarIconDataKey: "about",
                                 currentPageIndex: selectedIndex,
                               ),
-                              SyncButton(),
-                              SizedBox(height: 10),
+                              const SyncButton(),
+                              const SizedBox(height: 10),
                               SizedBox(
                                   height:
                                       MediaQuery.viewPaddingOf(context).bottom),
@@ -323,9 +323,9 @@ class SidebarClock extends StatelessWidget {
             key: ValueKey(appStateSettings["expandedNavigationSidebar"]),
             child: MediaQuery(
               data: MediaQuery.of(context)
-                  .copyWith(textScaler: TextScaler.linear(1.0)),
+                  .copyWith(textScaler: const TextScaler.linear(1.0)),
               child: TimerBuilder.periodic(
-                Duration(seconds: 5),
+                const Duration(seconds: 5),
                 builder: (context) {
                   DateTime now = DateTime.now();
                   return Column(
@@ -349,7 +349,7 @@ class SidebarClock extends StatelessWidget {
                         text: DateFormat('EEEE', context.locale.toString())
                             .format(now),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       TextFont(
                         textColor: getColor(context, "black").withOpacity(0.5),
                         fontSize: 18,
@@ -427,25 +427,23 @@ class _SyncButtonState extends State<SyncButton> {
                   child: Row(
                     children: [
                       refreshButton,
-                      SizedBox(width: 15),
+                      const SizedBox(width: 15),
                       Flexible(
                         child: AnimatedSwitcher(
-                          duration: Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 500),
                           child: SizedBox(
                             key: ValueKey(appStateSettings["lastSynced"]),
                             child: TimerBuilder.periodic(
-                              Duration(seconds: 5),
+                              const Duration(seconds: 5),
                               builder: (context) {
                                 return TextFont(
                                   textAlign: TextAlign.left,
                                   textColor: getColor(context, "textLight"),
                                   fontSize: 13,
                                   maxLines: 3,
-                                  text: "synced".tr() +
-                                      " " +
-                                      (getTimeLastSynced() == null
+                                  text: "${"synced".tr()} ${getTimeLastSynced() == null
                                           ? "never".tr()
-                                          : getTimeAgo(getTimeLastSynced()!)),
+                                          : getTimeAgo(getTimeLastSynced()!)}",
                                 );
                               },
                             ),
@@ -548,7 +546,7 @@ class NavigationSidebarButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
       child: AnimatedSwitcher(
-        duration: Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 250),
         child: Tappable(
           key: ValueKey(isSelected),
           borderRadius: getPlatform() == PlatformOS.isIOS ? 10 : 50,
@@ -561,8 +559,8 @@ class NavigationSidebarButton extends StatelessWidget {
               navigatorKey.currentState!.pushAndRemoveUntil(
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
-                        SizedBox(),
-                    transitionDuration: Duration(seconds: 0),
+                        const SizedBox(),
+                    transitionDuration: const Duration(seconds: 0),
                   ),
                   (route) => route.isFirst);
               navigatorKey.currentState!.pop();
@@ -574,14 +572,14 @@ class NavigationSidebarButton extends StatelessWidget {
                 ? Padding(
                     key:
                         ValueKey(appStateSettings["expandedNavigationSidebar"]),
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 13,
                     ),
                     child: Row(
                       children: [
                         iconWidget,
-                        SizedBox(width: 15),
+                        const SizedBox(width: 15),
                         Expanded(
                           child: TextFont(
                             text: label.capitalizeFirst,
@@ -595,7 +593,7 @@ class NavigationSidebarButton extends StatelessWidget {
                 : Padding(
                     key:
                         ValueKey(appStateSettings["expandedNavigationSidebar"]),
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 0,
                       vertical: 13,
                     ),
@@ -638,7 +636,7 @@ class _EdiDatatButtonsState extends State<EditDataButtons> {
           },
           popRoutes: false,
           trailing: AnimatedRotation(
-            duration: Duration(milliseconds: 600),
+            duration: const Duration(milliseconds: 600),
             curve: Curves.easeInOutCubicEmphasized,
             turns: showEditDataButtons ? 0 : -0.5,
             child: Icon(
@@ -649,13 +647,13 @@ class _EdiDatatButtonsState extends State<EditDataButtons> {
           ),
         ),
         AnimatedPadding(
-          duration: Duration(milliseconds: 1500),
+          duration: const Duration(milliseconds: 1500),
           curve: Curves.easeInOutCubicEmphasized,
           padding: EdgeInsets.only(
               left: appStateSettings["expandedNavigationSidebar"] ? 8 : 0),
           child: AnimatedSizeSwitcher(
             child: !showEditDataButtons
-                ? Container(key: ValueKey(1))
+                ? Container(key: const ValueKey(1))
                 : Column(
                     children: [
                       NavigationSidebarButtonWithNavBarIconData(

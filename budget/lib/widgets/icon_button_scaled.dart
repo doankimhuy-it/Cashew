@@ -26,6 +26,7 @@ class IconButtonScaled extends StatelessWidget {
         borderRadius: BorderRadius.circular(100),
         child: Tappable(
           color: Colors.transparent,
+          onTap: onTap,
           child: Padding(
             padding: padding,
             child: Icon(
@@ -33,7 +34,6 @@ class IconButtonScaled extends StatelessWidget {
               size: iconSize,
             ),
           ),
-          onTap: onTap,
         ),
       ),
     );

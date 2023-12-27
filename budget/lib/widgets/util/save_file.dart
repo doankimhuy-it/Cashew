@@ -82,7 +82,7 @@ Future<bool> saveFile({
         icon: appStateSettings["outlinedIcons"]
             ? Icons.download_done_outlined
             : Icons.download_done_rounded,
-        timeout: Duration(milliseconds: 5000),
+        timeout: const Duration(milliseconds: 5000),
       ));
       return true;
     } catch (e) {
@@ -93,7 +93,7 @@ Future<bool> saveFile({
             ? Icons.warning_outlined
             : Icons.warning_rounded,
       ));
-      print("Error saving file to device: " + e.toString());
+      print("Error saving file to device: $e");
       return false;
     }
   }
@@ -104,7 +104,7 @@ Future<bool> saveFile({
             ? "/storage/emulated/0/Download"
             : (await getApplicationDocumentsDirectory()).path);
 
-    String filePath = "${directory}/${fileName}";
+    String filePath = "$directory/$fileName";
     File savedFile = File(filePath);
     if (dataStore != null) {
       await savedFile.writeAsBytes(dataStore);
@@ -118,11 +118,11 @@ Future<bool> saveFile({
       icon: appStateSettings["outlinedIcons"]
           ? Icons.download_done_outlined
           : Icons.download_done_rounded,
-      timeout: Duration(milliseconds: 5000),
+      timeout: const Duration(milliseconds: 5000),
     ));
     return true;
   } catch (e) {
-    print("Error saving file to device: " + e.toString());
+    print("Error saving file to device: $e");
     if (customDirectory == null) {
       // Try again with selecting a custom directory
       String? selectedDirectory = await FilePicker.platform.getDirectoryPath();

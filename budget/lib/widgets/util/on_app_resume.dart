@@ -32,9 +32,7 @@ class _OnAppResumeState extends State<OnAppResume> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
 
-    if (_lastState == null) {
-      _lastState = state;
-    }
+    _lastState ??= state;
 
     // app resumed
     if (state == AppLifecycleState.resumed &&

@@ -45,8 +45,8 @@ class CreditDebtTransactions extends StatefulWidget {
 class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
     with SingleTickerProviderStateMixin {
   String pageId = "CreditDebt";
-  late ScrollController _scrollController = ScrollController();
-  late TabController _tabController = TabController(
+  late final ScrollController _scrollController = ScrollController();
+  late final TabController _tabController = TabController(
     length: 2,
     vsync: this,
     initialIndex: appStateSettings["loansLastPage"] == 1 ? 1 : 0,
@@ -54,7 +54,7 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
 
   late bool? isCredit = widget.isCredit;
   String? searchValue;
-  FocusNode _searchFocusNode = FocusNode();
+  final FocusNode _searchFocusNode = FocusNode();
   int? numberLongTerm;
 
   @override
@@ -86,7 +86,7 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
         stream: database.watchAllCreditDebtTransactions(isCredit, searchValue),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data!.length <= 0) {
+            if (snapshot.data!.isEmpty) {
               return SliverToBoxAdapter(
                 child: Center(
                   child: Column(
@@ -120,9 +120,9 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
             return SliverImplicitlyAnimatedList<Transaction>(
               items: snapshot.data!,
               areItemsTheSame: (a, b) => a.transactionPk == b.transactionPk,
-              insertDuration: Duration(milliseconds: 500),
-              removeDuration: Duration(milliseconds: 500),
-              updateDuration: Duration(milliseconds: 500),
+              insertDuration: const Duration(milliseconds: 500),
+              removeDuration: const Duration(milliseconds: 500),
+              updateDuration: const Duration(milliseconds: 500),
               itemBuilder: (BuildContext context, Animation<double> animation,
                   Transaction item, int index) {
                 return SizeFadeTransition(
@@ -147,11 +147,11 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
               },
             );
           } else {
-            return SliverToBoxAdapter();
+            return const SliverToBoxAdapter();
           }
         },
       ),
-      SliverToBoxAdapter(
+      const SliverToBoxAdapter(
         child: SizedBox(height: 75),
       ),
     ];
@@ -211,11 +211,11 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
               horizontal: getHorizontalPaddingConstrained(context)),
           child: Row(
             children: [
-              SizedBox(width: 13),
+              const SizedBox(width: 13),
               Flexible(
                 child: AnimatedSize(
                   clipBehavior: Clip.none,
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   child: SlidingSelectorIncomeExpense(
                     useHorizontalPaddingConstrained: false,
                     initialIndex: isCredit == null
@@ -231,7 +231,7 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
                       else if (index == 3) isCredit = false;
                       setState(() {});
                     },
-                    options: ["all", "lent", "borrowed"],
+                    options: const ["all", "lent", "borrowed"],
                     customPadding: EdgeInsets.zero,
                   ),
                 ),
@@ -241,7 +241,7 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
                     ? Padding(
                         padding: const EdgeInsets.only(left: 7.0),
                         child: ButtonIcon(
-                          key: ValueKey(1),
+                          key: const ValueKey(1),
                           onTap: () {
                             setState(() {
                               searchValue = "";
@@ -252,10 +252,10 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
                         ),
                       )
                     : Container(
-                        key: ValueKey(2),
+                        key: const ValueKey(2),
                       ),
               ),
-              SizedBox(width: 13),
+              const SizedBox(width: 13),
             ],
           ),
         ),
@@ -290,14 +290,14 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
           ),
         ),
       ),
-      SliverToBoxAdapter(
+      const SliverToBoxAdapter(
         child: SizedBox(height: 10),
       ),
     ];
 
     return WillPopScope(
       onWillPop: () async {
-        if ((globalSelectedID.value[pageId] ?? []).length > 0) {
+        if ((globalSelectedID.value[pageId] ?? []).isNotEmpty) {
           globalSelectedID.value[pageId] = [];
           globalSelectedID.notifyListeners();
           return false;
@@ -316,7 +316,7 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
                 tooltip: isCredit == true || isCredit == null
                     ? "add-credit".tr()
                     : "add-debt".tr(),
-                openPage: SizedBox.shrink(),
+                openPage: const SizedBox.shrink(),
                 onTap: () {
                   openBottomSheet(
                     context,
@@ -338,7 +338,7 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
                 stream: database.watchAllObjectives(
                     objectiveType: ObjectiveType.loan, hideArchived: true),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData == false) return SizedBox.shrink();
+                  if (snapshot.hasData == false) return const SizedBox.shrink();
                   if ((snapshot.data?.length ?? 0) <= 0) {
                     numberLongTerm = 0;
                     _tabController.index = 0;
@@ -370,7 +370,7 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
                               sliverAppBar,
                               SliverToBoxAdapter(
                                 child: Padding(
-                                  padding: EdgeInsets.only(bottom: 13),
+                                  padding: const EdgeInsets.only(bottom: 13),
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal:
@@ -428,11 +428,11 @@ class _CreditDebtTransactionsState extends State<CreditDebtTransactions>
                                                     child: ButtonIcon(
                                                       size: 48,
                                                       iconPadding: 25,
-                                                      key: ValueKey(2),
+                                                      key: const ValueKey(2),
                                                       onTap: () {
                                                         pushRoute(
                                                           context,
-                                                          EditObjectivesPage(
+                                                          const EditObjectivesPage(
                                                             objectiveType:
                                                                 ObjectiveType
                                                                     .loan,
@@ -523,7 +523,7 @@ class AddLoanPopup extends StatelessWidget {
                 child: OutlinedButtonStacked(
                   alignLeft: true,
                   alignBeside: true,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   text: "long-term-loan".tr(),
                   iconData: appStateSettings["outlinedIcons"]
                       ? Icons.av_timer_outlined
@@ -553,14 +553,14 @@ class AddLoanPopup extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 13),
+          const SizedBox(height: 13),
           Row(
             children: [
               Expanded(
                 child: OutlinedButtonStacked(
                   alignLeft: true,
                   alignBeside: true,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   text: "one-time-loan".tr(),
                   iconData: appStateSettings["outlinedIcons"]
                       ? Icons.event_available_outlined

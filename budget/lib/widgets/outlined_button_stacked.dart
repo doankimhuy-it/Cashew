@@ -53,7 +53,7 @@ class OutlinedButtonStacked extends StatelessWidget {
                 children: [
                   Padding(
                     padding: padding ??
-                        EdgeInsets.symmetric(horizontal: 8, vertical: 30),
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 30),
                     child: Column(
                       crossAxisAlignment: alignLeft
                           ? CrossAxisAlignment.start
@@ -75,14 +75,14 @@ class OutlinedButtonStacked extends StatelessWidget {
                                           .secondary,
                                     ),
                                   ),
-                                  SizedBox(height: 10),
+                                  const SizedBox(height: 10),
                                   TextFont(
                                     text: text,
                                     fontSize: fontSize ?? 18,
                                     fontWeight: FontWeight.bold,
                                     maxLines: 2,
                                   ),
-                                  infoButton ?? SizedBox.shrink()
+                                  infoButton ?? const SizedBox.shrink()
                                 ],
                               )
                             : Row(
@@ -97,7 +97,7 @@ class OutlinedButtonStacked extends StatelessWidget {
                                           .secondary,
                                     ),
                                   ),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   Expanded(
                                     child: TextFont(
                                       text: text,
@@ -106,21 +106,21 @@ class OutlinedButtonStacked extends StatelessWidget {
                                       maxLines: 2,
                                     ),
                                   ),
-                                  infoButton ?? SizedBox.shrink(),
+                                  infoButton ?? const SizedBox.shrink(),
                                 ],
                               ),
                         afterWidget == null
-                            ? SizedBox.shrink()
-                            : SizedBox(height: 8),
+                            ? const SizedBox.shrink()
+                            : const SizedBox(height: 8),
                         if (afterWidgetPadding == null)
-                          afterWidget ?? SizedBox.shrink()
+                          afterWidget ?? const SizedBox.shrink()
                       ],
                     ),
                   ),
                   if (afterWidgetPadding != null)
                     Padding(
                       padding: afterWidgetPadding ?? EdgeInsets.zero,
-                      child: afterWidget ?? SizedBox.shrink(),
+                      child: afterWidget ?? const SizedBox.shrink(),
                     ),
                 ],
               ),
@@ -149,7 +149,7 @@ class OutlinedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     if (enabled == false) return child;
     return AnimatedContainer(
-      duration: Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 250),
       decoration: BoxDecoration(
         border: Border.all(
           color: borderColor ??

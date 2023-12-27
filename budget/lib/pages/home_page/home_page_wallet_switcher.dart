@@ -34,6 +34,8 @@ class HomePageWalletSwitcher extends StatelessWidget {
             if (snapshot.hasData) {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
+                clipBehavior: Clip.none,
+                padding: const EdgeInsets.symmetric(horizontal: 7),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -71,7 +73,7 @@ class HomePageWalletSwitcher extends StatelessWidget {
                               onTap: () {
                                 openBottomSheet(
                                   context,
-                                  EditHomePagePinnedWalletsPopup(
+                                  const EditHomePagePinnedWalletsPopup(
                                     homePageWidgetDisplay:
                                         HomePageWidgetDisplay.WalletSwitcher,
                                   ),
@@ -86,8 +88,6 @@ class HomePageWalletSwitcher extends StatelessWidget {
                     ),
                   ],
                 ),
-                clipBehavior: Clip.none,
-                padding: EdgeInsets.symmetric(horizontal: 7),
               );
             }
             return Container();
@@ -129,11 +129,11 @@ class EditHomePagePinnedWalletsPopup extends StatelessWidget {
         List<TransactionWallet> allPinnedWallets = snapshot2.data ?? [];
         Widget child = Column(
           children: [
-            if (allWalletsPks.length <= 0)
+            if (allWalletsPks.isEmpty)
               NoResultsCreate(
                 message: "no-accounts-found".tr(),
                 buttonLabel: "create-account".tr(),
-                route: AddWalletPage(
+                route: const AddWalletPage(
                   routesToPopAfterDelete: RoutesToPopAfterDelete.None,
                 ),
               ),
@@ -189,7 +189,7 @@ class EditHomePagePinnedWalletsPopup extends StatelessWidget {
                   );
                 },
               ),
-            if (allWalletsPks.length > 0 && includeFramework == true)
+            if (allWalletsPks.isNotEmpty && includeFramework == true)
               AddButton(
                 onTap: () {},
                 height: 50,
@@ -200,11 +200,11 @@ class EditHomePagePinnedWalletsPopup extends StatelessWidget {
                   bottom: 13,
                   top: 13,
                 ),
-                openPage: AddWalletPage(
+                openPage: const AddWalletPage(
                   routesToPopAfterDelete: RoutesToPopAfterDelete.None,
                 ),
                 afterOpenPage: () {
-                  Future.delayed(Duration(milliseconds: 100), () {
+                  Future.delayed(const Duration(milliseconds: 100), () {
                     bottomSheetControllerGlobalCustomAssigned?.snapToExtent(0);
                   });
                 },
@@ -254,7 +254,7 @@ class EditHomePagePinnedWalletsPopup extends StatelessWidget {
                     : Icons.edit_rounded,
               ),
               onPressed: () async {
-                pushRoute(context, EditWalletsPage());
+                pushRoute(context, const EditWalletsPage());
               },
             ),
             child: child,

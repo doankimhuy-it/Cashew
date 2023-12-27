@@ -17,7 +17,7 @@ class RadioItems<T> extends StatefulWidget {
   final bool Function(T item)? getSelected;
 
   const RadioItems({
-    Key? key,
+    super.key,
     required this.initial,
     required this.items,
     this.descriptions,
@@ -28,7 +28,7 @@ class RadioItems<T> extends StatefulWidget {
     this.getSelected,
     this.ifNullSelectNone = false,
     this.itemsAreFonts = false,
-  }) : super(key: key);
+  });
 
   @override
   State<RadioItems<T>> createState() => _RadioItemsState<T>();
@@ -60,7 +60,7 @@ class _RadioItemsState<T> extends State<RadioItems<T>> {
           widget.descriptions![index] == "";
       children.add(
         AnimatedSwitcher(
-          duration: Duration(milliseconds: 150),
+          duration: const Duration(milliseconds: 150),
           child: Tappable(
             key: ValueKey((currentValue == item).toString()),
             onLongPress: widget.onLongPress != null
@@ -78,7 +78,7 @@ class _RadioItemsState<T> extends State<RadioItems<T>> {
             },
             child: ListTile(
               title: Transform.translate(
-                offset: Offset(-12, 0),
+                offset: const Offset(-12, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -105,7 +105,7 @@ class _RadioItemsState<T> extends State<RadioItems<T>> {
                         maxLines: 3,
                       ),
                     noDescription
-                        ? SizedBox.shrink()
+                        ? const SizedBox.shrink()
                         : TextFont(
                             fontSize: 14,
                             text: widget.descriptions![index],
@@ -164,7 +164,7 @@ class CheckItems<T> extends StatefulWidget {
   final IconData? unSelectedIcon;
 
   const CheckItems({
-    Key? key,
+    super.key,
     this.initial,
     required this.items,
     required this.onChanged,
@@ -178,7 +178,7 @@ class CheckItems<T> extends StatefulWidget {
     this.triggerInitialOnChanged = true,
     this.selectedIcon,
     this.unSelectedIcon,
-  }) : super(key: key);
+  });
 
   @override
   State<CheckItems<T>> createState() => _CheckItemsState<T>();
@@ -238,7 +238,7 @@ class _CheckItemsState<T> extends State<CheckItems<T>> {
               currentValues.contains(widget.items[itemIndex - 1]);
       children.add(
         AnimatedSwitcher(
-          duration: Duration(milliseconds: 150),
+          duration: const Duration(milliseconds: 150),
           child: Tappable(
             customBorderRadius: BorderRadius.vertical(
               top: Radius.circular(
@@ -270,7 +270,7 @@ class _CheckItemsState<T> extends State<CheckItems<T>> {
             child: ListTile(
               minVerticalPadding: widget.minVerticalPadding,
               title: Transform.translate(
-                offset: Offset(-12, 0),
+                offset: const Offset(-12, 0),
                 child: Row(
                   children: [
                     Expanded(
@@ -285,12 +285,12 @@ class _CheckItemsState<T> extends State<CheckItems<T>> {
                     widget.buildSuffix != null
                         ? widget.buildSuffix!(currentValues, item, selected,
                             addEntry, removeEntry)
-                        : SizedBox.shrink()
+                        : const SizedBox.shrink()
                   ],
                 ),
               ),
               dense: true,
-              contentPadding: EdgeInsets.only(right: 0, left: 16),
+              contentPadding: const EdgeInsets.only(right: 0, left: 16),
               leading: Padding(
                 padding: const EdgeInsets.only(right: 5),
                 child: selected

@@ -42,26 +42,26 @@ class SearchFilters {
     this.titleContains,
     this.noteContains,
   }) {
-    walletPks = this.walletPks.isEmpty ? [] : this.walletPks;
-    categoryPks = this.categoryPks.isEmpty ? [] : this.categoryPks;
+    walletPks = walletPks.isEmpty ? [] : walletPks;
+    categoryPks = categoryPks.isEmpty ? [] : categoryPks;
     subcategoryPks =
-        this.subcategoryPks?.isEmpty == true ? [] : this.subcategoryPks;
-    budgetPks = this.budgetPks.isEmpty ? [] : this.budgetPks;
+        subcategoryPks?.isEmpty == true ? [] : subcategoryPks;
+    budgetPks = budgetPks.isEmpty ? [] : budgetPks;
     excludedBudgetPks =
-        this.excludedBudgetPks.isEmpty ? [] : this.excludedBudgetPks;
-    objectivePks = this.objectivePks.isEmpty ? [] : this.objectivePks;
+        excludedBudgetPks.isEmpty ? [] : excludedBudgetPks;
+    objectivePks = objectivePks.isEmpty ? [] : objectivePks;
     objectiveLoanPks =
-        this.objectiveLoanPks.isEmpty ? [] : this.objectiveLoanPks;
-    expenseIncome = this.expenseIncome.isEmpty ? [] : this.expenseIncome;
-    positiveCashFlow = this.positiveCashFlow;
-    paidStatus = this.paidStatus.isEmpty ? [] : this.paidStatus;
+        objectiveLoanPks.isEmpty ? [] : objectiveLoanPks;
+    expenseIncome = expenseIncome.isEmpty ? [] : expenseIncome;
+    positiveCashFlow = positiveCashFlow;
+    paidStatus = paidStatus.isEmpty ? [] : paidStatus;
     transactionTypes =
-        this.transactionTypes.isEmpty ? [] : this.transactionTypes;
-    budgetTransactionFilters = this.budgetTransactionFilters.isEmpty
+        transactionTypes.isEmpty ? [] : transactionTypes;
+    budgetTransactionFilters = budgetTransactionFilters.isEmpty
         ? []
-        : this.budgetTransactionFilters;
+        : budgetTransactionFilters;
     // reoccurence = [];
-    methodAdded = this.methodAdded.isEmpty ? [] : this.methodAdded;
+    methodAdded = methodAdded.isEmpty ? [] : methodAdded;
   }
   //if the value is empty, it means all/ignore
   // think of it, if the tag is added it will be considered in the search
@@ -309,11 +309,7 @@ class SearchFilters {
         }
       } catch (e) {
         print(
-          e.toString() +
-              " error loading filter string " +
-              key.toString() +
-              " " +
-              value.toString(),
+          "$e error loading filter string $key $value",
         );
       }
     }
@@ -322,54 +318,54 @@ class SearchFilters {
   String getFilterString() {
     String outString = "";
     for (String element in walletPks) {
-      outString += "walletPks:-:" + element + ":-:";
+      outString += "walletPks:-:$element:-:";
     }
     for (String element in categoryPks) {
-      outString += "categoryPks:-:" + element + ":-:";
+      outString += "categoryPks:-:$element:-:";
     }
     for (String element in subcategoryPks ?? []) {
-      outString += "subcategoryPks:-:" + element + ":-:";
+      outString += "subcategoryPks:-:$element:-:";
     }
     if (subcategoryPks == null) {
-      outString += "subcategoryPks:-:" + "null" + ":-:";
+      outString += "subcategoryPks:-:" "null" ":-:";
     }
     for (String? element in budgetPks) {
-      outString += "budgetPks:-:" + element.toString() + ":-:";
+      outString += "budgetPks:-:$element:-:";
     }
     for (String? element in excludedBudgetPks) {
-      outString += "excludedBudgetPks:-:" + element.toString() + ":-:";
+      outString += "excludedBudgetPks:-:$element:-:";
     }
     for (String? element in objectivePks) {
-      outString += "objectivePks:-:" + element.toString() + ":-:";
+      outString += "objectivePks:-:$element:-:";
     }
     for (String? element in objectivePks) {
-      outString += "objectiveLoanPks:-:" + element.toString() + ":-:";
+      outString += "objectiveLoanPks:-:$element:-:";
     }
     for (ExpenseIncome element in expenseIncome) {
-      outString += "expenseIncome:-:" + (element.index).toString() + ":-:";
+      outString += "expenseIncome:-:${element.index}:-:";
     }
-    outString += "positiveCashFlow:-:" + positiveCashFlow.toString() + ":-:";
+    outString += "positiveCashFlow:-:$positiveCashFlow:-:";
 
     for (PaidStatus element in paidStatus) {
-      outString += "paidStatus:-:" + (element.index).toString() + ":-:";
+      outString += "paidStatus:-:${element.index}:-:";
     }
     for (TransactionSpecialType? element in transactionTypes) {
       outString +=
-          "transactionTypes:-:" + (element?.index ?? null).toString() + ":-:";
+          "transactionTypes:-:${element?.index}:-:";
     }
     for (BudgetTransactionFilters element in budgetTransactionFilters) {
       outString +=
-          "budgetTransactionFilters:-:" + (element.index).toString() + ":-:";
+          "budgetTransactionFilters:-:${element.index}:-:";
     }
     for (MethodAdded element in methodAdded) {
       outString +=
-          "methodAdded:-:" + (element.index).toString().toString() + ":-:";
+          "methodAdded:-:${element.index}:-:";
     }
-    outString += "amountRange:-:" + amountRange.toString() + ":-:";
-    outString += "dateTimeRange:-:" + dateTimeRange.toString() + ":-:";
-    outString += "searchQuery:-:" + searchQuery.toString() + ":-:";
-    outString += "titleContains:-:" + titleContains.toString() + ":-:";
-    outString += "noteContains:-:" + noteContains.toString() + ":-:";
+    outString += "amountRange:-:$amountRange:-:";
+    outString += "dateTimeRange:-:$dateTimeRange:-:";
+    outString += "searchQuery:-:$searchQuery:-:";
+    outString += "titleContains:-:$titleContains:-:";
+    outString += "noteContains:-:$noteContains:-:";
     print(outString);
     return outString;
   }
@@ -411,7 +407,7 @@ class _TransactionFiltersSelectionState
           selectedCategories: selectedFilters.categoryPks,
           setSelectedCategories: (List<String>? categories) async {
             selectedFilters.categoryPks = categories ?? [];
-            if (selectedFilters.categoryPks.length <= 0) {
+            if (selectedFilters.categoryPks.isEmpty) {
               selectedFilters.subcategoryPks = [];
             }
 
@@ -488,10 +484,10 @@ class _TransactionFiltersSelectionState
                 },
               );
             }
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         SelectChips(
           items: ExpenseIncome.values,
           getLabel: (ExpenseIncome item) {
@@ -514,7 +510,7 @@ class _TransactionFiltersSelectionState
           },
         ),
         SelectChips(
-          items: [null, ...TransactionSpecialType.values],
+          items: const [null, ...TransactionSpecialType.values],
           getLabel: (TransactionSpecialType? item) {
             return transactionTypeDisplayToEnum[item]
                     ?.toString()
@@ -561,7 +557,7 @@ class _TransactionFiltersSelectionState
           stream: database.watchAllWallets(),
           builder: (context, snapshot) {
             if (snapshot.data != null && snapshot.data!.length <= 1) {
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             }
             if (snapshot.hasData) {
               return SelectChips(
@@ -605,15 +601,15 @@ class _TransactionFiltersSelectionState
                 },
               );
             } else {
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             }
           },
         ),
         StreamBuilder<List<Budget>>(
           stream: database.watchAllAddableBudgets(),
           builder: (context, snapshot) {
-            if (snapshot.data != null && snapshot.data!.length <= 0) {
-              return SizedBox.shrink();
+            if (snapshot.data != null && snapshot.data!.isEmpty) {
+              return const SizedBox.shrink();
             }
             if (snapshot.hasData) {
               return Column(
@@ -691,7 +687,7 @@ class _TransactionFiltersSelectionState
                 ],
               );
             } else {
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             }
           },
         ),
@@ -699,8 +695,8 @@ class _TransactionFiltersSelectionState
           stream: database.watchAllExcludedTransactionsBudgetsInUse(),
           builder: (context, snapshot) {
             print(snapshot.data);
-            if (snapshot.data != null && snapshot.data!.length <= 0) {
-              return SizedBox.shrink();
+            if (snapshot.data != null && snapshot.data!.isEmpty) {
+              return const SizedBox.shrink();
             }
             if (snapshot.hasData) {
               return Column(
@@ -718,7 +714,7 @@ class _TransactionFiltersSelectionState
                       );
                     },
                     getLabel: (Budget item) {
-                      return "excluded-from".tr() + " " + item.name;
+                      return "${"excluded-from".tr()} ${item.name}";
                     },
                     onSelected: (Budget item) {
                       if (selectedFilters.excludedBudgetPks
@@ -751,7 +747,7 @@ class _TransactionFiltersSelectionState
                 ],
               );
             } else {
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             }
           },
         ),
@@ -760,8 +756,8 @@ class _TransactionFiltersSelectionState
           stream: database.watchAllObjectives(
               objectiveType: ObjectiveType.goal, archivedLast: true),
           builder: (context, snapshot) {
-            if (snapshot.data != null && snapshot.data!.length <= 0) {
-              return SizedBox.shrink();
+            if (snapshot.data != null && snapshot.data!.isEmpty) {
+              return const SizedBox.shrink();
             }
             if (snapshot.hasData) {
               return SelectChips(
@@ -809,7 +805,7 @@ class _TransactionFiltersSelectionState
                 },
               );
             } else {
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             }
           },
         ),
@@ -818,8 +814,8 @@ class _TransactionFiltersSelectionState
           stream: database.watchAllObjectives(
               objectiveType: ObjectiveType.loan, archivedLast: true),
           builder: (context, snapshot) {
-            if (snapshot.data != null && snapshot.data!.length <= 0) {
-              return SizedBox.shrink();
+            if (snapshot.data != null && snapshot.data!.isEmpty) {
+              return const SizedBox.shrink();
             }
             if (snapshot.hasData) {
               return SelectChips(
@@ -867,7 +863,7 @@ class _TransactionFiltersSelectionState
                 },
               );
             } else {
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             }
           },
         ),
@@ -894,14 +890,14 @@ class _TransactionFiltersSelectionState
         //     return selectedFilters.methodAdded.contains(item);
         //   },
         // ),
-         SizedBox(height: 5),
+         const SizedBox(height: 5),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
               TextInput(
                 padding: EdgeInsets.zero,
-                labelText: "title-contains".tr() + "...",
+                labelText: "${"title-contains".tr()}...",
                 onChanged: (value) {
                   selectedFilters.titleContains = value.trim();
                 },
@@ -910,10 +906,10 @@ class _TransactionFiltersSelectionState
                     ? Icons.title_outlined
                     : Icons.title_rounded,
               ),
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               TextInput(
                 padding: EdgeInsets.zero,
-                labelText: "notes-contain".tr() + "...",
+                labelText: "${"notes-contain".tr()}...",
                 onChanged: (value) {
                   selectedFilters.noteContains = value.trim();
                 },
@@ -941,7 +937,7 @@ class _TransactionFiltersSelectionState
                   textColor: Theme.of(context).colorScheme.onTertiaryContainer,
                 ),
               ),
-              SizedBox(width: 13),
+              const SizedBox(width: 13),
               Flexible(
                 child: Button(
                   expandedLayout: true,
@@ -979,14 +975,14 @@ class AppliedFilterChips extends StatelessWidget {
     if (searchFilters.titleContains != null) {
       out.add(AppliedFilterChip(
         label:
-            "title-contains".tr() + ": " + (searchFilters.titleContains ?? ""),
+            "${"title-contains".tr()}: ${searchFilters.titleContains ?? ""}",
         openFiltersSelection: openFiltersSelection,
       ));
     }
     // Notes contains
     if (searchFilters.noteContains != null) {
       out.add(AppliedFilterChip(
-        label: "notes-contain".tr() + ": " + (searchFilters.noteContains ?? ""),
+        label: "${"notes-contain".tr()}: ${searchFilters.noteContains ?? ""}",
         openFiltersSelection: openFiltersSelection,
       ));
     }
@@ -1025,12 +1021,10 @@ class AppliedFilterChips extends StatelessWidget {
     if (searchFilters.amountRange != null) {
       out.add(
         AppliedFilterChip(
-          label: convertToMoney(allWallets, searchFilters.amountRange!.start) +
-              " – " +
-              convertToMoney(
+          label: "${convertToMoney(allWallets, searchFilters.amountRange!.start)} – ${convertToMoney(
                 allWallets,
                 searchFilters.amountRange!.end,
-              ),
+              )}",
           openFiltersSelection: openFiltersSelection,
         ),
       );
@@ -1122,7 +1116,7 @@ class AppliedFilterChips extends StatelessWidget {
     for (Budget budget in await database.getAllBudgets()) {
       if (searchFilters.excludedBudgetPks.contains(budget.budgetPk)) {
         out.add(AppliedFilterChip(
-          label: "excluded-from".tr() + ": " + budget.name,
+          label: "${"excluded-from".tr()}: ${budget.name}",
           customBorderColor: HexColor(
             budget.colour,
             defaultColor: Theme.of(context).colorScheme.primary,
@@ -1192,21 +1186,21 @@ class AppliedFilterChips extends StatelessWidget {
         builder: (context, AsyncSnapshot<List<Widget>> snapshot) {
           return AnimatedSize(
             curve: Curves.easeInOutCubicEmphasized,
-            duration: Duration(milliseconds: 1000),
+            duration: const Duration(milliseconds: 1000),
             child: snapshot.hasData &&
                     snapshot.data != null &&
-                    snapshot.data!.length > 0
+                    snapshot.data!.isNotEmpty
                 ? Padding(
                     padding: padding,
                     child: SingleChildScrollView(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       scrollDirection: Axis.horizontal,
                       child: AnimatedSizeSwitcher(
                         clipBehavior: Clip.none,
                         child: Row(
                           key: ValueKey(snapshot.data.toString()),
                           children: [
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
                             IconButtonScaled(
                               iconData: Icons.close_rounded,
                               iconSize: 14,
@@ -1215,14 +1209,14 @@ class AppliedFilterChips extends StatelessWidget {
                                 clearSearchFilters();
                               },
                             ),
-                            SizedBox(width: 2),
+                            const SizedBox(width: 2),
                             ...(snapshot.data ?? [])
                           ],
                         ),
                       ),
                     ),
                   )
-                : SizedBox.shrink(),
+                : const SizedBox.shrink(),
           );
         },
       ),

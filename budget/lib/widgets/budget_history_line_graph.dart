@@ -123,7 +123,7 @@ class BudgetHistoryLineGraph extends StatelessWidget {
           spots.firstOrNull?.length) {
         setNoPastRegionsAreZero(true);
       }
-      if (filteredDateRanges.length <= 0 || filteredSpotsFixedX.length <= 0) {
+      if (filteredDateRanges.isEmpty || filteredSpotsFixedX.isEmpty) {
         filteredDateRanges = dateRanges;
         filteredSpotsFixedX = spots;
       }
@@ -366,7 +366,7 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                 end: Alignment.topCenter,
               ),
             ),
-            dotData: FlDotData(show: false),
+            dotData: const FlDotData(show: false),
             color: Colors.transparent,
           ),
       for (String categoryPk in widget.extraCategorySpots.keys)
@@ -411,7 +411,7 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
       ),
       child: LineChart(
         curve: Curves.easeInOutCubicEmphasized,
-        duration: Duration(milliseconds: 2000),
+        duration: const Duration(milliseconds: 2000),
         LineChartData(
           lineBarsData: lineBarsData,
           minY: widget.minY,
@@ -454,7 +454,7 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
               return spotIndexes.map((index) {
                 return TouchedSpotIndicatorData(
                   FlLine(
-                    color: (widget.extraCategorySpots.keys.length <= 0
+                    color: (widget.extraCategorySpots.keys.isEmpty
                             ? widget.color
                             : barData.color) ??
                         Theme.of(context).colorScheme.primary,
@@ -466,14 +466,14 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                     getDotPainter: (spot, percent, barData, index) =>
                         FlDotCirclePainter(
                       radius: 3,
-                      color: (widget.extraCategorySpots.keys.length <= 0 &&
+                      color: (widget.extraCategorySpots.keys.isEmpty &&
                                   widget.lineColors == null
                               ? widget.color.withOpacity(0.9)
                               : barData.color) ??
                           Theme.of(context).colorScheme.primary,
                       strokeWidth: 2,
                       strokeColor:
-                          (widget.extraCategorySpots.keys.length <= 0 &&
+                          (widget.extraCategorySpots.keys.isEmpty &&
                                       widget.lineColors == null
                                   ? widget.color.withOpacity(0.9)
                                   : barData.color) ??
@@ -485,7 +485,7 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
             },
             touchTooltipData: LineTouchTooltipData(
               maxContentWidth: 170,
-              tooltipBgColor: widget.extraCategorySpots.keys.length <= 0 &&
+              tooltipBgColor: widget.extraCategorySpots.keys.isEmpty &&
                       (widget.lineColors == null ||
                           (widget.lineColors?.length ?? 0) <= 0)
                   ? widget.color.withOpacity(0.7)
@@ -500,7 +500,7 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
               fitInsideVertically: true,
               fitInsideHorizontally: true,
               tooltipPadding:
-                  EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 6),
+                  const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 6),
               getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
                 return lineBarsSpot.asMap().entries.map((entry) {
                   LineBarSpot lineBarSpot = entry.value;
@@ -518,8 +518,7 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                         dateRanges.length - 1 - (lineBarsSpot.first.x).round()];
                   } catch (e) {
                     print(
-                        "Error with date ranges passed in, length mismatched that of lines: " +
-                            e.toString());
+                        "Error with date ranges passed in, length mismatched that of lines: $e");
                   }
 
                   String startAndEndDateString = "";
@@ -534,18 +533,16 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                               dateRange.start.year != DateTime.now().year);
                     } else {
                       startAndEndDateString =
-                          getWordedDateShort(dateRange.start) +
-                              " – " +
-                              getWordedDateShort(dateRange.end,
+                          "${getWordedDateShort(dateRange.start)} – ${getWordedDateShort(dateRange.end,
                                   includeYear: dateRange.end.year !=
-                                      DateTime.now().year);
+                                      DateTime.now().year)}";
                     }
-                    startAndEndDateString = startAndEndDateString + "\n";
+                    startAndEndDateString = "$startAndEndDateString\n";
                   }
 
                   return LineTooltipItem(
                     "",
-                    TextStyle(),
+                    const TextStyle(),
                     children: [
                       if (dateRange != null &&
                           index == 0 &&
@@ -557,7 +554,7 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                                 .withOpacity(lineBarsSpot.length > 1 ? 0.7 : 1),
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
-                            fontFamilyFallback: ['Inter'],
+                            fontFamilyFallback: const ['Inter'],
                           ),
                         ),
                       TextSpan(
@@ -567,13 +564,13 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                         style: TextStyle(
                           color: lineBarSpot.bar.color ==
                                   lightenPastel(widget.color, amount: 0.3)
-                              ? widget.extraCategorySpots.keys.length <= 0
+                              ? widget.extraCategorySpots.keys.isEmpty
                                   ? Colors.white.withOpacity(0.9)
                                   : getColor(context, "black").withOpacity(0.7)
                               : lineBarSpot.bar.color,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
-                          fontFamilyFallback: ['Inter'],
+                          fontFamilyFallback: const ['Inter'],
                           height: index == 0 &&
                                   widget.showDateOnHover &&
                                   lineBarsSpot.length > 1
@@ -619,7 +616,7 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                       padding: const EdgeInsets.only(top: 8.0),
                       child: MediaQuery(
                         data: MediaQuery.of(context)
-                            .copyWith(textScaler: TextScaler.linear(1.0)),
+                            .copyWith(textScaler: const TextScaler.linear(1.0)),
                         child: TextFont(
                           textAlign: TextAlign.center,
                           fontSize: 13,
@@ -652,12 +649,12 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                       ),
                     );
                   }
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 },
               ),
             ),
-            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
@@ -671,13 +668,13 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                   } else if (value <= widget.maxY && value > widget.minY) {
                     show = true;
                   } else {
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   }
                   return Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: MediaQuery(
                       data: MediaQuery.of(context)
-                          .copyWith(textScaler: TextScaler.linear(1.0)),
+                          .copyWith(textScaler: const TextScaler.linear(1.0)),
                       child: TextFont(
                         textAlign: TextAlign.right,
                         text: getWordedNumber(

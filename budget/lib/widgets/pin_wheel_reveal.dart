@@ -8,12 +8,12 @@ class PinWheelReveal extends StatefulWidget {
   final Curve curve;
 
   const PinWheelReveal({
-    Key? key,
+    super.key,
     required this.child,
     required this.duration,
     this.delay = Duration.zero,
     this.curve = Curves.easeInOutCubic,
-  }) : super(key: key);
+  });
 
   @override
   _PinWheelRevealState createState() => _PinWheelRevealState();
@@ -32,7 +32,7 @@ class _PinWheelRevealState extends State<PinWheelReveal>
     _controller = AnimationController(duration: widget.duration, vsync: this);
 
     _animation = Tween(begin: 0.0, end: 1.0)
-        .animate(new CurvedAnimation(parent: _controller, curve: widget.curve))
+        .animate(CurvedAnimation(parent: _controller, curve: widget.curve))
       ..addListener(() {
         setState(() {
           _fraction = _animation.value;

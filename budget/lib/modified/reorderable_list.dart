@@ -1305,7 +1305,7 @@ class _DragInfo extends Drag {
   Widget createProxy(BuildContext context) {
     return capturedThemes.wrap(
       _proxyAnimation == null
-          ? SizedBox.shrink()
+          ? const SizedBox.shrink()
           : _DragItemProxy(
               listState: listState,
               index: index,

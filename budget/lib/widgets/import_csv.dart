@@ -28,7 +28,7 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class ImportCSV extends StatefulWidget {
-  const ImportCSV({Key? key}) : super(key: key);
+  const ImportCSV({super.key});
 
   @override
   State<ImportCSV> createState() => _ImportCSVState();
@@ -89,7 +89,7 @@ class _ImportCSVState extends State<ImportCSV> {
   Future<void> _assignColumns(String csvString,
       {bool importFromSheets = false}) async {
     try {
-      List<List<String>> fileContents = CsvToListConverter().convert(
+      List<List<String>> fileContents = const CsvToListConverter().convert(
         csvString,
         eol: '\n',
         shouldParseNumbers: false,
@@ -214,7 +214,7 @@ class _ImportCSVState extends State<ImportCSV> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Table(
-                      defaultColumnWidth: IntrinsicColumnWidth(),
+                      defaultColumnWidth: const IntrinsicColumnWidth(),
                       defaultVerticalAlignment:
                           TableCellVerticalAlignment.middle,
                       children: <TableRow>[
@@ -277,7 +277,7 @@ class _ImportCSVState extends State<ImportCSV> {
                       padding: const EdgeInsets.only(bottom: 5),
                       child: Container(
                         padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                            const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: appStateSettings["materialYou"]
@@ -308,9 +308,7 @@ class _ImportCSVState extends State<ImportCSV> {
                                         fontSize: 15,
                                       ),
                                       TextFont(
-                                        text: "example".tr() +
-                                            " " +
-                                            "dd/MM/yyyy HH:mm",
+                                        text: "${"example".tr()} dd/MM/yyyy HH:mm",
                                         fontSize: 12,
                                         maxLines: 5,
                                       ),
@@ -319,7 +317,7 @@ class _ImportCSVState extends State<ImportCSV> {
                                         maxLines: 5,
                                         fontSize: 12,
                                       ),
-                                      SizedBox(height: 10),
+                                      const SizedBox(height: 10),
                                     ],
                                   ),
                                   Container(
@@ -352,7 +350,7 @@ class _ImportCSVState extends State<ImportCSV> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5),
                         child: Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 15),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -383,7 +381,7 @@ class _ImportCSVState extends State<ImportCSV> {
                                           .capitalizeFirst,
                                       fontSize: 15,
                                     ),
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     DropdownSelect(
                                       compact: true,
                                       initial: assignedColumns[key]![
@@ -402,17 +400,15 @@ class _ImportCSVState extends State<ImportCSV> {
                                                   ...headers
                                                 ]
                                               : ["~None~", ...headers],
-                                      boldedValues: [
+                                      boldedValues: const [
                                         "~Current Wallet~",
                                         "~None~"
                                       ],
                                       getLabel: (label) {
                                         if (label == "~Current Wallet~") {
-                                          return "~" +
-                                              "current-account".tr() +
-                                              "~";
+                                          return "~${"current-account".tr()}~";
                                         } else if (label == "~None~") {
-                                          return "~" + "none".tr() + "~";
+                                          return "~${"none".tr()}~";
                                         }
                                         return label;
                                       },
@@ -526,14 +522,8 @@ class _ImportCSVState extends State<ImportCSV> {
             icon: appStateSettings["outlinedIcons"]
                 ? Icons.check_circle_outline_outlined
                 : Icons.check_circle_outline_rounded,
-            title: "done".tr() + "!",
-            description: "successfully-imported".tr() +
-                " " +
-                // Subtract one, since we don't count the header of the CSV as an entry
-                (fileContents.length - firstEntryIndex).toString() +
-                " " +
-                "transactions".tr().toLowerCase() +
-                ".",
+            title: "${"done".tr()}!",
+            description: "${"successfully-imported".tr()} ${fileContents.length - firstEntryIndex} ${"transactions".tr().toLowerCase()}.",
             onSubmitLabel: "ok".tr(),
             onSubmit: () {
               Navigator.pop(context);
@@ -614,9 +604,9 @@ class _ImportCSVState extends State<ImportCSV> {
       ),
     );
     // Fix over-scroll stretch when keyboard pops up quickly
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       bottomSheetControllerGlobal.scrollTo(0,
-          duration: Duration(milliseconds: 100));
+          duration: const Duration(milliseconds: 100));
     });
   }
 
@@ -757,10 +747,8 @@ Future saveSampleCSV({required BuildContext boxContext}) async {
       "",
       "",
     ]);
-    String csv = ListToCsvConverter().convert(csvData);
-    String fileName = "cashew-import-template" +
-        DateTime.now().millisecondsSinceEpoch.toString() +
-        ".csv";
+    String csv = const ListToCsvConverter().convert(csvData);
+    String fileName = "cashew-import-template${DateTime.now().millisecondsSinceEpoch}.csv";
     return saveCSV(boxContext: boxContext, csv: csv, fileName: fileName);
   });
   return;
@@ -772,8 +760,8 @@ class ImportingEntriesPopup extends StatefulWidget {
     required this.dateFormat,
     required this.fileContents,
     required this.next,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Map<String, Map<String, dynamic>> assignedColumns;
   final String dateFormat;
@@ -943,8 +931,7 @@ class _ImportingEntriesPopupState extends State<ImportingEntriesPopup> {
                         .trim()))
                 .walletPk;
           } catch (e) {
-            throw "Wallet not found! If you want to import to the current wallet, please select '~Current Wallet~'. Details: " +
-                e.toString();
+            throw "Wallet not found! If you want to import to the current wallet, please select '~Current Wallet~'. Details: $e";
           }
         }
       }
@@ -973,11 +960,9 @@ class _ImportingEntriesPopupState extends State<ImportingEntriesPopup> {
           if (result != null) break;
         }
         if (result == null) {
-          throw "Failed to parse date and time! Please use the custom 'Date Format' that matches your data. \n\n  Details: " +
-              e.toString();
+          throw "Failed to parse date and time! Please use the custom 'Date Format' that matches your data. \n\n  Details: $e";
         } else {
-          print("Successfully parsed data with a common date format: " +
-              result.toString());
+          print("Successfully parsed data with a common date format: $result");
           dateCreated = result;
         }
       } else {
@@ -993,8 +978,7 @@ class _ImportingEntriesPopupState extends State<ImportingEntriesPopup> {
             dateCreated.minute,
           );
         } catch (e) {
-          throw "Failed to parse date and time! Please use the custom 'Date Format' that matches your data. \n\n  Details: " +
-              e.toString();
+          throw "Failed to parse date and time! Please use the custom 'Date Format' that matches your data. \n\n  Details: $e";
         }
       }
     }
@@ -1076,7 +1060,7 @@ class _ImportingEntriesPopupState extends State<ImportingEntriesPopup> {
         } catch (e) {
           transactionAndTitle = null;
           skippedError
-              .add("Skipping row #" + i.toString() + "\n" + e.toString());
+              .add("Skipping row #$i\n$e");
         }
         if (transactionAndTitle == null) continue;
 
@@ -1084,14 +1068,14 @@ class _ImportingEntriesPopupState extends State<ImportingEntriesPopup> {
         TransactionsCompanion companionTransactionToInsert =
             transactionAndTitle.transaction.toCompanion(true);
         companionTransactionToInsert = companionTransactionToInsert.copyWith(
-            transactionPk: Value.absent());
+            transactionPk: const Value.absent());
         transactionsInserting.add(companionTransactionToInsert);
         // Use auto generated ID when inserting
         if (transactionAndTitle.title != null) {
           AssociatedTitlesCompanion companionTitleToInsert =
               transactionAndTitle.title!.toCompanion(true);
           companionTitleToInsert = companionTitleToInsert.copyWith(
-              associatedTitlePk: Value.absent());
+              associatedTitlePk: const Value.absent());
           titlesInserting.add(companionTitleToInsert);
         }
       }
@@ -1113,11 +1097,7 @@ class _ImportingEntriesPopupState extends State<ImportingEntriesPopup> {
         await openPopup(
           context,
           title: "csv-error".tr(),
-          description: "Skipped importing " +
-              skippedError.length.toString() +
-              " entries: " +
-              "\n\n" +
-              skippedError.take(10).join("\n\n"),
+          description: "Skipped importing ${skippedError.length} entries: \n\n${skippedError.take(10).join("\n\n")}",
           icon: appStateSettings["outlinedIcons"]
               ? Icons.error_outlined
               : Icons.error_rounded,
@@ -1156,12 +1136,10 @@ class _ImportingEntriesPopupState extends State<ImportingEntriesPopup> {
           currentPercent: currentPercent,
           color: Theme.of(context).colorScheme.primary,
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         TextFont(
           fontSize: 15,
-          text: currentEntryIndex.toString() +
-              " / " +
-              currentFileLength.toString(),
+          text: "$currentEntryIndex / $currentFileLength",
         )
       ],
     );
@@ -1197,7 +1175,7 @@ DateTime? tryDateFormatting(
     dateCreated =
         DateTime(dateCreated.year, dateCreated.month, dateCreated.day);
   } catch (e) {
-    print("Failed to parse date and time!" + e.toString());
+    print("Failed to parse date and time!$e");
   }
   return dateCreated;
 }

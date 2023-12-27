@@ -6,12 +6,12 @@ class BreathingWidget extends StatefulWidget {
   final Duration duration;
   final double endScale;
   const BreathingWidget({
-    Key? key,
+    super.key,
     required this.child,
     this.curve = Curves.ease,
     this.duration = const Duration(milliseconds: 3000),
     this.endScale = 1.3,
-  }) : super(key: key);
+  });
 
   @override
   _BreathingWidgetState createState() => _BreathingWidgetState();

@@ -34,7 +34,7 @@ class LinearGradientFadedEdges extends StatelessWidget {
             top: 0,
             bottom: 0,
             child: Transform.translate(
-              offset: Offset(-1, 0),
+              offset: const Offset(-1, 0),
               child: IgnorePointer(
                 child: Container(
                   width: gradientSize,
@@ -46,7 +46,7 @@ class LinearGradientFadedEdges extends StatelessWidget {
                       ],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
-                      stops: [0.1, 1],
+                      stops: const [0.1, 1],
                     ),
                   ),
                 ),
@@ -59,7 +59,7 @@ class LinearGradientFadedEdges extends StatelessWidget {
             top: 0,
             bottom: 0,
             child: Transform.translate(
-              offset: Offset(1, 0),
+              offset: const Offset(1, 0),
               child: IgnorePointer(
                 child: Container(
                   width: gradientSize,
@@ -71,7 +71,7 @@ class LinearGradientFadedEdges extends StatelessWidget {
                       ],
                       begin: Alignment.centerRight,
                       end: Alignment.centerLeft,
-                      stops: [0.1, 1],
+                      stops: const [0.1, 1],
                     ),
                   ),
                 ),
@@ -84,7 +84,7 @@ class LinearGradientFadedEdges extends StatelessWidget {
             left: 0,
             top: 0,
             child: Transform.translate(
-              offset: Offset(0, -1),
+              offset: const Offset(0, -1),
               child: IgnorePointer(
                 child: Container(
                   height: gradientSize,
@@ -96,7 +96,7 @@ class LinearGradientFadedEdges extends StatelessWidget {
                       ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      stops: [0.1, 1],
+                      stops: const [0.1, 1],
                     ),
                   ),
                 ),
@@ -109,7 +109,7 @@ class LinearGradientFadedEdges extends StatelessWidget {
             left: 0,
             bottom: 0,
             child: Transform.translate(
-              offset: Offset(0, 1),
+              offset: const Offset(0, 1),
               child: IgnorePointer(
                 child: Container(
                   height: gradientSize,
@@ -121,7 +121,7 @@ class LinearGradientFadedEdges extends StatelessWidget {
                       ],
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
-                      stops: [0.1, 1],
+                      stops: const [0.1, 1],
                     ),
                   ),
                 ),

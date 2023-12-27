@@ -20,10 +20,9 @@ import 'package:budget/struct/random_constants.dart';
 
 extension CapExtension on String {
   String get capitalizeFirst =>
-      this.length > 0 ? '${this[0].toUpperCase()}${this.substring(1)}' : '';
-  String get allCaps => this.toUpperCase();
-  String get capitalizeFirstofEach => this
-      .replaceAll(RegExp(' +'), ' ')
+      isNotEmpty ? '${this[0].toUpperCase()}${substring(1)}' : '';
+  String get allCaps => toUpperCase();
+  String get capitalizeFirstofEach => replaceAll(RegExp(' +'), ' ')
       .split(" ")
       .map((str) => str.capitalizeFirst)
       .join(" ");
@@ -31,19 +30,17 @@ extension CapExtension on String {
 
 String convertToPercent(double amount,
     {double? finalNumber, int? numberDecimals}) {
-  int numberDecimalsGet = numberDecimals != null
-      ? numberDecimals
-      : finalNumber == null
+  int numberDecimalsGet = numberDecimals ?? (finalNumber == null
           ? getDecimalPlaces(amount) > 2
               ? 2
               : getDecimalPlaces(amount)
           : getDecimalPlaces(finalNumber) > 2
               ? 2
-              : getDecimalPlaces(finalNumber);
+              : getDecimalPlaces(finalNumber));
 
   String roundedAmount = amount.toStringAsFixed(numberDecimalsGet);
 
-  return roundedAmount + "%";
+  return "$roundedAmount%";
 }
 
 int getDecimalPlaces(double number) {
@@ -147,14 +144,12 @@ String convertToMoney(
   }
   String formatOutput = currency.format(amount).trim();
   if (addCurrencyName == true && currencyKey != null) {
-    formatOutput = formatOutput + " " + currencyKey.toUpperCase();
+    formatOutput = "$formatOutput ${currencyKey.toUpperCase()}";
   } else if (addCurrencyName == true) {
-    formatOutput = formatOutput +
-        " " +
-        (allWallets.indexedByPk[appStateSettings["selectedWalletPk"]]
+    formatOutput = "$formatOutput ${(allWallets.indexedByPk[appStateSettings["selectedWalletPk"]]
                     ?.currency ??
                 "")
-            .toUpperCase();
+            .toUpperCase()}";
   }
   return formatOutput;
   // if (finalNumber != null &&
@@ -205,7 +200,7 @@ checkYesterdayTodayTomorrow(DateTime date) {
       date.year == tomorrow.year) {
     return "tomorrow".tr();
   }
-  DateTime yesterday = now.subtract(Duration(days: 1));
+  DateTime yesterday = now.subtract(const Duration(days: 1));
   if (date.day == yesterday.day &&
       date.month == yesterday.month &&
       date.year == yesterday.year) {
@@ -249,15 +244,9 @@ String getWordedDateShortMore(DateTime date,
   }
   final locale = navigatorKey.currentContext?.locale.toString();
   if (includeYear) {
-    return DateFormat.MMMMd(locale).format(date) +
-        ", " +
-        DateFormat.y(locale).format(date);
+    return "${DateFormat.MMMMd(locale).format(date)}, ${DateFormat.y(locale).format(date)}";
   } else if (includeTime) {
-    return DateFormat.MMMMd(locale).format(date) +
-        ", " +
-        DateFormat.y(locale).format(date) +
-        " - " +
-        DateFormat('h:mm aaa', locale).format(date);
+    return "${DateFormat.MMMMd(locale).format(date)}, ${DateFormat.y(locale).format(date)} - ${DateFormat('h:mm aaa', locale).format(date)}";
   }
   return DateFormat.MMMMd(locale).format(date);
 }
@@ -296,17 +285,14 @@ getWordedDate(DateTime date,
 
   String extraYear = "";
   if (includeYearIfNotCurrentYear && now.year != date.year) {
-    extraYear = ", " + date.year.toString();
+    extraYear = ", ${date.year}";
   }
 
   if (checkYesterdayTodayTomorrow(date) != false) {
     return checkYesterdayTodayTomorrow(date) +
         (includeMonthDate
-            ? ", " +
-                DateFormat.MMMMd(navigatorKey.currentContext?.locale.toString())
-                    .format(date)
-                    .toString() +
-                extraYear
+            ? ", ${DateFormat.MMMMd(navigatorKey.currentContext?.locale.toString())
+                    .format(date)}$extraYear"
             : "");
   }
 
@@ -361,7 +347,7 @@ DateTime getDatePastToDetermineBudgetDate(int index, Budget budget,
   if (isChecking && reoccurrence == BudgetReoccurence.monthly) {
     DateTimeRange budgetRange = getBudgetDate(
         budget, getDatePastToDetermineBudgetDate(0, budget, isChecking: false));
-    if (budgetRange.end.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
+    if (budgetRange.end.isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
       return getDatePastToDetermineBudgetDate(index - 1, budget,
           isChecking: false);
     }
@@ -544,21 +530,13 @@ DateTimeRange getBudgetDate(Budget budget, DateTime currentDate) {
 
 String getWordedNumber(AllWallets allWallets, double value) {
   if (value >= 100000) {
-    return getCurrencyString(allWallets) +
-        (value / 1000).toStringAsFixed(0) +
-        "K";
+    return "${getCurrencyString(allWallets)}${(value / 1000).toStringAsFixed(0)}K";
   } else if (value >= 1000) {
-    return getCurrencyString(allWallets) +
-        (value / 1000).toStringAsFixed(1) +
-        "K";
+    return "${getCurrencyString(allWallets)}${(value / 1000).toStringAsFixed(1)}K";
   } else if (value <= -100000) {
-    return getCurrencyString(allWallets) +
-        (value / 1000).toStringAsFixed(0) +
-        "K";
+    return "${getCurrencyString(allWallets)}${(value / 1000).toStringAsFixed(0)}K";
   } else if (value <= -1000) {
-    return getCurrencyString(allWallets) +
-        (value / 1000).toStringAsFixed(1) +
-        "K";
+    return "${getCurrencyString(allWallets)}${(value / 1000).toStringAsFixed(1)}K";
   } else {
     return getCurrencyString(allWallets) + value.toInt().toString();
   }
@@ -567,7 +545,7 @@ String getWordedNumber(AllWallets allWallets, double value) {
 double getPercentBetweenDates(DateTimeRange timeRange, DateTime currentTime) {
   int millisecondDifference = timeRange.end.millisecondsSinceEpoch -
       timeRange.start.millisecondsSinceEpoch +
-      Duration(days: 1).inMilliseconds;
+      const Duration(days: 1).inMilliseconds;
   double percent = (currentTime.millisecondsSinceEpoch -
           timeRange.start.millisecondsSinceEpoch) /
       millisecondDifference;
@@ -719,7 +697,7 @@ List<BoxShadow> boxShadowGeneral(context) {
     BoxShadow(
       color: getColor(context, "shadowColorLight").withAlpha(30),
       blurRadius: 20,
-      offset: Offset(0, 0),
+      offset: const Offset(0, 0),
       spreadRadius: 8,
     ),
   ];
@@ -731,7 +709,7 @@ List<BoxShadow> boxShadowSharp(context) {
     BoxShadow(
       color: getColor(context, "shadowColorLight").withAlpha(30),
       blurRadius: 2,
-      offset: Offset(0, 0),
+      offset: const Offset(0, 0),
       spreadRadius: 2,
     ),
   ];
@@ -743,7 +721,7 @@ List<BoxShadow> boxShadowCategoryPercent(context) {
     BoxShadow(
       color: getColor(context, "shadowColor").withOpacity(0.4),
       blurRadius: 3,
-      offset: Offset(0, 0),
+      offset: const Offset(0, 0),
       spreadRadius: 2,
     ),
   ];
@@ -759,7 +737,7 @@ String pluralString(bool condition, String string) {
   if (condition) {
     return string;
   } else {
-    return string + "s";
+    return "${string}s";
   }
 }
 
@@ -796,16 +774,11 @@ class CustomMaterialPageRoute extends MaterialPageRoute {
   }
 
   CustomMaterialPageRoute({
-    required WidgetBuilder builder,
-    RouteSettings? settings,
-    bool maintainState = true,
-    bool fullscreenDialog = false,
-  }) : super(
-          builder: builder,
-          settings: settings,
-          maintainState: maintainState,
-          fullscreenDialog: fullscreenDialog,
-        );
+    required super.builder,
+    super.settings,
+    super.maintainState,
+    super.fullscreenDialog,
+  });
 }
 
 Future<dynamic> pushRoute(BuildContext context, Widget page,
@@ -820,10 +793,10 @@ Future<dynamic> pushRoute(BuildContext context, Widget page,
       context,
       PageRouteBuilder(
         opaque: false,
-        transitionDuration: Duration(milliseconds: 300),
-        reverseTransitionDuration: Duration(milliseconds: 125),
+        transitionDuration: const Duration(milliseconds: 300),
+        reverseTransitionDuration: const Duration(milliseconds: 125),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          final tween = Tween(begin: Offset(0, 0.05), end: Offset.zero)
+          final tween = Tween(begin: const Offset(0, 0.05), end: Offset.zero)
               .chain(CurveTween(curve: Curves.easeOut));
           return SlideTransition(
             position: animation.drive(tween),
@@ -987,7 +960,7 @@ String getDevicesDefaultCurrencyCode() {
       }
     }
   } catch (e) {
-    print("Error getting default currency " + e.toString());
+    print("Error getting default currency $e");
   }
   return popularCurrencies[0];
 }
@@ -1003,7 +976,7 @@ void copyToClipboard(String text, {bool showSnackbar = true}) async {
         icon: appStateSettings["outlinedIcons"]
             ? Icons.copy_outlined
             : Icons.copy_rounded,
-        timeout: Duration(milliseconds: 2500),
+        timeout: const Duration(milliseconds: 2500),
       ),
     );
   }
@@ -1020,7 +993,7 @@ Future<String?> readClipboard({bool showSnackbar = true}) async {
         icon: appStateSettings["outlinedIcons"]
             ? Icons.paste_outlined
             : Icons.paste_rounded,
-        timeout: Duration(milliseconds: 2500),
+        timeout: const Duration(milliseconds: 2500),
       ),
     );
   }
@@ -1101,7 +1074,7 @@ Future<int?> getAndroidVersion() async {
       String androidVersionString = androidInfo.version.release;
       androidVersion = int.tryParse(androidVersionString);
     } catch (e) {
-      print("Error parsing Android version" + e.toString());
+      print("Error parsing Android version$e");
     }
   }
   return androidVersion;
@@ -1114,7 +1087,7 @@ Future<bool> setHighRefreshRate() async {
     }
     return true;
   } catch (e) {
-    print("Error setting high refresh rate: " + e.toString());
+    print("Error setting high refresh rate: $e");
   }
   return false;
 }

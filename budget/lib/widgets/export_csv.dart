@@ -187,16 +187,14 @@ class ExportCSV extends StatelessWidget {
       List<List<dynamic>> csvData = [];
       csvData.add(output.first.keys.toList()); // Add first row headers
       csvData.addAll(output.map((map) => map.values.toList()));
-      String csv = ListToCsvConverter().convert(csvData);
+      String csv = const ListToCsvConverter().convert(csvData);
 
-      String fileName = "cashew-" +
-          DateTime.now()
+      String fileName = "cashew-${DateTime.now()
               .toString()
               .replaceAll(".", "-")
               .replaceAll("-", "-")
               .replaceAll(" ", "-")
-              .replaceAll(":", "-") +
-          ".csv";
+              .replaceAll(":", "-")}.csv";
       await saveCSV(boxContext: boxContext, csv: csv, fileName: fileName);
     });
   }

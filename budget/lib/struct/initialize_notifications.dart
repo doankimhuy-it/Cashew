@@ -47,7 +47,7 @@ runNotificationPayLoadsNoContext(payloadData) {
   if (payloadData == "addTransaction") {
     navigatorKey.currentState!.push(
       MaterialPageRoute(
-        builder: (context) => AddTransactionPage(
+        builder: (context) => const AddTransactionPage(
           routesToPopAfterDelete: RoutesToPopAfterDelete.None,
         ),
       ),
@@ -56,7 +56,7 @@ runNotificationPayLoadsNoContext(payloadData) {
     navigatorKey.currentState!.push(
       MaterialPageRoute(
         builder: (context) =>
-            UpcomingOverdueTransactions(overdueTransactions: true),
+            const UpcomingOverdueTransactions(overdueTransactions: true),
       ),
     );
   }
@@ -67,14 +67,14 @@ void runNotificationPayLoads(context) {
   if (notificationPayload == "addTransaction") {
     pushRoute(
       context,
-      AddTransactionPage(
+      const AddTransactionPage(
         routesToPopAfterDelete: RoutesToPopAfterDelete.None,
       ),
     );
   } else if (notificationPayload == "upcomingTransaction") {
     pushRoute(
       context,
-      UpcomingOverdueTransactions(overdueTransactions: false),
+      const UpcomingOverdueTransactions(overdueTransactions: false),
     );
   }
   notificationPayload = "";
@@ -97,8 +97,7 @@ Future<void> setDailyNotifications(context) async {
       }
       await scheduleDailyNotification(context, timeOfDay);
     } catch (e) {
-      print(e.toString() +
-          " Error setting up notifications for upcoming transactions");
+      print("$e Error setting up notifications for upcoming transactions");
     }
   }
 }
@@ -110,8 +109,7 @@ Future<void> setUpcomingNotifications(context) async {
     try {
       await scheduleUpcomingTransactionsNotification(context);
     } catch (e) {
-      print(e.toString() +
-          " Error setting up notifications for upcoming transactions");
+      print("$e Error setting up notifications for upcoming transactions");
     }
   }
   return;

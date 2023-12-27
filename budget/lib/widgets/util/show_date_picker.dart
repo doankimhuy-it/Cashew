@@ -26,7 +26,7 @@ Future<DateTime?> showCustomDatePicker(
             ),
           ),
         ),
-        child: child ?? SizedBox.shrink(),
+        child: child ?? const SizedBox.shrink(),
       );
     },
   );
@@ -51,7 +51,7 @@ Future<DateTimeRange?> showCustomDateRangePicker(
             ),
           ),
         ),
-        child: child ?? SizedBox.shrink(),
+        child: child ?? const SizedBox.shrink(),
       );
     },
     initialEntryMode: initialEntryMode,

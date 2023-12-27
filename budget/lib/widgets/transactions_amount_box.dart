@@ -41,7 +41,7 @@ class TransactionsAmountBox extends StatelessWidget {
           BoxDecoration(boxShadow: boxShadowCheck(boxShadowGeneral(context))),
       child: OpenContainerNavigation(
         closedColor: getColor(context, "lightDarkAccentHeavyLight"),
-        openPage: openPage ?? SizedBox.shrink(),
+        openPage: openPage ?? const SizedBox.shrink(),
         borderRadius: 15,
         button: (openContainer) {
           return Tappable(
@@ -65,7 +65,7 @@ class TransactionsAmountBox extends StatelessWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
-                    SizedBox(height: 6),
+                    const SizedBox(height: 6),
                     StreamBuilder<TotalWithCount?>(
                       stream: totalWithCountStream,
                       builder: (context, snapshot) {
@@ -80,7 +80,7 @@ class TransactionsAmountBox extends StatelessWidget {
                                   : absolute == true
                                    ? (totalSpent).abs()
                                       : (totalSpent),
-                              duration: Duration(milliseconds: 1000),
+                              duration: const Duration(milliseconds: 1000),
                               initialCount: (0),
                               textBuilder: (number) {
                                 return TextFont(
@@ -106,13 +106,11 @@ class TransactionsAmountBox extends StatelessWidget {
                                 );
                               },
                             ),
-                            SizedBox(height: 6),
+                            const SizedBox(height: 6),
                             TextFont(
-                              text: totalCount.toString() +   
-                                  " " +
-                                  (totalCount == 1
+                              text: "$totalCount ${totalCount == 1
                                       ? "transaction".tr().toLowerCase()
-                                      : "transactions".tr().toLowerCase()),
+                                      : "transactions".tr().toLowerCase()}",
                               fontSize: 13,
                               textColor: getColor(context, "textLight"),
                             ),

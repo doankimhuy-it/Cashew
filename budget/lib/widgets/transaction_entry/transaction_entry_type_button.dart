@@ -66,9 +66,9 @@ class TransactionEntryActionButton extends StatelessWidget {
             ),
           ),
         if (transaction.type == null && transaction.objectiveLoanFk == null)
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         if (transaction.type != null || transaction.objectiveLoanFk != null)
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
       ],
     );
   }
@@ -120,9 +120,7 @@ class ActionButton extends StatelessWidget {
                 child: Icon(
                   iconData,
                   color: dealtWith
-                      ? (containerColor == null
-                          ? Theme.of(context).canvasColor
-                          : containerColor)
+                      ? (containerColor ?? Theme.of(context).canvasColor)
                       : iconColor.withOpacity(0.8),
                   size: 23,
                 ),
@@ -161,7 +159,7 @@ class TransactionEntryTypeButton extends StatelessWidget {
                                   .primary
                                   .withOpacity(0.1)
                               : getColor(context, "lightDarkAccent"),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                          borderRadius: const BorderRadius.all(Radius.circular(10))),
                       child: TextFont(
                         text: getTransactionActionNameFromType(transaction),
                         fontSize: 14,
@@ -176,7 +174,7 @@ class TransactionEntryTypeButton extends StatelessWidget {
               ),
             ],
           )
-        : SizedBox();
+        : const SizedBox();
   }
 }
 
@@ -227,21 +225,21 @@ bool isTransactionActionDealtWith(Transaction transaction) {
 String getTransactionActionNameFromType(Transaction transaction) {
   return transaction.type == TransactionSpecialType.credit
       ? transaction.paid
-          ? "collect".tr() + "?"
+          ? "${"collect".tr()}?"
           : "collected".tr()
       : transaction.type == TransactionSpecialType.debt
           ? transaction.paid
-              ? "settle".tr() + "?"
+              ? "${"settle".tr()}?"
               : "settled".tr()
           : transaction.income
               ? (transaction.paid
                   ? "deposited".tr()
                   : transaction.skipPaid
                       ? "skipped".tr()
-                      : "deposit".tr() + "?")
+                      : "${"deposit".tr()}?")
               : (transaction.paid
                   ? "paid".tr()
                   : transaction.skipPaid
                       ? "skipped".tr()
-                      : "pay".tr() + "?");
+                      : "${"pay".tr()}?");
 }

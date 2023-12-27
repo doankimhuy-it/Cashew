@@ -59,7 +59,7 @@ Future<bool> checkConnection() async {
 
 class GoogleAuthClient extends http.BaseClient {
   final Map<String, String> _headers;
-  final http.Client _client = new http.Client();
+  final http.Client _client = http.Client();
   GoogleAuthClient(this._headers);
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
@@ -170,7 +170,7 @@ Future<bool> signInGoogle(
         icon: appStateSettings["outlinedIcons"]
             ? Icons.error_outlined
             : Icons.error_rounded,
-        timeout: Duration(milliseconds: 3400),
+        timeout: const Duration(milliseconds: 3400),
       ),
     );
     updateSettings("currentUserEmail", "", updateGlobalState: true);
@@ -285,7 +285,7 @@ Future<void> createBackupInBackground(context) async {
     DateTime lastUpdate = DateTime.parse(appStateSettings["lastBackup"]);
     DateTime nextPlannedBackup = lastUpdate
         .add(Duration(days: appStateSettings["autoBackupsFrequency"]));
-    print("next backup planned on " + nextPlannedBackup.toString());
+    print("next backup planned on $nextPlannedBackup");
     if (DateTime.now().millisecondsSinceEpoch >=
         nextPlannedBackup.millisecondsSinceEpoch) {
       print("auto backing up");
@@ -397,10 +397,10 @@ Future<void> createBackup(
     final authenticateClient = GoogleAuthClient(authHeaders);
     final driveApi = drive.DriveApi(authenticateClient);
 
-    var media = new drive.Media(
+    var media = drive.Media(
         currentDBFileInfo.mediaStream, currentDBFileInfo.dbFileBytes.length);
 
-    var driveFile = new drive.File();
+    var driveFile = drive.File();
     final timestamp =
         DateFormat("yyyy-MM-dd-hhmmss").format(DateTime.now().toUtc());
     // -$timestamp
@@ -625,7 +625,7 @@ class _GoogleAccountLoginButtonState extends State<GoogleAccountLoginButton> {
           //     builder: (context) => AccountsPage(),
           //   ),
           // );
-          pushRoute(context, AccountsPage());
+          pushRoute(context, const AccountsPage());
         }
       },
     );
@@ -635,11 +635,11 @@ class _GoogleAccountLoginButtonState extends State<GoogleAccountLoginButton> {
   Widget build(BuildContext context) {
     if (widget.navigationSidebarButton == true) {
       return AnimatedSwitcher(
-        duration: Duration(milliseconds: 600),
+        duration: const Duration(milliseconds: 600),
         child: googleUser == null
             ? getPlatform() == PlatformOS.isIOS
                 ? NavigationSidebarButton(
-                    key: ValueKey("login"),
+                    key: const ValueKey("login"),
                     label: "backup".tr(),
                     icon: MoreIcons.google_drive,
                     iconScale: 0.87,
@@ -647,7 +647,7 @@ class _GoogleAccountLoginButtonState extends State<GoogleAccountLoginButton> {
                     isSelected: false,
                   )
                 : NavigationSidebarButton(
-                    key: ValueKey("login"),
+                    key: const ValueKey("login"),
                     label: "login".tr(),
                     icon: MoreIcons.google,
                     onTap: loginWithSync,
@@ -655,7 +655,7 @@ class _GoogleAccountLoginButtonState extends State<GoogleAccountLoginButton> {
                   )
             : getPlatform() == PlatformOS.isIOS
                 ? NavigationSidebarButton(
-                    key: ValueKey("user"),
+                    key: const ValueKey("user"),
                     label: "backup".tr(),
                     icon: MoreIcons.google_drive,
                     iconScale: 0.87,
@@ -665,7 +665,7 @@ class _GoogleAccountLoginButtonState extends State<GoogleAccountLoginButton> {
                     isSelected: widget.isButtonSelected,
                   )
                 : NavigationSidebarButton(
-                    key: ValueKey("user"),
+                    key: const ValueKey("user"),
                     label: googleUser!.displayName ?? "",
                     icon: widget.forceButtonName == null
                         ? appStateSettings["outlinedIcons"]
@@ -682,7 +682,7 @@ class _GoogleAccountLoginButtonState extends State<GoogleAccountLoginButton> {
     }
     return googleUser == null
         ? Padding(
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
             child: getPlatform() == PlatformOS.isIOS
                 ? SettingsContainer(
                     isOutlined: widget.isOutlinedButton,
@@ -707,14 +707,14 @@ class _GoogleAccountLoginButtonState extends State<GoogleAccountLoginButton> {
           )
         : getPlatform() == PlatformOS.isIOS
             ? SettingsContainerOpenPage(
-                openPage: AccountsPage(),
+                openPage: const AccountsPage(),
                 title: widget.forceButtonName ?? "backup".tr(),
                 icon: MoreIcons.google_drive,
                 isOutlined: widget.isOutlinedButton,
                 iconScale: 0.87,
               )
             : SettingsContainerOpenPage(
-                openPage: AccountsPage(),
+                openPage: const AccountsPage(),
                 title: widget.forceButtonName ?? googleUser!.displayName ?? "",
                 icon: widget.forceButtonName == null
                     ? appStateSettings["outlinedIcons"]
@@ -759,11 +759,11 @@ Future<(drive.DriveApi? driveApi, List<drive.File>?)> getDriveFiles() async {
 
 class BackupManagement extends StatefulWidget {
   const BackupManagement({
-    Key? key,
+    super.key,
     required this.isManaging,
     required this.isClientSync,
     this.hideDownloadButton = false,
-  }) : super(key: key);
+  });
 
   final bool isManaging;
   final bool isClientSync;
@@ -808,7 +808,7 @@ class _BackupManagementState extends State<BackupManagement> {
   @override
   Widget build(BuildContext context) {
     if (widget.isClientSync) {
-      if (filesState.length > 0) {
+      if (filesState.isNotEmpty) {
         print(appStateSettings["devicesHaveBeenSynced"]);
         filesState =
             filesState.where((file) => isSyncBackupFile(file.name)).toList();
@@ -816,7 +816,7 @@ class _BackupManagementState extends State<BackupManagement> {
             updateGlobalState: false);
       }
     } else {
-      if (filesState.length > 0) {
+      if (filesState.isNotEmpty) {
         filesState =
             filesState.where((file) => !isSyncBackupFile(file.name)).toList();
         updateSettings("numBackups", filesState.length,
@@ -833,9 +833,7 @@ class _BackupManagementState extends State<BackupManagement> {
       subtitle: widget.isClientSync
           ? "manage-syncing-info".tr()
           : widget.isManaging
-              ? appStateSettings["backupLimit"].toString() +
-                  " " +
-                  "stored-backups".tr()
+              ? "${appStateSettings["backupLimit"]} ${"stored-backups".tr()}"
               : "overwrite-warning".tr(),
       child: Column(
         children: [
@@ -849,7 +847,7 @@ class _BackupManagementState extends State<BackupManagement> {
                         color: appStateSettings["materialYou"]
                             ? Theme.of(context).colorScheme.secondaryContainer
                             : getColor(context, "lightDarkAccentHeavyLight"),
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: 5,
                           right: 5,
                           bottom: 10,
@@ -859,7 +857,7 @@ class _BackupManagementState extends State<BackupManagement> {
                     ),
                   ],
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           widget.isManaging && widget.isClientSync == false
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 0),
@@ -880,7 +878,7 @@ class _BackupManagementState extends State<BackupManagement> {
                         : Icons.cloud_done_rounded,
                   ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           widget.isClientSync
               ? Padding(
                   padding:
@@ -907,17 +905,17 @@ class _BackupManagementState extends State<BackupManagement> {
                         : Icons.cloud_sync_rounded,
                   ),
                 )
-              : SizedBox.shrink(),
-          SizedBox.shrink(),
+              : const SizedBox.shrink(),
+          const SizedBox.shrink(),
           widget.isManaging && widget.isClientSync == false
               ? AnimatedExpanded(
                   expand: autoBackups,
                   child: Padding(
-                    key: ValueKey(1),
+                    key: const ValueKey(1),
                     padding: const EdgeInsets.only(bottom: 8),
                     child: SettingsContainerDropdown(
                       enableBorderRadius: true,
-                      items: ["1", "2", "3", "7", "10", "14"],
+                      items: const ["1", "2", "3", "7", "10", "14"],
                       onChanged: (value) {
                         updateSettings("autoBackupsFrequency", int.parse(value),
                             pagesNeedingRefresh: [], updateGlobalState: false);
@@ -932,7 +930,7 @@ class _BackupManagementState extends State<BackupManagement> {
                     ),
                   ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           widget.isManaging &&
                   widget.isClientSync == false &&
                   appStateSettings["showBackupLimit"]
@@ -945,7 +943,7 @@ class _BackupManagementState extends State<BackupManagement> {
                     title: "backup-limit".tr(),
                     icon: Icons.format_list_numbered_rtl_outlined,
                     initial: appStateSettings["backupLimit"].toString(),
-                    items: ["10", "15", "20", "30"],
+                    items: const ["10", "15", "20", "30"],
                     onChanged: (value) {
                       if (int.parse(value) < appStateSettings["backupLimit"]) {
                         openPopup(
@@ -976,7 +974,7 @@ class _BackupManagementState extends State<BackupManagement> {
                     },
                   ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           isLoading
               ? Column(
                   children: [
@@ -990,13 +988,13 @@ class _BackupManagementState extends State<BackupManagement> {
                           isManaging: widget.isManaging, i: i),
                   ],
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           ...filesMap
               .map(
                 (MapEntry<int, drive.File> file) => AnimatedSizeSwitcher(
                   child: deletedIndices.contains(file.key)
                       ? Container(
-                          key: ValueKey(1),
+                          key: const ValueKey(1),
                         )
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
@@ -1056,7 +1054,7 @@ class _BackupManagementState extends State<BackupManagement> {
                                     : getColor(
                                         context, "lightDarkAccentHeavyLight"),
                             child: Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 15),
                               child: Row(
                                 children: [
@@ -1099,10 +1097,8 @@ class _BackupManagementState extends State<BackupManagement> {
                                               TextFont(
                                                 text: (isSyncBackupFile(
                                                         file.value.name)
-                                                    ? getDeviceFromSyncBackupFileName(
-                                                            file.value.name) +
-                                                        " " +
-                                                        "sync"
+                                                    ? "${getDeviceFromSyncBackupFileName(
+                                                            file.value.name)} sync"
                                                     : file.value.name ??
                                                         "No name"),
                                                 fontSize: 14,
@@ -1133,7 +1129,7 @@ class _BackupManagementState extends State<BackupManagement> {
                                       ? Row(
                                           children: [
                                             widget.hideDownloadButton
-                                                ? SizedBox.shrink()
+                                                ? const SizedBox.shrink()
                                                 : Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -1191,27 +1187,22 @@ class _BackupManagementState extends State<BackupManagement> {
                                                     title: "delete-backup".tr(),
                                                     subtitle: file.value.name ??
                                                         "No name",
-                                                    description: (widget
+                                                    description: "${widget
                                                                 .isClientSync
-                                                            ? "delete-sync-backup-warning"
-                                                                    .tr() +
-                                                                "\n"
-                                                            : "") +
-                                                        getWordedDateShortMore(
+                                                            ? "${"delete-sync-backup-warning"
+                                                                    .tr()}\n"
+                                                            : ""}${getWordedDateShortMore(
                                                             (file.value.modifiedTime ??
                                                                     DateTime
                                                                         .now())
                                                                 .toLocal(),
                                                             includeTimeIfToday:
-                                                                true) +
-                                                        "\n" +
-                                                        convertBytesToMB(file
+                                                                true)}\n${convertBytesToMB(file
                                                                     .value
                                                                     .size ??
                                                                 "0")
                                                             .toStringAsFixed(
-                                                                2) +
-                                                        " MB",
+                                                                2)} MB",
                                                     onSubmit: () async {
                                                       Navigator.pop(context);
                                                       loadingIndeterminateKey
@@ -1277,7 +1268,7 @@ class _BackupManagementState extends State<BackupManagement> {
                                             ),
                                           ],
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                 ],
                               ),
                             ),
@@ -1285,7 +1276,7 @@ class _BackupManagementState extends State<BackupManagement> {
                         ),
                 ),
               )
-              .toList(),
+              ,
         ],
       ),
     );
@@ -1305,10 +1296,10 @@ double convertBytesToMB(String bytesString) {
 
 class LoadingShimmerDriveFiles extends StatelessWidget {
   const LoadingShimmerDriveFiles({
-    Key? key,
+    super.key,
     required this.isManaging,
     required this.i,
-  }) : super(key: key);
+  });
 
   final bool isManaging;
   final int i;
@@ -1336,7 +1327,7 @@ class LoadingShimmerDriveFiles extends StatelessWidget {
                   .withOpacity(0.5)
               : getColor(context, "lightDarkAccentHeavy").withOpacity(0.5),
           child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Row(
                 children: [
                   Expanded(
@@ -1349,13 +1340,13 @@ class LoadingShimmerDriveFiles extends StatelessWidget {
                           color: Theme.of(context).colorScheme.secondary,
                           size: 30,
                         ),
-                        SizedBox(width: 13),
+                        const SizedBox(width: 13),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
                                   color: Colors.white,
@@ -1363,9 +1354,9 @@ class LoadingShimmerDriveFiles extends StatelessWidget {
                                 height: 20,
                                 width: 70 + randomDouble[i % 10] * 120 + 13,
                               ),
-                              SizedBox(height: 6),
+                              const SizedBox(height: 6),
                               Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
                                   color: Colors.white,
@@ -1379,7 +1370,7 @@ class LoadingShimmerDriveFiles extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(width: 13),
+                  const SizedBox(width: 13),
                   isManaging
                       ? Row(
                           children: [
@@ -1388,7 +1379,7 @@ class LoadingShimmerDriveFiles extends StatelessWidget {
                                 icon: appStateSettings["outlinedIcons"]
                                     ? Icons.close_outlined
                                     : Icons.close_rounded),
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
                             ButtonIcon(
                                 onTap: () {},
                                 icon: appStateSettings["outlinedIcons"]
@@ -1396,7 +1387,7 @@ class LoadingShimmerDriveFiles extends StatelessWidget {
                                     : Icons.close_rounded),
                           ],
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                 ],
               )),
         ),
@@ -1416,15 +1407,13 @@ Future<bool> saveDriveFileToDevice({
   await for (var data in response.stream) {
     dataStore.insertAll(dataStore.length, data);
   }
-  String fileName = "cashew-" +
-      ((fileToSave.name ?? "") +
+  String fileName = "cashew-${((fileToSave.name ?? "") +
               (fileToSave.modifiedTime ?? DateTime.now()).toString())
           .replaceAll(".sqlite", "")
           .replaceAll(".", "-")
           .replaceAll("-", "-")
           .replaceAll(" ", "-")
-          .replaceAll(":", "-") +
-      ".sql";
+          .replaceAll(":", "-")}.sql";
 
   return await saveFile(
     boxContext: boxContext,
@@ -1446,9 +1435,7 @@ bool openBackupReminderPopupCheck(BuildContext context) {
       icon: MoreIcons.google_drive,
       iconScale: 0.9,
       title: "backup-your-data-reminder".tr(),
-      description: "backup-your-data-reminder-description".tr() +
-          " " +
-          "google-drive".tr(),
+      description: "${"backup-your-data-reminder-description".tr()} ${"google-drive".tr()}",
       onSubmitLabel: "backup".tr().capitalizeFirst,
       onSubmit: () async {
         Navigator.pop(context);

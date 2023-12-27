@@ -39,7 +39,7 @@ class RecentlyAddedTransactionInfo {
     shouldAnimate = false;
     isRunningAnimation = true;
     recentlyAddedTransactionInfo.notifyListeners();
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       isRunningAnimation = false;
       recentlyAddedTransactionInfo.notifyListeners();
     });
@@ -58,9 +58,8 @@ class TransactionEntryHitBox extends RenderProxyBox {
 class TransactionEntryBox extends SingleChildRenderObjectWidget {
   final String transactionKey;
 
-  TransactionEntryBox(
-      {required Widget child, required this.transactionKey, Key? key})
-      : super(child: child, key: key);
+  const TransactionEntryBox(
+      {required Widget super.child, required this.transactionKey, super.key});
 
   @override
   TransactionEntryHitBox createRenderObject(BuildContext context) {
@@ -75,8 +74,8 @@ class TransactionEntryBox extends SingleChildRenderObjectWidget {
 }
 
 class TransactionEntry extends StatelessWidget {
-  TransactionEntry({
-    Key? key,
+  const TransactionEntry({
+    super.key,
     required this.openPage,
     required this.transaction,
     this.listID, //needs to be unique based on the page to avoid conflicting globalSelectedIDs
@@ -95,7 +94,7 @@ class TransactionEntry extends StatelessWidget {
     this.showObjectivePercentage = true,
     this.customPadding,
     this.allowOpenIntoObjectiveLoanPage = true,
-  }) : super(key: key);
+  });
 
   final Widget openPage;
   final Transaction transaction;
@@ -325,14 +324,12 @@ class TransactionEntry extends StatelessWidget {
                         isTransactionAfterSelected ? 0 : borderRadius,
                       ),
                     ),
-                    closedColor: containerColor == null
-                        ? Theme.of(context).canvasColor
-                        : containerColor,
+                    closedColor: containerColor ?? Theme.of(context).canvasColor,
                     button: (openContainer) {
                       return FlashingContainer(
                         loopCount: loopCount,
                         isAnimating: triggerAnimation,
-                        flashDuration: Duration(milliseconds: 500),
+                        flashDuration: const Duration(milliseconds: 500),
                         backgroundColor: selectedColor.withOpacity(
                           appStateSettings["materialYou"]
                               ? categoryTintColor == null
@@ -404,7 +401,7 @@ class TransactionEntry extends StatelessWidget {
                                           listID: listID,
                                           selectTransaction: selectTransaction,
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                   CategoryIcon(
                                     cacheImage: true,
                                     category: category,
@@ -429,13 +426,13 @@ class TransactionEntry extends StatelessWidget {
                                     );
                                     if (highlightActionButton) {
                                       actionButton = BreathingWidget(
-                                        duration: Duration(milliseconds: 600),
+                                        duration: const Duration(milliseconds: 600),
                                         endScale: 1.2,
                                         child: actionButton,
                                       );
                                     }
                                     return AnimatedSwitcher(
-                                      duration: Duration(milliseconds: 800),
+                                      duration: const Duration(milliseconds: 800),
                                       child: isTransactionActionDealtWith(
                                               transaction)
                                           ? Container(child: actionButton)
@@ -487,24 +484,24 @@ class TransactionEntry extends StatelessWidget {
                                                 budget: budget,
                                                 objective: objective,
                                               )
-                                            : SizedBox.shrink(),
+                                            : const SizedBox.shrink(),
                                         transaction.sharedKey != null ||
                                                 transaction.sharedStatus ==
                                                     SharedStatus.waiting
                                             ? SharedBudgetLabel(
                                                 transaction: transaction)
-                                            : SizedBox.shrink()
+                                            : const SizedBox.shrink()
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 7,
                                   ),
                                   getIsFullScreen(context)
                                       ? TransactionEntryTypeButton(
                                           transaction: transaction,
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                   TransactionEntryNote(
                                     transaction: transaction,
                                     iconColor: iconColor,
@@ -566,7 +563,7 @@ class FlashingContainer extends StatefulWidget {
   final Color backgroundColor;
   final int loopCount; // Add this property
 
-  FlashingContainer({
+  const FlashingContainer({super.key, 
     required this.child,
     this.flashDuration = const Duration(milliseconds: 500),
     this.isAnimating = true,
@@ -654,7 +651,7 @@ class TransactionSelectionCheck extends StatelessWidget {
   final Function(Transaction transaction, bool selected, bool isSwiping)
       selectTransaction;
 
-  const TransactionSelectionCheck({
+  const TransactionSelectionCheck({super.key, 
     required this.selected,
     required this.areTransactionsBeingSelected,
     this.listID,
@@ -665,7 +662,7 @@ class TransactionSelectionCheck extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSize(
-      duration: Duration(milliseconds: 550),
+      duration: const Duration(milliseconds: 550),
       curve: Curves.easeInOutCubicEmphasized,
       child: selected || areTransactionsBeingSelected == true
           ? ScaleIn(
@@ -686,12 +683,12 @@ class TransactionSelectionCheck extends StatelessWidget {
                     },
                     color: Colors.transparent,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 10,
                         vertical: 12,
                       ),
                       child: ScaledAnimatedSwitcher(
-                        duration: Duration(milliseconds: 275),
+                        duration: const Duration(milliseconds: 275),
                         keyToWatch: selected.toString(),
                         child: Transform.scale(
                           scale: selected ? 1 : 0.95,
@@ -711,7 +708,7 @@ class TransactionSelectionCheck extends StatelessWidget {
                                 width: 2,
                               ),
                             ),
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             child: Icon(
                               Icons.check,
                               size: 14,

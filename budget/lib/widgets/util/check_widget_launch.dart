@@ -21,7 +21,7 @@ class AndroidOnly extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (getPlatform(ignoreEmulation: true) != PlatformOS.isAndroid) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
     return child;
   }
@@ -64,7 +64,7 @@ class _CheckWidgetLaunchState extends State<CheckWidgetLaunch> {
     if (widgetPayload == "addTransaction") {
       pushRoute(
         context,
-        AddTransactionPage(
+        const AddTransactionPage(
           routesToPopAfterDelete: RoutesToPopAfterDelete.None,
         ),
       );
@@ -89,7 +89,7 @@ class _CheckWidgetLaunchState extends State<CheckWidgetLaunch> {
     } else if (widgetPayload == "netWorthLaunch") {
       pushRoute(
         context,
-        WalletDetailsPage(
+        const WalletDetailsPage(
           wallet: null,
         ),
       );
@@ -102,7 +102,7 @@ class _CheckWidgetLaunchState extends State<CheckWidgetLaunch> {
       onAppResume: () {
         hasDoneWidgetAction = false;
       },
-      child: SizedBox.shrink(),
+      child: const SizedBox.shrink(),
     );
   }
 }
@@ -116,7 +116,7 @@ class RenderHomePageWidgets extends StatefulWidget {
 
 Future updateWidgetColorsAndText(BuildContext context) async {
   if (getPlatform(ignoreEmulation: true) != PlatformOS.isAndroid) return;
-  await Future.delayed(Duration(milliseconds: 500), () async {
+  await Future.delayed(const Duration(milliseconds: 500), () async {
     await HomeWidget.saveWidgetData<String>('netWorthTitle', "net-worth".tr());
     await HomeWidget.saveWidgetData<String>(
       'widgetColorBackground',
@@ -176,11 +176,9 @@ class _RenderHomePageWidgetsState extends State<RenderHomePageWidgets> {
             builder: (context, snapshot) {
               Future.delayed(Duration.zero, () async {
                 int totalCount = snapshot.data?.count ?? 0;
-                String netWorthTransactionsNumber = totalCount.toString() +
-                    " " +
-                    (totalCount == 1
+                String netWorthTransactionsNumber = "$totalCount ${totalCount == 1
                         ? "transaction".tr().toLowerCase()
-                        : "transactions".tr().toLowerCase());
+                        : "transactions".tr().toLowerCase()}";
                 double totalSpent = snapshot.data?.total ?? 0;
                 String netWorthAmount = convertToMoney(
                   Provider.of<AllWallets>(context, listen: false),

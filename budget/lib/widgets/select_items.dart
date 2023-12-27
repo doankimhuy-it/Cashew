@@ -20,7 +20,7 @@ class SelectItems extends StatefulWidget {
   final bool allSelected;
 
   const SelectItems({
-    Key? key,
+    super.key,
     required this.initialItems,
     required this.items,
     this.onChanged,
@@ -33,7 +33,7 @@ class SelectItems extends StatefulWidget {
     this.getColor,
     this.highlightSelected = false,
     this.allSelected = false,
-  }) : super(key: key);
+  });
 
   @override
   State<SelectItems> createState() => _SelectItemsState();
@@ -113,7 +113,7 @@ class _SelectItemsState extends State<SelectItems> {
               },
               child: ListTile(
                 title: Transform.translate(
-                  offset: Offset(-12, 0),
+                  offset: const Offset(-12, 0),
                   child: TextFont(
                       fontSize: 18,
                       text: widget.displayFilter == null
@@ -127,7 +127,7 @@ class _SelectItemsState extends State<SelectItems> {
                         padding: const EdgeInsets.only(right: 8.0),
                         child: ScaledAnimatedSwitcher(
                           keyToWatch: selected.toString(),
-                          duration: Duration(milliseconds: 400),
+                          duration: const Duration(milliseconds: 400),
                           child: Opacity(
                             opacity: selected ? 1 : 0.8,
                             child: Icon(

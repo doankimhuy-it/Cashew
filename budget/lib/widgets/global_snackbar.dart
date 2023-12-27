@@ -7,7 +7,7 @@ import 'package:budget/colors.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 
 class GlobalSnackbar extends StatefulWidget {
-  const GlobalSnackbar({Key? key}) : super(key: key);
+  const GlobalSnackbar({super.key});
 
   @override
   State<GlobalSnackbar> createState() => GlobalSnackbarState();
@@ -39,7 +39,7 @@ class GlobalSnackbarState extends State<GlobalSnackbar>
   SnackbarMessage? currentMessage;
 
   post(SnackbarMessage message, {bool postIfQueue = true}) {
-    if (currentQueue.length >= 1 && !postIfQueue) return;
+    if (currentQueue.isNotEmpty && !postIfQueue) return;
     currentQueue.add(message);
     if (currentQueue.length <= 1) animateIn(message);
   }
@@ -50,7 +50,7 @@ class GlobalSnackbarState extends State<GlobalSnackbar>
     });
     _animationControllerX.animateTo(0.5, duration: Duration.zero);
     _animationControllerY.animateTo(0.5,
-        curve: ElasticOutCurve(0.8),
+        curve: const ElasticOutCurve(0.8),
         duration: Duration(
             milliseconds:
                 ((_animationControllerY.value - 0.5).abs() * 800 + 900)
@@ -69,11 +69,11 @@ class GlobalSnackbarState extends State<GlobalSnackbar>
             milliseconds:
                 ((_animationControllerY.value - 0.5).abs() * 800 + 2000)
                     .toInt()));
-    if (currentQueue.length >= 1) {
+    if (currentQueue.isNotEmpty) {
       currentQueue.removeAt(0);
     }
-    if (currentQueue.length >= 1) {
-      Future.delayed(Duration(milliseconds: 150), () {
+    if (currentQueue.isNotEmpty) {
+      Future.delayed(const Duration(milliseconds: 150), () {
         animateIn(currentQueue[0]);
       });
     }
@@ -84,9 +84,9 @@ class GlobalSnackbarState extends State<GlobalSnackbar>
     super.initState();
 
     _animationControllerY = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1000));
+        vsync: this, duration: const Duration(milliseconds: 1000));
     _animationControllerX = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1000));
+        vsync: this, duration: const Duration(milliseconds: 1000));
   }
 
   _onPointerMove(PointerMoveEvent ptr) {
@@ -158,14 +158,14 @@ class GlobalSnackbarState extends State<GlobalSnackbar>
             child: Align(
               alignment: Alignment.topCenter,
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 15),
+                margin: const EdgeInsets.symmetric(horizontal: 15),
                 decoration: BoxDecoration(boxShadow: [
                   BoxShadow(
                     color: Theme.of(context).brightness == Brightness.light
                         ? getColor(context, "shadowColorLight")
                         : getColor(context, "shadowColor").withOpacity(0.1),
                     blurRadius: 15,
-                    offset: Offset(0, 0),
+                    offset: const Offset(0, 0),
                     spreadRadius: 2,
                   ),
                 ]),
@@ -197,7 +197,7 @@ class GlobalSnackbarState extends State<GlobalSnackbar>
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               currentMessage?.icon == null
-                                  ? SizedBox.shrink()
+                                  ? const SizedBox.shrink()
                                   : Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: Icon(
@@ -225,7 +225,7 @@ class GlobalSnackbarState extends State<GlobalSnackbar>
                                       maxLines: 3,
                                     ),
                                     currentMessage?.description == null
-                                        ? SizedBox.shrink()
+                                        ? const SizedBox.shrink()
                                         : TextFont(
                                             maxLines: 5,
                                             text: currentMessage?.description ??

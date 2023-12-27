@@ -13,8 +13,7 @@ import 'package:provider/provider.dart';
 
 class EditBudgetLimitsPage extends StatefulWidget {
   const EditBudgetLimitsPage(
-      {required this.budget, this.currentIsAbsoluteSpendingLimit, Key? key})
-      : super(key: key);
+      {required this.budget, this.currentIsAbsoluteSpendingLimit, super.key});
   final Budget budget;
   final bool? currentIsAbsoluteSpendingLimit;
 
@@ -29,7 +28,7 @@ class _EditBudgetLimitsPageState extends State<EditBudgetLimitsPage> {
 
   @override
   void initState() {
-    Future.delayed(Duration(milliseconds: 0), () async {
+    Future.delayed(const Duration(milliseconds: 0), () async {
       await database.fixWanderingCategoryLimitsInBudget(
         allWallets: Provider.of<AllWallets>(context, listen: false),
         budgetPk: widget.budget.budgetPk,
@@ -57,7 +56,7 @@ class _EditBudgetLimitsPageState extends State<EditBudgetLimitsPage> {
                   ? Icons.confirmation_num_outlined
                   : Icons.confirmation_num_rounded,
               initial: selectedIsAbsoluteSpendingLimit.toString(),
-              items: ["true", "false"],
+              items: const ["true", "false"],
               onChanged: (value) async {
                 bool result = value == "true";
                 if (result != selectedIsAbsoluteSpendingLimit) {

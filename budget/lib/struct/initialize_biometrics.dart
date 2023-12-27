@@ -68,14 +68,14 @@ class _InitializeBiometricsState extends State<InitializeBiometrics> {
           });
         },
         child: Column(
-          key: ValueKey(0),
+          key: const ValueKey(0),
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BreathingWidget(
               child: Center(
                 child: AnimatedSwitcher(
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   switchInCurve: Curves.easeInOut,
                   switchOutCurve: Curves.easeInOut,
                   transitionBuilder:
@@ -89,7 +89,7 @@ class _InitializeBiometricsState extends State<InitializeBiometrics> {
                           size: 50,
                           color: Theme.of(context).colorScheme.secondary,
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                 ),
               ),
             )
@@ -98,10 +98,10 @@ class _InitializeBiometricsState extends State<InitializeBiometrics> {
       ),
     );
     if (authenticated == true) {
-      child = SizedBox(key: ValueKey(1), child: widget.child);
+      child = SizedBox(key: const ValueKey(1), child: widget.child);
     }
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       switchInCurve: Curves.easeInOut,
       switchOutCurve: Curves.easeInOut,
       transitionBuilder: (Widget child, Animation<double> animation) {

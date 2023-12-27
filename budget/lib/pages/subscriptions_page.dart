@@ -28,7 +28,7 @@ import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/count_number.dart';
 
 class SubscriptionsPage extends StatefulWidget {
-  const SubscriptionsPage({Key? key}) : super(key: key);
+  const SubscriptionsPage({super.key});
 
   @override
   State<SubscriptionsPage> createState() => _SubscriptionsPageState();
@@ -48,7 +48,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if ((globalSelectedID.value["Subscriptions"] ?? []).length > 0) {
+        if ((globalSelectedID.value["Subscriptions"] ?? []).isNotEmpty) {
           globalSelectedID.value["Subscriptions"] = [];
           globalSelectedID.notifyListeners();
           return false;
@@ -63,7 +63,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
             floatingActionButton: AnimateFABDelayed(
               fab: FAB(
                 tooltip: "add-subscription".tr(),
-                openPage: AddTransactionPage(
+                openPage: const AddTransactionPage(
                   selectedType: TransactionSpecialType.subscription,
                   routesToPopAfterDelete: RoutesToPopAfterDelete.None,
                 ),
@@ -85,7 +85,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                     action: () {
                       openBottomSheet(
                         context,
-                        PopupFramework(
+                        const PopupFramework(
                           hasPadding: false,
                           child: SubscriptionSettings(),
                         ),
@@ -112,7 +112,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                               snapshot.data);
                           return CountNumber(
                             count: total.abs(),
-                            duration: Duration(milliseconds: 700),
+                            duration: const Duration(milliseconds: 700),
                             initialCount: (0),
                             textBuilder: (number) {
                               return TextFont(
@@ -130,7 +130,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                         },
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: 5),
                         child: TextFont(
                           text: selectedType == SelectedSubscriptionsType.yearly
                               ? "yearly-subscriptions".tr()
@@ -147,7 +147,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             AnimatedSwitcher(
-                              duration: Duration(milliseconds: 250),
+                              duration: const Duration(milliseconds: 250),
                               child: Button(
                                 key: ValueKey(selectedType !=
                                     SelectedSubscriptionsType.monthly),
@@ -176,13 +176,13 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                                       updateGlobalState: false);
                                 }),
                                 fontSize: 12,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 13),
                               ),
                             ),
-                            SizedBox(width: 7),
+                            const SizedBox(width: 7),
                             AnimatedSwitcher(
-                              duration: Duration(milliseconds: 250),
+                              duration: const Duration(milliseconds: 250),
                               child: Button(
                                 key: ValueKey(selectedType !=
                                     SelectedSubscriptionsType.yearly),
@@ -211,13 +211,13 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                                       updateGlobalState: false);
                                 }),
                                 fontSize: 12,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 13),
                               ),
                             ),
-                            SizedBox(width: 7),
+                            const SizedBox(width: 7),
                             AnimatedSwitcher(
-                              duration: Duration(milliseconds: 250),
+                              duration: const Duration(milliseconds: 250),
                               child: Button(
                                 key: ValueKey(selectedType !=
                                     SelectedSubscriptionsType.total),
@@ -246,7 +246,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                                       updateGlobalState: false);
                                 }),
                                 fontSize: 12,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 13),
                               ),
                             ),
@@ -257,17 +257,17 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(
                 child: SizedBox(height: 45),
               ),
               StreamBuilder<List<Transaction>>(
                 stream: database.getAllSubscriptions().$1,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    if (snapshot.data!.length <= 0) {
-                      return SliverToBoxAdapter(
+                    if (snapshot.data!.isEmpty) {
+                      return const SliverToBoxAdapter(
                           child: NoResults(
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                 top: 15,
                                 right: 30,
                                 left: 30,
@@ -293,7 +293,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                                 transaction: transaction,
                                 listID: "Subscriptions",
                               ),
-                              SizedBox(height: 12),
+                              const SizedBox(height: 12),
                             ],
                           );
                         },
@@ -301,14 +301,14 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                       ),
                     );
                   } else {
-                    return SliverToBoxAdapter();
+                    return const SliverToBoxAdapter();
                   }
                 },
               ),
-              SliverToBoxAdapter(child: SizedBox(height: 55)),
+              const SliverToBoxAdapter(child: SizedBox(height: 55)),
             ],
           ),
-          SelectedTransactionsAppBar(
+          const SelectedTransactionsAppBar(
             pageID: "Subscriptions",
           ),
         ],
@@ -319,10 +319,9 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
 
 class UpcomingTransactionDateHeader extends StatelessWidget {
   const UpcomingTransactionDateHeader(
-      {Key? key,
+      {super.key,
       required this.transaction,
-      this.useHorizontalPaddingConstrained = true})
-      : super(key: key);
+      this.useHorizontalPaddingConstrained = true});
 
   final Transaction transaction;
   final bool useHorizontalPaddingConstrained;
@@ -340,7 +339,7 @@ class UpcomingTransactionDateHeader extends StatelessWidget {
             : 0,
       ),
       child: Padding(
-        padding: EdgeInsets.only(left: 19, bottom: 3, right: 19),
+        padding: const EdgeInsets.only(left: 19, bottom: 3, right: 19),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -357,18 +356,14 @@ class UpcomingTransactionDateHeader extends StatelessWidget {
                         ? TextFont(
                             fontSize: 16,
                             textColor: getColor(context, "textLight"),
-                            text: " • " +
-                                daysDifference.abs().toString() +
-                                " " +
-                                (daysDifference.abs() == 1
+                            text: " • ${daysDifference.abs()} ${daysDifference.abs() == 1
                                     ? "day".tr()
-                                    : "days".tr()) +
-                                (daysDifference > 0
-                                    ? " " + "overdue".tr().toLowerCase()
-                                    : ""),
+                                    : "days".tr()}${daysDifference > 0
+                                    ? " ${"overdue".tr().toLowerCase()}"
+                                    : ""}",
                             fontWeight: FontWeight.bold,
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                   ),
                 ],
               ),
@@ -386,11 +381,9 @@ class UpcomingTransactionDateHeader extends StatelessWidget {
                             amount: 0.4),
                         size: 16,
                       ),
-                      SizedBox(width: 3),
+                      const SizedBox(width: 3),
                       TextFont(
-                        text: transaction.periodLength.toString() +
-                            " " +
-                            (transaction.periodLength == 1
+                        text: "${transaction.periodLength} ${transaction.periodLength == 1
                                 ? nameRecurrence[transaction.reoccurrence]
                                     .toString()
                                     .toLowerCase()
@@ -400,7 +393,7 @@ class UpcomingTransactionDateHeader extends StatelessWidget {
                                     .toString()
                                     .toLowerCase()
                                     .tr()
-                                    .toLowerCase()),
+                                    .toLowerCase()}",
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                         textColor: dynamicPastel(
@@ -409,7 +402,7 @@ class UpcomingTransactionDateHeader extends StatelessWidget {
                       ),
                     ],
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ],
         ),
       ),
@@ -422,7 +415,7 @@ class SubscriptionSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         AutoPaySubscriptionsSetting(),
         AutoPaySettingDescription(),

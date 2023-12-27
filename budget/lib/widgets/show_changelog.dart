@@ -2001,7 +2001,7 @@ Map<String, List<MajorChanges>> getMajorChanges() {
           "major-change-3-2".tr(),
         ],
         onTap: (context) {
-          pushRoute(context, ObjectivesListPage(backButton: true));
+          pushRoute(context, const ObjectivesListPage(backButton: true));
         },
       ),
       MajorChanges(
@@ -2012,7 +2012,7 @@ Map<String, List<MajorChanges>> getMajorChanges() {
           "major-change-4-2".tr(),
         ],
         onTap: (context) {
-          pushRoute(context, EditHomePage());
+          pushRoute(context, const EditHomePage());
         },
       ),
       MajorChanges(
@@ -2022,7 +2022,7 @@ Map<String, List<MajorChanges>> getMajorChanges() {
           "major-change-5-1".tr(),
         ],
         onTap: (context) {
-          pushRoute(context, EditCategoriesPage());
+          pushRoute(context, const EditCategoriesPage());
         },
       ),
       // MajorChanges(
@@ -2041,7 +2041,7 @@ Map<String, List<MajorChanges>> getMajorChanges() {
           "major-change-7-1".tr(),
         ],
         onTap: (context) {
-          pushRoute(context, WalletDetailsPage(wallet: null));
+          pushRoute(context, const WalletDetailsPage(wallet: null));
         },
       ),
       MajorChanges(
@@ -2057,7 +2057,7 @@ Map<String, List<MajorChanges>> getMajorChanges() {
           "major-change-9-1".tr(),
         ],
         onTap: (context) {
-          pushRoute(context, SettingsPageFramework());
+          pushRoute(context, const SettingsPageFramework());
         },
       ),
       MajorChanges(
@@ -2067,7 +2067,7 @@ Map<String, List<MajorChanges>> getMajorChanges() {
           "major-change-10-1".tr(),
         ],
         onTap: (context) {
-          pushRoute(context, EditHomePage());
+          pushRoute(context, const EditHomePage());
         },
       ),
     ],
@@ -2081,7 +2081,7 @@ Map<String, List<MajorChanges>> getMajorChanges() {
         onTap: (context) {
           pushRoute(
             context,
-            AddCategoryPage(
+            const AddCategoryPage(
               routesToPopAfterDelete: RoutesToPopAfterDelete.None,
             ),
           );
@@ -2094,7 +2094,7 @@ Map<String, List<MajorChanges>> getMajorChanges() {
           "major-change-12-1".tr(),
         ],
         onTap: (context) {
-          pushRoute(context, EditHomePage());
+          pushRoute(context, const EditHomePage());
         },
       ),
       MajorChanges(
@@ -2124,7 +2124,7 @@ Map<String, List<MajorChanges>> getMajorChanges() {
         onTap: (context) {
           openBottomSheet(
             context,
-            PopupFramework(
+            const PopupFramework(
               child: AddMoreThingsPopup(),
             ),
           );
@@ -2139,7 +2139,7 @@ Map<String, List<MajorChanges>> getMajorChanges() {
           "major-change-16-1".tr(),
         ],
         onTap: (context) {
-          pushRoute(context, WalletDetailsPage(wallet: null));
+          pushRoute(context, const WalletDetailsPage(wallet: null));
         },
       ),
     ],
@@ -2153,7 +2153,7 @@ Map<String, List<MajorChanges>> getMajorChanges() {
         onTap: (context) {
           pushRoute(
             context,
-            CreditDebtTransactions(
+            const CreditDebtTransactions(
               isCredit: null,
             ),
           );
@@ -2189,7 +2189,7 @@ bool showChangelog(
 
   //Don't show changelog on first login and only show if english, unless forced
   if (changelogPoints != null &&
-      changelogPoints.length > 0 &&
+      changelogPoints.isNotEmpty &&
       (forceShow ||
           (appStateSettings["numLogins"] > 1
           //   &&  Localizations.localeOf(context).toString().toLowerCase() == "en"
@@ -2199,11 +2199,11 @@ bool showChangelog(
       PopupFramework(
         title: "changelog".tr(),
         subtitle: getVersionString(),
+        showCloseButton: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [(extraWidget ?? SizedBox.shrink()), ...changelogPoints],
+          children: [(extraWidget ?? const SizedBox.shrink()), ...changelogPoints],
         ),
-        showCloseButton: true,
       ),
       showScrollbar: true,
     );
@@ -2274,7 +2274,7 @@ List<Widget>? getChangelogPointsWidgets(BuildContext context,
 
       if (string.trim() == "") {
         // this is an empty line
-        changelogPoints.add(SizedBox(
+        changelogPoints.add(const SizedBox(
           height: 8,
         ));
       } else if (string.trim() != "end") {
@@ -2288,9 +2288,9 @@ List<Widget>? getChangelogPointsWidgets(BuildContext context,
         ));
       }
     }
-    if (changelogPoints.length > 0) {
+    if (changelogPoints.isNotEmpty) {
       changelogPoints.add(
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
       );
     }
 
@@ -2313,12 +2313,7 @@ int parseVersionInt(String versionString) {
 String getVersionString() {
   String version = packageInfoGlobal.version;
   String buildNumber = packageInfoGlobal.buildNumber;
-  return "v" +
-      version +
-      "+" +
-      buildNumber +
-      ", db-v" +
-      schemaVersionGlobal.toString();
+  return "v$version+$buildNumber, db-v$schemaVersionGlobal";
 }
 
 class MajorChanges {
@@ -2334,7 +2329,7 @@ List<Widget>? getAllMajorChangeWidgetsForVersion(BuildContext context,
     String version, Map<String, List<MajorChanges>> majorChanges) {
   if (majorChanges[version] == null) return null;
   return [
-    SizedBox(height: 5),
+    const SizedBox(height: 5),
     for (MajorChanges majorChange in (majorChanges[version] ?? []))
       Padding(
         padding: const EdgeInsets.only(
@@ -2348,7 +2343,7 @@ List<Widget>? getAllMajorChangeWidgetsForVersion(BuildContext context,
                 filled: false,
                 alignLeft: true,
                 alignBeside: true,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 text: majorChange.title.tr(),
                 iconData: majorChange.icon,
                 onTap: majorChange.onTap == null
@@ -2371,6 +2366,6 @@ List<Widget>? getAllMajorChangeWidgetsForVersion(BuildContext context,
           ],
         ),
       ),
-    SizedBox(height: 10),
+    const SizedBox(height: 10),
   ];
 }

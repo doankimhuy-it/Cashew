@@ -34,12 +34,12 @@ class _HomePageBudgetsState extends State<HomePageBudgets> {
         stream: database.getAllPinnedBudgets().$1,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data!.length == 0) {
+            if (snapshot.data!.isEmpty) {
               return AddButton(
                 onTap: () {
                   openBottomSheet(
                     context,
-                    EditHomePagePinnedBudgetsPopup(
+                    const EditHomePagePinnedBudgetsPopup(
                       showBudgetsTotalLabelSetting: false,
                     ),
                     useCustomController: true,
@@ -77,7 +77,7 @@ class _HomePageBudgetsState extends State<HomePageBudgets> {
                   onTap: () {
                     openBottomSheet(
                       context,
-                      EditHomePagePinnedBudgetsPopup(
+                      const EditHomePagePinnedBudgetsPopup(
                         showBudgetsTotalLabelSetting: false,
                       ),
                       useCustomController: true,
@@ -85,7 +85,7 @@ class _HomePageBudgetsState extends State<HomePageBudgets> {
                   },
                   height: null,
                   width: null,
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                   // icon: Icons.format_list_bulleted_add,
                 ),
               ),
@@ -121,6 +121,9 @@ class _HomePageBudgetsState extends State<HomePageBudgets> {
                             addAutomaticKeepAlives: true,
                             clipBehavior: Clip.none,
                             scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                            ),
                             children: [
                               for (Widget widget in budgetItems)
                                 Padding(
@@ -131,9 +134,6 @@ class _HomePageBudgetsState extends State<HomePageBudgets> {
                                   ),
                                 )
                             ],
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
                           ),
                         )
                       : CarouselSlider(
@@ -158,7 +158,7 @@ class _HomePageBudgetsState extends State<HomePageBudgets> {
               ],
             );
           } else {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
         },
       ),
@@ -193,7 +193,7 @@ class EditHomePagePinnedBudgetsPopup extends StatelessWidget {
                           : Icons.edit_rounded,
                     ),
                     onPressed: () async {
-                      pushRoute(context, EditBudgetPage());
+                      pushRoute(context, const EditBudgetPage());
                     },
                   ),
                   child: Column(
@@ -201,13 +201,13 @@ class EditHomePagePinnedBudgetsPopup extends StatelessWidget {
                       if (showBudgetsTotalLabelSetting)
                         ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: TotalSpentToggle(),
+                          child: const TotalSpentToggle(),
                         ),
-                      if (allBudgets.length <= 0)
+                      if (allBudgets.isEmpty)
                         NoResultsCreate(
                           message: "no-budgets-found".tr(),
                           buttonLabel: "create-budget".tr(),
-                          route: AddBudgetPage(
+                          route: const AddBudgetPage(
                             routesToPopAfterDelete: RoutesToPopAfterDelete.None,
                           ),
                         ),
@@ -268,7 +268,7 @@ class EditHomePagePinnedBudgetsPopup extends StatelessWidget {
                           );
                         },
                       ),
-                      if (allBudgets.length > 0)
+                      if (allBudgets.isNotEmpty)
                         AddButton(
                           onTap: () {},
                           height: 50,
@@ -279,11 +279,11 @@ class EditHomePagePinnedBudgetsPopup extends StatelessWidget {
                             bottom: 13,
                             top: 13,
                           ),
-                          openPage: AddBudgetPage(
+                          openPage: const AddBudgetPage(
                             routesToPopAfterDelete: RoutesToPopAfterDelete.None,
                           ),
                           afterOpenPage: () {
-                            Future.delayed(Duration(milliseconds: 100), () {
+                            Future.delayed(const Duration(milliseconds: 100), () {
                               bottomSheetControllerGlobalCustomAssigned
                                   ?.snapToExtent(0);
                             });

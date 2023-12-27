@@ -66,19 +66,19 @@ class BudgetPage extends StatelessWidget {
               isPastBudgetButCurrentPeriod: isPastBudgetButCurrentPeriod,
             );
           }
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         });
   }
 }
 
 class _BudgetPageContent extends StatefulWidget {
   const _BudgetPageContent({
-    Key? key,
-    required Budget this.budget,
+    super.key,
+    required this.budget,
     this.dateForRange,
     this.isPastBudget = false,
     this.isPastBudgetButCurrentPeriod = false,
-  }) : super(key: key);
+  });
 
   final Budget budget;
   final DateTime? dateForRange;
@@ -94,7 +94,7 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
   String? selectedMember;
   bool showAllSubcategories = appStateSettings["showAllSubcategories"];
   TransactionCategory? selectedCategory; //We shouldn't always rely on this, if for example the user changes the category and we are still on this page. But for less important info and O(1) we can reference it quickly.
-  GlobalKey<PieChartDisplayState> _pieChartDisplayStateKey = GlobalKey();
+  final GlobalKey<PieChartDisplayState> _pieChartDisplayStateKey = GlobalKey();
 
   @override
   void initState() {
@@ -108,7 +108,7 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
     setState(() {
       showAllSubcategories = !showAllSubcategories;
     });
-    Future.delayed(Duration(milliseconds: 10), () {
+    Future.delayed(const Duration(milliseconds: 10), () {
       _pieChartDisplayStateKey.currentState!
           .setTouchedCategoryPk(selectedCategory?.categoryPk);
     });
@@ -220,7 +220,7 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
     );
     return WillPopScope(
       onWillPop: () async {
-        if ((globalSelectedID.value[pageId] ?? []).length > 0) {
+        if ((globalSelectedID.value[pageId] ?? []).isNotEmpty) {
           globalSelectedID.value[pageId] = [];
           globalSelectedID.notifyListeners();
           return false;
@@ -268,7 +268,7 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
                     totalSpent: totalSpent,
                   );
                 } else {
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 }
               },
             ),
@@ -470,13 +470,13 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
                       child: Column(
                         children: [
                           Transform.translate(
-                            offset: Offset(0, -10),
+                            offset: const Offset(0, -10),
                             child: WidgetSize(
                               onChange: (Size size) {
                                 budgetHeaderHeight = size.height - 20;
                               },
                               child: Container(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                   top: 10,
                                   bottom: 22,
                                   left: 22,
@@ -557,7 +557,7 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
                                       ),
                                     ),
                                     widget.isPastBudget == true
-                                        ? SizedBox.shrink()
+                                        ? const SizedBox.shrink()
                                         : DaySpending(
                                             budget: widget.budget,
                                             totalAmount: s.totalSpent,
@@ -585,10 +585,10 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
                                         ?.setTouchedIndex(-1);
                                   },
                                 )
-                              : SizedBox.shrink(),
-                          if (snapshot.data!.length > 0) SizedBox(height: 30),
+                              : const SizedBox.shrink(),
+                          if (snapshot.data!.isNotEmpty) const SizedBox(height: 30),
 
-                          if (snapshot.data!.length > 0)
+                          if (snapshot.data!.isNotEmpty)
                             pieChart(
                               budgetRange: budgetRange,
                               totalSpent: s.totalSpent,
@@ -602,7 +602,7 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
                           // if (snapshot.data!.length > 0)
                           //   SizedBox(height: 35),
                           ...categoryEntries,
-                          if (snapshot.data!.length > 0) SizedBox(height: 15),
+                          if (snapshot.data!.isNotEmpty) const SizedBox(height: 15),
                         ],
                       ),
                     );
@@ -614,7 +614,7 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
                 child: AnimatedExpanded(
                     expand: selectedCategory != null,
                     child: Padding(
-                      key: ValueKey(1),
+                      key: const ValueKey(1),
                       padding: const EdgeInsets.only(
                           left: 13, right: 15, top: 5, bottom: 15),
                       child: Center(
@@ -633,9 +633,9 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 13),
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 13),
+                    margin: const EdgeInsets.symmetric(horizontal: 13),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
                       color: appStateSettings["materialYou"]
                           ? dynamicPastel(
                               context, budgetColorScheme.secondaryContainer,
@@ -651,7 +651,7 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
                       budgetRange: budgetRange,
                       budgetColorScheme: budgetColorScheme,
                       showIfNone: false,
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                           left: 5, right: 7, bottom: 12, top: 18),
                     ),
                   ),
@@ -723,24 +723,20 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
                           text: "view-previous-budget-periods".tr(),
                         ),
                       )
-                    : SizedBox.shrink(),
+                    : const SizedBox.shrink(),
                 showTotalCashFlow: true,
               ),
               SliverToBoxAdapter(
                 child: widget.budget.sharedDateUpdated == null
-                    ? SizedBox.shrink()
+                    ? const SizedBox.shrink()
                     : Padding(
                         padding: const EdgeInsets.only(
                             left: 10, right: 10, bottom: 0),
                         child: TextFont(
-                          text: "synced".tr() +
-                              " " +
-                              getTimeAgo(
+                          text: "${"synced".tr()} ${getTimeAgo(
                                 widget.budget.sharedDateUpdated!,
-                              ).toLowerCase() +
-                              "\n Created by " +
-                              getMemberNickname(
-                                  (widget.budget.sharedMembers ?? [""])[0]),
+                              ).toLowerCase()}\n Created by ${getMemberNickname(
+                                  (widget.budget.sharedMembers ?? [""])[0])}",
                           fontSize: 13,
                           textColor: getColor(context, "textLight"),
                           textAlign: TextAlign.center,
@@ -752,7 +748,7 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
               SliverToBoxAdapter(
                 child: Container(height: 1, color: pageBackgroundColor),
               ),
-              SliverToBoxAdapter(child: SizedBox(height: 45))
+              const SliverToBoxAdapter(child: SizedBox(height: 45))
             ],
           ),
           SelectedTransactionsAppBar(
@@ -770,10 +766,10 @@ class WidgetPosition extends StatefulWidget {
   final Function(Offset position) onChange;
 
   const WidgetPosition({
-    Key? key,
+    super.key,
     required this.onChange,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   _WidgetPositionState createState() => _WidgetPositionState();
@@ -935,7 +931,7 @@ class _BudgetLineGraphState extends State<BudgetLineGraph> {
       stream: mergedStreamsPastSpendingTotals,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          if (snapshot.data!.length <= 0) return SizedBox.shrink();
+          if (snapshot.data!.isEmpty) return const SizedBox.shrink();
           DateTime budgetRangeEnd = widget.budgetRange.end;
           if (showCompressedView && budgetRangeEnd.isAfter(DateTime.now())) {
             budgetRangeEnd = DateTime.now();
@@ -978,7 +974,7 @@ class _BudgetLineGraphState extends State<BudgetLineGraph> {
               ? HexColor(widget.selectedCategory!.colour,
                   defaultColor: Theme.of(context).colorScheme.primary)
               : widget.budgetColorScheme.primary;
-          if (widget.showIfNone == false && allZeroes) return SizedBox.shrink();
+          if (widget.showIfNone == false && allZeroes) return const SizedBox.shrink();
           return Stack(
             children: [
               Padding(
@@ -1031,7 +1027,7 @@ class _BudgetLineGraphState extends State<BudgetLineGraph> {
                   right: 0,
                   top: 0,
                   child: Transform.translate(
-                    offset: Offset(5, -5),
+                    offset: const Offset(5, -5),
                     child: Tooltip(
                       message: showCompressedView
                           ? "view-all-days".tr()
@@ -1041,7 +1037,7 @@ class _BudgetLineGraphState extends State<BudgetLineGraph> {
                         icon: Transform.rotate(
                           angle: pi / 2,
                           child: ScaledAnimatedSwitcher(
-                            duration: Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 300),
                             keyToWatch: showCompressedView.toString(),
                             child: Icon(
                               showCompressedView
@@ -1072,7 +1068,7 @@ class _BudgetLineGraphState extends State<BudgetLineGraph> {
             ],
           );
         }
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       },
     );
   }
@@ -1119,7 +1115,7 @@ class _TotalSpentState extends State<TotalSpent> {
         _swapTotalSpentDisplay();
       },
       child: AnimatedSwitcher(
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         child: IntrinsicWidth(
           child: budgetAmount - widget.totalSpent >= 0
               ? Row(
@@ -1131,7 +1127,7 @@ class _TotalSpentState extends State<TotalSpent> {
                         count: showTotalSpent
                             ? widget.totalSpent
                             : budgetAmount - widget.totalSpent,
-                        duration: Duration(milliseconds: 400),
+                        duration: const Duration(milliseconds: 400),
                         initialCount: (0),
                         textBuilder: (number) {
                           return TextFont(
@@ -1153,8 +1149,8 @@ class _TotalSpentState extends State<TotalSpent> {
                       padding: const EdgeInsets.only(bottom: 1.5),
                       child: TextFont(
                         text: (showTotalSpent
-                                ? " " + "spent-amount-of".tr() + " "
-                                : " " + "remaining-amount-of".tr() + " ") +
+                                ? " ${"spent-amount-of".tr()} "
+                                : " ${"remaining-amount-of".tr()} ") +
                             convertToMoney(
                                 Provider.of<AllWallets>(context), budgetAmount),
                         fontSize: 15,
@@ -1174,7 +1170,7 @@ class _TotalSpentState extends State<TotalSpent> {
                         count: showTotalSpent
                             ? widget.totalSpent
                             : -1 * (budgetAmount - widget.totalSpent),
-                        duration: Duration(milliseconds: 400),
+                        duration: const Duration(milliseconds: 400),
                         initialCount: (0),
                         textBuilder: (number) {
                           return TextFont(
@@ -1196,8 +1192,8 @@ class _TotalSpentState extends State<TotalSpent> {
                       padding: const EdgeInsets.only(bottom: 1.5),
                       child: TextFont(
                         text: (showTotalSpent
-                                ? " " + "spent-amount-of".tr() + " "
-                                : " " + "overspent-amount-of".tr() + " ") +
+                                ? " ${"spent-amount-of".tr()} "
+                                : " ${"overspent-amount-of".tr()} ") +
                             convertToMoney(
                                 Provider.of<AllWallets>(context), budgetAmount),
                         fontSize: 15,

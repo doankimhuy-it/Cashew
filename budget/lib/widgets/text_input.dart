@@ -40,7 +40,7 @@ class TextInput extends StatelessWidget {
   final bool autocorrect;
 
   const TextInput({
-    Key? key,
+    super.key,
     required this.labelText,
     this.onChanged,
     this.onSubmitted,
@@ -73,7 +73,7 @@ class TextInput extends StatelessWidget {
     this.inputFormatters,
     this.textAlign = TextAlign.start,
     this.autocorrect = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -100,13 +100,11 @@ class TextInput extends StatelessWidget {
             //incognito keyboard
             enableIMEPersonalizedLearning:
                 !appStateSettings["incognitoKeyboard"],
-            scrollPadding: EdgeInsets.only(bottom: 80),
+            scrollPadding: const EdgeInsets.only(bottom: 80),
             focusNode: focusNode,
-            keyboardType: keyboardType != null
-                ? keyboardType
-                : numbersOnly
+            keyboardType: keyboardType ?? (numbersOnly
                     ? TextInputType.number
-                    : TextInputType.text,
+                    : TextInputType.text),
             maxLines: maxLines,
             minLines: minLines,
             onTap: onTap,
@@ -120,18 +118,18 @@ class TextInput extends StatelessWidget {
             autocorrect: autocorrect,
             style: TextStyle(
               fontSize:
-                  fontSize != null ? fontSize : (bubbly == false ? 18 : 15),
+                  fontSize ?? (bubbly == false ? 18 : 15),
               height: bubbly == true
                       ? 1.7
                       : 1.3,
               fontWeight: fontWeight,
               fontFamily: appStateSettings["font"],
-              fontFamilyFallback: ['Inter'],
+              fontFamilyFallback: const ['Inter'],
             ),
             cursorColor: dynamicPastel(
                 context, HexColor(appStateSettings["accentColor"]),
                 amount: 0.1, inverse: true),
-            decoration: new InputDecoration(
+            decoration: InputDecoration(
               hintStyle: TextStyle(color: getColor(context, "textLight")),
               alignLabelWithHint: true,
               prefix: prefix != null ? TextFont(text: prefix ?? "") : null,
@@ -148,7 +146,7 @@ class TextInput extends StatelessWidget {
               filled: bubbly == false ? true : false,
               fillColor: Colors.transparent,
               isDense: true,
-              suffixIconConstraints: BoxConstraints(maxHeight: 20),
+              suffixIconConstraints: const BoxConstraints(maxHeight: 20),
               suffixIcon: bubbly == false || icon == null
                   ? null
                   : Padding(
@@ -177,7 +175,7 @@ class TextInput extends StatelessWidget {
               enabledBorder: bubbly == false
                   ? UnderlineInputBorder(
                       borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(10)),
+                          const BorderRadius.vertical(top: Radius.circular(10)),
                       borderSide: BorderSide(
                         color: appStateSettings["materialYou"]
                             ? Theme.of(context)
@@ -198,7 +196,7 @@ class TextInput extends StatelessWidget {
               focusedBorder: bubbly == false
                   ? UnderlineInputBorder(
                       borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(5.0)),
+                          const BorderRadius.vertical(top: Radius.circular(5.0)),
                       borderSide: BorderSide(
                         color: Theme.of(context).colorScheme.secondary,
                         width: 2,

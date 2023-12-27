@@ -121,8 +121,8 @@ enum SharedStatus { waiting, shared, error }
 class IntListInColumnConverter extends TypeConverter<List<int>, String> {
   const IntListInColumnConverter();
   @override
-  List<int> fromSql(String string_from_db) {
-    return new List<int>.from(json.decode(string_from_db));
+  List<int> fromSql(String stringFromDb) {
+    return List<int>.from(json.decode(stringFromDb));
   }
 
   @override
@@ -135,8 +135,8 @@ class BudgetTransactionFiltersListInColumnConverter
     extends TypeConverter<List<BudgetTransactionFilters>, String> {
   const BudgetTransactionFiltersListInColumnConverter();
   @override
-  List<BudgetTransactionFilters> fromSql(String string_from_db) {
-    List<int> ints = List<int>.from(json.decode(string_from_db));
+  List<BudgetTransactionFilters> fromSql(String stringFromDb) {
+    List<int> ints = List<int>.from(json.decode(stringFromDb));
     List<BudgetTransactionFilters> filters = ints
         .where((i) => i >= 0 && i < BudgetTransactionFilters.values.length)
         .map((i) => BudgetTransactionFilters.values[i])
@@ -155,8 +155,8 @@ class HomePageWidgetDisplayListInColumnConverter
     extends TypeConverter<List<HomePageWidgetDisplay>, String> {
   const HomePageWidgetDisplayListInColumnConverter();
   @override
-  List<HomePageWidgetDisplay> fromSql(String string_from_db) {
-    List<int> ints = List<int>.from(json.decode(string_from_db));
+  List<HomePageWidgetDisplay> fromSql(String stringFromDb) {
+    List<int> ints = List<int>.from(json.decode(stringFromDb));
     List<HomePageWidgetDisplay> widgetDisplays = ints
         .where((i) => i >= 0 && i < HomePageWidgetDisplay.values.length)
         .map((i) => HomePageWidgetDisplay.values[i])
@@ -174,8 +174,8 @@ class HomePageWidgetDisplayListInColumnConverter
 class StringListInColumnConverter extends TypeConverter<List<String>, String> {
   const StringListInColumnConverter();
   @override
-  List<String> fromSql(String string_from_db) {
-    List<dynamic> dynamicList = List<dynamic>.from(json.decode(string_from_db));
+  List<String> fromSql(String stringFromDb) {
+    List<dynamic> dynamicList = List<dynamic>.from(json.decode(stringFromDb));
     List<String> stringList =
         dynamicList.map((dynamic item) => item.toString()).toList();
     return stringList;
@@ -190,8 +190,8 @@ class StringListInColumnConverter extends TypeConverter<List<String>, String> {
 class DoubleListInColumnConverter extends TypeConverter<List<double>, String> {
   const DoubleListInColumnConverter();
   @override
-  List<double> fromSql(String string_from_db) {
-    return new List<double>.from(json.decode(string_from_db));
+  List<double> fromSql(String stringFromDb) {
+    return List<double>.from(json.decode(stringFromDb));
   }
 
   @override
@@ -241,13 +241,13 @@ class Wallets extends Table {
   TextColumn get colour => text().withLength(max: COLOUR_LIMIT).nullable()();
   TextColumn get iconName => text().nullable()(); // Money symbol
   DateTimeColumn get dateCreated =>
-      dateTime().clientDefault(() => new DateTime.now())();
+      dateTime().clientDefault(() => DateTime.now())();
   DateTimeColumn get dateTimeModified =>
       dateTime().withDefault(Constant(DateTime.now())).nullable()();
   IntColumn get order => integer()();
   TextColumn get currency => text().nullable()();
   TextColumn get currencyFormat => text().nullable()();
-  IntColumn get decimals => integer().withDefault(Constant(2))();
+  IntColumn get decimals => integer().withDefault(const Constant(2))();
   TextColumn get homePageWidgetDisplay => text()
       .nullable()
       .withDefault(const Constant(null))
@@ -277,7 +277,7 @@ class Transactions extends Table {
   // TextColumn get labelFks =>
   //     text().map(const IntListInColumnConverter()).nullable()();
   DateTimeColumn get dateCreated =>
-      dateTime().clientDefault(() => new DateTime.now())();
+      dateTime().clientDefault(() => DateTime.now())();
   // DateTimeColumn get dateTimeCreated =>
   //     dateTime().withDefault(Constant(DateTime.now())).nullable()();
   DateTimeColumn get dateTimeModified =>
@@ -334,7 +334,7 @@ class Categories extends Table {
   TextColumn get iconName => text().nullable()();
   TextColumn get emojiIconName => text().nullable()();
   DateTimeColumn get dateCreated =>
-      dateTime().clientDefault(() => new DateTime.now())();
+      dateTime().clientDefault(() => DateTime.now())();
   DateTimeColumn get dateTimeModified =>
       dateTime().withDefault(Constant(DateTime.now())).nullable()();
   IntColumn get order => integer()();
@@ -384,7 +384,7 @@ class AssociatedTitles extends Table {
   TextColumn get categoryFk => text().references(Categories, #categoryPk)();
   TextColumn get title => text().withLength(max: NAME_LIMIT)();
   DateTimeColumn get dateCreated =>
-      dateTime().clientDefault(() => new DateTime.now())();
+      dateTime().clientDefault(() => DateTime.now())();
   DateTimeColumn get dateTimeModified =>
       dateTime().withDefault(Constant(DateTime.now())).nullable()();
   IntColumn get order => integer()();
@@ -430,7 +430,7 @@ class Budgets extends Table {
   IntColumn get periodLength => integer()();
   IntColumn get reoccurrence => intEnum<BudgetReoccurence>().nullable()();
   DateTimeColumn get dateCreated =>
-      dateTime().clientDefault(() => new DateTime.now())();
+      dateTime().clientDefault(() => DateTime.now())();
   DateTimeColumn get dateTimeModified =>
       dateTime().withDefault(Constant(DateTime.now())).nullable()();
   BoolColumn get pinned => boolean().withDefault(const Constant(false))();
@@ -469,14 +469,14 @@ class AppSettings extends Table {
   TextColumn get settingsJSON =>
       text()(); // This is the JSON stored as a string for shared prefs 'userSettings'
   DateTimeColumn get dateUpdated =>
-      dateTime().clientDefault(() => new DateTime.now())();
+      dateTime().clientDefault(() => DateTime.now())();
 }
 
 @DataClassName('ScannerTemplate')
 class ScannerTemplates extends Table {
   TextColumn get scannerTemplatePk => text().clientDefault(() => uuid.v4())();
   DateTimeColumn get dateCreated =>
-      dateTime().clientDefault(() => new DateTime.now())();
+      dateTime().clientDefault(() => DateTime.now())();
   DateTimeColumn get dateTimeModified =>
       dateTime().withDefault(Constant(DateTime.now())).nullable()();
   TextColumn get templateName => text().withLength(max: NAME_LIMIT)();
@@ -501,7 +501,7 @@ class ScannerTemplates extends Table {
 @DataClassName('Objective')
 class Objectives extends Table {
   TextColumn get objectivePk => text().clientDefault(() => uuid.v4())();
-  IntColumn get type => intEnum<ObjectiveType>().withDefault(Constant(0))();
+  IntColumn get type => intEnum<ObjectiveType>().withDefault(const Constant(0))();
   TextColumn get name => text().withLength(max: NAME_LIMIT)();
   RealColumn get amount => real()();
   IntColumn get order => integer()();
@@ -509,7 +509,7 @@ class Objectives extends Table {
       .withLength(max: COLOUR_LIMIT)
       .nullable()(); // if null we are using the themes color
   DateTimeColumn get dateCreated =>
-      dateTime().clientDefault(() => new DateTime.now())();
+      dateTime().clientDefault(() => DateTime.now())();
   DateTimeColumn get endDate => dateTime().nullable()();
   DateTimeColumn get dateTimeModified =>
       dateTime().withDefault(Constant(DateTime.now())).nullable()();
@@ -637,7 +637,7 @@ class CategoryWithTotal {
 ])
 class FinanceDatabase extends _$FinanceDatabase {
   // FinanceDatabase() : super(_openConnection());
-  FinanceDatabase(QueryExecutor e) : super(e);
+  FinanceDatabase(super.e);
 
   // you should bump this number whenever you change or add a table definition
   @override
@@ -658,7 +658,7 @@ class FinanceDatabase extends _$FinanceDatabase {
       //   }
       // },
       onUpgrade: (migrator, from, to) async {
-        print("Migrating from: " + from.toString() + " to " + to.toString());
+        print("Migrating from: $from to $to");
         if (from <= 9) {
           await migrator.createTable($AppSettingsTable(database));
         }
@@ -902,8 +902,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                     schema.transactions, schema.transactions.originalDateDue);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column originalDateDue " +
-                        e.toString());
+                    "Migration Error: Error creating column originalDateDue $e");
               }
             },
             from38To39: (m, schema) async {
@@ -916,8 +915,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                 await m.addColumn(
                     schema.categories, schema.categories.emojiIconName);
               } catch (e) {
-                print("Migration Error: Error creating column emojiIconName " +
-                    e.toString());
+                print("Migration Error: Error creating column emojiIconName $e");
               }
             },
             from39To40: (m, schema) async {
@@ -926,14 +924,12 @@ class FinanceDatabase extends _$FinanceDatabase {
                 await m.addColumn(
                     schema.transactions, schema.transactions.objectiveFk);
               } catch (e) {
-                print("Migration Error: Error creating column objectiveFk " +
-                    e.toString());
+                print("Migration Error: Error creating column objectiveFk $e");
               }
               try {
                 await migrator.createTable($ObjectivesTable(database));
               } catch (e) {
-                print("Migration Error: Error creating table ObjectivesTable " +
-                    e.toString());
+                print("Migration Error: Error creating table ObjectivesTable $e");
               }
             },
             from40To41: (m, schema) async {
@@ -943,14 +939,12 @@ class FinanceDatabase extends _$FinanceDatabase {
                     schema.budgets, schema.budgets.categoryFksExclude);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column categoryFksExclude " +
-                        e.toString());
+                    "Migration Error: Error creating column categoryFksExclude $e");
               }
               try {
                 await m.alterTable(TableMigration(budgets));
               } catch (e) {
-                print("Migration Error: Error deleting includeAllCategories " +
-                    e.toString());
+                print("Migration Error: Error deleting includeAllCategories $e");
               }
               try {
                 List<Budget> allBudgets = await getAllBudgets();
@@ -959,7 +953,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                   if (budget.budgetTransactionFilters == null &&
                       budget.addedTransactionsOnly == false) {
                     budgetsInserting.add(budget.copyWith(
-                        budgetTransactionFilters: Value([
+                        budgetTransactionFilters: const Value([
                       BudgetTransactionFilters.defaultBudgetTransactionFilters
                     ])));
                   }
@@ -967,8 +961,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                 await updateBatchBudgetsOnly(budgetsInserting);
               } catch (e) {
                 print(
-                    "Migration Error: Error upgrading transaction filters default for budgets " +
-                        e.toString());
+                    "Migration Error: Error upgrading transaction filters default for budgets $e");
               }
             },
             from41To42: (m, schema) async {
@@ -977,23 +970,20 @@ class FinanceDatabase extends _$FinanceDatabase {
                 await m.addColumn(
                     schema.categories, schema.categories.mainCategoryPk);
               } catch (e) {
-                print("Migration Error: Error creating column mainCategoryPk " +
-                    e.toString());
+                print("Migration Error: Error creating column mainCategoryPk $e");
               }
               try {
                 await m.addColumn(
                     schema.wallets, schema.wallets.homePageWidgetDisplay);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column homePageWidgetDisplay " +
-                        e.toString());
+                    "Migration Error: Error creating column homePageWidgetDisplay $e");
               }
               try {
                 await m.addColumn(
                     schema.transactions, schema.transactions.subCategoryFk);
               } catch (e) {
-                print("Migration Error: Error creating column subCategoryFk " +
-                    e.toString());
+                print("Migration Error: Error creating column subCategoryFk $e");
               }
               // Also see beforeOpen
               // We modify the entries of homePageWidgetDisplay of wallet entries after this migration
@@ -1008,8 +998,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                     schema.transactions, schema.transactions.budgetFksExclude);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column budgetFksExclude " +
-                        e.toString());
+                    "Migration Error: Error creating column budgetFksExclude $e");
               }
             },
             from43To44: (m, schema) async {
@@ -1019,15 +1008,13 @@ class FinanceDatabase extends _$FinanceDatabase {
                     schema.transactions, schema.transactions.endDate);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column transactions.endDate" +
-                        e.toString());
+                    "Migration Error: Error creating column transactions.endDate$e");
               }
               try {
                 await m.addColumn(schema.objectives, schema.objectives.endDate);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column objectives.endDate " +
-                        e.toString());
+                    "Migration Error: Error creating column objectives.endDate $e");
               }
             },
             from44To45: (m, schema) async {
@@ -1036,30 +1023,26 @@ class FinanceDatabase extends _$FinanceDatabase {
                 await m.addColumn(schema.budgets, schema.budgets.walletFks);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column budgets.walletFks" +
-                        e.toString());
+                    "Migration Error: Error creating column budgets.walletFks$e");
               }
               try {
                 await m.addColumn(schema.budgets, schema.budgets.income);
               } catch (e) {
-                print("Migration Error: Error creating column budgets.income " +
-                    e.toString());
+                print("Migration Error: Error creating column budgets.income $e");
               }
               try {
                 await m.addColumn(
                     schema.objectives, schema.objectives.walletFk);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column objectives.walletFk " +
-                        e.toString());
+                    "Migration Error: Error creating column objectives.walletFk $e");
               }
               try {
                 await m.addColumn(schema.categoryBudgetLimits,
                     schema.categoryBudgetLimits.walletFk);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column categoryBudgetLimits.walletFk " +
-                        e.toString());
+                    "Migration Error: Error creating column categoryBudgetLimits.walletFk $e");
               }
             },
             from45To46: (m, schema) async {
@@ -1068,46 +1051,40 @@ class FinanceDatabase extends _$FinanceDatabase {
                     schema.transactions.pairedTransactionFk);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column transactions.pairedTransactionFk " +
-                        e.toString());
+                    "Migration Error: Error creating column transactions.pairedTransactionFk $e");
               }
               try {
                 await m.addColumn(
                     schema.transactions, schema.transactions.objectiveLoanFk);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column transactions.objectiveLoanFk " +
-                        e.toString());
+                    "Migration Error: Error creating column transactions.objectiveLoanFk $e");
               }
               try {
                 await m.addColumn(
                     schema.wallets, schema.wallets.currencyFormat);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column wallets.currencyFormat " +
-                        e.toString());
+                    "Migration Error: Error creating column wallets.currencyFormat $e");
               }
               try {
                 await m.addColumn(schema.budgets, schema.budgets.archived);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column budgets.archived " +
-                        e.toString());
+                    "Migration Error: Error creating column budgets.archived $e");
               }
               try {
                 await m.addColumn(
                     schema.objectives, schema.objectives.archived);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column objectives.archived " +
-                        e.toString());
+                    "Migration Error: Error creating column objectives.archived $e");
               }
               try {
                 await m.addColumn(schema.objectives, schema.objectives.type);
               } catch (e) {
                 print(
-                    "Migration Error: Error creating column objectives.type " +
-                        e.toString());
+                    "Migration Error: Error creating column objectives.type $e");
               }
             },
           ),
@@ -1126,8 +1103,8 @@ class FinanceDatabase extends _$FinanceDatabase {
 
         if (details.hadUpgrade && details.versionBefore != null) {
           print(
-              "Migration Version Before: " + details.versionBefore.toString());
-          print("Migration Version After: " + details.versionNow.toString());
+              "Migration Version Before: ${details.versionBefore}");
+          print("Migration Version After: ${details.versionNow}");
 
           if (details.versionBefore! < 42) {
             // Migration 41to42
@@ -1144,8 +1121,7 @@ class FinanceDatabase extends _$FinanceDatabase {
               await updateBatchWalletsOnly(walletsInserting);
             } catch (e) {
               print(
-                  "Migration Error: Error upgrading home page widget display default for wallets " +
-                      e.toString());
+                  "Migration Error: Error upgrading home page widget display default for wallets $e");
             }
           }
           if (details.versionBefore! < 45) {
@@ -1163,8 +1139,7 @@ class FinanceDatabase extends _$FinanceDatabase {
               await updateBatchObjectivesOnly(objectivesInserting);
             } catch (e) {
               print(
-                  "Migration Error: Error upgrading objectives.walletFk to current wallet " +
-                      e.toString());
+                  "Migration Error: Error upgrading objectives.walletFk to current wallet $e");
             }
 
             print(
@@ -1179,8 +1154,7 @@ class FinanceDatabase extends _$FinanceDatabase {
               await updateBatchBudgetsOnly(budgetsInserting);
             } catch (e) {
               print(
-                  "Migration Error: Error upgrading objectives.walletFk to current wallet " +
-                      e.toString());
+                  "Migration Error: Error upgrading objectives.walletFk to current wallet $e");
             }
 
             print(
@@ -1198,8 +1172,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                   categoryBudgetLimitsInserting);
             } catch (e) {
               print(
-                  "Migration Error: Error upgrading objectives.walletFk to current wallet " +
-                      e.toString());
+                  "Migration Error: Error upgrading objectives.walletFk to current wallet $e");
             }
           }
         }
@@ -1472,7 +1445,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     return dateColumn.isBetweenValues(
         DateTime(date.year, date.month, date.day),
         DateTime(date.year, date.month, date.day + 1)
-            .subtract(Duration(milliseconds: 1)));
+            .subtract(const Duration(milliseconds: 1)));
   }
 
   Stream<RangeValues> getHighestLowestAmount(SearchFilters searchFilters) {
@@ -1780,7 +1753,7 @@ class FinanceDatabase extends _$FinanceDatabase {
           transactions.dateCreated
               .isBiggerThanValue(startDate ?? DateTime.now()) &
           transactions.dateCreated.isSmallerThanValue(
-              endDate ?? DateTime.now().add(Duration(days: 1000))) &
+              endDate ?? DateTime.now().add(const Duration(days: 1000))) &
           (transactions.type.equals(TransactionSpecialType.subscription.index) |
               transactions.type
                   .equals(TransactionSpecialType.repetitive.index) |
@@ -1799,7 +1772,7 @@ class FinanceDatabase extends _$FinanceDatabase {
           transactions.dateCreated
               .isBiggerThanValue(startDate ?? DateTime.now()) &
           transactions.dateCreated.isSmallerThanValue(
-              endDate ?? DateTime.now().add(Duration(days: 1000))) &
+              endDate ?? DateTime.now().add(const Duration(days: 1000))) &
           (transactions.type.equals(TransactionSpecialType.subscription.index) |
               transactions.type
                   .equals(TransactionSpecialType.repetitive.index) |
@@ -1825,7 +1798,7 @@ class FinanceDatabase extends _$FinanceDatabase {
           transactions.skipPaid.equals(false) &
           transactions.paid.equals(false) &
           (isOverdueTransactions == null
-              ? Constant(true)
+              ? const Constant(true)
               : isOverdueTransactions == true
                   ? transactions.dateCreated.isSmallerThanValue(DateTime.now())
                   : transactions.dateCreated
@@ -1883,12 +1856,12 @@ class FinanceDatabase extends _$FinanceDatabase {
           ..where((b) =>
               (hideArchived == true
                   ? b.archived.equals(false)
-                  : Constant(true)) &
+                  : const Constant(true)) &
               (searchFor == null
-                  ? Constant(true)
+                  ? const Constant(true)
                   : b.name
                       .collate(Collate.noCase)
-                      .like("%" + (searchFor) + "%")))
+                      .like("%$searchFor%")))
           ..orderBy([
             if (archivedLast) (b) => OrderingTerm.asc(b.archived),
             (b) => OrderingTerm.asc(b.order)
@@ -1901,7 +1874,7 @@ class FinanceDatabase extends _$FinanceDatabase {
       {required String title, int? limit, int? offset}) {
     return (select(associatedTitles)
           ..where(
-              (t) => (t.title.collate(Collate.noCase).like("%" + title + "%")))
+              (t) => (t.title.collate(Collate.noCase).like("%$title%")))
           ..orderBy([(t) => OrderingTerm.desc(t.order)])
           ..limit(limit ?? DEFAULT_LIMIT, offset: offset ?? DEFAULT_OFFSET))
         .get();
@@ -2135,8 +2108,8 @@ class FinanceDatabase extends _$FinanceDatabase {
       {String? searchFor, int? limit, int? offset}) {
     return (select(wallets)
           ..where((w) => (searchFor == null
-              ? Constant(true)
-              : w.name.collate(Collate.noCase).like("%" + (searchFor) + "%")))
+              ? const Constant(true)
+              : w.name.collate(Collate.noCase).like("%$searchFor%")))
           ..orderBy([(w) => OrderingTerm.asc(w.order)])
           ..limit(limit ?? DEFAULT_LIMIT, offset: offset ?? DEFAULT_OFFSET))
         .watch();
@@ -2152,12 +2125,12 @@ class FinanceDatabase extends _$FinanceDatabase {
           ..where((w) => ((homePageWidgetDisplay != null
                   ? w.homePageWidgetDisplay
                       .contains(homePageWidgetDisplay.index.toString())
-                  : Constant(true)) &
+                  : const Constant(true)) &
               (searchFor == null
-                  ? Constant(true)
+                  ? const Constant(true)
                   : w.name
                       .collate(Collate.noCase)
-                      .like("%" + (searchFor) + "%"))))
+                      .like("%$searchFor%"))))
           ..orderBy([(w) => OrderingTerm.asc(w.order)]))
         .join([
       leftOuterJoin(
@@ -2450,7 +2423,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     if (insert) {
       // Use auto incremented ID when inserting
       companionToInsert = companionToInsert.copyWith(
-        walletPk: Value.absent(),
+        walletPk: const Value.absent(),
         homePageWidgetDisplay: Value(defaultWalletHomePageWidgetDisplay),
       );
     }
@@ -2469,7 +2442,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     if (insert) {
       // Use auto incremented ID when inserting
       companionToInsert =
-          companionToInsert.copyWith(objectivePk: Value.absent());
+          companionToInsert.copyWith(objectivePk: const Value.absent());
 
       // If homepage section disabled and user added an objective, enable homepage section
       if (appStateSettings[objective.type == ObjectiveType.goal
@@ -2515,7 +2488,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     if (insert) {
       // Use auto incremented ID when inserting
       companionToInsert =
-          companionToInsert.copyWith(scannerTemplatePk: Value.absent());
+          companionToInsert.copyWith(scannerTemplatePk: const Value.absent());
     }
 
     return into(scannerTemplates)
@@ -2533,7 +2506,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     if (insert) {
       // Use auto incremented ID when inserting
       companionToInsert =
-          companionToInsert.copyWith(categoryLimitPk: Value.absent());
+          companionToInsert.copyWith(categoryLimitPk: const Value.absent());
     }
 
     return into(categoryBudgetLimits)
@@ -2544,8 +2517,8 @@ class FinanceDatabase extends _$FinanceDatabase {
       {String? searchFor, int? limit, int? offset}) {
     return (select(associatedTitles)
           ..where((t) => (searchFor == null
-              ? Constant(true)
-              : t.title.collate(Collate.noCase).like("%" + (searchFor) + "%")))
+              ? const Constant(true)
+              : t.title.collate(Collate.noCase).like("%$searchFor%")))
           ..orderBy([(t) => OrderingTerm.desc(t.order)])
         // ..limit(limit ?? DEFAULT_LIMIT, offset: offset ?? DEFAULT_OFFSET)
         )
@@ -2566,7 +2539,7 @@ class FinanceDatabase extends _$FinanceDatabase {
       {int? limit, int? offset}) async {
     return (await (select(associatedTitles)
               ..where((t) =>
-                  t.title.collate(Collate.noCase).like("%" + searchFor + "%") &
+                  t.title.collate(Collate.noCase).like("%$searchFor%") &
                   t.categoryFk.equals(categoryFk))
             // ..limit(limit ?? DEFAULT_LIMIT, offset: offset ?? DEFAULT_OFFSET)
             )
@@ -2580,7 +2553,7 @@ class FinanceDatabase extends _$FinanceDatabase {
       int? offset}) async {
     return (await (select(associatedTitles)
               ..where((t) =>
-                  t.title.collate(Collate.noCase).like("%" + searchFor + "%"))
+                  t.title.collate(Collate.noCase).like("%$searchFor%"))
             // ..limit(limit ?? DEFAULT_LIMIT, offset: offset ?? DEFAULT_OFFSET)
             )
             .get())
@@ -2592,7 +2565,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     return (await (select(categories)
               ..where((c) =>
                   onlyShowMainCategoryListing(c) &
-                  c.name.collate(Collate.noCase).like("%" + searchFor + "%"))
+                  c.name.collate(Collate.noCase).like("%$searchFor%"))
               ..limit(limit ?? DEFAULT_LIMIT, offset: offset ?? DEFAULT_OFFSET))
             .get())
         .first;
@@ -2751,7 +2724,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     if (insert) {
       // Use auto incremented ID when inserting
       companionToInsert =
-          companionToInsert.copyWith(associatedTitlePk: Value.absent());
+          companionToInsert.copyWith(associatedTitlePk: const Value.absent());
     }
 
     return into(associatedTitles)
@@ -2953,18 +2926,18 @@ class FinanceDatabase extends _$FinanceDatabase {
 
   Transaction cleanseTransactionForLongTermLoan(Transaction transaction) {
     if (transaction.objectiveLoanFk != null) {
-      transaction = transaction.copyWith(objectiveFk: Value(null));
+      transaction = transaction.copyWith(objectiveFk: const Value(null));
       if (transaction.type == TransactionSpecialType.credit ||
           transaction.type == TransactionSpecialType.debt) {
-        transaction = transaction.copyWith(type: Value(null));
+        transaction = transaction.copyWith(type: const Value(null));
       }
     }
     if (transaction.objectiveFk != null) {
-      transaction = transaction.copyWith(objectiveLoanFk: Value(null));
+      transaction = transaction.copyWith(objectiveLoanFk: const Value(null));
     }
     if (transaction.type == TransactionSpecialType.credit ||
         transaction.type == TransactionSpecialType.debt) {
-      transaction = transaction.copyWith(objectiveLoanFk: Value(null));
+      transaction = transaction.copyWith(objectiveLoanFk: const Value(null));
     }
     return transaction;
   }
@@ -3033,7 +3006,7 @@ class FinanceDatabase extends _$FinanceDatabase {
         );
       } catch (e) {
         print("subcategory no longer exists");
-        transaction = transaction.copyWith(subCategoryFk: Value(null));
+        transaction = transaction.copyWith(subCategoryFk: const Value(null));
       }
     }
 
@@ -3053,11 +3026,11 @@ class FinanceDatabase extends _$FinanceDatabase {
               insert: true,
               transaction.copyWith(
                 transactionPk: "-1",
-                sharedKey: Value(null),
+                sharedKey: const Value(null),
                 // transactionOwnerEmail: Value(null),
                 // transactionOriginalOwnerEmail: Value(null),
-                sharedDateUpdated: Value(null),
-                sharedStatus: Value(null),
+                sharedDateUpdated: const Value(null),
+                sharedStatus: const Value(null),
                 // sharedReferenceBudgetPk: Value(null),
               ),
             );
@@ -3067,11 +3040,11 @@ class FinanceDatabase extends _$FinanceDatabase {
         if (transaction.sharedKey != null && budget.sharedKey != null) {
           sendTransactionSet(transaction, budget);
           transaction =
-              transaction.copyWith(sharedStatus: Value(SharedStatus.waiting));
+              transaction.copyWith(sharedStatus: const Value(SharedStatus.waiting));
         } else if (transaction.sharedKey == null && budget.sharedKey != null) {
           sendTransactionAdd(transaction, budget);
           transaction =
-              transaction.copyWith(sharedStatus: Value(SharedStatus.waiting));
+              transaction.copyWith(sharedStatus: const Value(SharedStatus.waiting));
         }
       } else {
         if (transaction.sharedStatus == null &&
@@ -3088,12 +3061,12 @@ class FinanceDatabase extends _$FinanceDatabase {
               insert: true,
               transaction.copyWith(
                 transactionPk: "-1",
-                sharedKey: Value(null),
-                transactionOwnerEmail: Value(null),
-                transactionOriginalOwnerEmail: Value(null),
-                sharedDateUpdated: Value(null),
-                sharedStatus: Value(null),
-                sharedReferenceBudgetPk: Value(null),
+                sharedKey: const Value(null),
+                transactionOwnerEmail: const Value(null),
+                transactionOriginalOwnerEmail: const Value(null),
+                sharedDateUpdated: const Value(null),
+                sharedStatus: const Value(null),
+                sharedReferenceBudgetPk: const Value(null),
               ),
               updateSharedEntry: false);
         }
@@ -3106,11 +3079,11 @@ class FinanceDatabase extends _$FinanceDatabase {
     if (insert) {
       // Use auto incremented ID when inserting
       companionToInsert =
-          companionToInsert.copyWith(transactionPk: Value.absent());
+          companionToInsert.copyWith(transactionPk: const Value.absent());
     }
 
     if (insert == false && transaction.methodAdded == MethodAdded.preview) {
-      companionToInsert = companionToInsert.copyWith(methodAdded: Value(null));
+      companionToInsert = companionToInsert.copyWith(methodAdded: const Value(null));
     }
 
     return into(transactions)
@@ -3135,10 +3108,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     await batch((batch) {
       for (SyncLog syncLog in syncLogs) {
         if (syncLog.deleteLogType != null) {
-          print("Sync Log: Deleting " +
-              syncLog.deleteLogType.toString() +
-              " " +
-              syncLog.pk.toString());
+          print("Sync Log: Deleting ${syncLog.deleteLogType} ${syncLog.pk}");
         } else if (syncLog.updateLogType != null) {
           String name = "";
           try {
@@ -3148,10 +3118,7 @@ class FinanceDatabase extends _$FinanceDatabase {
             name = syncLog.itemToUpdate?.name;
           } catch (e) {}
           print(
-            "Sync Log: Creating " +
-                syncLog.updateLogType.toString() +
-                " " +
-                name,
+            "Sync Log: Creating ${syncLog.updateLogType} $name",
           );
         }
 
@@ -3549,7 +3516,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     if (insert) {
       // Use auto incremented ID when inserting
       companionToInsert =
-          companionToInsert.copyWith(categoryPk: Value.absent());
+          companionToInsert.copyWith(categoryPk: const Value.absent());
     }
 
     // We need to ensure the value is set back to null, so insert/replace
@@ -3589,7 +3556,7 @@ class FinanceDatabase extends _$FinanceDatabase {
         if (insert) {
           // Use auto incremented ID when inserting
           companionToInsert =
-              companionToInsert.copyWith(budgetPk: Value.absent());
+              companionToInsert.copyWith(budgetPk: const Value.absent());
         }
         return into(budgets).insert((companionToInsert));
       }
@@ -3689,7 +3656,7 @@ class FinanceDatabase extends _$FinanceDatabase {
         if (insert) {
           // Use auto incremented ID when inserting
           companionToInsert =
-              companionToInsert.copyWith(transactionPk: Value.absent());
+              companionToInsert.copyWith(transactionPk: const Value.absent());
         }
         return into(transactions).insert((companionToInsert));
       }
@@ -3784,7 +3751,7 @@ class FinanceDatabase extends _$FinanceDatabase {
 
     if (insert) {
       // Use auto incremented ID when inserting
-      companionToInsert = companionToInsert.copyWith(budgetPk: Value.absent());
+      companionToInsert = companionToInsert.copyWith(budgetPk: const Value.absent());
 
       // If homepage section disabled and user added a budget, enable homepage section
       if (appStateSettings["showPinnedBudgets"] == false &&
@@ -3859,12 +3826,12 @@ class FinanceDatabase extends _$FinanceDatabase {
                   ? c.income.equals(true) & c.categoryPk.equals("0").not()
                   : selectedIncome == false
                       ? c.income.equals(false) & c.categoryPk.equals("0").not()
-                      : Constant(true)) &
+                      : const Constant(true)) &
               (searchFor == null
-                  ? Constant(true)
+                  ? const Constant(true)
                   : c.name
                       .collate(Collate.noCase)
-                      .like("%" + (searchFor) + "%"))))
+                      .like("%$searchFor%"))))
           ..orderBy([
             (c) => OrderingTerm.asc(c.mainCategoryPk),
             (c) => OrderingTerm.asc(c.order),
@@ -3881,10 +3848,10 @@ class FinanceDatabase extends _$FinanceDatabase {
     query = (select(categories)
           ..where((c) => (onlyShowMainCategoryListing(c) &
               (searchFor == null
-                  ? Constant(true)
+                  ? const Constant(true)
                   : c.name
                       .collate(Collate.noCase)
-                      .like("%" + (searchFor) + "%"))))
+                      .like("%$searchFor%"))))
           ..orderBy([
             (c) => OrderingTerm.asc(c.order),
           ]))
@@ -3959,14 +3926,14 @@ class FinanceDatabase extends _$FinanceDatabase {
           ..where((i) =>
               (hideArchived == true
                   ? i.archived.equals(false)
-                  : Constant(true)) &
+                  : const Constant(true)) &
               i.type.equals(objectiveType.index) &
               onlyShowBasedOnIncomeObjective(i, isIncome) &
               (searchFor == null
-                  ? Constant(true)
+                  ? const Constant(true)
                   : i.name
                       .collate(Collate.noCase)
-                      .like("%" + (searchFor) + "%")))
+                      .like("%$searchFor%")))
           ..orderBy([
             if (archivedLast) (i) => OrderingTerm.asc(i.archived),
             (i) => OrderingTerm.asc(i.order),
@@ -3995,9 +3962,9 @@ class FinanceDatabase extends _$FinanceDatabase {
     return (select(categories)
           ..where((c) => ((includeSubCategories == false
                   ? onlyShowMainCategoryListing(c)
-                  : Constant(true)) &
+                  : const Constant(true)) &
               (allCategories != false
-                  ? Constant(true)
+                  ? const Constant(true)
                   : c.categoryPk.isIn(categoryFks ?? []))))
           ..orderBy([(c) => OrderingTerm.asc(c.order)])
           ..limit(limit ?? DEFAULT_LIMIT, offset: offset ?? DEFAULT_OFFSET))
@@ -4021,7 +3988,7 @@ class FinanceDatabase extends _$FinanceDatabase {
   Future<List<Budget>> getAllBudgets({bool? sharedBudgetsOnly}) {
     return (select(budgets)
           ..where((b) => ((sharedBudgetsOnly == null
-              ? Constant(true)
+              ? const Constant(true)
               : sharedBudgetsOnly == true
                   ? b.sharedKey.isNotNull()
                   : b.sharedKey.isNull())))
@@ -4333,7 +4300,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     List<Transaction> transactionsInserting = [];
     for (Transaction transaction in transactionsWithSubCategory) {
       transactionsInserting.add(transaction.copyWith(
-          subCategoryFk: Value(null), dateTimeModified: Value(DateTime.now())));
+          subCategoryFk: const Value(null), dateTimeModified: Value(DateTime.now())));
     }
     await updateBatchTransactionsOnly(transactionsInserting);
   }
@@ -4532,22 +4499,22 @@ class FinanceDatabase extends _$FinanceDatabase {
       if (objectiveType == ObjectiveType.goal) {
         if (objectivePk == null) {
           transaction = transaction.copyWith(
-            objectiveFk: Value(null),
+            objectiveFk: const Value(null),
           );
         } else {
           transaction = transaction.copyWith(
             objectiveFk: Value(objectivePk),
-            objectiveLoanFk: Value(null),
+            objectiveLoanFk: const Value(null),
           );
         }
       } else if (objectiveType == ObjectiveType.loan) {
         if (objectivePk == null) {
           transaction = transaction.copyWith(
-            objectiveLoanFk: Value(null),
+            objectiveLoanFk: const Value(null),
           );
         } else {
           transaction = transaction.copyWith(
-            objectiveFk: Value(null),
+            objectiveFk: const Value(null),
             objectiveLoanFk: Value(objectivePk),
           );
         }
@@ -4681,7 +4648,7 @@ class FinanceDatabase extends _$FinanceDatabase {
       transactionsEdited.add(
         transaction.copyWith(
           categoryFk: categoryFrom.categoryPk,
-          subCategoryFk: Value(null),
+          subCategoryFk: const Value(null),
           dateTimeModified: Value(DateTime.now()),
         ),
       );
@@ -4693,7 +4660,7 @@ class FinanceDatabase extends _$FinanceDatabase {
 
     await database.createOrUpdateCategory(
       categoryFrom.copyWith(
-        mainCategoryPk: Value(null),
+        mainCategoryPk: const Value(null),
         order: await database.getAmountOfCategories(),
       ),
     );
@@ -5065,7 +5032,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     required bool joinedWithBudgets,
     required bool joinedWithObjectives,
   }) {
-    if (searchFilters == null) return Constant(true);
+    if (searchFilters == null) return const Constant(true);
 
     Expression<bool> isInWalletPks =
         onlyShowBasedOnWalletFks(tbl, searchFilters.walletPks);
@@ -5084,29 +5051,29 @@ class FinanceDatabase extends _$FinanceDatabase {
 
     Expression<bool> isBalanceCorrectionAnd =
         searchFilters.categoryPks.contains("0")
-            ? Constant(true)
+            ? const Constant(true)
             : tbl.categoryFk.equals("0").not();
     Expression<bool> isNotLoan = tbl.objectiveLoanFk.isNull() &
         tbl.type.isNotInValues(
             [TransactionSpecialType.credit, TransactionSpecialType.debt]);
-    Expression<bool> isIncome = searchFilters.expenseIncome.length <= 0
-        ? Constant(true)
+    Expression<bool> isIncome = searchFilters.expenseIncome.isEmpty
+        ? const Constant(true)
         : searchFilters.expenseIncome.contains(ExpenseIncome.income)
             ? tbl.income.equals(true) & isBalanceCorrectionAnd & isNotLoan
-            : Constant(false);
-    Expression<bool> isExpense = searchFilters.expenseIncome.length <= 0
-        ? Constant(true)
+            : const Constant(false);
+    Expression<bool> isExpense = searchFilters.expenseIncome.isEmpty
+        ? const Constant(true)
         : searchFilters.expenseIncome.contains(ExpenseIncome.expense)
             ? tbl.income.equals(false) & isBalanceCorrectionAnd & isNotLoan
-            : Constant(false);
+            : const Constant(false);
     Expression<bool> isPositiveCashFlow =
         searchFilters.positiveCashFlow == true ||
                 searchFilters.positiveCashFlow == false
             ? tbl.income.equals(searchFilters.positiveCashFlow == true)
-            : Constant(true);
+            : const Constant(true);
 
-    Expression<bool> isPaid = searchFilters.paidStatus.length <= 0
-        ? Constant(true)
+    Expression<bool> isPaid = searchFilters.paidStatus.isEmpty
+        ? const Constant(true)
         : searchFilters.paidStatus.contains(PaidStatus.paid)
             ? tbl.paid.equals(true) &
                 tbl.type.isNotNull() &
@@ -5114,9 +5081,9 @@ class FinanceDatabase extends _$FinanceDatabase {
                   TransactionSpecialType.debt,
                   TransactionSpecialType.credit
                 ])
-            : Constant(false);
-    Expression<bool> isNotPaid = searchFilters.paidStatus.length <= 0
-        ? Constant(true)
+            : const Constant(false);
+    Expression<bool> isNotPaid = searchFilters.paidStatus.isEmpty
+        ? const Constant(true)
         : searchFilters.paidStatus.contains(PaidStatus.notPaid)
             ? tbl.paid.equals(false) &
                 tbl.type.isNotNull() &
@@ -5124,15 +5091,15 @@ class FinanceDatabase extends _$FinanceDatabase {
                   TransactionSpecialType.debt,
                   TransactionSpecialType.credit
                 ])
-            : Constant(false);
-    Expression<bool> isSkippedPaid = searchFilters.paidStatus.length <= 0
-        ? Constant(true)
+            : const Constant(false);
+    Expression<bool> isSkippedPaid = searchFilters.paidStatus.isEmpty
+        ? const Constant(true)
         : searchFilters.paidStatus.contains(PaidStatus.skipped)
             ? tbl.skipPaid.equals(true) & tbl.type.isNotNull()
-            : Constant(false);
+            : const Constant(false);
 
-    Expression<bool> isLongTermLoanBorrowed = Constant(false);
-    Expression<bool> isLongTermLoanLent = Constant(false);
+    Expression<bool> isLongTermLoanBorrowed = const Constant(false);
+    Expression<bool> isLongTermLoanLent = const Constant(false);
     if (searchFilters.transactionTypes.contains(TransactionSpecialType.credit)) {
       isLongTermLoanLent = tbl.objectiveLoanFk.isNotNull() & tbl.income.not();
     }
@@ -5140,30 +5107,29 @@ class FinanceDatabase extends _$FinanceDatabase {
       isLongTermLoanBorrowed = tbl.objectiveLoanFk.isNotNull() & tbl.income;
     }
     Expression<bool> isTransactionType =
-        searchFilters.transactionTypes.length > 0
+        searchFilters.transactionTypes.isNotEmpty
             ? tbl.type.isInValues(searchFilters.transactionTypes) |
                 isLongTermLoanLent |
                 isLongTermLoanBorrowed
-            : Constant(true);
+            : const Constant(true);
 
     Expression<bool> includeShared =
-        searchFilters.budgetTransactionFilters.length <= 0
-            ? Constant(true)
+        searchFilters.budgetTransactionFilters.isEmpty
+            ? const Constant(true)
             : searchFilters.budgetTransactionFilters.contains(
                         BudgetTransactionFilters.sharedToOtherBudget) ==
                     true
                 ? tbl.sharedKey.isNotNull()
-                : Constant(false);
+                : const Constant(false);
 
     Expression<bool> includeAdded = searchFilters
-                .budgetTransactionFilters.length <=
-            0
-        ? Constant(true)
+                .budgetTransactionFilters.isEmpty
+        ? const Constant(true)
         : searchFilters.budgetTransactionFilters
                     .contains(BudgetTransactionFilters.addedToOtherBudget) ==
                 true
             ? tbl.sharedReferenceBudgetPk.isNotNull() & tbl.sharedKey.isNull()
-            : Constant(false);
+            : const Constant(false);
 
     Expression<bool> isMethodAdded =
         onlyShowBasedOnMethodAdded(tbl, searchFilters.methodAdded);
@@ -5171,7 +5137,7 @@ class FinanceDatabase extends _$FinanceDatabase {
     Expression<bool> isInAmountRange = searchFilters.amountRange != null
         ? tbl.amount.isBetweenValues(searchFilters.amountRange?.start ?? 0,
             searchFilters.amountRange?.end ?? 0)
-        : Constant(true);
+        : const Constant(true);
 
     Expression<bool> isInDateTimeRange = onlyShowBasedOnTimeRange(
         tbl,
@@ -5191,13 +5157,13 @@ class FinanceDatabase extends _$FinanceDatabase {
 
     String? titleContains = searchFilters.titleContains;
     Expression<bool> isInTitleContains = titleContains == null
-        ? Constant(true)
-        : tbl.name.collate(Collate.noCase).like("%" + titleContains + "%");
+        ? const Constant(true)
+        : tbl.name.collate(Collate.noCase).like("%$titleContains%");
     String? noteContains = searchFilters.noteContains;
 
     Expression<bool> isInNoteContains = noteContains == null
-        ? Constant(true)
-        : tbl.note.collate(Collate.noCase).like("%" + noteContains + "%");
+        ? const Constant(true)
+        : tbl.note.collate(Collate.noCase).like("%$noteContains%");
 
     return isInWalletPks &
         isInCategoryPks &
@@ -5229,36 +5195,36 @@ class FinanceDatabase extends _$FinanceDatabase {
   }) {
     // If withCategories if true, you will need to use a join with categories!
     return searchQuery == "" || searchQuery == null
-        ? Constant(true)
+        ? const Constant(true)
         : (withCategories == true
                 ? categories.name
                     .collate(Collate.noCase)
-                    .like("%" + searchQuery + "%")
-                : Constant(false)) |
+                    .like("%$searchQuery%")
+                : const Constant(false)) |
             (joinedWithSubcategoriesTable != null
                 ? joinedWithSubcategoriesTable.name
                     .collate(Collate.noCase)
-                    .like("%" + searchQuery + "%")
-                : Constant(false)) |
+                    .like("%$searchQuery%")
+                : const Constant(false)) |
             (withBudgets == true
                 ? budgets.name
                     .collate(Collate.noCase)
-                    .like("%" + searchQuery + "%")
-                : Constant(false)) |
+                    .like("%$searchQuery%")
+                : const Constant(false)) |
             (withObjectives == true
                 ? objectives.name
                     .collate(Collate.noCase)
-                    .like("%" + searchQuery + "%")
-                : Constant(false)) |
-            tbl.name.collate(Collate.noCase).like("%" + searchQuery + "%") |
-            tbl.note.collate(Collate.noCase).like("%" + searchQuery + "%");
+                    .like("%$searchQuery%")
+                : const Constant(false)) |
+            tbl.name.collate(Collate.noCase).like("%$searchQuery%") |
+            tbl.note.collate(Collate.noCase).like("%$searchQuery%");
   }
 
   Expression<bool> onlyShowIfFollowsFilters($TransactionsTable tbl,
       {List<BudgetTransactionFilters>? budgetTransactionFilters,
       List<String>? memberTransactionFilters}) {
     Expression<bool> memberIncluded = memberTransactionFilters == null
-        ? Constant(true)
+        ? const Constant(true)
         : (tbl.sharedKey.isNotNull() &
                 tbl.transactionOwnerEmail.isIn(memberTransactionFilters) |
             tbl.sharedKey.isNull());
@@ -5271,7 +5237,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                   BudgetTransactionFilters.sharedToOtherBudget),
             ) |
             (tbl.sharedKey.isNull())
-        : Constant(true);
+        : const Constant(true);
 
     Expression<bool> includeAdded = budgetTransactionFilters
                 ?.contains(BudgetTransactionFilters.addedToOtherBudget) ==
@@ -5281,7 +5247,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                   BudgetTransactionFilters.addedToOtherBudget),
             ) |
             (tbl.sharedReferenceBudgetPk.isNull() | tbl.sharedKey.isNotNull())
-        : Constant(true);
+        : const Constant(true);
 
     Expression<bool> includeIncome = budgetTransactionFilters
                 ?.contains(BudgetTransactionFilters.includeIncome) ==
@@ -5291,7 +5257,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                   BudgetTransactionFilters.includeIncome),
             ) |
             (tbl.income.equals(false))
-        : Constant(true);
+        : const Constant(true);
 
     Expression<bool> includeDebtAndCredit = budgetTransactionFilters
                 ?.contains(BudgetTransactionFilters.includeDebtAndCredit) ==
@@ -5306,7 +5272,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                     ]) |
                     tbl.type.isNull()) &
                 (tbl.objectiveLoanFk.isNull())))
-        : Constant(true);
+        : const Constant(true);
 
     Expression<bool> includeAddedToObjective = budgetTransactionFilters
                 ?.contains(BudgetTransactionFilters.addedToObjective) ==
@@ -5316,7 +5282,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                   BudgetTransactionFilters.addedToObjective),
             ) |
             (tbl.objectiveFk.isNull())
-        : Constant(true);
+        : const Constant(true);
 
     Expression<bool> includeBalanceCorrection = budgetTransactionFilters
                 ?.contains(BudgetTransactionFilters.includeBalanceCorrection) ==
@@ -5326,7 +5292,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                   BudgetTransactionFilters.includeBalanceCorrection),
             ) |
             (tbl.categoryFk.equals("0").not())
-        : Constant(true);
+        : const Constant(true);
 
     return memberIncluded &
         includeShared &
@@ -5434,8 +5400,8 @@ class FinanceDatabase extends _$FinanceDatabase {
 
   Expression<bool> isInCategory(
       tbl, List<String>? categoryFks, List<String>? categoryFksExclude) {
-    if ((categoryFks ?? []).length <= 0) categoryFks = null;
-    if ((categoryFksExclude ?? []).length <= 0) categoryFksExclude = null;
+    if ((categoryFks ?? []).isEmpty) categoryFks = null;
+    if ((categoryFksExclude ?? []).isEmpty) categoryFksExclude = null;
     return categoryFks == null && categoryFksExclude == null
         ? tbl.categoryFk.isNotNull()
         : categoryFks != null && categoryFksExclude == null
@@ -5448,8 +5414,8 @@ class FinanceDatabase extends _$FinanceDatabase {
 
   bool isInCategoryCheck(String categoryFk, List<String>? categoryFks,
       List<String>? categoryFksExclude) {
-    if ((categoryFks ?? []).length <= 0) categoryFks = null;
-    if ((categoryFksExclude ?? []).length <= 0) categoryFksExclude = null;
+    if ((categoryFks ?? []).isEmpty) categoryFks = null;
+    if ((categoryFksExclude ?? []).isEmpty) categoryFksExclude = null;
     return categoryFks == null && categoryFksExclude == null
         ? true
         : categoryFks != null && categoryFksExclude == null
@@ -5463,16 +5429,16 @@ class FinanceDatabase extends _$FinanceDatabase {
   Expression<bool> onlyShowIfMember($TransactionsTable tbl, String? member) {
     return (member != null
         ? tbl.transactionOwnerEmail.equals(member)
-        : Constant(true));
+        : const Constant(true));
   }
 
   Expression<bool> onlyShowBasedOnIncome($TransactionsTable tbl, bool? income) {
-    return (income != null ? tbl.income.equals(income) : Constant(true));
+    return (income != null ? tbl.income.equals(income) : const Constant(true));
   }
 
   Expression<bool> onlyShowBasedOnIncomeObjective(
       $ObjectivesTable tbl, bool? income) {
-    return (income != null ? tbl.income.equals(income) : Constant(true));
+    return (income != null ? tbl.income.equals(income) : const Constant(true));
   }
 
   // Balance correction category has pk "0"
@@ -5480,7 +5446,7 @@ class FinanceDatabase extends _$FinanceDatabase {
   Expression<bool> onlyShowIfNotBalanceCorrection(
       $TransactionsTable tbl, bool? isIncome) {
     return ((tbl.categoryFk.equals("0").not()) |
-        (isIncome == null ? Constant(true) : Constant(false)));
+        (isIncome == null ? const Constant(true) : const Constant(false)));
   }
 
   // If followCustomPeriodCycle is true, cycleSettingsExtension should always be passed in a value!
@@ -5496,12 +5462,12 @@ class FinanceDatabase extends _$FinanceDatabase {
           allTime: false);
     }
     CycleType selectedPeriodType = CycleType.values[
-        appStateSettings["selectedPeriodCycleType" + cycleSettingsExtension] ??
+        appStateSettings["selectedPeriodCycleType$cycleSettingsExtension"] ??
             0];
     if (followCustomPeriodCycle == false) {
-      return Constant(true);
+      return const Constant(true);
     } else if (selectedPeriodType == CycleType.allTime) {
-      return Constant(true);
+      return const Constant(true);
     } else if (selectedPeriodType == CycleType.cycle) {
       DateTimeRange budgetRange = getCycleDateTimeRange(cycleSettingsExtension);
       DateTime startDate = DateTime(budgetRange.start.year,
@@ -5528,7 +5494,7 @@ class FinanceDatabase extends _$FinanceDatabase {
         return tbl.dateCreated.isBiggerOrEqualValue(startDate);
       }
     }
-    return Constant(true);
+    return const Constant(true);
   }
 
   Expression<bool> onlyShowBasedOnCategoryFks($TransactionsTable tbl,
@@ -5541,22 +5507,22 @@ class FinanceDatabase extends _$FinanceDatabase {
     return subCategoryFks == null
         ? tbl.subCategoryFk.isNull()
         : subCategoryFks.isEmpty
-            ? Constant(true)
+            ? const Constant(true)
             : tbl.subCategoryFk.isIn(subCategoryFks);
   }
 
   Expression<bool> onlyShowBasedOnWalletFks(
       $TransactionsTable tbl, List<String>? walletFks) {
-    return (walletFks != null && walletFks.length > 0
+    return (walletFks != null && walletFks.isNotEmpty
         ? tbl.walletFk.isIn(walletFks)
-        : Constant(true));
+        : const Constant(true));
   }
 
   Expression<bool> onlyShowBasedOnMethodAdded(
       $TransactionsTable tbl, List<MethodAdded>? methodAdded) {
-    return (methodAdded != null && methodAdded.length > 0
+    return (methodAdded != null && methodAdded.isNotEmpty
         ? tbl.methodAdded.isInValues(methodAdded)
-        : Constant(true));
+        : const Constant(true));
   }
 
   Expression<bool> onlyShowBasedOnBudgetFks(
@@ -5567,15 +5533,15 @@ class FinanceDatabase extends _$FinanceDatabase {
             tbl.sharedReferenceBudgetPk.isNull()
         : (budgetFks ?? []).contains(null)
             ? tbl.sharedReferenceBudgetPk.isNull()
-            : (budgetFks != null && budgetFks.length > 0
+            : (budgetFks != null && budgetFks.isNotEmpty
                 ? tbl.sharedReferenceBudgetPk
                     .isIn(budgetFks.map((value) => value ?? "0").toList())
-                : Constant(true));
+                : const Constant(true));
   }
 
   Expression<bool> onlyShowBasedOnExcludedBudgetFks(
       $TransactionsTable tbl, List<String>? excludedBudgetFks) {
-    Expression<bool> result = Constant(true);
+    Expression<bool> result = const Constant(true);
     for (String excludedBudgetFk in excludedBudgetFks ?? []) {
       result = result & tbl.budgetFksExclude.contains(excludedBudgetFk);
     }
@@ -5592,10 +5558,10 @@ class FinanceDatabase extends _$FinanceDatabase {
             tbl.objectiveFk.isNull()
         : (objectiveFks ?? []).contains(null)
             ? tbl.objectiveFk.isNull()
-            : (objectiveFks != null && objectiveFks.length > 0
+            : (objectiveFks != null && objectiveFks.isNotEmpty
                 ? tbl.objectiveFk
                     .isIn(objectiveFks.map((value) => value ?? "0").toList())
-                : Constant(true));
+                : const Constant(true));
   }
 
   Expression<bool> onlyShowBasedOnObjectiveLoanFks(
@@ -5608,10 +5574,10 @@ class FinanceDatabase extends _$FinanceDatabase {
             tbl.objectiveLoanFk.isNull()
         : (objectiveLoanFks ?? []).contains(null)
             ? tbl.objectiveLoanFk.isNull()
-            : (objectiveLoanFks != null && objectiveLoanFks.length > 0
+            : (objectiveLoanFks != null && objectiveLoanFks.isNotEmpty
                 ? tbl.objectiveLoanFk.isIn(
                     objectiveLoanFks.map((value) => value ?? "0").toList())
-                : Constant(true));
+                : const Constant(true));
   }
 
   // Start date is in the past
@@ -5625,9 +5591,9 @@ class FinanceDatabase extends _$FinanceDatabase {
             (budget.addedTransactionsOnly == true &&
                 budget.sharedKey == null &&
                 budget.reoccurrence == BudgetReoccurence.custom)
-        ? Constant(true)
+        ? const Constant(true)
         : (allTime == true || (startDate == null && endDate == null)
-            ? Constant(true)
+            ? const Constant(true)
             : startDate == null && endDate != null
                 ? isOnDay(transactions.dateCreated, endDate) |
                     transactions.dateCreated.isSmallerOrEqualValue(endDate)
@@ -5648,7 +5614,7 @@ class FinanceDatabase extends _$FinanceDatabase {
       $TransactionsTable tbl, String? budgetPk) {
     return (budgetPk != null
         ? tbl.sharedReferenceBudgetPk.equals(budgetPk)
-        : Constant(true));
+        : const Constant(true));
   }
 
   Expression<bool> onlyShowIfNotExcludedFromBudget(
@@ -5657,14 +5623,14 @@ class FinanceDatabase extends _$FinanceDatabase {
         ? tbl.budgetFksExclude.isNull() |
             (tbl.budgetFksExclude.isNotNull() &
                 tbl.budgetFksExclude.contains(budgetPk).not())
-        : Constant(true));
+        : const Constant(true));
   }
 
   Expression<bool> onlyShowIfCertainObjective(
       $TransactionsTable tbl, String? objectivePk) {
     return (objectivePk != null
         ? tbl.objectiveFk.equals(objectivePk)
-        : Constant(true));
+        : const Constant(true));
   }
 
   Stream<double?> watchTotalOfBudget({
@@ -5723,7 +5689,7 @@ class FinanceDatabase extends _$FinanceDatabase {
             ) &
             (paidOnly == true
                 ? transactions.paid.equals(true)
-                : Constant(true)) &
+                : const Constant(true)) &
             // evaluateIfNull(tbl.income.equals(income ?? false), income, true) &
             transactions.walletFk.equals(wallet.walletPk) &
             onlyShowIfFollowsFilters(transactions,
@@ -5735,7 +5701,7 @@ class FinanceDatabase extends _$FinanceDatabase {
             onlyShowIfCertainBudget(
                 transactions, onlyShowTransactionsBelongingToBudgetPk) &
             (mainCategoryPkIfSubCategories == null
-                ? Constant(true)
+                ? const Constant(true)
                 : transactions.categoryFk
                     .equals(mainCategoryPkIfSubCategories)));
       mergedStreams.add(query
@@ -5810,7 +5776,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                 cycleSettingsExtension: cycleSettingsExtension,
                 forcedDateTimeRange: forcedDateTimeRange,
               ) &
-              (paidOnly == true ? tbl.paid.equals(true) : Constant(true)) &
+              (paidOnly == true ? tbl.paid.equals(true) : const Constant(true)) &
               // evaluateIfNull(tbl.income.equals(income ?? false), income, true) &
               transactions.walletFk.equals(wallet.walletPk) &
               onlyShowIfFollowsFilters(tbl,
@@ -5822,7 +5788,7 @@ class FinanceDatabase extends _$FinanceDatabase {
               onlyShowIfCertainBudget(
                   tbl, onlyShowTransactionsBelongingToBudgetPk) &
               (mainCategoryPkIfSubCategories == null
-                  ? Constant(true)
+                  ? const Constant(true)
                   : transactions.categoryFk
                       .equals(mainCategoryPkIfSubCategories));
         })
@@ -5863,7 +5829,7 @@ class FinanceDatabase extends _$FinanceDatabase {
         CategoryBudgetLimit? categoryBudgetLimit =
             row.readTableOrNull(categoryBudgetLimits);
 
-        final double? total = (row.read(totalAmt) ?? 0) *
+        final double total = (row.read(totalAmt) ?? 0) *
             (amountRatioToPrimaryCurrency(allWallets, wallet.currency));
         final int? transactionCount = row.read(totalCount);
         return CategoryWithTotal(
@@ -5902,7 +5868,7 @@ class FinanceDatabase extends _$FinanceDatabase {
   // remove loans transactions here - we don't want loans to contribute to our other totals, only net
   Expression<bool> onlyShowIfOnlyExpenseAndIncome(
       $TransactionsTable tbl, bool enabled) {
-    return (enabled == false ? Constant(true) : Constant(false)) |
+    return (enabled == false ? const Constant(true) : const Constant(false)) |
         ((tbl.objectiveLoanFk.isNull() &
             tbl.type.isNotInValues(
                 [TransactionSpecialType.credit, TransactionSpecialType.debt]) &
@@ -5969,10 +5935,10 @@ class FinanceDatabase extends _$FinanceDatabase {
     final query = selectOnly(transactions)
       ..addColumns([totalAmt])
       ..where((startDate == null
-              ? Constant(true)
+              ? const Constant(true)
               : transactions.dateCreated.isBiggerThanValue(startDate)) &
           (isIncome == null
-              ? Constant(true)
+              ? const Constant(true)
               : isIncome == true
                   ? transactions.income.equals(true)
                   : transactions.income.equals(false)) &
@@ -6023,7 +5989,7 @@ class FinanceDatabase extends _$FinanceDatabase {
             transactions.paid.equals(false) &
             transactions.walletFk.equals(wallet.walletPk) &
             (isOverdueTransactions == null
-                ? Constant(true)
+                ? const Constant(true)
                 : isOverdueTransactions == true
                     ? transactions.dateCreated
                         .isSmallerThanValue(DateTime.now())
@@ -6089,7 +6055,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                   joinedWithBudgets: false,
                   joinedWithObjectives: false) &
               (cycleSettingsExtension == null
-                  ? Constant(true)
+                  ? const Constant(true)
                   : onlyShowIfFollowCustomPeriodCycle(
                       transactions,
                       followCustomPeriodCycle,
@@ -6108,7 +6074,7 @@ class FinanceDatabase extends _$FinanceDatabase {
                   // Only apply this tab specific total when searching
                   : (objectives.name
                       .collate(Collate.noCase)
-                      .like("%" + (searchString ?? "") + "%"))) &
+                      .like("%${searchString ?? ""}%"))) &
               transactions.walletFk.equals(wallet.walletPk) &
               (isCredit == null
                   ? transactions.type
@@ -6370,7 +6336,7 @@ class FinanceDatabase extends _$FinanceDatabase {
               forcedDateTimeRange: forcedDateTimeRange,
             ) &
             evaluateIfNull(transactions.categoryFk.isIn(categoryFks),
-                categoryFks.length <= 0 ? null : true, true) &
+                categoryFks.isEmpty ? null : true, true) &
             evaluateIfNull(transactions.paid.equals(true), isPaidOnly, true) &
             onlyShowIfFollowsFilters(transactions,
                 budgetTransactionFilters: budgetTransactionFilters,
@@ -6444,7 +6410,7 @@ class FinanceDatabase extends _$FinanceDatabase {
   Stream<List<TransactionWithCount>> getCommonTransactions() {
     // Database dates stored in seconds since epoch
     final int threeMonthsAgo =
-        DateTime.now().subtract(Duration(days: 60)).millisecondsSinceEpoch ~/
+        DateTime.now().subtract(const Duration(days: 60)).millisecondsSinceEpoch ~/
             1000;
 
     return customSelect(

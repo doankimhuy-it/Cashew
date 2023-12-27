@@ -27,8 +27,7 @@ int roundToNearestNextFifthYear(int year) {
 }
 
 class TransactionsSearchPage extends StatefulWidget {
-  const TransactionsSearchPage({this.initialFilters, Key? key})
-      : super(key: key);
+  const TransactionsSearchPage({this.initialFilters, super.key});
 
   final SearchFilters? initialFilters;
 
@@ -50,7 +49,7 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
 
   @override
   void initState() {
-    Future.delayed(Duration(milliseconds: 0), () {
+    Future.delayed(const Duration(milliseconds: 0), () {
       // This detaches the focus so that any popup does not trigger a rerendering of list widgets
       FocusScopeNode currentFocus = FocusScope.of(context);
       if (!currentFocus.hasPrimaryFocus) {
@@ -74,7 +73,7 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
       // Keep at least one year into the future loaded
       if (searchFilters.dateTimeRange != null &&
           searchFilters.dateTimeRange!.end
-              .isBefore(DateTime.now().add(Duration(days: 365)))) {
+              .isBefore(DateTime.now().add(const Duration(days: 365)))) {
         searchFilters.dateTimeRange = DateTimeRange(
           start:
               searchFilters.dateTimeRange?.start ?? initialDateTimeRange.start,
@@ -82,12 +81,10 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
         );
       }
     }
-    if (searchFilters.dateTimeRange == null) {
-      searchFilters.dateTimeRange = initialDateTimeRange;
-    }
+    searchFilters.dateTimeRange ??= initialDateTimeRange;
 
     _animationControllerSearch = AnimationController(vsync: this, value: 1);
-    _searchFocusNode = new FocusNode();
+    _searchFocusNode = FocusNode();
     super.initState();
   }
 
@@ -111,7 +108,7 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
         ),
       ),
     );
-    Future.delayed(Duration(milliseconds: 250), () {
+    Future.delayed(const Duration(milliseconds: 250), () {
       updateSettings(
         "searchTransactionsSetFiltersString",
         searchFilters.getFilterString(),
@@ -160,7 +157,7 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if ((globalSelectedID.value["TransactionsSearch"] ?? []).length > 0) {
+        if ((globalSelectedID.value["TransactionsSearch"] ?? []).isNotEmpty) {
           globalSelectedID.value["TransactionsSearch"] = [];
           globalSelectedID.notifyListeners();
           return false;
@@ -187,7 +184,7 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
               floatingActionButton: AnimateFABDelayed(
                 fab: FAB(
                   tooltip: "add-transaction".tr(),
-                  openPage: AddTransactionPage(
+                  openPage: const AddTransactionPage(
                     routesToPopAfterDelete: RoutesToPopAfterDelete.None,
                   ),
                 ),
@@ -208,7 +205,7 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
                       },
                       child: Row(
                         children: [
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Expanded(
                             child: TextInput(
                               labelText: "search-placeholder".tr(),
@@ -227,11 +224,11 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
                                   }
                                 });
                               },
-                              padding: EdgeInsets.all(0),
+                              padding: const EdgeInsets.all(0),
                               focusNode: _searchFocusNode,
                             ),
                           ),
-                          SizedBox(width: 7),
+                          const SizedBox(width: 7),
                           ButtonIcon(
                             onTap: () {
                               selectDateRange(context);
@@ -240,9 +237,9 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
                                 ? Icons.calendar_month_outlined
                                 : Icons.calendar_month_rounded,
                           ),
-                          SizedBox(width: 7),
+                          const SizedBox(width: 7),
                           AnimatedSwitcher(
-                            duration: Duration(milliseconds: 500),
+                            duration: const Duration(milliseconds: 500),
                             child: ButtonIcon(
                               key: ValueKey(
                                 searchFilters.isClear(
@@ -274,13 +271,13 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
                                   : Icons.filter_alt_rounded,
                             ),
                           ),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                         ],
                       ),
                     ),
                   ),
                 ),
-                SliverToBoxAdapter(
+                const SliverToBoxAdapter(
                   child: SizedBox(height: 13),
                 ),
                 SliverToBoxAdapter(
@@ -311,15 +308,13 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
                         bottom: 8,
                       ),
                       child: TextFont(
-                        text: getWordedDateShortMore(
+                        text: "${getWordedDateShortMore(
                                 searchFilters.dateTimeRange?.start ??
                                     DateTime.now(),
-                                includeYear: true) +
-                            " – " +
-                            getWordedDateShortMore(
+                                includeYear: true)} – ${getWordedDateShortMore(
                                 searchFilters.dateTimeRange?.end ??
                                     DateTime.now(),
-                                includeYear: true),
+                                includeYear: true)}",
                         fontSize: 13,
                         textAlign: TextAlign.center,
                         textColor: getColor(context, "textLight"),
@@ -336,7 +331,7 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
                     // limit: 250,
                     noResultsExtraWidget: dateRangeWidget,
                     totalCashFlowExtraWidget: Transform.translate(
-                        offset: Offset(0, -15), child: dateRangeWidget),
+                        offset: const Offset(0, -15), child: dateRangeWidget),
                     showTotalCashFlow: true,
                   );
                 }),
@@ -360,13 +355,13 @@ class TransactionsSearchPageState extends State<TransactionsSearchPage>
                 //     selectDateRange(context);
                 //   },
                 // ),
-                SliverToBoxAdapter(
+                const SliverToBoxAdapter(
                   child: SizedBox(height: 50),
                 ),
               ],
             ),
           ),
-          SelectedTransactionsAppBar(
+          const SelectedTransactionsAppBar(
             pageID: "TransactionsSearch",
           ),
         ],
@@ -400,7 +395,7 @@ class AppliedFilterChip extends StatelessWidget {
         color:
             Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.5),
         child: Container(
-          padding: EdgeInsets.only(left: 14, right: 14, top: 7, bottom: 7),
+          padding: const EdgeInsets.only(left: 14, right: 14, top: 7, bottom: 7),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
@@ -412,7 +407,7 @@ class AppliedFilterChip extends StatelessWidget {
           child: Row(
             children: [
               icon == null
-                  ? SizedBox.shrink()
+                  ? const SizedBox.shrink()
                   : Padding(
                       padding: const EdgeInsets.only(right: 5),
                       child: Icon(icon, size: 23),

@@ -54,7 +54,7 @@ class _SaveBottomButtonState extends State<SaveBottomButton>
   Widget build(BuildContext context) {
     // print(getKeyboardHeight(context));
     return AnimatedContainer(
-      duration: Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 100),
       curve: Curves.easeInOutCubic,
       transform: Matrix4.translationValues(
         0.0,
@@ -65,7 +65,7 @@ class _SaveBottomButtonState extends State<SaveBottomButton>
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Transform.translate(
-            offset: Offset(0, 1),
+            offset: const Offset(0, 1),
             child: Container(
               height: 12,
               foregroundDecoration: BoxDecoration(
@@ -76,7 +76,7 @@ class _SaveBottomButtonState extends State<SaveBottomButton>
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: [0.1, 1],
+                  stops: const [0.1, 1],
                 ),
               ),
             ),
@@ -139,7 +139,7 @@ class _KeyboardHeightAreaAnimatedState extends State<KeyboardHeightAreaAnimated>
   Widget build(BuildContext context) {
     // print(isKeyboardOpen);
     return AnimatedContainer(
-      duration: Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 400),
       curve: Curves.easeInOutCubic,
       color: Theme.of(context).canvasColor,
       height: isKeyboardOpen ? getKeyboardHeight(context) : 0,

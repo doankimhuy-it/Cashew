@@ -6,10 +6,10 @@ class WidgetSize extends StatefulWidget {
   final Function(Size size) onChange;
 
   const WidgetSize({
-    Key? key,
+    super.key,
     required this.onChange,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   _WidgetSizeState createState() => _WidgetSizeState();
@@ -42,7 +42,7 @@ class _WidgetSizeState extends State<WidgetSize> {
     if (context == null) return;
 
     try {
-      Size newSize = context.size ?? Size(0, 0);
+      Size newSize = context.size ?? const Size(0, 0);
       if (oldSize == newSize) return;
 
       oldSize = newSize;
@@ -57,9 +57,9 @@ class WidgetSizeBuilder extends StatefulWidget {
   final Widget Function(Size? size) widgetBuilder;
 
   const WidgetSizeBuilder({
-    Key? key,
+    super.key,
     required this.widgetBuilder,
-  }) : super(key: key);
+  });
 
   @override
   _WidgetSizeBuilderState createState() => _WidgetSizeBuilderState();
@@ -88,7 +88,7 @@ class _WidgetSizeBuilderState extends State<WidgetSizeBuilder> {
     var context = widgetKey.currentContext;
     if (context == null) return;
     try {
-      Size newSize = context.size ?? Size(0, 0);
+      Size newSize = context.size ?? const Size(0, 0);
       if (oldSize == newSize) return;
 
       oldSize = newSize;

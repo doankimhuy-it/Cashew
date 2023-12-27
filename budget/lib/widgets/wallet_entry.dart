@@ -49,7 +49,7 @@ class WalletEntry extends StatelessWidget {
                       : Colors.transparent,
                 ),
               ),
-              duration: Duration(milliseconds: 450),
+              duration: const Duration(milliseconds: 450),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 13),
@@ -86,7 +86,7 @@ class WalletEntry extends StatelessWidget {
                           CountNumber(
                             lazyFirstRender: false,
                             count: (walletWithDetails.totalSpent ?? 0 * -1),
-                            duration: Duration(milliseconds: 1000),
+                            duration: const Duration(milliseconds: 1000),
                             decimals: walletWithDetails.wallet.decimals,
                             initialCount: 0,
                             textBuilder: (number) {
@@ -109,12 +109,9 @@ class WalletEntry extends StatelessWidget {
                           ),
                           TextFont(
                             textAlign: TextAlign.left,
-                            text: walletWithDetails.numberTransactions
-                                    .toString() +
-                                " " +
-                                (walletWithDetails.numberTransactions == 1
+                            text: "${walletWithDetails.numberTransactions} ${walletWithDetails.numberTransactions == 1
                                     ? "transaction".tr().toLowerCase()
-                                    : "transactions".tr().toLowerCase()),
+                                    : "transactions".tr().toLowerCase()}",
                             fontSize: 14,
                             textColor:
                                 getColor(context, "black").withOpacity(0.65),
@@ -231,7 +228,7 @@ class WalletEntryRow extends StatelessWidget {
                   CountNumber(
                     lazyFirstRender: false,
                     count: (walletWithDetails.totalSpent ?? 0 * -1),
-                    duration: Duration(milliseconds: 1000),
+                    duration: const Duration(milliseconds: 1000),
                     decimals: walletWithDetails.wallet.decimals,
                     initialCount: 0,
                     textBuilder: (number) {

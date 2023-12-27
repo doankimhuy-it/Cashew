@@ -83,7 +83,7 @@ class _EditHomePageState extends State<EditHomePage> {
             onTap: () {
               openBottomSheet(
                 context,
-                EditHomePagePinnedWalletsPopup(
+                const EditHomePagePinnedWalletsPopup(
                   homePageWidgetDisplay: HomePageWidgetDisplay.WalletSwitcher,
                   showCyclePicker: true,
                 ),
@@ -103,7 +103,7 @@ class _EditHomePageState extends State<EditHomePage> {
             onTap: () {
               openBottomSheet(
                 context,
-                EditHomePagePinnedWalletsPopup(
+                const EditHomePagePinnedWalletsPopup(
                   homePageWidgetDisplay: HomePageWidgetDisplay.WalletList,
                   showCyclePicker: true,
                 ),
@@ -123,7 +123,7 @@ class _EditHomePageState extends State<EditHomePage> {
             onTap: () {
               openBottomSheet(
                 context,
-                EditHomePagePinnedBudgetsPopup(
+                const EditHomePagePinnedBudgetsPopup(
                   showBudgetsTotalLabelSetting: true,
                 ),
                 useCustomController: true,
@@ -142,7 +142,7 @@ class _EditHomePageState extends State<EditHomePage> {
             onTap: () async {
               openBottomSheet(
                 context,
-                EditHomePagePinnedGoalsPopup(
+                const EditHomePagePinnedGoalsPopup(
                     showGoalsTotalLabelSetting: true,
                     objectiveType: ObjectiveType.goal),
                 useCustomController: true,
@@ -162,7 +162,7 @@ class _EditHomePageState extends State<EditHomePage> {
                 context,
                 PopupFramework(
                   title: "select-period".tr(),
-                  child: PeriodCyclePicker(
+                  child: const PeriodCyclePicker(
                       cycleSettingsExtension: "OverdueUpcoming"),
                 ),
               );
@@ -277,7 +277,7 @@ class _EditHomePageState extends State<EditHomePage> {
                         }
                       }
                       if (budgetPk == customLabel) {
-                        return ('${customLabel} (${getWordedDateShortMore(DateTime.parse(appStateSettings["lineGraphStartDate"]), includeYear: true)})');
+                        return ('$customLabel (${getWordedDateShortMore(DateTime.parse(appStateSettings["lineGraphStartDate"]), includeYear: true)})');
                       }
                       return budgetPk;
                     },
@@ -426,7 +426,7 @@ class _EditHomePageState extends State<EditHomePage> {
         title: "edit-home".tr(),
         slivers: [
           if (enableDoubleColumn(context))
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: PanelSectionSeparator(
                 orderKey: "ORDER:CENTER",
               ),
@@ -491,7 +491,7 @@ class _EditHomePageState extends State<EditHomePage> {
                 key: ValueKey(key),
                 currentReorder: currentReorder != -1 && currentReorder != index,
                 padding:
-                    EdgeInsets.only(left: 18, right: 0, top: 16, bottom: 16),
+                    const EdgeInsets.only(left: 18, right: 0, top: 16, bottom: 16),
                 extraWidget: Row(
                   children: [
                     getPlatform() == PlatformOS.isIOS
@@ -520,7 +520,7 @@ class _EditHomePageState extends State<EditHomePage> {
                       editHomePageItems[key]!.icon,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    SizedBox(width: 13),
+                    const SizedBox(width: 13),
                     Expanded(
                       child: TextFont(
                         text: editHomePageItems[key]!.name,
@@ -575,9 +575,9 @@ class PanelSectionSeparator extends StatelessWidget {
             fontSize: 16,
             textAlign: TextAlign.left,
           ),
-        Expanded(
+        const Expanded(
             child: HorizontalBreak(
-          padding: const EdgeInsets.all(15),
+          padding: EdgeInsets.all(15),
         )),
         if (orderKey == "ORDER:CENTER")
           TextFont(
@@ -586,9 +586,9 @@ class PanelSectionSeparator extends StatelessWidget {
             textAlign: TextAlign.right,
           ),
         if (orderKey == "ORDER:CENTER")
-          Expanded(
+          const Expanded(
               child: HorizontalBreak(
-            padding: const EdgeInsets.all(15),
+            padding: EdgeInsets.all(15),
           )),
         if (orderKey == "ORDER:RIGHT")
           TextFont(
@@ -610,7 +610,7 @@ Future openPieChartHomePageBottomSheetSettings(BuildContext context) async {
       child: Column(
         children: [
           RadioItems(
-            items: <String>[
+            items: const <String>[
               "all",
               "outgoing",
               "incoming",
@@ -624,8 +624,8 @@ Future openPieChartHomePageBottomSheetSettings(BuildContext context) async {
               Navigator.of(context).pop();
             },
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 5),
+          const Padding(
+            padding: EdgeInsets.only(top: 5),
             child: HorizontalBreakAbove(
               enabled: true,
               child: PeriodCyclePicker(
@@ -664,7 +664,7 @@ class _HomePageEditRowEntryUsernameState
   Widget build(BuildContext context) {
     return EditRowEntry(
       canReorder: false,
-      padding: EdgeInsets.only(left: 18, right: 0, top: 16, bottom: 16),
+      padding: const EdgeInsets.only(left: 18, right: 0, top: 16, bottom: 16),
       extraWidget: Row(
         children: [
           getPlatform() == PlatformOS.isIOS
@@ -698,7 +698,7 @@ class _HomePageEditRowEntryUsernameState
             widget.iconData,
             color: Theme.of(context).colorScheme.primary,
           ),
-          SizedBox(width: 13),
+          const SizedBox(width: 13),
           Expanded(
             child: TextFont(
               text: widget.name,
@@ -714,7 +714,7 @@ class _HomePageEditRowEntryUsernameState
       onTap: () {
         widget.onChanged(!value);
         setState(() {
-          this.value = !value;
+          value = !value;
         });
       },
       openPage: Container(),
@@ -725,7 +725,7 @@ class _HomePageEditRowEntryUsernameState
 void switchHomeScreenSection(
     BuildContext context, String sectionSetting, bool value) {
   if (enableDoubleColumn(context)) {
-    updateSettings(sectionSetting + "FullScreen", value,
+    updateSettings("${sectionSetting}FullScreen", value,
         pagesNeedingRefresh: [], updateGlobalState: false);
   } else {
     updateSettings(sectionSetting, value,
@@ -735,8 +735,8 @@ void switchHomeScreenSection(
 
 bool isHomeScreenSectionEnabled(BuildContext context, String sectionSetting) {
   if (enableDoubleColumn(context)) {
-    if (appStateSettings[sectionSetting + "FullScreen"] != null) {
-      return appStateSettings[sectionSetting + "FullScreen"];
+    if (appStateSettings["${sectionSetting}FullScreen"] != null) {
+      return appStateSettings["${sectionSetting}FullScreen"];
     }
     return false;
   } else {

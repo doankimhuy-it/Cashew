@@ -30,14 +30,12 @@ Future saveDBFileToDevice({
 
 Future exportDB({required BuildContext boxContext}) async {
   await openLoadingPopupTryCatch(() async {
-    String fileName = "cashew-" +
-        DateTime.now()
+    String fileName = "cashew-${DateTime.now()
             .toString()
             .replaceAll(".", "-")
             .replaceAll("-", "-")
             .replaceAll(" ", "-")
-            .replaceAll(":", "-") +
-        ".sql";
+            .replaceAll(":", "-")}.sql";
     await saveDBFileToDevice(boxContext: boxContext, fileName: fileName);
   });
 }

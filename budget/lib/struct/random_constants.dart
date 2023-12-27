@@ -1,6 +1,6 @@
 import 'dart:math';
 
-Random random = new Random();
+Random random = Random();
 List<int> randomInt = [
   random.nextInt(100),
   random.nextInt(100),

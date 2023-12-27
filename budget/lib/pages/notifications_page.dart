@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:app_settings/app_settings.dart';
 
 class NotificationsPage extends StatefulWidget {
-  const NotificationsPage({Key? key}) : super(key: key);
+  const NotificationsPage({super.key});
 
   @override
   State<NotificationsPage> createState() => _NotificationsPageState();
@@ -37,9 +37,7 @@ class _NotificationsPageState extends State<NotificationsPage>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
 
-    if (_lastState == null) {
-      _lastState = state;
-    }
+    _lastState ??= state;
 
     // app resumed
     if (state == AppLifecycleState.resumed &&
@@ -66,7 +64,7 @@ class _NotificationsPageState extends State<NotificationsPage>
       listWidgets: [
         AnimatedExpanded(
           expand: notificationsEnabled == false,
-          duration: Duration(milliseconds: 100),
+          duration: const Duration(milliseconds: 100),
           child: StatusBox(
             title: "notifications-disabled".tr(),
             description: "notifications-disabled-description".tr(),
@@ -81,8 +79,8 @@ class _NotificationsPageState extends State<NotificationsPage>
         ),
         AnimatedOpacity(
           opacity: notificationsEnabled ? 1 : 0.5,
-          duration: Duration(milliseconds: 300),
-          child: Column(
+          duration: const Duration(milliseconds: 300),
+          child: const Column(
             children: [
               DailyNotificationsSettings(),
               UpcomingTransactionsNotificationsSettings()

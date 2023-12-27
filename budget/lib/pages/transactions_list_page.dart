@@ -24,7 +24,7 @@ import 'package:budget/widgets/util/multi_directional_infinite_scroll.dart';
 import 'package:budget/widgets/pull_down_to_refresh_sync.dart';
 
 class TransactionsListPage extends StatefulWidget {
-  const TransactionsListPage({Key? key}) : super(key: key);
+  const TransactionsListPage({super.key});
 
   @override
   State<TransactionsListPage> createState() => TransactionsListPageState();
@@ -38,7 +38,7 @@ class TransactionsListPageState extends State<TransactionsListPage>
 
   void scrollToTop({int duration = 1200}) {
     if (_scrollController.offset <= 0) {
-      pushRoute(context, TransactionsSearchPage());
+      pushRoute(context, const TransactionsSearchPage());
     } else {
       _scrollController.animateTo(0,
           duration: Duration(
@@ -107,7 +107,7 @@ class TransactionsListPageState extends State<TransactionsListPage>
         ),
       ),
     );
-    Future.delayed(Duration(milliseconds: 250), () {
+    Future.delayed(const Duration(milliseconds: 250), () {
       updateSettings(
         "transactionsListPageSetFiltersString",
         searchFilters.getFilterString(),
@@ -147,7 +147,7 @@ class TransactionsListPageState extends State<TransactionsListPage>
                 },
                 child: NestedScrollView(
                   controller: _scrollController,
-                  physics: value ? NeverScrollableScrollPhysics() : null,
+                  physics: value ? const NeverScrollableScrollPhysics() : null,
                   headerSliverBuilder:
                       (BuildContext contextHeader, bool innerBoxIsScrolled) {
                     return <Widget>[
@@ -165,9 +165,9 @@ class TransactionsListPageState extends State<TransactionsListPage>
                                   onPressed: () {
                                     selectFilters(context);
                                   },
-                                  padding: EdgeInsets.all(15 - 8),
+                                  padding: const EdgeInsets.all(15 - 8),
                                   icon: AnimatedContainer(
-                                    duration: Duration(milliseconds: 500),
+                                    duration: const Duration(milliseconds: 500),
                                     decoration: BoxDecoration(
                                       color: searchFilters.isClear()
                                           ? Colors.transparent
@@ -177,7 +177,7 @@ class TransactionsListPageState extends State<TransactionsListPage>
                                               .withOpacity(0.1),
                                       borderRadius: BorderRadius.circular(100),
                                     ),
-                                    padding: EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
                                     child: Icon(
                                       appStateSettings["outlinedIcons"]
                                           ? Icons.filter_alt_outlined
@@ -191,11 +191,11 @@ class TransactionsListPageState extends State<TransactionsListPage>
                                   ),
                                 ),
                                 IconButton(
-                                  padding: EdgeInsets.all(15),
+                                  padding: const EdgeInsets.all(15),
                                   tooltip: "search-transactions".tr(),
                                   onPressed: () {
                                     pushRoute(
-                                        context, TransactionsSearchPage());
+                                        context, const TransactionsSearchPage());
                                   },
                                   icon: Icon(
                                     appStateSettings["outlinedIcons"]
@@ -219,7 +219,7 @@ class TransactionsListPageState extends State<TransactionsListPage>
                                         1) {
                                       _pageController.animateToPage(
                                         _pageController.initialPage + index,
-                                        duration: Duration(milliseconds: 1000),
+                                        duration: const Duration(milliseconds: 1000),
                                         curve: Curves.easeInOutCubicEmphasized,
                                       );
                                     } else {
@@ -238,7 +238,7 @@ class TransactionsListPageState extends State<TransactionsListPage>
                                   selectFilters(context);
                                 },
                                 clearSearchFilters: clearSearchFilters,
-                                padding: EdgeInsets.symmetric(vertical: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 5),
                               ),
                             ),
                           ],
@@ -290,19 +290,16 @@ class TransactionsListPageState extends State<TransactionsListPage>
                                         renderType: TransactionEntriesRenderType
                                             .implicitlyAnimatedSlivers,
                                         startDate,
-                                        new DateTime(
+                                        DateTime(
                                             startDate.year,
                                             startDate.month + 1,
                                             startDate.day - 1),
                                         onSelected: onSelected,
                                         listID: "Transactions",
-                                        noResultsMessage: "no-transactions-for"
-                                                .tr() +
-                                            " " +
-                                            getMonth(startDate,
+                                        noResultsMessage: "${"no-transactions-for"
+                                                .tr()} ${getMonth(startDate,
                                                 includeYear: startDate.year !=
-                                                    DateTime.now().year) +
-                                            ".",
+                                                    DateTime.now().year)}.",
                                         showTotalCashFlow: true,
                                         enableSpendingSummary: true,
                                         showSpendingSummary: appStateSettings[
@@ -328,8 +325,8 @@ class TransactionsListPageState extends State<TransactionsListPage>
                                                           TextAlign.center,
                                                     ),
                                                   ),
-                                                  SizedBox(height: 5),
-                                                  ShowTransactionsMonthlySpendingSummarySettingToggle(),
+                                                  const SizedBox(height: 5),
+                                                  const ShowTransactionsMonthlySpendingSummarySettingToggle(),
                                                 ],
                                               ),
                                             ),
@@ -338,7 +335,7 @@ class TransactionsListPageState extends State<TransactionsListPage>
                                       ),
 
                                       // Wipe all remaining pixels off - sometimes graphics artifacts are left behind
-                                      SliverToBoxAdapter(
+                                      const SliverToBoxAdapter(
                                         child: SizedBox(
                                           height: 40,
                                         ),
@@ -352,13 +349,13 @@ class TransactionsListPageState extends State<TransactionsListPage>
                         },
                       ),
                       getIsFullScreen(context) == false
-                          ? SizedBox.shrink()
+                          ? const SizedBox.shrink()
                           : Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: IconButton(
-                                  padding: EdgeInsets.all(15),
+                                  padding: const EdgeInsets.all(15),
                                   icon: Icon(
                                     appStateSettings["outlinedIcons"]
                                         ? Icons.arrow_left_outlined
@@ -371,7 +368,7 @@ class TransactionsListPageState extends State<TransactionsListPage>
                                                   _pageController.initialPage)
                                               .round() -
                                           1,
-                                      duration: Duration(milliseconds: 1000),
+                                      duration: const Duration(milliseconds: 1000),
                                       curve: Curves.easeInOutCubicEmphasized,
                                     );
                                   },
@@ -379,13 +376,13 @@ class TransactionsListPageState extends State<TransactionsListPage>
                               ),
                             ),
                       getIsFullScreen(context) == false
-                          ? SizedBox.shrink()
+                          ? const SizedBox.shrink()
                           : Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: IconButton(
-                                  padding: EdgeInsets.all(15),
+                                  padding: const EdgeInsets.all(15),
                                   icon: Icon(
                                     appStateSettings["outlinedIcons"]
                                         ? Icons.arrow_right_outlined
@@ -398,7 +395,7 @@ class TransactionsListPageState extends State<TransactionsListPage>
                                                   _pageController.initialPage)
                                               .round() +
                                           1,
-                                      duration: Duration(milliseconds: 1000),
+                                      duration: const Duration(milliseconds: 1000),
                                       curve: Curves.easeInOutCubicEmphasized,
                                     );
                                   },
@@ -409,7 +406,7 @@ class TransactionsListPageState extends State<TransactionsListPage>
                   ),
                 ),
               ),
-              SelectedTransactionsAppBar(
+              const SelectedTransactionsAppBar(
                 pageID: "Transactions",
               ),
             ],
@@ -425,7 +422,7 @@ class TransactionsSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         MarkAsPaidOnDaySetting(),
         NetSpendingDayTotalSetting(),
@@ -463,7 +460,7 @@ class ShowTransactionsBalanceTransferTabSettingToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (Provider.of<AllWallets>(context).indexedByPk.keys.length <= 1) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
     return SettingsContainerSwitch(
       title: "show-balance-transfer-tab".tr(),
@@ -491,7 +488,7 @@ class NetSpendingDayTotalSetting extends StatelessWidget {
           ? Icons.playlist_add_outlined
           : Icons.playlist_add_rounded,
       initial: appStateSettings["netSpendingDayTotal"].toString(),
-      items: ["false", "true"],
+      items: const ["false", "true"],
       onChanged: (value) async {
         updateSettings("netSpendingDayTotal", value == "true" ? true : false,
             updateGlobalState: true, pagesNeedingRefresh: [1]);

@@ -35,14 +35,14 @@ class HomePageCreditDebts extends StatelessWidget {
                   selectedTab: null,
                 ),
                 textColor: getColor(context, "unPaidUpcoming"),
-                openPage: CreditDebtTransactions(isCredit: true),
+                openPage: const CreditDebtTransactions(isCredit: true),
                 onLongPress: () async {
                   await openCreditDebtsSettings(context);
                   homePageStateKey.currentState?.refreshState();
                 },
               ),
             ),
-            SizedBox(width: 13),
+            const SizedBox(width: 13),
             Expanded(
               child: TransactionsAmountBox(
                 label: "borrowed".tr(),
@@ -54,7 +54,7 @@ class HomePageCreditDebts extends StatelessWidget {
                   selectedTab: null,
                 ),
                 textColor: getColor(context, "unPaidOverdue"),
-                openPage: CreditDebtTransactions(isCredit: false),
+                openPage: const CreditDebtTransactions(isCredit: false),
                 onLongPress: () async {
                   await openCreditDebtsSettings(context);
                   homePageStateKey.currentState?.refreshState();
@@ -74,7 +74,7 @@ Future openCreditDebtsSettings(BuildContext context) {
     PopupFramework(
       title: "loans".tr(),
       subtitle: "applies-to-homepage".tr(),
-      child: PeriodCyclePicker(cycleSettingsExtension: "CreditDebts"),
+      child: const PeriodCyclePicker(cycleSettingsExtension: "CreditDebts"),
     ),
   );
 }

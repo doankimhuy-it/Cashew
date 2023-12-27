@@ -17,7 +17,7 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:budget/widgets/outlined_button_stacked.dart';
 
 class AccountsPage extends StatefulWidget {
-  const AccountsPage({Key? key}) : super(key: key);
+  const AccountsPage({super.key});
 
   @override
   State<AccountsPage> createState() => AccountsPageState();
@@ -87,7 +87,7 @@ class AccountsPageState extends State<AccountsPage> {
                           try {
                             await signInAndSync(context, next: () {});
                           } catch (e) {
-                            print("Error signing in: " + e.toString());
+                            print("Error signing in: $e");
                           }
                         },
                       )
@@ -96,10 +96,10 @@ class AccountsPageState extends State<AccountsPage> {
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 35),
+                      const SizedBox(height: 35),
                       getPlatform() == PlatformOS.isIOS
                           ? Container(
-                              padding: EdgeInsets.all(20),
+                              padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.primary,
                                 shape: BoxShape.circle,
@@ -116,9 +116,9 @@ class AccountsPageState extends State<AccountsPage> {
                                   ? profileWidget
                                   : FadeInImage.memoryNetwork(
                                       fadeInDuration:
-                                          Duration(milliseconds: 100),
+                                          const Duration(milliseconds: 100),
                                       fadeOutDuration:
-                                          Duration(milliseconds: 100),
+                                          const Duration(milliseconds: 100),
                                       placeholder: kTransparentImage,
                                       image: googleUser!.photoUrl.toString(),
                                       height: 95,
@@ -130,7 +130,7 @@ class AccountsPageState extends State<AccountsPage> {
                                       },
                                     ),
                             ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       TextFont(
                         text: getPlatform() == PlatformOS.isIOS
                             ? "google-drive-backup".tr()
@@ -139,14 +139,14 @@ class AccountsPageState extends State<AccountsPage> {
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
-                      SizedBox(height: 2),
+                      const SizedBox(height: 2),
                       TextFont(
                         text: (appStateSettings["currentUserEmail"] ?? "")
                             .toString(),
                         textAlign: TextAlign.center,
                         fontSize: 15,
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       IntrinsicWidth(
                         child: Button(
                           label: "logout".tr(),
@@ -163,12 +163,12 @@ class AccountsPageState extends State<AccountsPage> {
                               }
                             }
                           },
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 17, vertical: 12),
                           fontSize: 15,
                         ),
                       ),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
                         child: Row(
@@ -178,7 +178,7 @@ class AccountsPageState extends State<AccountsPage> {
                                 ignoring: currentlyExporting,
                                 child: AnimatedOpacity(
                                   opacity: currentlyExporting ? 0.4 : 1,
-                                  duration: Duration(milliseconds: 200),
+                                  duration: const Duration(milliseconds: 200),
                                   child: OutlinedButtonStacked(
                                     text: "backup".tr(),
                                     iconData: appStateSettings["outlinedIcons"]
@@ -200,7 +200,7 @@ class AccountsPageState extends State<AccountsPage> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 15),
+                            const SizedBox(width: 15),
                             Expanded(
                               child: OutlinedButtonStacked(
                                 text: "restore".tr(),
@@ -215,7 +215,7 @@ class AccountsPageState extends State<AccountsPage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
                         child: Row(
@@ -228,7 +228,7 @@ class AccountsPageState extends State<AccountsPage> {
                                 },
                               ),
                             ),
-                            SizedBox(width: 18),
+                            const SizedBox(width: 18),
                             Expanded(
                               child: BackupsCloudBackupButton(
                                 onTap: () async {
@@ -263,7 +263,7 @@ class AccountsPageState extends State<AccountsPage> {
                                 ),
                               ),
                             )
-                          : SizedBox(height: 75),
+                          : const SizedBox(height: 75),
                     ],
                   ),
           ),

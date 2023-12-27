@@ -52,6 +52,8 @@ class LowKeyButton extends StatelessWidget {
           (appStateSettings["materialYou"]
               ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
               : getColor(context, "lightDarkAccent")),
+      onTap: onTap,
+      borderRadius: 13,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
         child: Row(
@@ -64,12 +66,10 @@ class LowKeyButton extends StatelessWidget {
               textColor:
                   textColor ?? getColor(context, "black").withOpacity(0.5),
             ),
-            extraWidget ?? SizedBox.shrink(),
+            extraWidget ?? const SizedBox.shrink(),
           ],
         ),
       ),
-      onTap: onTap,
-      borderRadius: 13,
     );
   }
 }
