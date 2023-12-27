@@ -786,6 +786,7 @@ String filterEmailTitle(string) {
 }
 
 class CustomMaterialPageRoute extends MaterialPageRoute {
+  @override
   @protected
   bool get hasScopedWillPopCallback {
     return false;

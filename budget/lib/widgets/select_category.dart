@@ -99,6 +99,7 @@ class _SelectCategoryState extends State<SelectCategory> {
     _scrollController = ScrollController();
   }
 
+  @override
   void didUpdateWidget(oldWidget) {
     if (widget.selectedCategories != oldWidget.selectedCategories) {
       setState(() {

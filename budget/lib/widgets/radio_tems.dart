@@ -195,6 +195,7 @@ class _CheckItemsState<T> extends State<CheckItems<T>> {
     });
   }
 
+  @override
   void didUpdateWidget(oldWidget) {
     if (oldWidget != widget && widget.syncWithInitial) {
       setState(() {

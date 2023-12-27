@@ -36,6 +36,7 @@ class MultiDirectionalInfiniteScrollState
   List<int> top = [1];
   List<int> bottom = [-1, 0];
 
+  @override
   void initState() {
     super.initState();
     if (widget.initialItems != null) {

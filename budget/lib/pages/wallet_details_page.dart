@@ -1992,6 +1992,7 @@ class _AllSpendingPastSpendingGraphState
   List<DateTimeRange> dateTimeRanges = [];
   int amountLoaded = 8;
   bool amountLoadedPressedOnce = false;
+  @override
   initState() {
     Future.delayed(Duration.zero, () async {
       loadLines(amountLoaded);

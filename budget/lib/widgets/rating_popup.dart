@@ -186,7 +186,7 @@ Future<bool> shareFeedback(String feedbackText, String feedbackType,
       "appVersion": getVersionString(),
     };
 
-    DocumentReference feedbackCreatedOnCloud =
+    DocumentReference _ =
         await db.collection("feedback").add(feedbackEntry);
 
     openSnackbar(SnackbarMessage(

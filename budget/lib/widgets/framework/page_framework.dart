@@ -151,6 +151,7 @@ class PageFrameworkState extends State<PageFramework>
         duration: Duration(milliseconds: duration), curve: Curves.easeInOut);
   }
 
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {

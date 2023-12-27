@@ -72,6 +72,7 @@ class HomePageState extends State<HomePage>
   late AnimationController _animationControllerHeader2;
   int selectedSlidingSelector = 1;
 
+  @override
   void initState() {
     super.initState();
     _animationControllerHeader = AnimationController(vsync: this, value: 1);

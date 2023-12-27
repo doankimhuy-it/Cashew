@@ -842,12 +842,14 @@ class _BudgetLineGraphState extends State<BudgetLineGraph> {
   List<DateTimeRange> dateTimeRanges = [];
   int longestDateRange = 0;
 
+  @override
   void didUpdateWidget(oldWidget) {
     if (oldWidget != widget) {
       _init();
     }
   }
 
+  @override
   initState() {
     _init();
   }

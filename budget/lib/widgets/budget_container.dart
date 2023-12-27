@@ -1111,6 +1111,7 @@ class _BudgetSpenderSummaryState extends State<BudgetSpenderSummary> {
   Set<String> members = {};
   String? selectedMember = null;
 
+  @override
   initState() {
     Future.delayed(Duration.zero, () async {
       _initialize();

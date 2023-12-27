@@ -48,6 +48,7 @@ class _SelectItemsState extends State<SelectItems> {
     currentItems = widget.initialItems;
   }
 
+  @override
   void didUpdateWidget(oldWidget) {
     if (oldWidget != widget && widget.syncWithInitial) {
       setState(() {

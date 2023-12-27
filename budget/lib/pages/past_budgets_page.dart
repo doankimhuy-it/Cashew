@@ -76,6 +76,7 @@ class __PastBudgetsPageContentState extends State<_PastBudgetsPageContent> {
       _pastBudgetContainerListStateStateKey = GlobalKey();
   GlobalKey<PageFrameworkState> budgetHistoryKey = GlobalKey();
 
+  @override
   initState() {
     Future.delayed(Duration.zero, () async {
       loadLines(amountLoaded);

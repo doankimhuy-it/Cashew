@@ -1276,7 +1276,6 @@ class _SelectAmountValueState extends State<SelectAmountValue> {
   }
 
   addToAmount(String input) {
-    String amountClone = amount;
     if (input == "." && amount.contains(".")) {
     } else {
       if (amount == "0" || amount == "") {
