@@ -65,7 +65,6 @@ runNotificationPayLoadsNoContext(payloadData) {
 }
 
 void runNotificationPayLoads(context) {
-  if (kIsWeb) return;
   if (notificationPayload == "addTransaction") {
     pushRoute(
       context,
@@ -83,7 +82,6 @@ void runNotificationPayLoads(context) {
 }
 
 Future<void> setDailyNotifications(context) async {
-  if (kIsWeb) return;
   bool notificationsEnabled = appStateSettings["notifications"] == true;
 
   if (notificationsEnabled) {
@@ -107,7 +105,6 @@ Future<void> setDailyNotifications(context) async {
 }
 
 Future<void> setUpcomingNotifications(context) async {
-  if (kIsWeb) return;
   bool upcomingTransactionsNotificationsEnabled =
       appStateSettings["notificationsUpcomingTransactions"] == true;
   if (upcomingTransactionsNotificationsEnabled) {

@@ -72,12 +72,7 @@ Future<bool> initializeSettings() async {
   if (appStateSettings["accentSystemColor"] == true) {
     appStateSettings["accentColor"] = await getAccentColorSystemString();
   }
-
-  // Disable sync every change is not on web
-  // It will still sync when user pulls down to refresh
-  if (!kIsWeb) {
-    appStateSettings["syncEveryChange"] = false;
-  }
+  appStateSettings["syncEveryChange"] = false;
 
   // Load iOS font when iOS
   // Disable iOS font for now... Avenir looks better

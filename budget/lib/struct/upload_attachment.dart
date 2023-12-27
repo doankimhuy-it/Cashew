@@ -63,12 +63,8 @@ Future<String?> getFileAndUpload() async {
 
     Uint8List fileBytes;
 
-    if (kIsWeb) {
-      fileBytes = result.files.single.bytes!;
-    } else {
-      File file = File(result.files.single.path ?? "");
-      fileBytes = await file.readAsBytes();
-    }
+    File file = File(result.files.single.path ?? "");
+    fileBytes = await file.readAsBytes();
 
     late Stream<List<int>> mediaStream;
     mediaStream = Stream.value(fileBytes);

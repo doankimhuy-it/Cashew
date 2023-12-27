@@ -514,8 +514,6 @@ class _AddCategoryPageState extends State<AddCategoryPage>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TextInput(
-                                    autoFocus:
-                                        kIsWeb && getIsFullScreen(context),
                                     focusNode: _titleFocusNode,
                                     labelText: "name-placeholder".tr(),
                                     bubbly: false,

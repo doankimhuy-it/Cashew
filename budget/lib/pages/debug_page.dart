@@ -338,10 +338,6 @@ class DebugPage extends StatelessWidget {
           label: "Fix migration (from db 37 above)",
           onTap: () async {
             await database.customStatement('PRAGMA user_version = 37');
-            if (kIsWeb) {
-              final html.Storage localStorage = html.window.localStorage;
-              localStorage["moor_db_version_db"] = "37";
-            }
             restartAppPopup(context);
           },
         ),
@@ -505,9 +501,7 @@ class DebugPage extends StatelessWidget {
             }),
         TextFont(
             maxLines: 10,
-            text: kIsWeb
-                ? html.window.navigator.userAgent.toString().toLowerCase()
-                : ""),
+            text: ""),
         ColorBox(color: Theme.of(context).colorScheme.surface, name: "surface"),
         ColorBox(
             color: Theme.of(context).colorScheme.onSurface, name: "onSurface"),

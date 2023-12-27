@@ -971,7 +971,7 @@ class _AddBillItemPageState extends State<AddBillItemPage> {
                       padding: EdgeInsets.only(left: 7, right: 7),
                       fontSize: getIsFullScreen(context) ? 26 : 25,
                       fontWeight: FontWeight.bold,
-                      topContentPadding: kIsWeb ? 6.8 : 0,
+                      topContentPadding: 0,
                     ),
                   ),
                 ),

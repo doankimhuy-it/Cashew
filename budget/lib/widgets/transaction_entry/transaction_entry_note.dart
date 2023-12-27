@@ -44,9 +44,7 @@ class TransactionEntryNote extends StatelessWidget {
               fontFamilyFallback: ['Inter'],
             ),
             triggerMode: TooltipTriggerMode.tap,
-            showDuration: getIsFullScreen(context) == false || kIsWeb == false
-                ? Duration(milliseconds: 10000)
-                : Duration(milliseconds: 100),
+            showDuration: Duration(milliseconds: 10000),
             message: cleanupNoteStringWithURLs(transaction.note),
             child: Padding(
               padding:

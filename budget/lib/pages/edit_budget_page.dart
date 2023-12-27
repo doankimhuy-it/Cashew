@@ -43,8 +43,7 @@ bool hideIfSearching(String? searchTerm, bool isFocused, BuildContext context) {
   if (hiddenOnSearchValue != null && hiddenOnSearchValue == searchTerm) {
     return true;
   }
-  if (kIsWeb == false &&
-      isFocused == true &&
+  if (isFocused == true &&
       MediaQuery.sizeOf(context).height < 950) {
     return true;
   }

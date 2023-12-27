@@ -145,7 +145,6 @@ class _SelectCategoryImageState extends State<SelectCategoryImage> {
                           bottomSheetControllerGlobal.snapToExtent(0);
                         },
                         padding: EdgeInsets.all(0),
-                        autoFocus: kIsWeb,
                       ),
                       // ),
                     ),

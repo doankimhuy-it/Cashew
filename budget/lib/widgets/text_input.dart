@@ -97,7 +97,7 @@ class TextInput extends StatelessWidget {
             textInputAction: textInputAction,
             textCapitalization:
                 textCapitalization ?? TextCapitalization.sentences,
-            textAlignVertical: kIsWeb ? TextAlignVertical.bottom : null,
+            textAlignVertical: null,
             //incognito keyboard
             enableIMEPersonalizedLearning:
                 !appStateSettings["incognitoKeyboard"],
@@ -122,9 +122,7 @@ class TextInput extends StatelessWidget {
             style: TextStyle(
               fontSize:
                   fontSize != null ? fontSize : (bubbly == false ? 18 : 15),
-              height: kIsWeb
-                  ? null
-                  : bubbly == true
+              height: bubbly == true
                       ? 1.7
                       : 1.3,
               fontWeight: fontWeight,
@@ -140,12 +138,12 @@ class TextInput extends StatelessWidget {
               prefix: prefix != null ? TextFont(text: prefix ?? "") : null,
               suffix: suffix != null ? TextFont(text: suffix ?? "") : null,
               contentPadding: EdgeInsets.only(
-                left: bubbly == false ? (kIsWeb ? 8 + 5 : 8) : 18,
-                right: (kIsWeb ? paddingRight + 5 : paddingRight),
+                left: bubbly == false ? 8 : 18,
+                right: paddingRight,
                 top: topContentPadding != null
                     ? topContentPadding ?? 0
                     : (bubbly == false ? 15 : 18),
-                bottom: bubbly == false ? (kIsWeb ? 8 : 5) : (kIsWeb ? 15 : 0),
+                bottom: bubbly == false ? 5 :  0,
               ),
               hintText: labelText,
               filled: bubbly == false ? true : false,

@@ -243,8 +243,7 @@ class TransactionEntry extends StatelessWidget {
     //   return SizedBox.shrink();
     // }
 
-    bool enableSelectionCheckmark = getPlatform() == PlatformOS.isIOS ||
-        (kIsWeb && getIsFullScreen(context));
+    bool enableSelectionCheckmark = getPlatform() == PlatformOS.isIOS;
     if (globalSelectedID.value[listID ?? "0"] == null) {
       globalSelectedID.value[listID ?? "0"] = [];
     }

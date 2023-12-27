@@ -182,16 +182,14 @@ class MorePages extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                notificationsGlobalEnabled
-                    ? Expanded(
-                        child: SettingsContainerOpenPage(
-                          openPage: NotificationsPage(),
-                          title: navBarIconsData["notifications"]!.label.tr(),
-                          icon: navBarIconsData["notifications"]!.iconData,
-                          isOutlined: true,
-                        ),
-                      )
-                    : SizedBox.shrink(),
+                Expanded(
+                  child: SettingsContainerOpenPage(
+                    openPage: NotificationsPage(),
+                    title: navBarIconsData["notifications"]!.label.tr(),
+                    icon: navBarIconsData["notifications"]!.iconData,
+                    isOutlined: true,
+                  ),
+                ),
                 Expanded(child: GoogleAccountLoginButton()),
               ],
             ),
@@ -492,7 +490,7 @@ class SettingsPageContent extends StatelessWidget {
               : Icons.home_rounded,
         ),
 
-        notificationsGlobalEnabled && getIsFullScreen(context) == false
+        getIsFullScreen(context) == false
             ? SettingsContainerOpenPage(
                 openPage: NotificationsPage(),
                 title: "notifications".tr(),

@@ -178,7 +178,6 @@ class _AddAssociatedTitlePageState extends State<AddAssociatedTitlePage> {
                   fontWeight: FontWeight.bold,
                   topContentPadding: 0,
                   focusNode: _focusNode,
-                  autoFocus: kIsWeb && getIsFullScreen(context),
                 ),
               ),
             ],

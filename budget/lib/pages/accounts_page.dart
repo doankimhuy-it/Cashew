@@ -1,4 +1,3 @@
-
 import 'package:budget/colors.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/main.dart';
@@ -71,42 +70,6 @@ class AccountsPageState extends State<AccountsPage> {
           ? null
           : Theme.of(context).colorScheme.secondaryContainer,
       bottomPadding: false,
-      actions: [
-        // Show the tip if it was dissmissed
-        if (kIsWeb && appStateSettings["autoLoginDisabledOnWebTip"] == false)
-          CustomPopupMenuButton(
-            showButtons: true,
-            keepOutFirst: true,
-            items: [
-              DropdownItemMenu(
-                id: "auto-login-disabled-info",
-                label: "info".tr(),
-                icon: appStateSettings["outlinedIcons"]
-                    ? Icons.info_outlined
-                    : Icons.info_outline_rounded,
-                action: () {
-                  openPopup(
-                    context,
-                    icon: appStateSettings["outlinedIcons"]
-                        ? Icons.lightbulb_outlined
-                        : Icons.lightbulb_outline_rounded,
-                    title: "auto-login-disabled-on-web".tr(),
-                    description: "why-is-auto-login-disabled-on-web".tr(),
-                    onExtraLabel2: "read-more-here".tr(),
-                    onExtra2: () {
-                      openUrl(
-                          "https://pub.dev/packages/google_sign_in_web#differences-between-google-identity-services-sdk-and-google-sign-in-for-web-sdk");
-                    },
-                    onSubmit: () {
-                      Navigator.pop(context);
-                    },
-                    onSubmitLabel: "ok".tr(),
-                  );
-                },
-              ),
-            ],
-          ),
-      ],
       slivers: [
         SliverFillRemaining(
           hasScrollBody: false,
@@ -280,44 +243,6 @@ class AccountsPageState extends State<AccountsPage> {
                           ],
                         ),
                       ),
-                      if (kIsWeb)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 7),
-                          child: TipBox(
-                            settingsString: "autoLoginDisabledOnWebTip",
-                            onTap: () {
-                              openUrl(
-                                  "https://pub.dev/packages/google_sign_in_web#differences-between-google-identity-services-sdk-and-google-sign-in-for-web-sdk");
-                            },
-                            text: "",
-                            richTextSpan: [
-                              TextSpan(
-                                text: "why-is-auto-login-disabled-on-web".tr() +
-                                    " ",
-                                style: TextStyle(
-                                  color: getColor(context, "black"),
-                                  fontFamily: appStateSettings["font"],
-                                  fontFamilyFallback: ['Inter'],
-                                ),
-                              ),
-                              TextSpan(
-                                text: "read-more-here".tr() + ".",
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  decorationStyle: TextDecorationStyle.solid,
-                                  decorationColor:
-                                      getColor(context, "unPaidOverdue")
-                                          .withOpacity(0.8),
-                                  color: getColor(context, "unPaidOverdue")
-                                      .withOpacity(0.8),
-                                  fontFamily: appStateSettings["font"],
-                                  fontFamilyFallback: ['Inter'],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                       getPlatform() == PlatformOS.isIOS
                           ? Padding(
                               padding: const EdgeInsets.symmetric(

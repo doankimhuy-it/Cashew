@@ -258,11 +258,10 @@ class NavigationSidebarState extends State<NavigationSidebar> {
                                 navBarIconDataKey: "loans",
                                 currentPageIndex: selectedIndex,
                               ),
-                              if (kIsWeb == false)
-                                NavigationSidebarButtonWithNavBarIconData(
-                                  navBarIconDataKey: "notifications",
-                                  currentPageIndex: selectedIndex,
-                                ),
+                              NavigationSidebarButtonWithNavBarIconData(
+                                navBarIconDataKey: "notifications",
+                                currentPageIndex: selectedIndex,
+                              ),
                               NavigationSidebarButtonWithNavBarIconData(
                                 navBarIconDataKey: "allSpending",
                                 currentPageIndex: selectedIndex,
@@ -324,7 +323,8 @@ class SidebarClock extends StatelessWidget {
         ? Center(
             key: ValueKey(appStateSettings["expandedNavigationSidebar"]),
             child: MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
+              data: MediaQuery.of(context)
+                  .copyWith(textScaler: TextScaler.linear(1.0)),
               child: TimerBuilder.periodic(
                 Duration(seconds: 5),
                 builder: (context) {

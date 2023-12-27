@@ -37,8 +37,8 @@ import 'firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 // Requires hot restart when changed
-bool enableDevicePreview = false && kDebugMode;
-bool allowDebugFlags = true || kIsWeb;
+bool enableDevicePreview = false;
+bool allowDebugFlags = true;
 bool allowDangerousDebugFlags = kDebugMode;
 
 void main() async {
@@ -364,14 +364,8 @@ class App extends StatelessWidget {
             ),
           ),
         );
-        if (kIsWeb) {
-          return FadeIn(
-              duration: Duration(milliseconds: 1000), child: mainWidget);
-        } else {
-          return mainWidget;
-        }
+        return mainWidget;
       },
-      // ),
     );
   }
 }

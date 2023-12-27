@@ -4071,68 +4071,66 @@ class _TransactionNotesTextInputState extends State<TransactionNotesTextInput> {
                   subtitle: "add-attachment-description".tr(),
                   child: Column(
                     children: [
-                      if (kIsWeb == false)
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 13),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: OutlinedButtonStacked(
-                                  filled: false,
-                                  alignLeft: true,
-                                  alignBeside: true,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 20),
-                                  text: "take-photo".tr(),
-                                  iconData: appStateSettings["outlinedIcons"]
-                                      ? Icons.camera_alt_outlined
-                                      : Icons.camera_alt_rounded,
-                                  onTap: () async {
-                                    Navigator.pop(context);
-                                    if (await checkLockedFeatureIfInDemoMode(
-                                            context) ==
-                                        true) {
-                                      String? result = await getPhotoAndUpload(
-                                          source: ImageSource.camera);
-                                      addAttachmentLinkToNote(result);
-                                    }
-                                  },
-                                ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 13),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: OutlinedButtonStacked(
+                                filled: false,
+                                alignLeft: true,
+                                alignBeside: true,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 20),
+                                text: "take-photo".tr(),
+                                iconData: appStateSettings["outlinedIcons"]
+                                    ? Icons.camera_alt_outlined
+                                    : Icons.camera_alt_rounded,
+                                onTap: () async {
+                                  Navigator.pop(context);
+                                  if (await checkLockedFeatureIfInDemoMode(
+                                          context) ==
+                                      true) {
+                                    String? result = await getPhotoAndUpload(
+                                        source: ImageSource.camera);
+                                    addAttachmentLinkToNote(result);
+                                  }
+                                },
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      if (kIsWeb == false)
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 13),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: OutlinedButtonStacked(
-                                  filled: false,
-                                  alignLeft: true,
-                                  alignBeside: true,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 20),
-                                  text: "select-photo".tr(),
-                                  iconData: appStateSettings["outlinedIcons"]
-                                      ? Icons.photo_library_outlined
-                                      : Icons.photo_library_rounded,
-                                  onTap: () async {
-                                    Navigator.pop(context);
-                                    if (await checkLockedFeatureIfInDemoMode(
-                                            context) ==
-                                        true) {
-                                      String? result = await getPhotoAndUpload(
-                                          source: ImageSource.gallery);
-                                      addAttachmentLinkToNote(result);
-                                    }
-                                  },
-                                ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 13),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: OutlinedButtonStacked(
+                                filled: false,
+                                alignLeft: true,
+                                alignBeside: true,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 20),
+                                text: "select-photo".tr(),
+                                iconData: appStateSettings["outlinedIcons"]
+                                    ? Icons.photo_library_outlined
+                                    : Icons.photo_library_rounded,
+                                onTap: () async {
+                                  Navigator.pop(context);
+                                  if (await checkLockedFeatureIfInDemoMode(
+                                          context) ==
+                                      true) {
+                                    String? result = await getPhotoAndUpload(
+                                        source: ImageSource.gallery);
+                                    addAttachmentLinkToNote(result);
+                                  }
+                                },
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 13),
                         child: Row(
@@ -4506,7 +4504,6 @@ class _TitleInputState extends State<TitleInput> {
                       .getSimilarAssociatedTitles(title: text, limit: 3);
                   setState(() {});
                 },
-                autoFocus: kIsWeb && getIsFullScreen(context),
               ),
             ),
             AnimatedSizeSwitcher(
@@ -4570,7 +4567,7 @@ class _TitleInputState extends State<TitleInput> {
                                       ),
                                     ),
                                     SizedBox(width: 13),
-                                     Expanded(
+                                    Expanded(
                                       child: TextFont(
                                         text: foundAssociatedTitle.title,
                                         fontSize: 16,

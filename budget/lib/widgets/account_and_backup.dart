@@ -45,18 +45,15 @@ import 'package:budget/struct/random_constants.dart';
 
 Future<bool> checkConnection() async {
   late bool isConnected;
-  if (!kIsWeb) {
-    try {
-      final result = await InternetAddress.lookup('example.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isConnected = true;
-      }
-    } on SocketException catch (e) {
-      print(e.toString());
-      isConnected = false;
+
+  try {
+    final result = await InternetAddress.lookup('example.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      isConnected = true;
     }
-  } else {
-    isConnected = true;
+  } on SocketException catch (e) {
+    print(e.toString());
+    isConnected = false;
   }
   return isConnected;
 }
@@ -133,24 +130,10 @@ Future<bool> signInGoogle(
       // googleSignIn?.currentUser?.clearAuthCache();
 
       final signIn.GoogleSignInAccount? account = silentSignIn == true
-          ?
-          // kIsWeb
-          //     ? await googleSignIn?.signInSilently()
-          // Google Sign-in silent on web no longer gives access to the scopes
-          // https://pub.dev/packages/google_sign_in_web#differences-between-google-identity-services-sdk-and-google-sign-in-for-web-sdk
-          // await googleSignIn?.signInSilently().then((value) async {
-          //     return await googleSignIn?.signIn();
-          //   })
-          // Currently we do not use silent sign in anymore, as it does not allow any access
-          // to GDrive or other tools, so there is no point to get the username/email form silent
-          kIsWeb
-              ? await googleSignIn?.signIn()
-              : await googleSignIn?.signInSilently()
+          ? await googleSignIn?.signInSilently()
           : await googleSignIn?.signIn();
 
       if (account != null) {
-        // print("ACCOUNT");
-        // print(account);
         googleUser = account;
         updateSettings(
           "currentUserEmail",
@@ -225,7 +208,7 @@ Future<bool> signOutGoogle() async {
 
 Future<bool> refreshGoogleSignIn() async {
   await signOutGoogle();
-  await signInGoogle(silentSignIn: kIsWeb ? false : true);
+  await signInGoogle(silentSignIn: true);
   return true;
 }
 
@@ -290,7 +273,6 @@ Future<bool> signInAndSync(BuildContext context,
 Future<void> createBackupInBackground(context) async {
   if (appStateSettings["hasSignedIn"] == false) return;
   if (errorSigningInDuringCloud == true) return;
-  if (kIsWeb && !entireAppLoaded) return;
   // print(entireAppLoaded);
   print("Last backup: " + appStateSettings["lastBackup"]);
   //Only run this once, don't run again if the global state changes (e.g. when changing a setting)
@@ -329,14 +311,9 @@ Future<void> createBackupInBackground(context) async {
 }
 
 Future forceDeleteDB() async {
-  if (kIsWeb) {
-    final html.Storage localStorage = html.window.localStorage;
-    localStorage.clear();
-  } else {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final dbFile = File(p.join(dbFolder.path, 'db.sqlite'));
-    await dbFile.delete();
-  }
+  final dbFolder = await getApplicationDocumentsDirectory();
+  final dbFile = File(p.join(dbFolder.path, 'db.sqlite'));
+  await dbFile.delete();
 }
 
 bool openDatabaseCorruptedPopup(BuildContext context) {
@@ -856,7 +833,7 @@ class _BackupManagementState extends State<BackupManagement> {
               : "overwrite-warning".tr(),
       child: Column(
         children: [
-          widget.isClientSync && kIsWeb == false
+          widget.isClientSync
               ? Row(
                   children: [
                     Expanded(
@@ -900,8 +877,8 @@ class _BackupManagementState extends State<BackupManagement> {
               : SizedBox.shrink(),
           widget.isClientSync
               ? Padding(
-                  padding: EdgeInsets.only(
-                      bottom: widget.isClientSync && kIsWeb ? 0 : 10),
+                  padding:
+                      EdgeInsets.only(bottom: widget.isClientSync ? 0 : 10),
                   child: SettingsContainerSwitch(
                     enableBorderRadius: true,
                     onSwitched: (value) {
@@ -925,33 +902,7 @@ class _BackupManagementState extends State<BackupManagement> {
                   ),
                 )
               : SizedBox.shrink(),
-          // Only allow sync on every change for web
-          // Only on web, disabled automatically in initializeSettings if not web
-          widget.isClientSync && kIsWeb
-              ? Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: AnimatedExpanded(
-                    expand: backupSync,
-                    child: SettingsContainerSwitch(
-                      enableBorderRadius: true,
-                      onSwitched: (value) {
-                        updateSettings("syncEveryChange", value,
-                            pagesNeedingRefresh: [], updateGlobalState: false);
-                      },
-                      initialValue: appStateSettings["syncEveryChange"],
-                      title: "sync-every-change".tr(),
-                      descriptionWithValue: (value) {
-                        return value
-                            ? "sync-every-change-description1".tr()
-                            : "sync-every-change-description2".tr();
-                      },
-                      icon: appStateSettings["outlinedIcons"]
-                          ? Icons.all_inbox_outlined
-                          : Icons.all_inbox_rounded,
-                    ),
-                  ),
-                )
-              : SizedBox.shrink(),
+          SizedBox.shrink(),
           widget.isManaging && widget.isClientSync == false
               ? AnimatedExpanded(
                   expand: autoBackups,

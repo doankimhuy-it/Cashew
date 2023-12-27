@@ -507,7 +507,6 @@ class _AddWalletPageState extends State<AddWalletPage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextInput(
-                  autoFocus: kIsWeb && getIsFullScreen(context),
                   focusNode: _titleFocusNode,
                   labelText: "name-placeholder".tr(),
                   bubbly: false,

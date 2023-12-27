@@ -17,7 +17,7 @@ class CustomContextMenu extends StatelessWidget {
       contextMenuBuilder: (context, offset) {
         Offset newOffset = Offset(
             offset.dx - getWidthNavigationSidebar(context),
-            offset.dy - (kIsWeb ? 0 : 15));
+            offset.dy - 15);
         return Stack(
           children: [
             GestureDetector(

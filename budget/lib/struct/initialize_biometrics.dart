@@ -12,11 +12,10 @@ Future<bool> checkBiometrics({
   bool checkAlways = false,
   String message = 'Please authenticate to continue.',
 }) async {
-  if (kIsWeb) return true;
   final LocalAuthentication auth = LocalAuthentication();
   final bool requireAuth = checkAlways || appStateSettings["requireAuth"];
-  biometricsAvailable = kIsWeb == false && await auth.canCheckBiometrics ||
-      await auth.isDeviceSupported();
+  biometricsAvailable =
+      await auth.canCheckBiometrics || await auth.isDeviceSupported();
   bool didAuthenticate = false;
   if (requireAuth == true && biometricsAvailable == true) {
     await auth.stopAuthentication();

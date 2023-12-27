@@ -183,8 +183,6 @@ Future<bool> syncData(BuildContext context) async {
   if (appStateSettings["backupSync"] == false) return false;
   if (appStateSettings["hasSignedIn"] == false) return false;
   if (errorSigningInDuringCloud == true) return false;
-  // Prevent sign-in on web - background sign-in cannot access Google Drive etc.
-  if (kIsWeb && !entireAppLoaded) return false;
 
   canSyncData = false;
 
@@ -267,41 +265,10 @@ Future<bool> syncData(BuildContext context) async {
 
     FinanceDatabase databaseSync;
 
-    if (kIsWeb) {
-      String dataEncoded = bin2str.encode(Uint8List.fromList(dataStore));
-
-      try {
-        databaseSync = await constructDb('syncdb',
-            initialDataWeb: Uint8List.fromList(dataStore));
-      } catch (e) {
-        double megabytes = dataEncoded.length / (1024 * 1024);
-        await openPopup(
-          context,
-          title: "syncing-failed".tr(),
-          description: e.toString() +
-              "\n\n" +
-              megabytes.toString() +
-              " MB in size" +
-              " when syncing with " +
-              file.name.toString(),
-          icon: appStateSettings["outlinedIcons"]
-              ? Icons.sync_problem_outlined
-              : Icons.sync_problem_rounded,
-          onSubmit: () {
-            Navigator.pop(context);
-          },
-          onSubmitLabel: "ok".tr(),
-        );
-        // final html.Storage localStorage = html.window.localStorage;
-        // localStorage["moor_db_str_syncdb"] = "";
-        throw (e);
-      }
-    } else {
-      final dbFolder = await getApplicationDocumentsDirectory();
-      final dbFile = File(p.join(dbFolder.path, 'syncdb.sqlite'));
-      await dbFile.writeAsBytes(dataStore);
-      databaseSync = await constructDb('syncdb');
-    }
+    final dbFolder = await getApplicationDocumentsDirectory();
+    final dbFile = File(p.join(dbFolder.path, 'syncdb.sqlite'));
+    await dbFile.writeAsBytes(dataStore);
+    databaseSync = await constructDb('syncdb');
 
     try {
       List<TransactionWallet> newWallets =

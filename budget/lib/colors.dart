@@ -338,7 +338,6 @@ Future<bool> systemColorByDefault() async {
 
 bool supportsSystemColor() {
   return defaultTargetPlatform.supportsAccentColor &&
-      kIsWeb != true &&
       getPlatform() != PlatformOS.isIOS;
 }
 
@@ -370,7 +369,7 @@ SystemUiOverlayStyle getSystemUiOverlayStyle(Brightness brightness) {
       statusBarBrightness: Brightness.light,
       systemStatusBarContrastEnforced: false,
       statusBarIconBrightness: Brightness.dark,
-      statusBarColor: kIsWeb ? Colors.black : Colors.transparent,
+      statusBarColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
       systemNavigationBarColor: getBottomNavbarBackgroundColor(
         colorScheme: getColorScheme(brightness),
@@ -383,7 +382,7 @@ SystemUiOverlayStyle getSystemUiOverlayStyle(Brightness brightness) {
       statusBarBrightness: Brightness.dark,
       systemStatusBarContrastEnforced: false,
       statusBarIconBrightness: Brightness.light,
-      statusBarColor: kIsWeb ? Colors.black : Colors.transparent,
+      statusBarColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.light,
       systemNavigationBarColor: getBottomNavbarBackgroundColor(
         colorScheme: getColorScheme(brightness),

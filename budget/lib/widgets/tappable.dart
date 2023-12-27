@@ -54,9 +54,7 @@ class Tappable extends StatelessWidget {
       type: type,
       borderRadius: customBorderRadius ?? BorderRadius.circular(borderRadius),
       child: InkWell(
-        splashFactory: kIsWeb
-            ? InkRipple.splashFactory
-            : InkSparkle.constantTurbulenceSeedSplashFactory,
+        splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
         borderRadius: customBorderRadius ?? BorderRadius.circular(borderRadius),
         onTap: onTap,
         onHighlightChanged: onHighlightChanged,
@@ -64,7 +62,7 @@ class Tappable extends StatelessWidget {
         onLongPress: onLongPress,
       ),
     );
-    if (!kIsWeb && onLongPress != null) {
+    if (onLongPress != null) {
       return tappable;
     }
 
@@ -181,7 +179,7 @@ class _FadedButtonState extends State<FadedButton>
   @override
   Widget build(BuildContext context) {
     Widget tappable = MouseRegion(
-      cursor: kIsWeb ? SystemMouseCursors.click : MouseCursor.defer,
+      cursor:  MouseCursor.defer,
       child: IgnorePointer(
         ignoring: widget.onLongPress == null && widget.onTap == null,
         child: GestureDetector(
@@ -214,7 +212,7 @@ class _FadedButtonState extends State<FadedButton>
       ),
     );
 
-    if (!kIsWeb && widget.onLongPress != null) {
+    if (widget.onLongPress != null) {
       return tappable;
     }
 

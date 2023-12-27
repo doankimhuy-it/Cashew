@@ -25,8 +25,6 @@ import 'package:budget/widgets/time_digits.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-bool notificationsGlobalEnabled = kIsWeb == false;
-
 enum ReminderNotificationType {
   IfAppNotOpened,
   DayFromOpen,
@@ -501,9 +499,6 @@ tz.TZDateTime _nextInstanceOfSetTime(TimeOfDay timeOfDay, {int dayOffset = 0}) {
 }
 
 Future<bool> initializeNotificationsPlatform() async {
-  if (kIsWeb || Platform.isLinux) {
-    return false;
-  }
   bool result = await checkNotificationsPermissionAll();
   if (result) {
     print("Notifications initialized");

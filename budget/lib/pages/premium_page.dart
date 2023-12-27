@@ -26,8 +26,8 @@ import 'package:sa3_liquid/sa3_liquid.dart';
 import 'package:budget/widgets/open_container_navigation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
-bool premiumPopupEnabled = kIsWeb == false;
-bool tryStoreEnabled = kIsWeb == false && kDebugMode == false;
+bool premiumPopupEnabled = true;
+bool tryStoreEnabled = kDebugMode == false;
 StreamSubscription<List<PurchaseDetails>>? purchaseListener;
 Map<String, ProductDetails> storeProducts = {};
 Map<String, String> productIDs = {
@@ -811,7 +811,7 @@ class ProductsState extends State<Products> {
       duration: Duration(milliseconds: 700),
       child: appStateSettings["purchaseID"] != null
           ? ManageSubscription()
-          : kIsWeb || hasProducts == false
+          : hasProducts == false
               ? loading == true
                   ? SizedBox.shrink()
                   : StatusBox(
@@ -1350,9 +1350,6 @@ class PremiumBanner extends StatelessWidget {
             color: Colors.transparent,
             borderRadius: borderRadius,
             onTap: () {
-              if (kIsWeb)
-                openUrl("https://ko-fi.com/dapperappdeveloper");
-              else
                 openContainer();
             },
             child: ClipRRect(
@@ -1367,7 +1364,7 @@ class PremiumBanner extends StatelessWidget {
                       child: PremiumBackground(
                         purchased: purchased,
                         disableAnimation:
-                            getPlatform() == PlatformOS.isIOS || kIsWeb,
+                            getPlatform() == PlatformOS.isIOS,
                       ),
                     ),
                     Padding(

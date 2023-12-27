@@ -223,13 +223,6 @@ class PageNavigationFrameworkState extends State<PageNavigationFramework> {
           createSyncBackup(changeMadeSync: true);
         }
       });
-
-      if (kIsWeb) {
-        // On web, disable the browser's context menu since this example uses a custom
-        // Flutter-rendered context menu.
-        // Refer here: https://api.flutter.dev/flutter/material/TextField/contextMenuBuilder.html
-        BrowserContextMenu.disableContextMenu();
-      }
     });
 
     pages = [
@@ -301,11 +294,7 @@ class PageNavigationFrameworkState extends State<PageNavigationFramework> {
           body: FadeIndexedStack(
             children: [...pages, ...pagesExtended],
             index: currentPage,
-            duration: !kIsWeb
-                ? Duration.zero
-                : appStateSettings["batterySaver"]
-                    ? Duration.zero
-                    : Duration(milliseconds: 300),
+            duration: Duration.zero
           ),
           extendBody: false,
           bottomNavigationBar: BottomNavBar(

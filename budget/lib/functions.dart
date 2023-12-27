@@ -764,42 +764,21 @@ String pluralString(bool condition, String string) {
     return string + "s";
 }
 
-// String? getOSInsideWeb() {
-//   if (kIsWeb) {
-//     final userAgent = window.navigator.userAgent.toString().toLowerCase();
-//     if (userAgent.contains("(macintosh")) return "iOS";
-//     if (userAgent.contains("(iphone")) return "iOS";
-//     if (userAgent.contains("(linux")) return "Android";
-//     return "web";
-//   } else {
-//     return null;
-//   }
-// }
-
 bool lockAppWaitForRestart = false;
 void restartAppPopup(context) async {
   // For now, enforce this until better solution found
-  if (kIsWeb || true) {
-    // Lock the side navigation
-    lockAppWaitForRestart = true;
-    appStateKey.currentState?.refreshAppState();
+  // Lock the side navigation
+  lockAppWaitForRestart = true;
+  appStateKey.currentState?.refreshAppState();
 
-    openPopup(
-      context,
-      title: "please-restart-the-application".tr(),
-      icon: appStateSettings["outlinedIcons"]
-          ? Icons.restart_alt_outlined
-          : Icons.restart_alt_rounded,
-      barrierDismissible: false,
-    );
-  } else {
-    // Pop all routes, select home tab
-    RestartApp.restartApp(context);
-    Navigator.of(context).popUntil((route) => route.isFirst);
-    Future.delayed(Duration(milliseconds: 100), () {
-      PageNavigationFramework.changePage(context, 0, switchNavbar: true);
-    });
-  }
+  openPopup(
+    context,
+    title: "please-restart-the-application".tr(),
+    icon: appStateSettings["outlinedIcons"]
+        ? Icons.restart_alt_outlined
+        : Icons.restart_alt_rounded,
+    barrierDismissible: false,
+  );
 }
 
 String filterEmailTitle(string) {
@@ -905,18 +884,6 @@ double getKeyboardHeight(context) {
 }
 
 Future<String> getDeviceInfo() async {
-  if (kIsWeb) {
-    String webBrowserInfo = html.window.navigator.userAgent.toString();
-    return webBrowserInfo
-        .toLowerCase()
-        .replaceAll("mozilla/5.0", "")
-        .replaceAll("mozilla", "")
-        .replaceAll("(", "")
-        .replaceAll(")", "")
-        .replaceAll(";", "")
-        .trim()
-        .capitalizeFirst;
-  }
   try {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
@@ -1100,8 +1067,6 @@ enum PlatformOS {
 PlatformOS? getPlatform({bool ignoreEmulation = false}) {
   if (appStateSettings["iOSEmulate"] == true && ignoreEmulation == false) {
     return PlatformOS.isIOS;
-  } else if (kIsWeb) {
-    return PlatformOS.web;
   } else if (Platform.isIOS) {
     return PlatformOS.isIOS;
   } else if (Platform.isAndroid) {

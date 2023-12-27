@@ -272,7 +272,6 @@ Future<bool> getCloudBudgets() async {
   if (appStateSettings["sharedBudgets"] == false) return false;
   if (appStateSettings["hasSignedIn"] == false) return false;
   if (errorSigningInDuringCloud == true) return false;
-  if (kIsWeb && !entireAppLoaded) return false;
   FirebaseFirestore? db = await firebaseGetDBInstance();
   if (cloudTimeoutTimer?.isActive == true) {
     // openSnackbar(SnackbarMessage(title: "Please wait..."));
@@ -648,7 +647,6 @@ Future<bool> syncPendingQueueOnServer() async {
   if (appStateSettings["sharedBudgets"] == false) return false;
   if (appStateSettings["hasSignedIn"] == false) return false;
   if (errorSigningInDuringCloud == true) return false;
-  if (kIsWeb && !entireAppLoaded) return false;
   print("syncing pending queue");
   Map<dynamic, dynamic> currentSendTransactionsToServerQueue =
       appStateSettings["sendTransactionsToServerQueue"];

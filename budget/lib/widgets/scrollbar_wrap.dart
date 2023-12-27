@@ -8,8 +8,8 @@ class ScrollbarWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // disable in debug mode because of scroll controller warnings
-    if (kIsWeb || kDebugMode) {
+    // Disable in debug mode because of scroll controller warnings
+    if (kDebugMode) {
       return child;
     }
     return MediaQuery.removePadding(

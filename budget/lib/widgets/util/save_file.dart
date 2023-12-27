@@ -33,35 +33,6 @@ Future<bool> saveFile({
   if (dataStore == null && dataString == null) {
     throw ("Both arguments cannot be null");
   }
-  if (kIsWeb) {
-    try {
-      String base64String = base64Encode(
-          dataStore != null ? dataStore : utf8.encode(dataString!));
-      AnchorElement anchor = AnchorElement(
-          href: 'data:application/octet-stream;base64,$base64String')
-        ..download = fileName
-        ..style.display = 'none';
-      anchor.click();
-      openSnackbar(SnackbarMessage(
-        title: successMessage,
-        description: fileName,
-        icon: appStateSettings["outlinedIcons"]
-            ? Icons.download_done_outlined
-            : Icons.download_done_rounded,
-      ));
-      return true;
-    } catch (e) {
-      openSnackbar(SnackbarMessage(
-        title: errorMessage,
-        description: e.toString(),
-        icon: appStateSettings["outlinedIcons"]
-            ? Icons.warning_outlined
-            : Icons.warning_rounded,
-      ));
-      print("Error saving file to device: " + e.toString());
-      return false;
-    }
-  }
 
   if (shareFile || getPlatform() == PlatformOS.isIOS) {
     try {

@@ -673,7 +673,6 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
                   child: IntrinsicWidth(
                     child: TextInput(
                       textAlign: TextAlign.center,
-                      autoFocus: kIsWeb && getIsFullScreen(context),
                       focusNode: _titleFocusNode,
                       labelText: "name-placeholder".tr(),
                       bubbly: false,

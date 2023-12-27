@@ -228,9 +228,6 @@ Future<void> parseEmailsInBackground(context,
   if (appStateSettings["hasSignedIn"] == false) return;
   if (errorSigningInDuringCloud == true) return;
   if (appStateSettings["emailScanning"] == false) return;
-  // Prevent sign-in on web - background sign-in cannot access Google Drive etc.
-  if (kIsWeb && !entireAppLoaded) return;
-  // print(entireAppLoaded);
   //Only run this once, don't run again if the global state changes (e.g. when changing a setting)
   if (entireAppLoaded == false || forceParse) {
     if (appStateSettings["AutoTransactions-canReadEmails"] == true) {

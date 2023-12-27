@@ -1,4 +1,3 @@
-
 import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/struct/settings.dart';
@@ -30,14 +29,11 @@ Future<bool> importDBFileFromDevice(BuildContext context) async {
     ));
     return false;
   }
-  if (kIsWeb) {
-    Uint8List fileBytes = result.files.single.bytes!;
-    await overwriteDefaultDB(fileBytes);
-  } else {
-    File file = File(result.files.single.path ?? "");
-    Uint8List fileBytes = await file.readAsBytes();
-    await overwriteDefaultDB(fileBytes);
-  }
+
+  File file = File(result.files.single.path ?? "");
+  Uint8List fileBytes = await file.readAsBytes();
+  await overwriteDefaultDB(fileBytes);
+
   resetLanguageToSystem(context);
   await updateSettings("databaseJustImported", true,
       pagesNeedingRefresh: [], updateGlobalState: false);

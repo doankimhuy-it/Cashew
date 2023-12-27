@@ -56,15 +56,11 @@ class _ImportCSVState extends State<ImportCSV> {
 
       if (result != null) {
         String csvString;
-        if (kIsWeb) {
-          List<int> fileBytes = result.files.single.bytes!;
-          csvString = utf8.decode(fileBytes);
-        } else {
-          File file = File(result.files.single.path ?? "");
-          Uint8List fileBytes = await file.readAsBytes();
-          DecodingResult decoded = await CharsetDetector.autoDecode(fileBytes);
-          csvString = decoded.string;
-        }
+
+        File file = File(result.files.single.path ?? "");
+        Uint8List fileBytes = await file.readAsBytes();
+        DecodingResult decoded = await CharsetDetector.autoDecode(fileBytes);
+        csvString = decoded.string;
         // print(csvString);
         return csvString;
       } else {
@@ -1069,7 +1065,7 @@ class _ImportingEntriesPopupState extends State<ImportingEntriesPopup> {
             }
           }
         }
-         ImportingTransactionAndTitle? transactionAndTitle;
+        ImportingTransactionAndTitle? transactionAndTitle;
         try {
           transactionAndTitle = await _importEntry(
             assignedColumns,

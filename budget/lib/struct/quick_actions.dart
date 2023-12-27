@@ -15,7 +15,6 @@ import "package:provider/provider.dart";
 import "package:quick_actions/quick_actions.dart";
 
 void runQuickActionsPayLoads(context) async {
-  if (kIsWeb) return;
   final QuickActions quickActions = const QuickActions();
   quickActions.initialize((String quickAction) async {
     if (Navigator.of(context).canPop() == false || entireAppLoaded) {
