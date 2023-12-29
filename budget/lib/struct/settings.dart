@@ -154,7 +154,6 @@ Future<bool> updateSettings(
       } else if (page == 3) {
         settingsPageStateKey.currentState?.refreshState();
         settingsPageFrameworkStateKey.currentState?.refreshState();
-        purchasesStateKey.currentState?.refreshState();
       }
     }
   }

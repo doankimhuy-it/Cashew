@@ -19,7 +19,6 @@ import 'package:budget/pages/edit_wallets_page.dart';
 import 'package:budget/pages/home_page/home_page.dart';
 import 'package:budget/pages/notifications_page.dart';
 import 'package:budget/pages/objectives_list_page.dart';
-import 'package:budget/pages/premium_page.dart';
 import 'package:budget/pages/settings_page.dart';
 import 'package:budget/pages/subscriptions_page.dart';
 import 'package:budget/pages/transactions_list_page.dart';
@@ -88,7 +87,6 @@ GlobalKey<BudgetsListPageState> budgetsListPageStateKey = GlobalKey();
 GlobalKey<MoreActionsPageState> settingsPageStateKey = GlobalKey();
 GlobalKey<SettingsPageFrameworkState> settingsPageFrameworkStateKey =
     GlobalKey();
-GlobalKey<ProductsState> purchasesStateKey = GlobalKey();
 GlobalKey<AccountsPageState> accountsPageStateKey = GlobalKey();
 GlobalKey<BottomNavBarState> navbarStateKey = GlobalKey();
 GlobalKey<NavigationSidebarState> sidebarStateKey = GlobalKey();
@@ -186,8 +184,6 @@ class PageNavigationFrameworkState extends State<PageNavigationFramework> {
       await initializeDefaultDatabase();
       runNotificationPayLoads(context);
       runQuickActionsPayLoads(context);
-      initializeStoreAndPurchases(
-          context: context, popRouteWithPurchase: false);
 
       if (entireAppLoaded == false) {
         await runAllCloudFunctions(context);

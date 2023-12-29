@@ -10,7 +10,6 @@ import 'package:budget/pages/edit_objectives_page.dart';
 import 'package:budget/pages/exchange_rates_page.dart';
 import 'package:budget/pages/home_page/home_page_net_worth.dart';
 import 'package:budget/pages/objectives_list_page.dart';
-import 'package:budget/pages/premium_page.dart';
 import 'package:budget/pages/transactions_list_page.dart';
 import 'package:budget/pages/upcoming_overdue_transactions_page.dart';
 import 'package:budget/struct/language_map.dart';
@@ -90,13 +89,7 @@ class MoreActionsPageState extends State<MoreActionsPage>
         title: "more-actions".tr(),
         backButton: false,
         horizontalPadding: getHorizontalPaddingConstrained(context),
-        listWidgets: const [
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: PremiumBanner(),
-          ),
-          MorePages()
-        ],
+        listWidgets: const [MorePages()],
       );
     });
   }
@@ -160,10 +153,12 @@ class MorePages extends StatelessWidget {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
                   child: SettingsContainer(
                     onTap: () {
-                      openBottomSheet(context, const RatingPopup(), fullSnap: true);
+                      openBottomSheet(context, const RatingPopup(),
+                          fullSnap: true);
                     },
                     title: "feedback".tr(),
                     icon: appStateSettings["outlinedIcons"]
@@ -204,8 +199,8 @@ class MorePages extends StatelessWidget {
                 ),
                 Expanded(
                   child: SettingsContainerOpenPage(
-                    openPage:
-                        const UpcomingOverdueTransactions(overdueTransactions: null),
+                    openPage: const UpcomingOverdueTransactions(
+                        overdueTransactions: null),
                     title: navBarIconsData["scheduled"]!.label.tr(),
                     icon: navBarIconsData["scheduled"]!.iconData,
                     isOutlined: true,
@@ -959,9 +954,7 @@ class _SetNumberFormatPopupState extends State<SetNumberFormatPopup> {
             initial: appStateSettings["numberFormatLocale"],
             displayFilter: (item) {
               if (item == null) {
-                return "${"default".tr()} (${convertToMoney(
-                        Provider.of<AllWallets>(context, listen: true), 1000.23,
-                        customLocale: Platform.localeName)})";
+                return "${"default".tr()} (${convertToMoney(Provider.of<AllWallets>(context, listen: true), 1000.23, customLocale: Platform.localeName)})";
               }
               return convertToMoney(
                   Provider.of<AllWallets>(context, listen: true), 1000.23,

@@ -1,7 +1,6 @@
 import 'package:budget/colors.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/pages/add_transaction_page.dart';
-import 'package:budget/pages/premium_page.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/color_picker.dart';
@@ -151,7 +150,8 @@ class _SelectColorState extends State<SelectColor> {
                                   selectedColor = color;
                                   selectedIndex = index;
                                 });
-                                Future.delayed(const Duration(milliseconds: 70), () {
+                                Future.delayed(const Duration(milliseconds: 70),
+                                    () {
                                   if (widget.next != null) {
                                     widget.next!();
                                   }
@@ -228,8 +228,8 @@ class _SelectColorState extends State<SelectColor> {
                                     selectedColor = color;
                                     selectedIndex = index;
                                   });
-                                  Future.delayed(const Duration(milliseconds: 70),
-                                      () {
+                                  Future.delayed(
+                                      const Duration(milliseconds: 70), () {
                                     Navigator.pop(context);
                                     if (widget.next != null) {
                                       widget.next!();
@@ -250,8 +250,8 @@ class _SelectColorState extends State<SelectColor> {
                                     setState(() {
                                       selectedColor = color;
                                     });
-                                    Future.delayed(const Duration(milliseconds: 70),
-                                        () {
+                                    Future.delayed(
+                                        const Duration(milliseconds: 70), () {
                                       Navigator.pop(context);
                                       if (widget.next != null) {
                                         widget.next!();
@@ -295,7 +295,8 @@ class ColorIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
-      margin: margin ?? const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
+      margin:
+          margin ?? const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
       height: size,
       width: size,
       decoration: outline
@@ -344,7 +345,8 @@ class ThemeColorIcon extends StatelessWidget {
       message: "theme-color".tr(),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
-        margin: margin ?? const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
+        margin: margin ??
+            const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
         height: size,
         width: size,
         decoration: outline
@@ -459,49 +461,44 @@ class _ColorIconCustomState extends State<ColorIconCustom> {
     );
     return Tooltip(
       message: "custom-color".tr(),
-      child: LockedFeature(
-        actionAfter: () async {
-          await openBottomSheet(context, colorPickerPopup);
-        },
-        child: Container(
-          margin: widget.margin ??
-              const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
-          height: widget.size,
-          width: widget.size,
-          decoration: widget.outline
-              ? BoxDecoration(
-                  border: Border.all(
-                    color: dynamicPastel(context, selectedColor,
-                        amountLight: 0.5, amountDark: 0.4, inverse: true),
-                    width: 3,
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(500)),
-                )
-              : BoxDecoration(
-                  border: GradientBoxBorder(
-                    gradient: LinearGradient(colors: [
-                      Colors.red.withOpacity(0.8),
-                      Colors.yellow.withOpacity(0.8),
-                      Colors.green.withOpacity(0.8),
-                      Colors.blue.withOpacity(0.8),
-                      Colors.purple.withOpacity(0.8),
-                    ]),
-                    width: 3,
-                  ),
-                  borderRadius: BorderRadius.circular(500),
+      child: Container(
+        margin: widget.margin ??
+            const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
+        height: widget.size,
+        width: widget.size,
+        decoration: widget.outline
+            ? BoxDecoration(
+                border: Border.all(
+                  color: dynamicPastel(context, selectedColor,
+                      amountLight: 0.5, amountDark: 0.4, inverse: true),
+                  width: 3,
                 ),
-          child: Tappable(
-            color: Colors.transparent,
-            onTap: () async {
-              await openBottomSheet(context, colorPickerPopup);
-            },
-            borderRadius: 500,
-            child: Icon(
-              appStateSettings["outlinedIcons"]
-                  ? Icons.colorize_outlined
-                  : Icons.colorize_rounded,
-              color: Theme.of(context).colorScheme.secondary,
-            ),
+                borderRadius: const BorderRadius.all(Radius.circular(500)),
+              )
+            : BoxDecoration(
+                border: GradientBoxBorder(
+                  gradient: LinearGradient(colors: [
+                    Colors.red.withOpacity(0.8),
+                    Colors.yellow.withOpacity(0.8),
+                    Colors.green.withOpacity(0.8),
+                    Colors.blue.withOpacity(0.8),
+                    Colors.purple.withOpacity(0.8),
+                  ]),
+                  width: 3,
+                ),
+                borderRadius: BorderRadius.circular(500),
+              ),
+        child: Tappable(
+          color: Colors.transparent,
+          onTap: () async {
+            await openBottomSheet(context, colorPickerPopup);
+          },
+          borderRadius: 500,
+          child: Icon(
+            appStateSettings["outlinedIcons"]
+                ? Icons.colorize_outlined
+                : Icons.colorize_rounded,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),

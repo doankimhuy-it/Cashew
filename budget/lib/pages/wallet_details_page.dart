@@ -7,7 +7,6 @@ import 'package:budget/pages/credit_debt_transactions_page.dart';
 import 'package:budget/pages/home_page/home_page_line_graph.dart';
 import 'package:budget/pages/home_page/home_page_net_worth.dart';
 import 'package:budget/pages/past_budgets_page.dart';
-import 'package:budget/pages/premium_page.dart';
 import 'package:budget/pages/transaction_filters.dart';
 import 'package:budget/pages/transactions_search_page.dart';
 import 'package:budget/pages/upcoming_overdue_transactions_page.dart';
@@ -134,7 +133,6 @@ class _WalletDetailsPageState extends State<WalletDetailsPage>
   void initState() {
     _tabController.addListener(onTabController);
     if (widget.wallet == null) {
-      allSpendingHistoryDismissedPremium = false;
       searchFilters = SearchFilters();
       searchFilters?.loadFilterString(
         appStateSettings["allSpendingSetFiltersString"],
@@ -310,8 +308,8 @@ class _WalletDetailsPageState extends State<WalletDetailsPage>
                         ),
                         textColor: getColor(context, "black"),
                         openPage: TransactionsSearchPage(
-                          initialFilters: (searchFilters ?? SearchFilters())
-                              ?.copyWith(
+                          initialFilters:
+                              (searchFilters ?? SearchFilters())?.copyWith(
                             dateTimeRange:
                                 getDateTimeRangeForPassedSearchFilters(
                                     cycleSettingsExtension: "",
@@ -353,8 +351,8 @@ class _WalletDetailsPageState extends State<WalletDetailsPage>
                           AmountSpentEntryRow(
                             forceShow: true,
                             openPage: TransactionsSearchPage(
-                              initialFilters: (searchFilters ?? SearchFilters())
-                                  ?.copyWith(
+                              initialFilters:
+                                  (searchFilters ?? SearchFilters())?.copyWith(
                                 dateTimeRange:
                                     getDateTimeRangeForPassedSearchFilters(
                                         cycleSettingsExtension: "",
@@ -386,8 +384,8 @@ class _WalletDetailsPageState extends State<WalletDetailsPage>
                           AmountSpentEntryRow(
                             forceShow: true,
                             openPage: TransactionsSearchPage(
-                              initialFilters: (searchFilters ?? SearchFilters())
-                                  ?.copyWith(
+                              initialFilters:
+                                  (searchFilters ?? SearchFilters())?.copyWith(
                                 dateTimeRange:
                                     getDateTimeRangeForPassedSearchFilters(
                                         cycleSettingsExtension: "",
@@ -465,7 +463,8 @@ class _WalletDetailsPageState extends State<WalletDetailsPage>
                                     CycleType.allTime
                                 ? "all-time".tr()
                                 : null,
-                            openPage: const CreditDebtTransactions(isCredit: true),
+                            openPage:
+                                const CreditDebtTransactions(isCredit: true),
                             textColor: getColor(context, "unPaidUpcoming"),
                             label: "lent".tr(),
                             totalWithCountStream:
@@ -493,7 +492,8 @@ class _WalletDetailsPageState extends State<WalletDetailsPage>
                                     CycleType.allTime
                                 ? "all-time".tr()
                                 : null,
-                            openPage: const CreditDebtTransactions(isCredit: false),
+                            openPage:
+                                const CreditDebtTransactions(isCredit: false),
                             textColor: getColor(context, "unPaidOverdue"),
                             label: "borrowed".tr(),
                             totalWithCountStream:
@@ -553,8 +553,8 @@ class _WalletDetailsPageState extends State<WalletDetailsPage>
                             onlyIncomeAndExpense: true,
                           ),
                           openPage: TransactionsSearchPage(
-                            initialFilters: (searchFilters ?? SearchFilters())
-                                ?.copyWith(
+                            initialFilters:
+                                (searchFilters ?? SearchFilters())?.copyWith(
                               dateTimeRange:
                                   getDateTimeRangeForPassedSearchFilters(
                                       cycleSettingsExtension: "",
@@ -588,8 +588,8 @@ class _WalletDetailsPageState extends State<WalletDetailsPage>
                             onlyIncomeAndExpense: true,
                           ),
                           openPage: TransactionsSearchPage(
-                            initialFilters: (searchFilters ?? SearchFilters())
-                                ?.copyWith(
+                            initialFilters:
+                                (searchFilters ?? SearchFilters())?.copyWith(
                               dateTimeRange:
                                   getDateTimeRangeForPassedSearchFilters(
                                       cycleSettingsExtension: "",
@@ -703,25 +703,24 @@ class _WalletDetailsPageState extends State<WalletDetailsPage>
     }
 
     selectedTabPeriodSelected(VoidCallback onTap) => AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              child: selectedDateTimeRange == null
-                  ? Container(
-                      key: ValueKey(selectedDateTimeRange),
-                    )
-                  : SelectedPeriodHeaderLabel(
-                      key: ValueKey(selectedDateTimeRange),
-                      color: Theme.of(context).colorScheme.tertiaryContainer,
-                      textColor:
-                          Theme.of(context).colorScheme.onTertiaryContainer,
-                      text: selectedDateTimeRange != null
-                          ? timeRangeString
-                          : getLabelOfSelectedCustomPeriod(""),
-                      onTap: onTap,
-                      iconData: appStateSettings["outlinedIcons"]
-                          ? Icons.timelapse_outlined
-                          : Icons.timelapse_rounded,
-                    ),
-            );
+          duration: const Duration(milliseconds: 500),
+          child: selectedDateTimeRange == null
+              ? Container(
+                  key: ValueKey(selectedDateTimeRange),
+                )
+              : SelectedPeriodHeaderLabel(
+                  key: ValueKey(selectedDateTimeRange),
+                  color: Theme.of(context).colorScheme.tertiaryContainer,
+                  textColor: Theme.of(context).colorScheme.onTertiaryContainer,
+                  text: selectedDateTimeRange != null
+                      ? timeRangeString
+                      : getLabelOfSelectedCustomPeriod(""),
+                  onTap: onTap,
+                  iconData: appStateSettings["outlinedIcons"]
+                      ? Icons.timelapse_outlined
+                      : Icons.timelapse_rounded,
+                ),
+        );
 
     Widget clearSelectedPeriodButton = AnimatedSizeSwitcher(
       child: selectedDateTimeRange == null
@@ -1649,8 +1648,8 @@ class _WalletDetailsCategorySelectionState
                 pushRoute(
                   context,
                   TransactionsSearchPage(
-                    initialFilters: (widget.searchFilters ?? SearchFilters())
-                        ?.copyWith(
+                    initialFilters:
+                        (widget.searchFilters ?? SearchFilters())?.copyWith(
                       dateTimeRange:
                           widget.getDateTimeRangeForPassedSearchFilters(),
                       walletPks: widget.wallet == null
@@ -1939,8 +1938,8 @@ class WalletDetailsLineGraph extends StatelessWidget {
             child: Stack(
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.only(left: 7, right: 7, bottom: 12, top: 18),
+                  padding: const EdgeInsets.only(
+                      left: 7, right: 7, bottom: 12, top: 18),
                   child: spendingGraph,
                 ),
               ],
@@ -1951,8 +1950,6 @@ class WalletDetailsLineGraph extends StatelessWidget {
     );
   }
 }
-
-bool allSpendingHistoryDismissedPremium = false;
 
 class AllSpendingPastSpendingGraph extends StatefulWidget {
   const AllSpendingPastSpendingGraph({
@@ -2338,85 +2335,76 @@ class _AllSpendingPastSpendingGraphState
                           children: [
                             Container(
                               color: Theme.of(context).canvasColor,
-                              child: FadeOutAndLockFeature(
-                                hasInitiallyDismissed:
-                                    allSpendingHistoryDismissedPremium,
-                                actionAfter: () {
-                                  allSpendingHistoryDismissedPremium = true;
-                                },
-                                child: Stack(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 7, horizontal: 0),
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 5),
-                                        child: ClipRRect(
-                                          child: BudgetHistoryLineGraph(
-                                            forceMinYIfPositive: widget
-                                                    .appStateSettingsNetAllSpendingTotal
-                                                ? null
-                                                : 0,
-                                            showDateOnHover: true,
-                                            onTouchedIndex: (index) {},
-                                            color: dynamicPastel(
-                                              context,
-                                              Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                              amountLight: 0.4,
-                                              amountDark: 0.2,
-                                            ),
-                                            dateRanges: dateTimeRanges,
-                                            lineColors: allSpots.length > 1
-                                                ? [
-                                                    getColor(context,
-                                                        "expenseAmount"),
-                                                    getColor(context,
-                                                        "incomeAmount"),
-                                                  ]
-                                                : null,
-                                            spots: allSpots,
-                                            horizontalLineAt: null,
-                                            budget:
-                                                getCustomCycleTempBudget(""),
-                                            extraCategorySpots: const {},
-                                            categoriesMapped: const {},
-                                            loadAllEvenIfZero:
-                                                amountLoadedPressedOnce,
-                                            setNoPastRegionsAreZero:
-                                                (bool value) {
-                                              amountLoadedPressedOnce = true;
-                                            },
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 7, horizontal: 0),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 5),
+                                      child: ClipRRect(
+                                        child: BudgetHistoryLineGraph(
+                                          forceMinYIfPositive: widget
+                                                  .appStateSettingsNetAllSpendingTotal
+                                              ? null
+                                              : 0,
+                                          showDateOnHover: true,
+                                          onTouchedIndex: (index) {},
+                                          color: dynamicPastel(
+                                            context,
+                                            Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            amountLight: 0.4,
+                                            amountDark: 0.2,
                                           ),
+                                          dateRanges: dateTimeRanges,
+                                          lineColors: allSpots.length > 1
+                                              ? [
+                                                  getColor(
+                                                      context, "expenseAmount"),
+                                                  getColor(
+                                                      context, "incomeAmount"),
+                                                ]
+                                              : null,
+                                          spots: allSpots,
+                                          horizontalLineAt: null,
+                                          budget: getCustomCycleTempBudget(""),
+                                          extraCategorySpots: const {},
+                                          categoriesMapped: const {},
+                                          loadAllEvenIfZero:
+                                              amountLoadedPressedOnce,
+                                          setNoPastRegionsAreZero:
+                                              (bool value) {
+                                            amountLoadedPressedOnce = true;
+                                          },
                                         ),
                                       ),
                                     ),
-                                    LoadMorePeriodsButton(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      onPressed: () {
-                                        if (amountLoadedPressedOnce == false) {
-                                          setState(() {
-                                            amountLoadedPressedOnce = true;
-                                          });
-                                        } else {
-                                          int amountMoreToLoad =
-                                              getIsFullScreen(context) == false
-                                                  ? 3
-                                                  : 5;
-                                          loadLines(
-                                              amountLoaded + amountMoreToLoad);
-                                          setState(() {
-                                            amountLoaded =
-                                                amountLoaded + amountMoreToLoad;
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  LoadMorePeriodsButton(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    onPressed: () {
+                                      if (amountLoadedPressedOnce == false) {
+                                        setState(() {
+                                          amountLoadedPressedOnce = true;
+                                        });
+                                      } else {
+                                        int amountMoreToLoad =
+                                            getIsFullScreen(context) == false
+                                                ? 3
+                                                : 5;
+                                        loadLines(
+                                            amountLoaded + amountMoreToLoad);
+                                        setState(() {
+                                          amountLoaded =
+                                              amountLoaded + amountMoreToLoad;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
                             Transform.translate(
@@ -2685,9 +2673,8 @@ class AmountSpentEntryRow extends StatelessWidget {
                                 ),
                               ),
                               TextSpan(
-                                text: "  ($totalCount${extraText == null
-                                        ? ""
-                                        : ", ${extraText ?? ""}"})",
+                                text:
+                                    "  ($totalCount${extraText == null ? "" : ", ${extraText ?? ""}"})",
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: getColor(context, "textLight"),

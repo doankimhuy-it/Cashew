@@ -7,7 +7,6 @@ import 'package:budget/pages/add_transaction_page.dart';
 import 'package:budget/pages/edit_budget_limits_page.dart';
 import 'package:budget/pages/home_page/home_page_line_graph.dart';
 import 'package:budget/pages/past_budgets_page.dart';
-import 'package:budget/pages/premium_page.dart';
 import 'package:budget/pages/transaction_filters.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
@@ -98,9 +97,6 @@ class _BudgetPageContentState extends State<_BudgetPageContent> {
 
   @override
   void initState() {
-    Future.delayed(Duration.zero, () {
-      if (widget.isPastBudget == true) premiumPopupPastBudgets(context);
-    });
     super.initState();
   }
 

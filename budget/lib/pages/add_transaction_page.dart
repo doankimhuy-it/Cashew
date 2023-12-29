@@ -7,7 +7,6 @@ import 'package:budget/pages/add_objective_page.dart';
 import 'package:budget/pages/add_wallet_page.dart';
 import 'package:budget/pages/edit_associated_titles_page.dart';
 import 'package:budget/pages/edit_wallets_page.dart';
-import 'package:budget/pages/premium_page.dart';
 import 'package:budget/pages/shared_budget_settings.dart';
 import 'package:budget/pages/transactions_list_page.dart';
 import 'package:budget/struct/database_global.dart';
@@ -520,15 +519,6 @@ class _AddTransactionPageState extends State<AddTransactionPage>
         await setUpcomingNotifications(context);
       }
 
-      // recentlyAddedTransactionID.value =
-
-      if (widget.transaction == null &&
-          appStateSettings["purchaseID"] == null) {
-        updateSettings("premiumPopupAddTransactionCount",
-            (appStateSettings["premiumPopupAddTransactionCount"] ?? 0) + 1,
-            updateGlobalState: false);
-      }
-
       return true;
     } catch (e) {
       if (e.toString() == "category-no-longer-exists") {
@@ -722,7 +712,6 @@ class _AddTransactionPageState extends State<AddTransactionPage>
           openTransferBalancePopup();
           return;
         }
-        await premiumPopupAddTransaction(context);
         if (widget.startInitialAddTransactionSequence == false) return;
         if (appStateSettings["askForTransactionTitle"]) {
           openBottomSheet(

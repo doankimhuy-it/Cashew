@@ -2,7 +2,6 @@ import 'package:budget/database/tables.dart';
 import 'package:budget/functions.dart';
 import 'package:budget/pages/add_transaction_page.dart';
 import 'package:budget/pages/edit_objectives_page.dart';
-import 'package:budget/pages/premium_page.dart';
 import 'package:budget/struct/currency_functions.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/settings.dart';
@@ -324,9 +323,7 @@ class _AddObjectivePageState extends State<AddObjectivePage>
     } else {
       Future.delayed(Duration.zero, () async {
         if (widget.objective == null) {
-          bool result = await premiumPopupObjectives(context,
-              objectiveType: objectiveType);
-          if (result == true && objectiveType != ObjectiveType.loan) {
+          if (objectiveType != ObjectiveType.loan) {
             openBottomSheet(
               context,
               fullSnap: false,
