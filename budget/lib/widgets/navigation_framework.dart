@@ -44,11 +44,9 @@ import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/open_snackbar.dart';
 import 'package:budget/widgets/outlined_button_stacked.dart';
-import 'package:budget/widgets/rating_popup.dart';
 import 'package:budget/widgets/select_amount.dart';
 import 'package:budget/widgets/select_chips.dart';
 import 'package:budget/widgets/selected_transactions_app_bar.dart';
-import 'package:budget/widgets/show_changelog.dart';
 import 'package:budget/struct/initialize_notifications.dart';
 import 'package:budget/widgets/global_loading_progress.dart';
 import 'package:budget/widgets/global_snackbar.dart';
@@ -174,12 +172,6 @@ class PageNavigationFrameworkState extends State<PageNavigationFramework> {
 
       await initializeNotificationsPlatform();
 
-      bool isChangelogShown = showChangelog(context);
-      bool isRatingPopupShown = false;
-      if (isChangelogShown == false) {
-        isRatingPopupShown = openRatingPopupCheck(context);
-      }
-
       await setDailyNotifications(context);
       await initializeDefaultDatabase();
       runNotificationPayLoads(context);
@@ -187,11 +179,6 @@ class PageNavigationFrameworkState extends State<PageNavigationFramework> {
 
       if (entireAppLoaded == false) {
         await runAllCloudFunctions(context);
-      }
-
-      // Do this after cloud functions attempt (i.e. if user is not signed in we can show it)
-      if (isRatingPopupShown == false && isChangelogShown == false) {
-        openBackupReminderPopupCheck(context);
       }
 
       // Mark subscriptions as paid AFTER syncing with cloud

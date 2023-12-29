@@ -3,7 +3,6 @@ import 'package:budget/main.dart';
 import 'package:budget/pages/accounts_page.dart';
 import 'package:budget/pages/add_transaction_page.dart';
 import 'package:budget/pages/debug_page.dart';
-import 'package:budget/pages/detailed_changelog_page.dart';
 import 'package:budget/pages/on_boarding_page.dart';
 import 'package:budget/struct/database_global.dart';
 import 'package:budget/struct/language_map.dart';
@@ -14,7 +13,6 @@ import 'package:budget/widgets/more_icons.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
 import 'package:budget/widgets/open_popup.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
-import 'package:budget/widgets/show_changelog.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -23,26 +21,6 @@ import 'package:budget/colors.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
-
-  showChangelogForce(BuildContext context) {
-    showChangelog(
-      context,
-      forceShow: true,
-      majorChangesOnly: true,
-      extraWidget: Padding(
-        padding: const EdgeInsets.only(
-          bottom: 10,
-        ),
-        child: Button(
-          label: "view-detailed-changelog".tr(),
-          onTap: () {
-            Navigator.pop(context);
-            pushRoute(context, const DetailedChangelogPage());
-          },
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +49,10 @@ class AboutPage extends StatelessWidget {
                   Tappable(
                     borderRadius: 15,
                     onLongPress: () {
-                      if (allowDebugFlags) {
-                        pushRoute(
-                          context,
-                          const DebugPage(),
-                        );
-                      }
+                      pushRoute(
+                        context,
+                        const DebugPage(),
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -92,9 +68,6 @@ class AboutPage extends StatelessWidget {
                   ),
                   Tappable(
                     borderRadius: 10,
-                    onTap: () {
-                      showChangelogForce(context);
-                    },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 0, horizontal: 10),
@@ -116,7 +89,7 @@ class AboutPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Tappable(
             onTap: () {
-              openUrl("https://github.com/jameskokoska/Cashew");
+              openUrl("https://github.com/doankimhuy-it/Cashew");
             },
             color: appStateSettings["materialYou"]
                 ? dynamicPastel(
@@ -139,7 +112,7 @@ class AboutPage extends StatelessWidget {
                       const SizedBox(width: 10),
                       Flexible(
                         child: TextFont(
-                          text: "app-is-open-source"
+                          text: "go-to-app-homepage"
                               .tr(namedArgs: {"app": globalAppName}),
                           fontSize: 18,
                           maxLines: 5,
@@ -151,177 +124,6 @@ class AboutPage extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        const SizedBox(height: 7),
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Button(
-                  label: "view-app-intro".tr(),
-                  onTap: () {
-                    pushRoute(
-                      context,
-                      const OnBoardingPage(
-                        popNavigationWhenDone: true,
-                        showPreviewDemoButton: false,
-                      ),
-                    );
-                  },
-                  expandedLayout: true,
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 15),
-                child: Button(
-                  label: "view-changelog".tr(),
-                  onTap: () {
-                    showChangelogForce(context);
-                  },
-                  expandedLayout: true,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-          child: Center(
-            child: TextFont(
-              text: "development-team".tr(),
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              textAlign: TextAlign.center,
-              maxLines: 5,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          child: Tappable(
-            onTap: () {
-              openUrl('mailto:dapperappdeveloper@gmail.com');
-            },
-            onLongPress: () {
-              copyToClipboard("dapperappdeveloper@gmail.com");
-            },
-            color: appStateSettings["materialYou"]
-                ? dynamicPastel(
-                    context, Theme.of(context).colorScheme.secondaryContainer,
-                    amountLight: 0.2, amountDark: 0.6)
-                : getColor(context, "lightDarkAccent"),
-            borderRadius: 15,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 15),
-              child: Column(
-                children: [
-                  TextFont(
-                    text: "lead-developer".tr(),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center,
-                    maxLines: 5,
-                  ),
-                  TextFont(
-                    text: "James",
-                    fontSize: 29,
-                    fontWeight: FontWeight.bold,
-                    textColor: Theme.of(context).colorScheme.onPrimaryContainer,
-                    textAlign: TextAlign.center,
-                    maxLines: 5,
-                  ),
-                  TextFont(
-                    text: "dapperappdeveloper@gmail.com",
-                    fontSize: 16,
-                    textAlign: TextAlign.center,
-                    maxLines: 5,
-                    textColor: getColor(context, "textLight"),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          child: Tappable(
-            onTap: () {},
-            color: appStateSettings["materialYou"]
-                ? dynamicPastel(
-                    context, Theme.of(context).colorScheme.secondaryContainer,
-                    amountLight: 0.2, amountDark: 0.6)
-                : getColor(context, "lightDarkAccent"),
-            borderRadius: 15,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 15),
-              child: Column(
-                children: [
-                  TextFont(
-                    text: "database-designer".tr(),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center,
-                    maxLines: 5,
-                  ),
-                  TextFont(
-                    text: "YuYing",
-                    fontSize: 29,
-                    fontWeight: FontWeight.bold,
-                    textColor: Theme.of(context).colorScheme.onPrimaryContainer,
-                    textAlign: TextAlign.center,
-                    maxLines: 5,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 15),
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Button(
-                  label: "view-licenses-and-legalese".tr(),
-                  color: Theme.of(context).colorScheme.tertiary,
-                  textColor: Theme.of(context).colorScheme.onTertiary,
-                  expandedLayout: true,
-                  onTap: () {
-                    showLicensePage(
-                        context: context,
-                        applicationVersion: getVersionString(),
-                        applicationLegalese:
-                            "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n${"exchange-rate-notice-description".tr()}");
-                  },
-                ),
-              ),
-            )
-          ],
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Button(
-                  label: "privacy-policy".tr(),
-                  color: Theme.of(context).colorScheme.tertiary,
-                  textColor: Theme.of(context).colorScheme.onTertiary,
-                  expandedLayout: true,
-                  onTap: () {
-                    openUrl("http://cashewapp.web.app/policy.html");
-                  },
-                ),
-              ),
-            )
-          ],
         ),
         const SizedBox(height: 10),
         Padding(
@@ -413,18 +215,6 @@ class AboutPage extends StatelessWidget {
             },
             color: Theme.of(context).colorScheme.error,
             textColor: Theme.of(context).colorScheme.onError,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-          child: Center(
-            child: TextFont(
-              text: "${"made-in-canada".tr()} 🍁",
-              fontSize: 14,
-              textAlign: TextAlign.center,
-              maxLines: 5,
-            ),
           ),
         ),
         const SizedBox(height: 20),
@@ -657,4 +447,10 @@ class AboutInfoBox extends StatelessWidget {
       ),
     );
   }
+}
+
+String getVersionString() {
+  String version = packageInfoGlobal.version;
+  String buildNumber = packageInfoGlobal.buildNumber;
+  return "v$version+$buildNumber, db-v1";
 }

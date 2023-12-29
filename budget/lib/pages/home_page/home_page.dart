@@ -22,7 +22,6 @@ import 'package:budget/widgets/animated_expanded.dart';
 import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
 import 'package:budget/widgets/pie_chart.dart';
-import 'package:budget/widgets/rating_popup.dart';
 import 'package:budget/widgets/selected_transactions_app_bar.dart';
 import 'package:budget/widgets/text_widgets.dart';
 import 'package:budget/widgets/util/check_widget_launch.dart';
@@ -307,7 +306,6 @@ class HomePageState extends State<HomePage>
                         : const SizedBox(height: 5),
                     // Not full screen
                     if (enableDoubleColumn(context) != true) ...[
-                      const KeepAliveClientMixin(child: HomePageRatingBox()),
                       for (String sectionKey
                           in appStateSettings["homePageOrder"])
                         homePageSections[sectionKey] ?? const SizedBox.shrink(),
@@ -390,141 +388,6 @@ class HomePageState extends State<HomePage>
           ],
         ),
       ),
-    );
-  }
-}
-
-class HomePageRatingBox extends StatefulWidget {
-  const HomePageRatingBox({super.key});
-
-  @override
-  State<HomePageRatingBox> createState() => _HomePageRatingBoxState();
-}
-
-class _HomePageRatingBoxState extends State<HomePageRatingBox> {
-  bool hidden = true;
-
-  @override
-  void initState() {
-    if ((appStateSettings["numLogins"] + 1) % 13 == 0 &&
-        appStateSettings["dismissedStoreRating"] != true &&
-        appStateSettings["openedStoreRating"] != true) {
-      setState(() {
-        hidden = false;
-      });
-    }
-    super.initState();
-  }
-
-  hide() {
-    setState(() {
-      hidden = true;
-    });
-    updateSettings("dismissedStoreRating", true, updateGlobalState: true);
-  }
-
-  open() {
-    setState(() {
-      hidden = true;
-    });
-    updateSettings("openedStoreRating", true, updateGlobalState: true);
-    inAppReview.openStoreListing(
-      appStoreId: "6463662930",
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedSizeSwitcher(
-      child: hidden
-          ? Container(
-              key: const ValueKey(1),
-            )
-          : Padding(
-              key: const ValueKey(2),
-              padding: const EdgeInsets.only(bottom: 13),
-              child: Container(
-                padding:
-                    const EdgeInsets.only(left: 15, right: 15, bottom: 18, top: 18),
-                margin: const EdgeInsets.symmetric(horizontal: 13),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  color: getColor(context, "lightDarkAccentHeavyLight"),
-                  boxShadow: boxShadowCheck(boxShadowGeneral(context)),
-                ),
-                child: Column(
-                  children: [
-                    TextFont(
-                      text: "enjoying-cashew-question".tr(),
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.center,
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 7),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: TextFont(
-                        text: "consider-rating".tr(),
-                        fontSize: 16,
-                        textAlign: TextAlign.center,
-                        maxLines: 5,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    ScalingStars(
-                      selectedStars: 5,
-                      onTap: (i) {
-                        if (i >= 4) {
-                          open();
-                        } else {
-                          shareFeedback(
-                            "from-homepage-stars",
-                            "rating",
-                            selectedStars: i,
-                          );
-                          hide();
-                        }
-                      },
-                      size: 50,
-                      color: getColor(context, "starYellow"),
-                      loop: true,
-                      loopDelay: const Duration(milliseconds: 1900),
-                    ),
-                    const SizedBox(height: 15),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Opacity(
-                            opacity: 0.7,
-                            child: Button(
-                              label: "no-thanks".tr(),
-                              onTap: () {
-                                hide();
-                              },
-                              expandedLayout: true,
-                              color: Theme.of(context).colorScheme.tertiary,
-                              textColor:
-                                  Theme.of(context).colorScheme.onTertiary,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Button(
-                            label: "rate".tr(),
-                            onTap: () {
-                              open();
-                            },
-                            expandedLayout: true,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
     );
   }
 }

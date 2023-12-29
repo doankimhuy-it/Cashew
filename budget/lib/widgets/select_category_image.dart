@@ -3,7 +3,6 @@ import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/button.dart';
 import 'package:budget/widgets/framework/popup_framework.dart';
 import 'package:budget/widgets/open_bottom_sheet.dart';
-import 'package:budget/widgets/rating_popup.dart';
 import 'package:budget/widgets/tappable.dart';
 import 'package:budget/struct/icon_objects.dart';
 import 'package:budget/widgets/text_input.dart';
@@ -217,10 +216,6 @@ class _SelectCategoryImageState extends State<SelectCategoryImage> {
                   }),
                 )
               : const SizedBox.shrink(),
-          const Padding(
-            padding: EdgeInsets.only(top: 8.0),
-            child: SuggestIcon(),
-          ),
         ],
       ),
     );
@@ -268,120 +263,6 @@ class UseEmoji extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class SuggestIcon extends StatelessWidget {
-  const SuggestIcon({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Tappable(
-      onTap: () {
-        openBottomSheet(
-          context,
-          const SuggestIconPopup(),
-          reAssignBottomSheetControllerGlobal: false,
-          useCustomController: true,
-        );
-        // Fix over-scroll stretch when keyboard pops up quickly
-        Future.delayed(const Duration(milliseconds: 100), () {
-          bottomSheetControllerGlobalCustomAssigned?.scrollTo(0,
-              duration: const Duration(milliseconds: 100));
-        });
-      },
-      color: Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.7),
-      borderRadius: 15,
-      child: Padding(
-        padding:
-            const EdgeInsets.only(left: 15, right: 10, top: 12, bottom: 12),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 12),
-              child: Icon(
-                appStateSettings["outlinedIcons"]
-                    ? Icons.reviews_outlined
-                    : Icons.reviews_rounded,
-                color: Theme.of(context).colorScheme.secondary,
-                size: 31,
-              ),
-            ),
-            Expanded(
-              child: TextFont(
-                textColor: Theme.of(context).colorScheme.onSecondaryContainer,
-                text: "icon-suggestion-details".tr(),
-                maxLines: 5,
-                fontSize: 14,
-              ),
-            ),
-            Icon(
-              appStateSettings["outlinedIcons"]
-                  ? Icons.chevron_right_outlined
-                  : Icons.chevron_right_rounded,
-              size: 25,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SuggestIconPopup extends StatefulWidget {
-  const SuggestIconPopup({super.key});
-
-  @override
-  State<SuggestIconPopup> createState() => _SuggestIconPopupState();
-}
-
-class _SuggestIconPopupState extends State<SuggestIconPopup> {
-  final TextEditingController _feedbackController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return PopupFramework(
-      title: "suggest-icon".tr(),
-      child: Column(
-        children: [
-          TextInput(
-            labelText: "suggestion".tr(),
-            keyboardType: TextInputType.multiline,
-            maxLines: null,
-            minLines: 3,
-            padding: EdgeInsets.zero,
-            controller: _feedbackController,
-            onChanged: (value) {
-              setState(() {});
-            },
-          ),
-          const SizedBox(height: 10),
-          Opacity(
-            opacity: 0.4,
-            child: TextFont(
-              text: "icon-suggestion-privacy".tr(),
-              textAlign: TextAlign.center,
-              fontSize: 12,
-              maxLines: 5,
-            ),
-          ),
-          const SizedBox(height: 15),
-          Button(
-            label: "submit".tr(),
-            onTap: () async {
-              shareFeedback(_feedbackController.text, "icon");
-              Navigator.pop(context);
-            },
-            disabled: _feedbackController.text == "",
-          )
-        ],
       ),
     );
   }

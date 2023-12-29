@@ -10,7 +10,6 @@ import 'package:budget/widgets/notifications_settings.dart';
 import 'package:budget/widgets/open_snackbar.dart';
 import 'package:budget/widgets/framework/page_framework.dart';
 import 'package:budget/database/generate_preview_data.dart';
-import 'package:budget/widgets/rating_popup.dart';
 import 'package:budget/widgets/settings_containers.dart';
 import 'package:budget/widgets/text_input.dart';
 import 'package:budget/widgets/text_widgets.dart';
@@ -252,21 +251,6 @@ class DebugPage extends StatelessWidget {
               ? Icons.animation_outlined
               : Icons.animation_rounded,
         ),
-        FutureBuilder<bool>(
-          future: inAppReview.isAvailable(),
-          builder: (context, snapshot) {
-            return SettingsContainer(
-              icon: Icons.store,
-              title: "Test store review integration",
-              description: "Available: ${snapshot.data}",
-              onTap: () async {
-                if (await inAppReview.isAvailable()) {
-                  inAppReview.requestReview();
-                }
-              },
-            );
-          },
-        ),
         SettingsContainerSwitch(
           title: "Native iOS Navigation",
           description: "Enables native iOS like navigation",
@@ -489,75 +473,6 @@ class DebugPage extends StatelessWidget {
                 ),
               );
             }),
-        const TextFont(
-            maxLines: 10,
-            text: ""),
-        ColorBox(color: Theme.of(context).colorScheme.surface, name: "surface"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.onSurface, name: "onSurface"),
-        ColorBox(color: Theme.of(context).canvasColor, name: "background"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.onBackground,
-            name: "onBackground"),
-        Container(
-          margin: const EdgeInsets.all(10),
-          height: 1,
-          color: Colors.grey,
-        ),
-        ColorBox(color: Theme.of(context).colorScheme.primary, name: "primary"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.onPrimary, name: "onPrimary"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.primaryContainer,
-            name: "primaryContainer"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-            name: "onPrimaryContainer"),
-        Container(
-          margin: const EdgeInsets.all(10),
-          height: 1,
-          color: Colors.grey,
-        ),
-        ColorBox(
-            color: Theme.of(context).colorScheme.secondary, name: "secondary"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.onSecondary,
-            name: "onSecondary"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.secondaryContainer,
-            name: "secondaryContainer"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.onSecondaryContainer,
-            name: "onSecondaryContainer"),
-        Container(
-          margin: const EdgeInsets.all(10),
-          height: 1,
-          color: Colors.grey,
-        ),
-        ColorBox(
-            color: Theme.of(context).colorScheme.tertiary, name: "tertiary"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.onTertiary,
-            name: "onTertiary"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.tertiaryContainer,
-            name: "tertiaryContainer"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.onTertiaryContainer,
-            name: "onTertiaryContainer"),
-        Container(
-          margin: const EdgeInsets.all(10),
-          height: 1,
-          color: Colors.grey,
-        ),
-        ColorBox(color: Theme.of(context).colorScheme.error, name: "error"),
-        ColorBox(color: Theme.of(context).colorScheme.onError, name: "onError"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.errorContainer,
-            name: "errorContainer"),
-        ColorBox(
-            color: Theme.of(context).colorScheme.onErrorContainer,
-            name: "onErrorContainer"),
       ],
     );
   }
